@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viral Ad Replicator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;600;700;800;900&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo">
+                <span class="logo-icon">&#9889;</span>
+                <h1>Viral Ad Replicator</h1>
+            </div>
+            <p class="subtitle">Replica la viralidad. Cambia el producto. Domina el feed.</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Left Panel: Controls -->
+            <section class="controls-panel">
+                <!-- Step 1: Upload -->
+                <div class="control-section">
+                    <div class="step-badge">1</div>
+                    <h2>Sube el anuncio original</h2>
+                    <p class="hint">Imagen del anuncio que quieres replicar</p>
+                    <div class="upload-zone" id="uploadZone">
+                        <div class="upload-content" id="uploadContent">
+                            <div class="upload-icon">&#128247;</div>
+                            <span>Arrastra tu imagen o haz clic</span>
+                            <span class="upload-formats">PNG, JPG, WEBP</span>
+                        </div>
+                        <img id="originalPreview" class="upload-preview hidden" alt="Preview">
+                        <input type="file" id="fileInput" accept="image/*" hidden>
+                    </div>
+                </div>
+
+                <!-- Step 2: New Product Image -->
+                <div class="control-section">
+                    <div class="step-badge">2</div>
+                    <h2>Imagen del nuevo producto</h2>
+                    <p class="hint">Producto que reemplazara al original</p>
+                    <div class="upload-zone upload-zone-small" id="productUploadZone">
+                        <div class="upload-content" id="productUploadContent">
+                            <div class="upload-icon">&#128230;</div>
+                            <span>Sube la imagen del producto</span>
+                        </div>
+                        <img id="productPreview" class="upload-preview hidden" alt="Product Preview">
+                        <input type="file" id="productFileInput" accept="image/*" hidden>
+                    </div>
+                    <div class="product-controls">
+                        <label>Posicion X
+                            <input type="range" id="productX" min="0" max="100" value="50">
+                        </label>
+                        <label>Posicion Y
+                            <input type="range" id="productY" min="0" max="100" value="50">
+                        </label>
+                        <label>Escala
+                            <input type="range" id="productScale" min="10" max="200" value="100">
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Step 3: Copy -->
+                <div class="control-section">
+                    <div class="step-badge">3</div>
+                    <h2>Nuevo Copy</h2>
+                    <p class="hint">Texto principal del anuncio</p>
+
+                    <div class="copy-inputs">
+                        <div class="input-group">
+                            <label for="headline">Headline / Titulo</label>
+                            <input type="text" id="headline" placeholder="Ej: El secreto que nadie te cuenta...">
+                        </div>
+                        <div class="input-group">
+                            <label for="subheadline">Sub-headline</label>
+                            <input type="text" id="subheadline" placeholder="Ej: Resultados en 7 dias">
+                        </div>
+                        <div class="input-group">
+                            <label for="ctaText">Call to Action (CTA)</label>
+                            <input type="text" id="ctaText" placeholder="Ej: Comprar Ahora" value="Comprar Ahora">
+                        </div>
+                        <div class="input-group">
+                            <label for="bodyText">Texto adicional (opcional)</label>
+                            <textarea id="bodyText" rows="2" placeholder="Ej: Envio gratis a todo el pais"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Style -->
+                <div class="control-section">
+                    <div class="step-badge">4</div>
+                    <h2>Estilo y formato</h2>
+
+                    <div class="style-options">
+                        <!-- Template Selection -->
+                        <div class="input-group">
+                            <label>Formato de anuncio</label>
+                            <div class="template-grid">
+                                <button class="template-btn active" data-template="feed" data-ratio="1:1">
+                                    <div class="template-icon ratio-square"></div>
+                                    <span>Feed 1:1</span>
+                                </button>
+                                <button class="template-btn" data-template="story" data-ratio="9:16">
+                                    <div class="template-icon ratio-story"></div>
+                                    <span>Story 9:16</span>
+                                </button>
+                                <button class="template-btn" data-template="landscape" data-ratio="16:9">
+                                    <div class="template-icon ratio-landscape"></div>
+                                    <span>Landscape</span>
+                                </button>
+                                <button class="template-btn" data-template="portrait" data-ratio="4:5">
+                                    <div class="template-icon ratio-portrait"></div>
+                                    <span>Portrait 4:5</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Layout Style -->
+                        <div class="input-group">
+                            <label>Estilo de layout</label>
+                            <div class="layout-grid">
+                                <button class="layout-btn active" data-layout="overlay">
+                                    <div class="layout-preview lp-overlay"></div>
+                                    <span>Overlay</span>
+                                </button>
+                                <button class="layout-btn" data-layout="split-top">
+                                    <div class="layout-preview lp-split-top"></div>
+                                    <span>Split Top</span>
+                                </button>
+                                <button class="layout-btn" data-layout="split-bottom">
+                                    <div class="layout-preview lp-split-bottom"></div>
+                                    <span>Split Bottom</span>
+                                </button>
+                                <button class="layout-btn" data-layout="minimal">
+                                    <div class="layout-preview lp-minimal"></div>
+                                    <span>Minimal</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Colors -->
+                        <div class="color-row">
+                            <div class="input-group">
+                                <label for="primaryColor">Color primario</label>
+                                <div class="color-picker-wrap">
+                                    <input type="color" id="primaryColor" value="#FF6B35">
+                                    <span class="color-hex" id="primaryHex">#FF6B35</span>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label for="accentColor">Color de acento</label>
+                                <div class="color-picker-wrap">
+                                    <input type="color" id="accentColor" value="#FFFFFF">
+                                    <span class="color-hex" id="accentHex">#FFFFFF</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="color-row">
+                            <div class="input-group">
+                                <label for="bgColor">Fondo overlay</label>
+                                <div class="color-picker-wrap">
+                                    <input type="color" id="bgColor" value="#000000">
+                                    <span class="color-hex" id="bgHex">#000000</span>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label for="overlayOpacity">Opacidad overlay</label>
+                                <input type="range" id="overlayOpacity" min="0" max="100" value="45">
+                            </div>
+                        </div>
+
+                        <!-- Font -->
+                        <div class="input-group">
+                            <label for="fontFamily">Tipografia</label>
+                            <select id="fontFamily">
+                                <option value="Inter">Inter (Moderna)</option>
+                                <option value="Poppins">Poppins (Bold)</option>
+                                <option value="Montserrat">Montserrat (Elegante)</option>
+                                <option value="Arial Black">Arial Black (Impacto)</option>
+                                <option value="Georgia">Georgia (Clasica)</option>
+                            </select>
+                        </div>
+
+                        <!-- Viral Effects -->
+                        <div class="input-group">
+                            <label>Efectos virales</label>
+                            <div class="effects-grid">
+                                <label class="effect-toggle">
+                                    <input type="checkbox" id="effectGlow" checked>
+                                    <span class="toggle-label">Glow CTA</span>
+                                </label>
+                                <label class="effect-toggle">
+                                    <input type="checkbox" id="effectBadge" checked>
+                                    <span class="toggle-label">Badge urgencia</span>
+                                </label>
+                                <label class="effect-toggle">
+                                    <input type="checkbox" id="effectGradient">
+                                    <span class="toggle-label">Gradiente</span>
+                                </label>
+                                <label class="effect-toggle">
+                                    <input type="checkbox" id="effectBorder">
+                                    <span class="toggle-label">Borde neon</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="badgeText">Texto del badge</label>
+                            <input type="text" id="badgeText" placeholder="Ej: -50% HOY" value="-50% HOY">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Panel: Preview & Export -->
+            <section class="preview-panel">
+                <div class="preview-header">
+                    <h2>Vista previa</h2>
+                    <div class="preview-actions">
+                        <button class="btn btn-secondary" id="btnRefresh" title="Regenerar">&#8635; Actualizar</button>
+                    </div>
+                </div>
+
+                <div class="canvas-wrapper" id="canvasWrapper">
+                    <canvas id="adCanvas" width="1080" height="1080"></canvas>
+                </div>
+
+                <!-- Export Options -->
+                <div class="export-section">
+                    <h3>Exportar</h3>
+                    <div class="export-buttons">
+                        <button class="btn btn-primary btn-export" id="btnDownloadPNG">
+                            <span class="btn-icon">&#128190;</span> Descargar PNG
+                        </button>
+                        <button class="btn btn-primary btn-export" id="btnDownloadJPG">
+                            <span class="btn-icon">&#128247;</span> Descargar JPG
+                        </button>
+                    </div>
+                    <div class="export-sizes">
+                        <button class="size-btn active" data-size="1080">1080px</button>
+                        <button class="size-btn" data-size="1200">1200px</button>
+                        <button class="size-btn" data-size="1500">1500px</button>
+                    </div>
+                </div>
+
+                <!-- Quick Variations -->
+                <div class="variations-section">
+                    <h3>Variaciones rapidas</h3>
+                    <p class="hint">Genera variaciones automaticas con cambios leves</p>
+                    <div class="variation-buttons">
+                        <button class="btn btn-variation" id="btnVarColor">&#127912; Color shift</button>
+                        <button class="btn btn-variation" id="btnVarLayout">&#128256; Cambiar layout</button>
+                        <button class="btn btn-variation" id="btnVarFont">&#128221; Cambiar fuente</button>
+                        <button class="btn btn-variation" id="btnVarEffect">&#10024; Efecto random</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
