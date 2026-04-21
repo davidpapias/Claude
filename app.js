@@ -1,872 +1,538 @@
-/* ===================================
-   VIRAL AD REPLICATOR - Engine
-   =================================== */
+const { useState, useEffect, useRef } = React;
 
-(function () {
-    'use strict';
+const STEPS = [
+  {
+    num: "3",
+    label: "Pensamiento",
+    time: "Mañana",
+    color: "#6366F1",
+    bg: "#EEF2FF",
+    border: "#C7D2FE",
+    icon: "✦",
+    duration: 180,
+    instruction: "Escribe tu intención UNA vez. Con plena atención. Sin repetir mecánicamente.",
+    placeholder: "Estoy construyendo una vida en la que…",
+    tip: "Una sola frase clara vale más que cien repeticiones vacías.",
+  },
+  {
+    num: "6",
+    label: "Sentimiento",
+    time: "Tarde",
+    color: "#EC4899",
+    bg: "#FDF2F8",
+    border: "#FBCFE8",
+    icon: "❋",
+    duration: 60,
+    instruction: "Cierra los ojos. No visualices lo que deseas — SIÉNTELO como si ya fuera real.",
+    placeholder: null,
+    tip: "¿Tranquilo? ¿Seguro? ¿Libre? Mantén esa sensación. Respira.",
+  },
+  {
+    num: "9",
+    label: "Acción",
+    time: "Noche",
+    color: "#10B981",
+    bg: "#ECFDF5",
+    border: "#A7F3D0",
+    icon: "◆",
+    duration: 120,
+    instruction: "¿Qué hiciste hoy que haría tu yo del futuro?",
+    placeholder: "Hoy di un paso alineado cuando…",
+    tip: "Una acción pequeña anclada en la realidad vale más que mil intenciones.",
+  },
+];
 
-    // ── State ──────────────────────────────────────────
-    const state = {
-        originalImage: null,
-        productImage: null,
-        template: 'feed',       // feed | story | landscape | portrait
-        layout: 'overlay',      // overlay | split-top | split-bottom | minimal
-        headline: '',
-        subheadline: '',
-        ctaText: 'Comprar Ahora',
-        bodyText: '',
-        badgeText: '-50% HOY',
-        primaryColor: '#FF6B35',
-        accentColor: '#FFFFFF',
-        bgColor: '#000000',
-        overlayOpacity: 0.45,
-        fontFamily: 'Inter',
-        productX: 50,
-        productY: 50,
-        productScale: 100,
-        effects: {
-            glow: true,
-            badge: true,
-            gradient: false,
-            border: false
-        },
-        exportSize: 1080
+const today = () => new Date().toISOString().split("T")[0];
+
+const loadData = () => {
+  try {
+    return JSON.parse(localStorage.getItem("m369") || "{}");
+  } catch {
+    return {};
+  }
+};
+
+const saveData = (data) => {
+  try {
+    localStorage.setItem("m369", JSON.stringify(data));
+  } catch {}
+};
+
+function Timer({ duration, onComplete, color }) {
+  const [left, setLeft] = useState(duration);
+  const [running, setRunning] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (running && left > 0) {
+      ref.current = setInterval(() => setLeft((l) => l - 1), 1000);
+    } else if (left === 0) {
+      clearInterval(ref.current);
+      setRunning(false);
+      onComplete?.();
+    }
+    return () => clearInterval(ref.current);
+  }, [running, left]);
+
+  const pct = ((duration - left) / duration) * 100;
+  const mm = String(Math.floor(left / 60)).padStart(2, "0");
+  const ss = String(left % 60).padStart(2, "0");
+
+  return (
+    <div style={{ textAlign: "center", margin: "16px 0" }}>
+      <svg width="96" height="96" viewBox="0 0 96 96" style={{ display: "block", margin: "0 auto 10px" }}>
+        <circle cx="48" cy="48" r="42" fill="none" stroke="#E5E7EB" strokeWidth="6" />
+        <circle
+          cx="48" cy="48" r="42" fill="none"
+          stroke={color} strokeWidth="6"
+          strokeDasharray={`${2 * Math.PI * 42}`}
+          strokeDashoffset={`${2 * Math.PI * 42 * (1 - pct / 100)}`}
+          strokeLinecap="round"
+          transform="rotate(-90 48 48)"
+          style={{ transition: "stroke-dashoffset 1s linear" }}
+        />
+        <text x="48" y="54" textAnchor="middle" fontSize="18" fontWeight="700" fill="#111827" fontFamily="'DM Mono', monospace">
+          {mm}:{ss}
+        </text>
+      </svg>
+      <button
+        onClick={() => {
+          if (left === 0) { setLeft(duration); setRunning(false); }
+          else setRunning((r) => !r);
+        }}
+        style={{
+          background: running ? "#F3F4F6" : color,
+          color: running ? "#374151" : "#fff",
+          border: "none", borderRadius: "999px",
+          padding: "8px 28px", fontFamily: "'DM Sans', sans-serif",
+          fontWeight: 600, fontSize: 14, cursor: "pointer",
+          transition: "all 0.2s",
+        }}
+      >
+        {left === 0 ? "Reiniciar" : running ? "Pausar" : "Iniciar"}
+      </button>
+    </div>
+  );
+}
+
+function StepCard({ step, dayData, onSave, active, onActivate }) {
+  const [text, setText] = useState(dayData?.text || "");
+  const [done, setDone] = useState(dayData?.done || false);
+  const [timerDone, setTimerDone] = useState(false);
+
+  const canComplete = step.placeholder ? text.trim().length > 10 : timerDone;
+
+  const handleSave = () => {
+    if (!canComplete) return;
+    setDone(true);
+    onSave({ text, done: true });
+  };
+
+  return (
+    <div
+      onClick={() => !done && onActivate()}
+      style={{
+        borderRadius: 20,
+        border: `2px solid ${done ? step.color : active ? step.border : "#E5E7EB"}`,
+        background: done ? step.bg : "#FAFAFA",
+        padding: "20px 24px",
+        marginBottom: 16,
+        cursor: done ? "default" : "pointer",
+        transition: "all 0.3s ease",
+        boxShadow: active ? `0 4px 24px ${step.color}22` : "none",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      <span style={{
+        position: "absolute", right: 16, top: -8,
+        fontSize: 80, fontFamily: "'DM Serif Display', serif",
+        color: step.color, opacity: 0.08, fontWeight: 900, lineHeight: 1,
+        userSelect: "none",
+      }}>
+        {step.num}
+      </span>
+
+      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+        <span style={{
+          background: step.color, color: "#fff",
+          borderRadius: "50%", width: 32, height: 32,
+          display: "flex", alignItems: "center", justifyContent: "center",
+          fontSize: 13, fontWeight: 700, flexShrink: 0,
+        }}>
+          {done ? "✓" : step.icon}
+        </span>
+        <div>
+          <div style={{ fontFamily: "'DM Serif Display', serif", fontSize: 18, color: "#111827", fontWeight: 700 }}>
+            {step.label}
+          </div>
+          <div style={{ fontSize: 12, color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif" }}>
+            {step.time} · {Math.floor(step.duration / 60)}m {step.duration % 60 > 0 ? `${step.duration % 60}s` : ""}
+          </div>
+        </div>
+        {done && (
+          <span style={{
+            marginLeft: "auto", background: step.color, color: "#fff",
+            borderRadius: 999, padding: "3px 12px", fontSize: 12,
+            fontFamily: "'DM Sans', sans-serif", fontWeight: 600,
+          }}>
+            Completado
+          </span>
+        )}
+      </div>
+
+      {active && !done && (
+        <div style={{ animation: "fadeIn 0.3s ease" }}>
+          <p style={{ fontSize: 14, color: "#374151", fontFamily: "'DM Sans', sans-serif", marginBottom: 12, lineHeight: 1.6 }}>
+            {step.instruction}
+          </p>
+
+          <Timer duration={step.duration} color={step.color} onComplete={() => setTimerDone(true)} />
+
+          {step.placeholder && (
+            <textarea
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              placeholder={step.placeholder}
+              onClick={(e) => e.stopPropagation()}
+              rows={3}
+              style={{
+                width: "100%", border: `1.5px solid ${step.border}`,
+                borderRadius: 12, padding: "10px 14px",
+                fontFamily: "'DM Sans', sans-serif", fontSize: 14,
+                color: "#111827", background: "#fff", resize: "none",
+                outline: "none", boxSizing: "border-box", marginBottom: 10,
+              }}
+            />
+          )}
+
+          <p style={{ fontSize: 12, color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif", marginBottom: 12, fontStyle: "italic" }}>
+            {step.tip}
+          </p>
+
+          <button
+            onClick={(e) => { e.stopPropagation(); handleSave(); }}
+            disabled={!canComplete}
+            style={{
+              background: canComplete ? step.color : "#E5E7EB",
+              color: canComplete ? "#fff" : "#9CA3AF",
+              border: "none", borderRadius: 999, padding: "10px 24px",
+              fontFamily: "'DM Sans', sans-serif", fontWeight: 700,
+              fontSize: 14, cursor: canComplete ? "pointer" : "not-allowed",
+              width: "100%", transition: "all 0.2s",
+            }}
+          >
+            Marcar como completado →
+          </button>
+        </div>
+      )}
+
+      {done && dayData?.text && (
+        <p style={{
+          fontSize: 13, color: "#6B7280", fontFamily: "'DM Sans', sans-serif",
+          fontStyle: "italic", marginTop: 8, borderLeft: `3px solid ${step.color}`,
+          paddingLeft: 10, lineHeight: 1.5,
+        }}>
+          "{dayData.text}"
+        </p>
+      )}
+    </div>
+  );
+}
+
+function StreakBar({ data }) {
+  const days = Array.from({ length: 30 }, (_, i) => {
+    const d = new Date();
+    d.setDate(d.getDate() - (29 - i));
+    const key = d.toISOString().split("T")[0];
+    const entry = data[key];
+    const completed = entry ? STEPS.filter((_, idx) => entry[idx]?.done).length : 0;
+    return { key, completed };
+  });
+
+  const streak = (() => {
+    let s = 0;
+    for (let i = days.length - 1; i >= 0; i--) {
+      if (days[i].completed === 3) s++;
+      else break;
+    }
+    return s;
+  })();
+
+  return (
+    <div style={{ background: "#FAFAFA", borderRadius: 16, padding: "16px 20px", marginBottom: 24 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+        <span style={{ fontFamily: "'DM Serif Display', serif", fontSize: 16, color: "#111827" }}>
+          Racha
+        </span>
+        <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 22, fontWeight: 700, color: streak > 0 ? "#F59E0B" : "#9CA3AF" }}>
+          {streak} {streak === 1 ? "día" : "días"} 🔥
+        </span>
+      </div>
+      <div style={{ display: "flex", gap: 3, flexWrap: "wrap" }}>
+        {days.map((d) => (
+          <div
+            key={d.key}
+            title={d.key}
+            style={{
+              width: 18, height: 18, borderRadius: 4,
+              background: d.completed === 3 ? "#10B981" : d.completed === 2 ? "#6366F1" : d.completed === 1 ? "#EC4899" : "#E5E7EB",
+              transition: "transform 0.2s",
+            }}
+          />
+        ))}
+      </div>
+      <div style={{ display: "flex", gap: 14, marginTop: 10 }}>
+        {[["#10B981", "Completo"], ["#6366F1", "2/3"], ["#EC4899", "1/3"], ["#E5E7EB", "Vacío"]].map(([c, l]) => (
+          <div key={l} style={{ display: "flex", alignItems: "center", gap: 5 }}>
+            <div style={{ width: 10, height: 10, borderRadius: 2, background: c }} />
+            <span style={{ fontSize: 11, color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif" }}>{l}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function HistoryView({ data, onBack }) {
+  const entries = Object.entries(data)
+    .filter(([, v]) => Object.values(v).some((s) => s?.done))
+    .sort(([a], [b]) => b.localeCompare(a))
+    .slice(0, 20);
+
+  return (
+    <div>
+      <button onClick={onBack} style={{
+        background: "none", border: "none", cursor: "pointer",
+        fontFamily: "'DM Sans', sans-serif", color: "#6366F1",
+        fontSize: 14, fontWeight: 600, marginBottom: 16, padding: 0,
+      }}>
+        ← Volver
+      </button>
+      <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: 22, marginBottom: 20, color: "#111827" }}>
+        Historial
+      </h2>
+      {entries.length === 0 && (
+        <p style={{ color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif", fontSize: 14 }}>
+          Aún no hay entradas registradas.
+        </p>
+      )}
+      {entries.map(([date, dayData]) => {
+        const d = new Date(date + "T12:00:00");
+        const label = d.toLocaleDateString("es-MX", { weekday: "long", day: "numeric", month: "long" });
+        const completed = STEPS.filter((_, i) => dayData[i]?.done).length;
+        return (
+          <div key={date} style={{
+            borderRadius: 16, border: "1.5px solid #E5E7EB",
+            padding: "16px 20px", marginBottom: 12, background: "#FAFAFA",
+          }}>
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
+              <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600, color: "#111827", fontSize: 14, textTransform: "capitalize" }}>
+                {label}
+              </span>
+              <span style={{
+                fontSize: 12, fontFamily: "'DM Mono', monospace",
+                color: completed === 3 ? "#10B981" : "#9CA3AF",
+                background: completed === 3 ? "#ECFDF5" : "#F3F4F6",
+                padding: "2px 10px", borderRadius: 999,
+              }}>
+                {completed}/3
+              </span>
+            </div>
+            {STEPS.map((step, i) => dayData[i]?.done && (
+              <div key={i} style={{ marginBottom: 6, display: "flex", gap: 8, alignItems: "flex-start" }}>
+                <span style={{
+                  flexShrink: 0, width: 20, height: 20, borderRadius: "50%",
+                  background: step.color, display: "flex", alignItems: "center",
+                  justifyContent: "center", fontSize: 10, color: "#fff", fontWeight: 700,
+                }}>
+                  {step.num}
+                </span>
+                <span style={{ fontSize: 13, color: "#6B7280", fontFamily: "'DM Sans', sans-serif", fontStyle: dayData[i]?.text ? "italic" : "normal" }}>
+                  {dayData[i]?.text || `${step.label} completado`}
+                </span>
+              </div>
+            ))}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function App() {
+  const [allData, setAllData] = useState(loadData);
+  const [activeStep, setActiveStep] = useState(null);
+  const [view, setView] = useState("home");
+
+  const todayKey = today();
+  const todayData = allData[todayKey] || {};
+  const completedToday = STEPS.filter((_, i) => todayData[i]?.done).length;
+
+  const handleSave = (stepIdx, stepData) => {
+    const updated = {
+      ...allData,
+      [todayKey]: { ...todayData, [stepIdx]: stepData },
     };
-
-    // ── Canvas dimensions per template ─────────────────
-    const DIMENSIONS = {
-        feed:      { w: 1080, h: 1080 },
-        story:     { w: 1080, h: 1920 },
-        landscape: { w: 1920, h: 1080 },
-        portrait:  { w: 1080, h: 1350 }
-    };
-
-    // ── DOM References ─────────────────────────────────
-    const canvas = document.getElementById('adCanvas');
-    const ctx = canvas.getContext('2d');
-
-    const $ = (sel) => document.querySelector(sel);
-    const $$ = (sel) => document.querySelectorAll(sel);
-
-    // Upload
-    const uploadZone = $('#uploadZone');
-    const fileInput = $('#fileInput');
-    const originalPreview = $('#originalPreview');
-    const uploadContent = $('#uploadContent');
-
-    // Product upload
-    const productUploadZone = $('#productUploadZone');
-    const productFileInput = $('#productFileInput');
-    const productPreview = $('#productPreview');
-    const productUploadContent = $('#productUploadContent');
-
-    // Text inputs
-    const headlineInput = $('#headline');
-    const subheadlineInput = $('#subheadline');
-    const ctaTextInput = $('#ctaText');
-    const bodyTextInput = $('#bodyText');
-    const badgeTextInput = $('#badgeText');
-
-    // Style controls
-    const primaryColorInput = $('#primaryColor');
-    const accentColorInput = $('#accentColor');
-    const bgColorInput = $('#bgColor');
-    const overlayOpacityInput = $('#overlayOpacity');
-    const fontFamilySelect = $('#fontFamily');
-
-    // Product controls
-    const productXInput = $('#productX');
-    const productYInput = $('#productY');
-    const productScaleInput = $('#productScale');
-
-    // Effect checkboxes
-    const effectGlow = $('#effectGlow');
-    const effectBadge = $('#effectBadge');
-    const effectGradient = $('#effectGradient');
-    const effectBorder = $('#effectBorder');
-
-    // ── Init ───────────────────────────────────────────
-    function init() {
-        bindEvents();
-        renderCanvas();
-    }
-
-    // ── Event Bindings ─────────────────────────────────
-    function bindEvents() {
-        // Original image upload
-        uploadZone.addEventListener('click', () => fileInput.click());
-        uploadZone.addEventListener('dragover', handleDragOver);
-        uploadZone.addEventListener('dragleave', handleDragLeave);
-        uploadZone.addEventListener('drop', handleDrop);
-        fileInput.addEventListener('change', handleFileSelect);
-
-        // Product image upload
-        productUploadZone.addEventListener('click', () => productFileInput.click());
-        productUploadZone.addEventListener('dragover', handleDragOver);
-        productUploadZone.addEventListener('dragleave', handleDragLeave);
-        productUploadZone.addEventListener('drop', (e) => handleDrop(e, true));
-        productFileInput.addEventListener('change', (e) => handleFileSelect(e, true));
-
-        // Text inputs
-        headlineInput.addEventListener('input', (e) => { state.headline = e.target.value; renderCanvas(); });
-        subheadlineInput.addEventListener('input', (e) => { state.subheadline = e.target.value; renderCanvas(); });
-        ctaTextInput.addEventListener('input', (e) => { state.ctaText = e.target.value; renderCanvas(); });
-        bodyTextInput.addEventListener('input', (e) => { state.bodyText = e.target.value; renderCanvas(); });
-        badgeTextInput.addEventListener('input', (e) => { state.badgeText = e.target.value; renderCanvas(); });
-
-        // Colors
-        primaryColorInput.addEventListener('input', (e) => {
-            state.primaryColor = e.target.value;
-            $('#primaryHex').textContent = e.target.value;
-            renderCanvas();
-        });
-        accentColorInput.addEventListener('input', (e) => {
-            state.accentColor = e.target.value;
-            $('#accentHex').textContent = e.target.value;
-            renderCanvas();
-        });
-        bgColorInput.addEventListener('input', (e) => {
-            state.bgColor = e.target.value;
-            $('#bgHex').textContent = e.target.value;
-            renderCanvas();
-        });
-        overlayOpacityInput.addEventListener('input', (e) => {
-            state.overlayOpacity = e.target.value / 100;
-            renderCanvas();
-        });
-
-        // Font
-        fontFamilySelect.addEventListener('change', (e) => {
-            state.fontFamily = e.target.value;
-            renderCanvas();
-        });
-
-        // Product position
-        productXInput.addEventListener('input', (e) => { state.productX = parseInt(e.target.value); renderCanvas(); });
-        productYInput.addEventListener('input', (e) => { state.productY = parseInt(e.target.value); renderCanvas(); });
-        productScaleInput.addEventListener('input', (e) => { state.productScale = parseInt(e.target.value); renderCanvas(); });
-
-        // Effects
-        effectGlow.addEventListener('change', (e) => { state.effects.glow = e.target.checked; renderCanvas(); });
-        effectBadge.addEventListener('change', (e) => { state.effects.badge = e.target.checked; renderCanvas(); });
-        effectGradient.addEventListener('change', (e) => { state.effects.gradient = e.target.checked; renderCanvas(); });
-        effectBorder.addEventListener('change', (e) => { state.effects.border = e.target.checked; renderCanvas(); });
-
-        // Template buttons
-        $$('.template-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                $$('.template-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                state.template = btn.dataset.template;
-                resizeCanvas();
-                renderCanvas();
-            });
-        });
-
-        // Layout buttons
-        $$('.layout-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                $$('.layout-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                state.layout = btn.dataset.layout;
-                renderCanvas();
-            });
-        });
-
-        // Size buttons
-        $$('.size-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                $$('.size-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                state.exportSize = parseInt(btn.dataset.size);
-            });
-        });
-
-        // Export
-        $('#btnDownloadPNG').addEventListener('click', () => exportAd('png'));
-        $('#btnDownloadJPG').addEventListener('click', () => exportAd('jpeg'));
-
-        // Refresh
-        $('#btnRefresh').addEventListener('click', () => renderCanvas());
-
-        // Variations
-        $('#btnVarColor').addEventListener('click', variationColor);
-        $('#btnVarLayout').addEventListener('click', variationLayout);
-        $('#btnVarFont').addEventListener('click', variationFont);
-        $('#btnVarEffect').addEventListener('click', variationEffect);
-    }
-
-    // ── File Handling ──────────────────────────────────
-    function handleDragOver(e) {
-        e.preventDefault();
-        e.currentTarget.style.borderColor = 'var(--accent)';
-        e.currentTarget.style.background = 'rgba(255,107,53,0.08)';
-    }
-
-    function handleDragLeave(e) {
-        e.currentTarget.style.borderColor = '';
-        e.currentTarget.style.background = '';
-    }
-
-    function handleDrop(e, isProduct) {
-        e.preventDefault();
-        e.currentTarget.style.borderColor = '';
-        e.currentTarget.style.background = '';
-        const file = e.dataTransfer.files[0];
-        if (file && file.type.startsWith('image/')) {
-            loadImage(file, isProduct === true);
-        }
-    }
-
-    function handleFileSelect(e, isProduct) {
-        const file = e.target.files[0];
-        if (file) {
-            loadImage(file, isProduct === true);
-        }
-    }
-
-    function loadImage(file, isProduct) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            const img = new Image();
-            img.onload = function () {
-                if (isProduct) {
-                    state.productImage = img;
-                    productPreview.src = e.target.result;
-                    productPreview.classList.remove('hidden');
-                    productUploadContent.classList.add('hidden');
-                } else {
-                    state.originalImage = img;
-                    originalPreview.src = e.target.result;
-                    originalPreview.classList.remove('hidden');
-                    uploadContent.classList.add('hidden');
-                }
-                renderCanvas();
-            };
-            img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-    }
-
-    // ── Canvas Sizing ──────────────────────────────────
-    function resizeCanvas() {
-        const dim = DIMENSIONS[state.template];
-        canvas.width = dim.w;
-        canvas.height = dim.h;
-    }
-
-    // ── Main Render ────────────────────────────────────
-    function renderCanvas() {
-        const W = canvas.width;
-        const H = canvas.height;
-
-        // Clear
-        ctx.clearRect(0, 0, W, H);
-
-        // Background
-        ctx.fillStyle = '#1a1a2e';
-        ctx.fillRect(0, 0, W, H);
-
-        // Show placeholder if nothing loaded
-        if (!state.originalImage && !state.productImage && !state.headline && !state.subheadline) {
-            renderPlaceholder();
-            return;
-        }
-
-        switch (state.layout) {
-            case 'overlay':
-                renderOverlay(W, H);
-                break;
-            case 'split-top':
-                renderSplitTop(W, H);
-                break;
-            case 'split-bottom':
-                renderSplitBottom(W, H);
-                break;
-            case 'minimal':
-                renderMinimal(W, H);
-                break;
-        }
-
-        // Neon border effect
-        if (state.effects.border) {
-            renderNeonBorder(W, H);
-        }
-    }
-
-    // ── Layout: Overlay ────────────────────────────────
-    function renderOverlay(W, H) {
-        // Draw original image as background (cover)
-        if (state.originalImage) {
-            drawImageCover(state.originalImage, 0, 0, W, H);
-        }
-
-        // Dark overlay
-        ctx.fillStyle = hexToRgba(state.bgColor, state.overlayOpacity);
-        ctx.fillRect(0, 0, W, H);
-
-        // Gradient effect on top
-        if (state.effects.gradient) {
-            const grad = ctx.createLinearGradient(0, 0, 0, H);
-            grad.addColorStop(0, hexToRgba(state.primaryColor, 0.3));
-            grad.addColorStop(0.5, 'transparent');
-            grad.addColorStop(1, hexToRgba(state.primaryColor, 0.4));
-            ctx.fillStyle = grad;
-            ctx.fillRect(0, 0, W, H);
-        }
-
-        // Product image
-        if (state.productImage) {
-            drawProduct(W, H, 0, 0, W, H);
-        }
-
-        // Text at bottom
-        const textY = H * 0.58;
-        renderTextBlock(W, H, textY);
-
-        // CTA
-        renderCTA(W, H, H * 0.84);
-
-        // Badge
-        if (state.effects.badge && state.badgeText) {
-            renderBadge(W, H);
-        }
-    }
-
-    // ── Layout: Split Top (text top, image bottom) ────
-    function renderSplitTop(W, H) {
-        const splitAt = H * 0.38;
-
-        // Top: colored area with text
-        ctx.fillStyle = state.bgColor;
-        ctx.fillRect(0, 0, W, splitAt);
-
-        if (state.effects.gradient) {
-            const grad = ctx.createLinearGradient(0, 0, W, 0);
-            grad.addColorStop(0, hexToRgba(state.primaryColor, 0.2));
-            grad.addColorStop(1, 'transparent');
-            ctx.fillStyle = grad;
-            ctx.fillRect(0, 0, W, splitAt);
-        }
-
-        // Bottom: image
-        if (state.originalImage) {
-            drawImageCover(state.originalImage, 0, splitAt, W, H - splitAt);
-        } else {
-            ctx.fillStyle = '#222240';
-            ctx.fillRect(0, splitAt, W, H - splitAt);
-        }
-
-        // Overlay on image portion
-        ctx.fillStyle = hexToRgba(state.bgColor, state.overlayOpacity * 0.5);
-        ctx.fillRect(0, splitAt, W, H - splitAt);
-
-        // Product on image area
-        if (state.productImage) {
-            drawProduct(W, H - splitAt, 0, splitAt, W, H - splitAt);
-        }
-
-        // Text on top section
-        renderTextBlock(W, splitAt, splitAt * 0.15, splitAt * 0.85);
-
-        // CTA at the split boundary
-        renderCTA(W, H, splitAt - 30);
-
-        // Badge
-        if (state.effects.badge && state.badgeText) {
-            renderBadge(W, H);
-        }
-    }
-
-    // ── Layout: Split Bottom (image top, text bottom) ──
-    function renderSplitBottom(W, H) {
-        const splitAt = H * 0.55;
-
-        // Top: image
-        if (state.originalImage) {
-            drawImageCover(state.originalImage, 0, 0, W, splitAt);
-        } else {
-            ctx.fillStyle = '#222240';
-            ctx.fillRect(0, 0, W, splitAt);
-        }
-
-        ctx.fillStyle = hexToRgba(state.bgColor, state.overlayOpacity * 0.4);
-        ctx.fillRect(0, 0, W, splitAt);
-
-        // Product on image area
-        if (state.productImage) {
-            drawProduct(W, splitAt, 0, 0, W, splitAt);
-        }
-
-        // Bottom: colored area with text
-        ctx.fillStyle = state.bgColor;
-        ctx.fillRect(0, splitAt, W, H - splitAt);
-
-        if (state.effects.gradient) {
-            const grad = ctx.createLinearGradient(0, splitAt, 0, H);
-            grad.addColorStop(0, hexToRgba(state.primaryColor, 0.15));
-            grad.addColorStop(1, 'transparent');
-            ctx.fillStyle = grad;
-            ctx.fillRect(0, splitAt, W, H - splitAt);
-        }
-
-        // Text in bottom section
-        const textStart = splitAt + 30;
-        renderTextBlock(W, H, textStart, H - splitAt - 80);
-
-        // CTA
-        renderCTA(W, H, H * 0.88);
-
-        // Badge
-        if (state.effects.badge && state.badgeText) {
-            renderBadge(W, H);
-        }
-    }
-
-    // ── Layout: Minimal ────────────────────────────────
-    function renderMinimal(W, H) {
-        // Full solid bg
-        ctx.fillStyle = state.bgColor;
-        ctx.fillRect(0, 0, W, H);
-
-        if (state.effects.gradient) {
-            const grad = ctx.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, W * 0.7);
-            grad.addColorStop(0, hexToRgba(state.primaryColor, 0.12));
-            grad.addColorStop(1, 'transparent');
-            ctx.fillStyle = grad;
-            ctx.fillRect(0, 0, W, H);
-        }
-
-        // Product centered (large)
-        if (state.productImage) {
-            const maxProductH = H * 0.45;
-            const maxProductW = W * 0.6;
-            const pAspect = state.productImage.width / state.productImage.height;
-            let pW = maxProductW;
-            let pH = pW / pAspect;
-            if (pH > maxProductH) {
-                pH = maxProductH;
-                pW = pH * pAspect;
-            }
-            const scale = state.productScale / 100;
-            pW *= scale;
-            pH *= scale;
-            const pX = (W - pW) / 2 + (state.productX - 50) * (W * 0.006);
-            const pY = H * 0.12 + (state.productY - 50) * (H * 0.004);
-
-            // Shadow behind product
-            ctx.shadowColor = 'rgba(0,0,0,0.4)';
-            ctx.shadowBlur = 40;
-            ctx.shadowOffsetY = 16;
-            ctx.drawImage(state.productImage, pX, pY, pW, pH);
-            ctx.shadowColor = 'transparent';
-            ctx.shadowBlur = 0;
-            ctx.shadowOffsetY = 0;
-        } else if (state.originalImage) {
-            // If no product, show original small/centered
-            const maxS = Math.min(W, H) * 0.5;
-            const iAspect = state.originalImage.width / state.originalImage.height;
-            let iW = maxS;
-            let iH = iW / iAspect;
-            if (iH > maxS) { iH = maxS; iW = iH * iAspect; }
-            ctx.drawImage(state.originalImage, (W - iW) / 2, H * 0.1, iW, iH);
-        }
-
-        // Text below product
-        const textY = H * 0.58;
-        renderTextBlock(W, H, textY);
-
-        // CTA
-        renderCTA(W, H, H * 0.84);
-
-        // Badge
-        if (state.effects.badge && state.badgeText) {
-            renderBadge(W, H);
-        }
-    }
-
-    // ── Draw Helpers ───────────────────────────────────
-    function drawImageCover(img, x, y, w, h) {
-        const iAspect = img.width / img.height;
-        const cAspect = w / h;
-        let sx, sy, sw, sh;
-
-        if (iAspect > cAspect) {
-            sh = img.height;
-            sw = sh * cAspect;
-            sx = (img.width - sw) / 2;
-            sy = 0;
-        } else {
-            sw = img.width;
-            sh = sw / cAspect;
-            sx = 0;
-            sy = (img.height - sh) / 2;
-        }
-
-        ctx.drawImage(img, sx, sy, sw, sh, x, y, w, h);
-    }
-
-    function drawProduct(areaW, areaH, offsetX, offsetY, containerW, containerH) {
-        if (!state.productImage) return;
-
-        const maxPW = containerW * 0.45;
-        const maxPH = containerH * 0.55;
-        const pAspect = state.productImage.width / state.productImage.height;
-        let pW = maxPW;
-        let pH = pW / pAspect;
-        if (pH > maxPH) {
-            pH = maxPH;
-            pW = pH * pAspect;
-        }
-
-        const scale = state.productScale / 100;
-        pW *= scale;
-        pH *= scale;
-
-        const pX = offsetX + (containerW - pW) * (state.productX / 100);
-        const pY = offsetY + (containerH - pH) * (state.productY / 100);
-
-        // Product shadow
-        ctx.save();
-        ctx.shadowColor = 'rgba(0,0,0,0.5)';
-        ctx.shadowBlur = 30;
-        ctx.shadowOffsetY = 10;
-        ctx.drawImage(state.productImage, pX, pY, pW, pH);
-        ctx.restore();
-    }
-
-    // ── Text Rendering ─────────────────────────────────
-    function renderTextBlock(W, H, startY, maxHeight) {
-        const padding = W * 0.07;
-        const maxTextW = W - padding * 2;
-        let y = startY;
-
-        // Headline
-        if (state.headline) {
-            const hSize = Math.round(W * 0.065);
-            ctx.font = `900 ${hSize}px "${state.fontFamily}", sans-serif`;
-            ctx.fillStyle = state.accentColor;
-            ctx.textAlign = 'left';
-
-            // Text shadow for readability
-            ctx.shadowColor = 'rgba(0,0,0,0.6)';
-            ctx.shadowBlur = 8;
-            ctx.shadowOffsetY = 2;
-
-            y = wrapText(state.headline, padding, y, maxTextW, hSize * 1.15);
-            ctx.shadowColor = 'transparent';
-            ctx.shadowBlur = 0;
-            y += 10;
-        }
-
-        // Subheadline
-        if (state.subheadline) {
-            const sSize = Math.round(W * 0.038);
-            ctx.font = `600 ${sSize}px "${state.fontFamily}", sans-serif`;
-            ctx.fillStyle = state.primaryColor;
-            ctx.textAlign = 'left';
-
-            ctx.shadowColor = 'rgba(0,0,0,0.5)';
-            ctx.shadowBlur = 6;
-            y = wrapText(state.subheadline, padding, y, maxTextW, sSize * 1.3);
-            ctx.shadowColor = 'transparent';
-            ctx.shadowBlur = 0;
-            y += 8;
-        }
-
-        // Body text
-        if (state.bodyText) {
-            const bSize = Math.round(W * 0.03);
-            ctx.font = `400 ${bSize}px "${state.fontFamily}", sans-serif`;
-            ctx.fillStyle = hexToRgba(state.accentColor, 0.75);
-            ctx.textAlign = 'left';
-
-            ctx.shadowColor = 'rgba(0,0,0,0.4)';
-            ctx.shadowBlur = 4;
-            y = wrapText(state.bodyText, padding, y, maxTextW, bSize * 1.4);
-            ctx.shadowColor = 'transparent';
-            ctx.shadowBlur = 0;
-        }
-
-        return y;
-    }
-
-    function wrapText(text, x, y, maxWidth, lineHeight) {
-        const words = text.split(' ');
-        let line = '';
-        let currentY = y;
-
-        for (let i = 0; i < words.length; i++) {
-            const testLine = line + words[i] + ' ';
-            const metrics = ctx.measureText(testLine);
-            if (metrics.width > maxWidth && i > 0) {
-                ctx.fillText(line.trim(), x, currentY);
-                line = words[i] + ' ';
-                currentY += lineHeight;
-            } else {
-                line = testLine;
-            }
-        }
-        ctx.fillText(line.trim(), x, currentY);
-        currentY += lineHeight;
-        return currentY;
-    }
-
-    // ── CTA Button ─────────────────────────────────────
-    function renderCTA(W, H, y) {
-        if (!state.ctaText) return;
-
-        const fontSize = Math.round(W * 0.035);
-        ctx.font = `800 ${fontSize}px "${state.fontFamily}", sans-serif`;
-        const textMetrics = ctx.measureText(state.ctaText);
-        const btnW = textMetrics.width + W * 0.08;
-        const btnH = fontSize * 2.4;
-        const btnX = W * 0.07;
-        const btnY = y - btnH / 2;
-        const radius = btnH / 2;
-
-        ctx.save();
-
-        // Glow effect
-        if (state.effects.glow) {
-            ctx.shadowColor = hexToRgba(state.primaryColor, 0.6);
-            ctx.shadowBlur = 30;
-            ctx.shadowOffsetY = 4;
-        }
-
-        // Button shape
-        ctx.fillStyle = state.primaryColor;
-        roundRect(ctx, btnX, btnY, btnW, btnH, radius);
-        ctx.fill();
-
-        ctx.restore();
-
-        // Button text
-        ctx.fillStyle = state.accentColor;
-        ctx.font = `800 ${fontSize}px "${state.fontFamily}", sans-serif`;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(state.ctaText, btnX + btnW / 2, btnY + btnH / 2);
-        ctx.textBaseline = 'alphabetic';
-    }
-
-    // ── Badge ──────────────────────────────────────────
-    function renderBadge(W, H) {
-        if (!state.badgeText) return;
-
-        const fontSize = Math.round(W * 0.032);
-        ctx.font = `900 ${fontSize}px "${state.fontFamily}", sans-serif`;
-        const textMetrics = ctx.measureText(state.badgeText);
-        const padX = W * 0.025;
-        const padY = fontSize * 0.5;
-        const badgeW = textMetrics.width + padX * 2;
-        const badgeH = fontSize + padY * 2;
-        const badgeX = W - badgeW - W * 0.05;
-        const badgeY = W * 0.05;
-
-        ctx.save();
-
-        // Badge glow
-        ctx.shadowColor = 'rgba(255,71,87,0.5)';
-        ctx.shadowBlur = 20;
-
-        // Badge background
-        ctx.fillStyle = '#FF4757';
-        roundRect(ctx, badgeX, badgeY, badgeW, badgeH, 8);
-        ctx.fill();
-
-        ctx.restore();
-
-        // Badge text
-        ctx.fillStyle = '#FFFFFF';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(state.badgeText, badgeX + badgeW / 2, badgeY + badgeH / 2);
-        ctx.textBaseline = 'alphabetic';
-    }
-
-    // ── Neon Border ────────────────────────────────────
-    function renderNeonBorder(W, H) {
-        const borderWidth = W * 0.006;
-        ctx.save();
-        ctx.strokeStyle = state.primaryColor;
-        ctx.lineWidth = borderWidth;
-        ctx.shadowColor = hexToRgba(state.primaryColor, 0.7);
-        ctx.shadowBlur = 20;
-
-        // Draw multiple passes for glow intensity
-        for (let i = 0; i < 3; i++) {
-            ctx.strokeRect(
-                borderWidth / 2 + i,
-                borderWidth / 2 + i,
-                W - borderWidth - i * 2,
-                H - borderWidth - i * 2
-            );
-        }
-        ctx.restore();
-    }
-
-    // ── Utilities ──────────────────────────────────────
-    function roundRect(ctx, x, y, w, h, r) {
-        ctx.beginPath();
-        ctx.moveTo(x + r, y);
-        ctx.lineTo(x + w - r, y);
-        ctx.quadraticCurveTo(x + w, y, x + w, y + r);
-        ctx.lineTo(x + w, y + h - r);
-        ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-        ctx.lineTo(x + r, y + h);
-        ctx.quadraticCurveTo(x, y + h, x, y + h - r);
-        ctx.lineTo(x, y + r);
-        ctx.quadraticCurveTo(x, y, x + r, y);
-        ctx.closePath();
-    }
-
-    function hexToRgba(hex, alpha) {
-        const r = parseInt(hex.slice(1, 3), 16);
-        const g = parseInt(hex.slice(3, 5), 16);
-        const b = parseInt(hex.slice(5, 7), 16);
-        return `rgba(${r},${g},${b},${alpha})`;
-    }
-
-    // ── Export ──────────────────────────────────────────
-    function exportAd(format) {
-        // Save current size
-        const origW = canvas.width;
-        const origH = canvas.height;
-
-        // Render at export size
-        const dim = DIMENSIONS[state.template];
-        const scale = state.exportSize / dim.w;
-        canvas.width = Math.round(dim.w * scale);
-        canvas.height = Math.round(dim.h * scale);
-        ctx.scale(scale, scale);
-        renderCanvas();
-        ctx.setTransform(1, 0, 0, 1, 0, 0);
-
-        // Create download
-        const mimeType = format === 'png' ? 'image/png' : 'image/jpeg';
-        const quality = format === 'jpeg' ? 0.92 : undefined;
-        const ext = format === 'png' ? 'png' : 'jpg';
-
-        canvas.toBlob(function (blob) {
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `viral-ad-${state.template}-${Date.now()}.${ext}`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-
-            // Restore canvas to preview size
-            canvas.width = origW;
-            canvas.height = origH;
-            renderCanvas();
-        }, mimeType, quality);
-    }
-
-    // ── Quick Variations ───────────────────────────────
-    function variationColor() {
-        const palettes = [
-            { primary: '#FF6B35', accent: '#FFFFFF', bg: '#000000' },
-            { primary: '#00D68F', accent: '#FFFFFF', bg: '#0A1628' },
-            { primary: '#7B61FF', accent: '#FFFFFF', bg: '#0F0A1F' },
-            { primary: '#FF4757', accent: '#FFFFFF', bg: '#1A0A0A' },
-            { primary: '#FFD93D', accent: '#1A1A2E', bg: '#0A0A0F' },
-            { primary: '#00B4D8', accent: '#FFFFFF', bg: '#0A1520' },
-            { primary: '#FF006E', accent: '#FFFFFF', bg: '#120018' },
-            { primary: '#F77F00', accent: '#FFFFFF', bg: '#1A1000' },
-            { primary: '#06D6A0', accent: '#1A1A2E', bg: '#021A14' },
-            { primary: '#E63946', accent: '#F1FAEE', bg: '#1D3557' }
-        ];
-
-        const current = palettes.findIndex(p => p.primary === state.primaryColor);
-        const next = (current + 1) % palettes.length;
-        const palette = palettes[next];
-
-        state.primaryColor = palette.primary;
-        state.accentColor = palette.accent;
-        state.bgColor = palette.bg;
-
-        primaryColorInput.value = palette.primary;
-        accentColorInput.value = palette.accent;
-        bgColorInput.value = palette.bg;
-        $('#primaryHex').textContent = palette.primary;
-        $('#accentHex').textContent = palette.accent;
-        $('#bgHex').textContent = palette.bg;
-
-        renderCanvas();
-    }
-
-    function variationLayout() {
-        const layouts = ['overlay', 'split-top', 'split-bottom', 'minimal'];
-        const current = layouts.indexOf(state.layout);
-        const next = (current + 1) % layouts.length;
-        state.layout = layouts[next];
-
-        $$('.layout-btn').forEach(b => {
-            b.classList.toggle('active', b.dataset.layout === state.layout);
-        });
-
-        renderCanvas();
-    }
-
-    function variationFont() {
-        const fonts = ['Inter', 'Poppins', 'Montserrat', 'Arial Black', 'Georgia'];
-        const current = fonts.indexOf(state.fontFamily);
-        const next = (current + 1) % fonts.length;
-        state.fontFamily = fonts[next];
-        fontFamilySelect.value = state.fontFamily;
-        renderCanvas();
-    }
-
-    function variationEffect() {
-        const effectKeys = ['glow', 'badge', 'gradient', 'border'];
-        const randomKey = effectKeys[Math.floor(Math.random() * effectKeys.length)];
-        state.effects[randomKey] = !state.effects[randomKey];
-
-        effectGlow.checked = state.effects.glow;
-        effectBadge.checked = state.effects.badge;
-        effectGradient.checked = state.effects.gradient;
-        effectBorder.checked = state.effects.border;
-
-        renderCanvas();
-    }
-
-    // ── Placeholder Render ─────────────────────────────
-    function renderPlaceholder() {
-        const W = canvas.width;
-        const H = canvas.height;
-
-        // Grid pattern
-        ctx.strokeStyle = 'rgba(255,107,53,0.08)';
-        ctx.lineWidth = 1;
-        const gridSize = 40;
-        for (let x = 0; x < W; x += gridSize) {
-            ctx.beginPath();
-            ctx.moveTo(x, 0);
-            ctx.lineTo(x, H);
-            ctx.stroke();
-        }
-        for (let y = 0; y < H; y += gridSize) {
-            ctx.beginPath();
-            ctx.moveTo(0, y);
-            ctx.lineTo(W, y);
-            ctx.stroke();
-        }
-
-        // Center text
-        ctx.fillStyle = 'rgba(255,107,53,0.3)';
-        ctx.font = `700 ${W * 0.04}px "Inter", sans-serif`;
-        ctx.textAlign = 'center';
-        ctx.fillText('Sube una imagen para empezar', W / 2, H / 2 - 20);
-
-        ctx.fillStyle = 'rgba(144,144,176,0.4)';
-        ctx.font = `400 ${W * 0.025}px "Inter", sans-serif`;
-        ctx.fillText('o escribe tu copy para previsualizar', W / 2, H / 2 + 20);
-    }
-
-    // ── Start ──────────────────────────────────────────
-    init();
-
-})();
+    setAllData(updated);
+    saveData(updated);
+    setActiveStep(null);
+  };
+
+  if (view === "history") return (
+    <Shell>
+      <HistoryView data={allData} onBack={() => setView("home")} />
+    </Shell>
+  );
+
+  if (view === "guide") return (
+    <Shell>
+      <button onClick={() => setView("home")} style={{
+        background: "none", border: "none", cursor: "pointer",
+        fontFamily: "'DM Sans', sans-serif", color: "#6366F1",
+        fontSize: 14, fontWeight: 600, marginBottom: 16, padding: 0,
+      }}>← Volver</button>
+      <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: 22, marginBottom: 8, color: "#111827" }}>
+        Qué es el Método 369
+      </h2>
+      <p style={{ fontSize: 14, color: "#6B7280", fontFamily: "'DM Sans', sans-serif", marginBottom: 20, lineHeight: 1.7 }}>
+        Tesla hablaba de patrones de frecuencia, no de escribir frases. El método real alinea los tres planos de la experiencia humana:
+      </p>
+      {STEPS.map((s) => (
+        <div key={s.num} style={{
+          borderRadius: 16, border: `1.5px solid ${s.border}`,
+          background: s.bg, padding: "16px 20px", marginBottom: 14,
+        }}>
+          <div style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 8 }}>
+            <span style={{
+              background: s.color, color: "#fff", borderRadius: "50%",
+              width: 36, height: 36, display: "flex", alignItems: "center",
+              justifyContent: "center", fontFamily: "'DM Serif Display', serif",
+              fontSize: 20, fontWeight: 700, flexShrink: 0,
+            }}>{s.num}</span>
+            <div>
+              <div style={{ fontFamily: "'DM Serif Display', serif", fontSize: 17, color: "#111827" }}>{s.label}</div>
+              <div style={{ fontSize: 12, color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif" }}>{s.time} · {Math.floor(s.duration / 60)}m</div>
+            </div>
+          </div>
+          <p style={{ fontSize: 13, color: "#374151", fontFamily: "'DM Sans', sans-serif", lineHeight: 1.6, margin: 0 }}>
+            {s.instruction}
+          </p>
+          <p style={{ fontSize: 12, color: s.color, fontFamily: "'DM Sans', sans-serif", marginTop: 8, fontWeight: 600, margin: "8px 0 0" }}>
+            💡 {s.tip}
+          </p>
+        </div>
+      ))}
+      <div style={{
+        borderRadius: 16, background: "#111827", padding: "16px 20px", marginTop: 8,
+      }}>
+        <p style={{ color: "#F9FAFB", fontFamily: "'DM Sans', sans-serif", fontSize: 13, lineHeight: 1.7, margin: 0 }}>
+          <strong style={{ color: "#10B981" }}>Resultado clave:</strong> Las personas que hicieron los 3 pasos mostraron cambios medibles — nuevos trabajos, ingresos inesperados, relaciones transformadas. <strong style={{ color: "#fff" }}>La acción fue el multiplicador en todos los casos.</strong>
+        </p>
+      </div>
+    </Shell>
+  );
+
+  return (
+    <Shell>
+      <div style={{ marginBottom: 24 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+          <div>
+            <h1 style={{
+              fontFamily: "'DM Serif Display', serif", fontSize: 30,
+              color: "#111827", margin: 0, lineHeight: 1.1,
+            }}>
+              Método<br /><span style={{ color: "#6366F1" }}>369</span>
+            </h1>
+            <p style={{ fontSize: 13, color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif", margin: "6px 0 0" }}>
+              {new Date().toLocaleDateString("es-MX", { weekday: "long", day: "numeric", month: "long" })}
+            </p>
+          </div>
+          <div style={{ textAlign: "right" }}>
+            <div style={{
+              fontFamily: "'DM Mono', monospace", fontSize: 32, fontWeight: 700,
+              color: completedToday === 3 ? "#10B981" : "#111827",
+            }}>
+              {completedToday}/3
+            </div>
+            <div style={{ fontSize: 12, color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif" }}>
+              hoy
+            </div>
+          </div>
+        </div>
+
+        <div style={{ marginTop: 14, background: "#E5E7EB", borderRadius: 999, height: 6, overflow: "hidden" }}>
+          <div style={{
+            height: "100%", borderRadius: 999,
+            background: "linear-gradient(90deg, #6366F1, #EC4899, #10B981)",
+            width: `${(completedToday / 3) * 100}%`,
+            transition: "width 0.5s ease",
+          }} />
+        </div>
+      </div>
+
+      <StreakBar data={allData} />
+
+      {completedToday === 3 && (
+        <div style={{
+          background: "linear-gradient(135deg, #ECFDF5, #D1FAE5)",
+          border: "1.5px solid #A7F3D0", borderRadius: 16,
+          padding: "16px 20px", marginBottom: 16, textAlign: "center",
+        }}>
+          <div style={{ fontSize: 28, marginBottom: 6 }}>🌟</div>
+          <div style={{ fontFamily: "'DM Serif Display', serif", fontSize: 18, color: "#065F46", marginBottom: 4 }}>
+            ¡Día completo!
+          </div>
+          <div style={{ fontSize: 13, color: "#059669", fontFamily: "'DM Sans', sans-serif" }}>
+            Pensamiento + Sentimiento + Acción. Los tres planos alineados.
+          </div>
+        </div>
+      )}
+
+      {STEPS.map((step, i) => (
+        <StepCard
+          key={i}
+          step={step}
+          dayData={todayData[i]}
+          active={activeStep === i}
+          onActivate={() => setActiveStep(activeStep === i ? null : i)}
+          onSave={(data) => handleSave(i, data)}
+        />
+      ))}
+
+      <div style={{ display: "flex", gap: 10, marginTop: 8 }}>
+        <button onClick={() => setView("guide")} style={{
+          flex: 1, background: "#F3F4F6", border: "none", borderRadius: 12,
+          padding: "12px 0", fontFamily: "'DM Sans', sans-serif",
+          fontWeight: 600, fontSize: 13, color: "#374151", cursor: "pointer",
+        }}>
+          📖 Guía
+        </button>
+        <button onClick={() => setView("history")} style={{
+          flex: 1, background: "#F3F4F6", border: "none", borderRadius: 12,
+          padding: "12px 0", fontFamily: "'DM Sans', sans-serif",
+          fontWeight: 600, fontSize: 13, color: "#374151", cursor: "pointer",
+        }}>
+          📅 Historial
+        </button>
+      </div>
+    </Shell>
+  );
+}
+
+function Shell({ children }) {
+  return (
+    <>
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;700&display=swap'); * { box-sizing: border-box; margin: 0; padding: 0; } body { background: #F9FAFB; } @keyframes fadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }`}</style>
+      <div style={{
+        maxWidth: 440, margin: "0 auto", padding: "28px 16px 48px",
+        minHeight: "100vh", fontFamily: "'DM Sans', sans-serif",
+      }}>
+        {children}
+      </div>
+    </>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
