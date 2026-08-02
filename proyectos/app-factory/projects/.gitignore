@@ -1,0 +1,5 @@
+# Each application is its own isolated Git repository and is not tracked by the
+# factory repository. Keep applications out of the factory history.
+*
+!.gitignore
+!README.md
