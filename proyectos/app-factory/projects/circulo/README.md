@@ -36,8 +36,8 @@ cp .env.example .env
 supabase start                  # imprime las claves locales
 # copia anon key y service role key al .env
 
-supabase db reset               # aplica supabase/migrations y supabase/seed/seed.sql
-./supabase/seed/create-demo-users.sh   # crea las cuentas demo con contraseña
+supabase db reset                # aplica supabase/migrations y supabase/seed/seed.sql
+                                  # (las cuentas demo quedan creadas con su contraseña real)
 
 pnpm test                       # pruebas de algoritmo y validación
 pnpm mobile                     # Expo: pulsa i (iOS) o a (Android)
@@ -79,14 +79,18 @@ ambos sentidos y que una cuenta suspendida no puede reactivarse a sí misma.
 
 ## Estado
 
-Verificado en este entorno: esquema, RLS, funciones, semillas, algoritmo, validación,
-`pnpm typecheck` limpio en los 6 paquetes, `pnpm --filter @circulo/admin build` (build de
-producción del panel) y `expo export --platform ios` / `--platform android` (empaqueta el bundle
-real de la app con Metro, sin simulador).
-**No verificado:** correr la app en un simulador o el panel en un navegador contra un proyecto
-Supabase real — este entorno no tiene Xcode, Android Studio ni Expo Go. Antes de cualquier
-demostración, corre `pnpm mobile` y `pnpm admin` con las credenciales reales y prueba el camino
-dorado a mano.
+Verificado en este entorno, incluyendo contra una instancia real de Supabase levantada con Docker
+(Postgres 17, Auth, PostgREST, Storage, Realtime): las 8 migraciones y el seed se aplican limpio,
+`pnpm typecheck` está limpio en los 6 paquetes, `next build` genera las 9 rutas del panel,
+`expo export --platform ios/android` empaqueta el bundle real de la app, y el camino dorado
+completo se probó con peticiones HTTP reales contra la API — login de una cuenta demo, descubrir
+candidatos, interés mutuo que crea exactamente un match, mensaje que un tercero no puede leer ni
+escribir, y un reporte visible solo para moderadores.
+
+**No verificado:** la UI en pantalla — este entorno no tiene Xcode, Android Studio ni Expo Go, así
+que nadie vio las pantallas renderizadas. El backend que las alimenta sí está probado de extremo a
+extremo. Antes de una demo visual: `supabase start`, `supabase db reset`, `pnpm mobile` y
+`pnpm admin`.
 
 Alcance, exclusiones, riesgos abiertos y siguientes pasos: `docs/backlog.md` y `docs/mvp-scope.md`.
 

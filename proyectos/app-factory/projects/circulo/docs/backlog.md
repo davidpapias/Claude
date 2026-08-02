@@ -21,12 +21,13 @@
 |------|--------|--------------|
 | 1 Definición | Completa | Documentos en `docs/` |
 | 2 Base técnica | Completa | `pnpm install`, `pnpm test` |
-| 3 Datos y seguridad | Completa y verificada | 36 aserciones SQL pasan |
+| 3 Datos y seguridad | Completa y verificada contra Supabase real | 36 aserciones SQL + camino dorado probado vía API REST/Auth reales (ver ronda 3) |
 | 4 App móvil | Completa; bundle real exportado para iOS y Android | `expo export --platform ios/android` empaqueta 1064/1061 módulos sin errores |
 | 5 Panel | Completa; build de producción verificado | `next build` genera las 9 rutas sin errores |
-| 6 Calidad | Parcial | Unitarias, integración de BD, typecheck y build/bundle real sí; e2e y accesibilidad manual pendientes |
+| 6 Calidad | Parcial | Unitarias, integración de BD, typecheck, build/bundle real y camino dorado contra Supabase real sí; e2e y accesibilidad manual de la UI pendientes |
 | 7 Revisión 1 | Hecha | Ver correcciones abajo |
 | 8 Revisión 2 | Hecha (typecheck + build + bundle) | Ver correcciones abajo |
+| 9 Revisión 3 | Hecha (Supabase local real) | Ver correcciones abajo |
 
 ### Correcciones de la revisión 1
 
@@ -74,11 +75,36 @@
   rutas del panel, y `expo export --platform ios` / `--platform android` empaquetan el bundle
   completo (1064 y 1061 módulos) sin errores de resolución.
 
+### Correcciones de la revisión 3 (Supabase local real, no solo psql)
+
+Se levantó el stack completo de Supabase con Docker (`supabase start`: Postgres 17, Auth, PostgREST,
+Storage, Realtime, Studio) y se probó el camino dorado con llamadas HTTP reales a la API, con las
+cuentas de demostración, exactamente como lo haría la app.
+
+- Las 8 migraciones se aplicaron limpio contra el Postgres real de Supabase (no solo contra el
+  Postgres genérico usado en `supabase/tests`), y el seed cargó sin errores.
+- **Bug real encontrado:** las cuentas de demostración no podían iniciar sesión. El seed insertaba
+  filas en `auth.users` solo con `id` y `email` (sin contraseña), y `create-demo-users.sh` intentaba
+  fijarla después vía la Admin API — pero como el usuario ya existía, esa llamada fallaba
+  silenciosamente (el script no revisaba el código de estado HTTP de `curl`, así que siempre
+  imprimía "listo" aunque la petición hubiera fallado). Confirmado con un login real contra la API:
+  devolvía `invalid_credentials`.
+  **Corrección:** `generate.mjs` ahora inserta filas completas en `auth.users` (con
+  `encrypted_password` calculado con `pgcrypto`, `email_confirmed_at`, `aud`/`role` correctos) y su
+  fila correspondiente en `auth.identities`, todo en un solo paso dentro de `seed.sql`. Se eliminó
+  `create-demo-users.sh`, que ya no hace falta.
+- Verificado con peticiones HTTP reales tras la corrección: login con `ana@demo.circulo.app` emite
+  un JWT válido; `discovery_candidates` devuelve candidatos reales; dos "me interesa" mutuos
+  (Ana ↔ Caro) crean exactamente un match y una conversación; un mensaje enviado por Ana es
+  invisible e imposible de escribir para un tercero (Beto) ajeno al match (`42501`); una cuenta
+  normal no puede leer la cola de reportes (`[]`) pero un moderador sí; un reporte real genera una
+  fila en `audit_logs`.
+
 ## Riesgos abiertos
 
 | # | Riesgo | Impacto | Mitigación propuesta |
 |---|--------|---------|----------------------|
-| 1 | App móvil y panel sin ejecutar en un simulador/navegador real | El bundle exporta y el build compila, pero no se probó la UI en pantalla ni el flujo con Supabase real | Arrancar Expo (`pnpm mobile`) y el panel (`pnpm admin`) contra un proyecto Supabase real y probar el camino dorado |
+| 1 | App móvil y panel sin ejecutar en un simulador/navegador real | El backend fue probado de extremo a extremo por API, pero no se probó la UI en pantalla | Arrancar Expo (`pnpm mobile`) y el panel (`pnpm admin`) y probar el camino dorado visualmente |
 | 2 | Sin envío real de notificaciones push | Menor reenganche | Expo Notifications en V1.1; las preferencias ya existen |
 | 3 | Moderación de fotos manual | Cuello de botella con volumen | Cola priorizada y revisión automática asistida |
 | 4 | Ranking en cliente | Un cliente modificado reordena lo que ve | Condición de salida en ADR 0003 |

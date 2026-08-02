@@ -125,8 +125,14 @@ say('--   admin@demo.circulo.app   — administrador');
 say('');
 say('begin;');
 say('');
-say("-- Passwords are set by supabase/seed/create-demo-users.sh through the Auth API;");
-say('-- this file only creates the auth.users rows when they are missing (local only).');
+say('-- Password for every seeded account: demo-circulo-2026');
+say("-- Hashed here with pgcrypto so these accounts can sign in immediately after");
+say('-- `supabase db reset`, with no separate Admin API step (and no risk of that step');
+say('-- silently no-opping against a user auth.users already has, which is what an');
+say("-- `insert ... on conflict do nothing` followed by a separate password-setting");
+say('-- call would do).');
+say('');
+say("select set_config('circulo.demo_password_hash', crypt('demo-circulo-2026', gen_salt('bf')), true);");
 say('');
 
 const users = [];
@@ -204,12 +210,29 @@ const staff = [
 const incomplete = { id: uuid(910), email: 'nuevo@demo.circulo.app' };
 
 say('-- --- auth users ---------------------------------------------------------');
-say('insert into auth.users (id, email) values');
-say(
-  [...users, ...staff, incomplete]
-    .map((user) => `  (${quote(user.id)}, ${quote(user.email)})`)
-    .join(',\n') + '\non conflict (id) do nothing;',
-);
+say('-- A fully-formed row, not just id + email: GoTrue needs aud/role set to');
+say("-- 'authenticated' and email_confirmed_at set, or it treats the account as");
+say('-- unconfirmed and refuses password sign-in.');
+for (const user of [...users, ...staff, incomplete]) {
+  say(
+    `insert into auth.users (` +
+      `instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, ` +
+      `raw_app_meta_data, raw_user_meta_data, created_at, updated_at, ` +
+      `confirmation_token, recovery_token, email_change_token_new, email_change` +
+      `) values (` +
+      `'00000000-0000-0000-0000-000000000000', ${quote(user.id)}, 'authenticated', 'authenticated', ` +
+      `${quote(user.email)}, current_setting('circulo.demo_password_hash', true), now(), ` +
+      `'{"provider":"email","providers":["email"]}'::jsonb, '{}'::jsonb, now(), now(), ` +
+      `'', '', '', ''` +
+      `) on conflict (id) do nothing;`,
+  );
+  say(
+    `insert into auth.identities (id, user_id, provider_id, provider, identity_data, created_at, updated_at) values (` +
+      `gen_random_uuid(), ${quote(user.id)}, ${quote(user.id)}, 'email', ` +
+      `jsonb_build_object('sub', ${quote(user.id)}::text, 'email', ${quote(user.email)}), now(), now()` +
+      `) on conflict (provider_id, provider) do nothing;`,
+  );
+}
 say('');
 
 say('insert into staff_members (user_id, role) values');
