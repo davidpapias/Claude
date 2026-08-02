@@ -1,5 +1,5 @@
 import type { FilterReason, MatchingProfile } from '@circulo/types';
-import { distanceKm } from './geo.js';
+import { distanceKm } from './geo';
 
 export interface ViewerContext {
   /** User ids the viewer blocked, or who blocked the viewer. */

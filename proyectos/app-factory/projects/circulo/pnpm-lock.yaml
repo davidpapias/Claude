@@ -4,7 +4,7 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-packageExtensionsChecksum: sha256-yXKQrfToYODyJWj+vGN/795WQwqfEw5hBQ7ts4s0u+k=
+packageExtensionsChecksum: sha256-1X24VGetZqC/PCgp76YN9pNcuwevYX9m12LE8kFBWkQ=
 
 importers:
 
@@ -62,6 +62,9 @@ importers:
 
   apps/mobile:
     dependencies:
+      '@babel/runtime':
+        specifier: ^7.26.0
+        version: 7.29.7
       '@circulo/config':
         specifier: workspace:*
         version: link:../../packages/config
@@ -74,6 +77,9 @@ importers:
       '@circulo/validation':
         specifier: workspace:*
         version: link:../../packages/validation
+      '@expo/metro-runtime':
+        specifier: ~4.0.1
+        version: 4.0.1(react-native@0.76.5(@babel/core@7.29.7)(@babel/preset-env@7.29.7(@babel/core@7.29.7))(@types/react@18.3.31)(react@18.3.1))
       '@hookform/resolvers':
         specifier: ^3.9.1
         version: 3.10.0(react-hook-form@7.84.0(react@18.3.1))
@@ -6254,6 +6260,7 @@ snapshots:
   '@expo/metro-runtime@4.0.1(react-native@0.76.5(@babel/core@7.29.7)(@babel/preset-env@7.29.7(@babel/core@7.29.7))(@types/react@18.3.31)(react@18.3.1))':
     dependencies:
       react-native: 0.76.5(@babel/core@7.29.7)(@babel/preset-env@7.29.7(@babel/core@7.29.7))(@types/react@18.3.31)(react@18.3.1)
+      whatwg-fetch: 3.6.20
 
   '@expo/osascript@2.7.1':
     dependencies:

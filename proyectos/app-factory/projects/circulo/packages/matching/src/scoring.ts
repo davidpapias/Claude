@@ -9,7 +9,7 @@ import {
   type ScoreBreakdown,
   type ScoreComponent,
 } from '@circulo/types';
-import { distanceKm } from './geo.js';
+import { distanceKm } from './geo';
 
 /** Weights sum to 100. Changing one requires updating docs/matching-system.md. */
 export const WEIGHTS: Record<ScoreComponent, number> = {

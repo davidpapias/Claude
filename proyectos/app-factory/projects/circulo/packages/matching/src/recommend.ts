@@ -4,10 +4,10 @@ import type {
   Recommendation,
   RecommendationBatch,
 } from '@circulo/types';
-import { EMPTY_VIEWER_CONTEXT, filterCandidate, type ViewerContext } from './filters.js';
-import { buildExplanations, type ExplanationOptions } from './explanations.js';
-import { computeExposureAdjustment, type ExposureSignals } from './exposure.js';
-import { scorePair } from './scoring.js';
+import { EMPTY_VIEWER_CONTEXT, filterCandidate, type ViewerContext } from './filters';
+import { buildExplanations, type ExplanationOptions } from './explanations';
+import { computeExposureAdjustment, type ExposureSignals } from './exposure';
+import { scorePair } from './scoring';
 
 /**
  * Keys that must never influence ranking. Present in profile display data, not

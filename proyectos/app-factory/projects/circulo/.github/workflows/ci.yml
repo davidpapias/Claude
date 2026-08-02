@@ -20,6 +20,13 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm typecheck
       - run: pnpm test
+      - name: Build the admin panel
+        # NEXT_PUBLIC_* values are inlined into the bundle at build time, so
+        # a real value isn't required here — only that one is present.
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:54321
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ci-placeholder-anon-key
+        run: pnpm --filter @circulo/admin build
 
   database:
     runs-on: ubuntu-latest

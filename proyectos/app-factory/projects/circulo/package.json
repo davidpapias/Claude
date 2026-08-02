@@ -64,6 +64,9 @@
       "expo-image-picker": {
         "peerDependencies": { "@types/react": "*" },
         "peerDependenciesMeta": { "@types/react": { "optional": true } }
+      },
+      "@expo/metro-runtime": {
+        "dependencies": { "whatwg-fetch": "^3.6.20" }
       }
     }
   }

@@ -79,11 +79,14 @@ ambos sentidos y que una cuenta suspendida no puede reactivarse a sí misma.
 
 ## Estado
 
-Verificado en este entorno: esquema, RLS, funciones, semillas, algoritmo, validación, y
-`pnpm typecheck` limpio en la app móvil, el panel y los cuatro paquetes compartidos.
-**No verificado:** ejecutar la app en un simulador y el panel en un navegador (requieren Xcode,
-Android Studio o Expo Go, y no hay ninguno disponible en este entorno). Antes de cualquier
-demostración, corre `pnpm mobile` y `pnpm admin` y prueba el camino dorado a mano.
+Verificado en este entorno: esquema, RLS, funciones, semillas, algoritmo, validación,
+`pnpm typecheck` limpio en los 6 paquetes, `pnpm --filter @circulo/admin build` (build de
+producción del panel) y `expo export --platform ios` / `--platform android` (empaqueta el bundle
+real de la app con Metro, sin simulador).
+**No verificado:** correr la app en un simulador o el panel en un navegador contra un proyecto
+Supabase real — este entorno no tiene Xcode, Android Studio ni Expo Go. Antes de cualquier
+demostración, corre `pnpm mobile` y `pnpm admin` con las credenciales reales y prueba el camino
+dorado a mano.
 
 Alcance, exclusiones, riesgos abiertos y siguientes pasos: `docs/backlog.md` y `docs/mvp-scope.md`.
 

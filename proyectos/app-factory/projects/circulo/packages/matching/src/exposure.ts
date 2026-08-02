@@ -1,4 +1,4 @@
-import { pairJitter } from './rng.js';
+import { pairJitter } from './rng';
 
 /**
  * Exposure fairness. Ordering must not collapse onto the same profiles: a

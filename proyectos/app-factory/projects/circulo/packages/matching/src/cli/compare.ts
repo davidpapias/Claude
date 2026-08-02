@@ -9,11 +9,11 @@
  */
 import { readFileSync } from 'node:fs';
 import type { MatchingProfile } from '@circulo/types';
-import { filterCandidate } from '../filters.js';
-import { scorePair } from '../scoring.js';
-import { buildExplanations } from '../explanations.js';
-import { distanceKm } from '../geo.js';
-import { makeProfile, slots } from '../fixtures.js';
+import { filterCandidate } from '../filters';
+import { scorePair } from '../scoring';
+import { buildExplanations } from '../explanations';
+import { distanceKm } from '../geo';
+import { makeProfile, slots } from '../fixtures';
 
 function load(path: string): MatchingProfile {
   return JSON.parse(readFileSync(path, 'utf8')) as MatchingProfile;

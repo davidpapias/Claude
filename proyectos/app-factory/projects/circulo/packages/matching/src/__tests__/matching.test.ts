@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import type { MatchingProfile } from '@circulo/types';
-import { makeProfile, slots } from '../fixtures.js';
-import { filterCandidate } from '../filters.js';
-import { scorePair, WEIGHTS } from '../scoring.js';
-import { buildExplanations } from '../explanations.js';
-import { computeExposureAdjustment } from '../exposure.js';
-import { ProtectedAttributeError, recommend } from '../recommend.js';
-import { buildConversationStarters } from '../starters.js';
-import { distanceKm } from '../geo.js';
+import { makeProfile, slots } from '../fixtures';
+import { filterCandidate } from '../filters';
+import { scorePair, WEIGHTS } from '../scoring';
+import { buildExplanations } from '../explanations';
+import { computeExposureAdjustment } from '../exposure';
+import { ProtectedAttributeError, recommend } from '../recommend';
+import { buildConversationStarters } from '../starters';
+import { distanceKm } from '../geo';
 
 const SEED = 'test-seed';
 

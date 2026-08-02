@@ -4,7 +4,7 @@ import type {
   MatchingProfile,
   RecommendationExplanation,
 } from '@circulo/types';
-import { distanceKm } from './geo.js';
+import { distanceKm } from './geo';
 
 /**
  * Explanations must be concrete and checkable against the two profiles.
