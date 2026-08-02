@@ -39,7 +39,7 @@ function Detail() {
     void load();
   }, [params.id]);
 
-  async function run(action: () => Promise<{ error: { message: string } | null }>) {
+  async function run(action: () => PromiseLike<{ error: { message: string } | null }>) {
     setBusy(true);
     const { error: actionError } = await action();
     setBusy(false);

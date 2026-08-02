@@ -69,7 +69,7 @@ Los datos de demostración son solo para desarrollo local. Nunca se cargan en pr
 pnpm test                                  # 47 pruebas unitarias (algoritmo + validación)
 PGHOST=... PGUSER=postgres ./supabase/tests/run.sh   # 36 aserciones de RLS y reglas de negocio
 pnpm --filter @circulo/matching compare    # inspecciona por qué dos perfiles encajan o no
-pnpm typecheck                             # TypeScript en todo el monorepo
+pnpm typecheck                             # TypeScript en app móvil, panel y los 4 paquetes
 ```
 
 `supabase/tests/run.sh` aplica las migraciones sobre una base desechable y comprueba, entre otras
@@ -79,10 +79,11 @@ ambos sentidos y que una cuenta suspendida no puede reactivarse a sí misma.
 
 ## Estado
 
-Verificado en este entorno: esquema, RLS, funciones, semillas, algoritmo y validación.
-**No verificado:** el build de la app móvil y del panel (requieren instalar dependencias nativas y
-un simulador). Antes de cualquier demostración, ejecuta `pnpm install`, `pnpm typecheck` y arranca
-Expo.
+Verificado en este entorno: esquema, RLS, funciones, semillas, algoritmo, validación, y
+`pnpm typecheck` limpio en la app móvil, el panel y los cuatro paquetes compartidos.
+**No verificado:** ejecutar la app en un simulador y el panel en un navegador (requieren Xcode,
+Android Studio o Expo Go, y no hay ninguno disponible en este entorno). Antes de cualquier
+demostración, corre `pnpm mobile` y `pnpm admin` y prueba el camino dorado a mano.
 
 Alcance, exclusiones, riesgos abiertos y siguientes pasos: `docs/backlog.md` y `docs/mvp-scope.md`.
 
