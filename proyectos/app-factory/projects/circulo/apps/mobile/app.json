@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "Círculo",
+    "slug": "circulo",
+    "scheme": "circulo",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "app.circulo.mvp",
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Elige fotos para tu perfil. Solo se suben las que tú selecciones.",
+        "NSLocationWhenInUseUsageDescription": "Usamos tu zona aproximada para mostrarte personas cerca. Nunca compartimos tu ubicación exacta."
+      }
+    },
+    "android": {
+      "package": "app.circulo.mvp",
+      "permissions": ["ACCESS_COARSE_LOCATION"]
+    },
+    "plugins": ["expo-router"],
+    "experiments": { "typedRoutes": false }
+  }
+}

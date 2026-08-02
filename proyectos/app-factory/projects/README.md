@@ -1,10 +1,10 @@
 # Projects
 
-One directory per application, created with `../scripts/new-app.sh`.
+One directory per application, created with `../scripts/new-app.sh` or by hand from a template.
 
-Each project is an isolated Git repository and is **not** tracked by the factory
-repository (see `.gitignore` in this directory). Push each application to its own
-remote.
+Projects are tracked in this repository; their build output is not (see `.gitignore`). If an
+application needs its own remote later, extract its directory into a new repository — nothing
+outside it is shared except the packages it declares.
 
-Never mix the source code, requirements, tasks, design decisions, analytics,
-credentials, or documentation of two applications.
+Never mix the source code, requirements, tasks, design decisions, analytics, credentials, or
+documentation of two applications.

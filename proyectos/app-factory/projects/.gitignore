@@ -1,5 +1,11 @@
-# Each application is its own isolated Git repository and is not tracked by the
-# factory repository. Keep applications out of the factory history.
-*
-!.gitignore
-!README.md
+# Applications are tracked, their build output is not.
+node_modules/
+.expo/
+.next/
+dist/
+build/
+coverage/
+*.log
+.env
+.env.*
+!.env.example
