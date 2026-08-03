@@ -15,6 +15,7 @@ export default function SignUp() {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
+  const [confirmationPending, setConfirmationPending] = useState(false);
 
   async function onSubmit() {
     void track('sign_up_started');
@@ -26,7 +27,7 @@ export default function SignUp() {
 
     setErrors({});
     setSubmitting(true);
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email: parsed.data.email,
       password: parsed.data.password,
     });
@@ -38,7 +39,29 @@ export default function SignUp() {
     }
 
     void track('sign_up_completed');
+
+    // Email confirmation is required: signUp does not return a session until
+    // the user clicks the link in their inbox. Onboarding needs a session
+    // (every RPC call requires auth.uid()), so it cannot start yet.
+    if (!data.session) {
+      setConfirmationPending(true);
+      return;
+    }
+
     router.replace({ pathname: '/onboarding/[step]', params: { step: 'identity' } });
+  }
+
+  if (confirmationPending) {
+    return (
+      <Screen>
+        <Heading>Revisa tu correo</Heading>
+        <Body>
+          Te enviamos un enlace de confirmación a {email}. Ábrelo y luego vuelve para iniciar
+          sesión.
+        </Body>
+        <Button label="Ya confirmé, iniciar sesión" onPress={() => router.replace('/sign-in')} />
+      </Screen>
+    );
   }
 
   return (

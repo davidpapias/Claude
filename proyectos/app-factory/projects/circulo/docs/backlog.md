@@ -100,17 +100,43 @@ cuentas de demostración, exactamente como lo haría la app.
   normal no puede leer la cola de reportes (`[]`) pero un moderador sí; un reporte real genera una
   fila en `audit_logs`.
 
+### Correcciones de la revisión 4 (cierre de riesgos del backlog)
+
+- **Riesgo #6 (verificación de correo) cerrado.** `auth.email.enable_confirmations` pasó a
+  `true`. Ajustado el flujo de registro: `signUp` ya no asume que hay sesión inmediata (con
+  confirmación obligatoria no la hay); si no hay sesión, la app muestra "revisa tu correo" en
+  vez de entrar a onboarding sin usuario autenticado. Se añadió el mensaje de error
+  `email_not_confirmed` a `humanError()`. Verificado de extremo a extremo contra Supabase real:
+  registro → correo real capturado en Mailpit → login antes de confirmar rechazado
+  (`email_not_confirmed`) → clic en el enlace real del correo → login exitoso después.
+  **Pendiente, documentado y no bloqueante:** el enlace de confirmación redirige a una URL web
+  (`site_url` en `config.toml`) en vez de al esquema `circulo://` de la app. Por ahora el usuario
+  confirma en el navegador y vuelve a la app para iniciar sesión a mano; para que el enlace loguee
+  automáticamente haría falta una pantalla de deep link que capture el token de la URL, fuera de
+  alcance de este cierre de riesgo.
+- **Riesgo #7 (E2E) parcialmente cerrado.** Se agregó una suite de Playwright real para el panel
+  (`apps/admin/e2e`) que corre contra el build de producción y verifica: la puerta de acceso pide
+  credenciales cuando no hay sesión, un login con credenciales inválidas muestra el error, y las
+  rutas protegidas no filtran contenido antes de autenticar. Ver `apps/admin/README.md` para
+  correrla. La accesibilidad manual (VoiceOver, Dynamic Type) sigue pendiente porque requiere un
+  dispositivo real.
+- **Riesgo #2 (push) evaluado y dejado fuera a propósito.** Implementar el envío requiere
+  credenciales de Expo Push y un dispositivo físico para confirmar que una notificación realmente
+  llega; construirlo sin poder verificarlo violaría la regla de no afirmar que algo funciona sin
+  probarlo. Se mantiene como está: la tabla `notifications` y las preferencias por categoría ya
+  existen y ya se pueblan correctamente (verificado en la revisión 3), solo falta el repartidor.
+
 ## Riesgos abiertos
 
 | # | Riesgo | Impacto | Mitigación propuesta |
 |---|--------|---------|----------------------|
 | 1 | App móvil y panel sin ejecutar en un simulador/navegador real | El backend fue probado de extremo a extremo por API, pero no se probó la UI en pantalla | Arrancar Expo (`pnpm mobile`) y el panel (`pnpm admin`) y probar el camino dorado visualmente |
-| 2 | Sin envío real de notificaciones push | Menor reenganche | Expo Notifications en V1.1; las preferencias ya existen |
+| 2 | Sin envío real de notificaciones push | Menor reenganche | Expo Notifications en V1.1, con un dispositivo real para verificar la entrega; las preferencias ya existen |
 | 3 | Moderación de fotos manual | Cuello de botella con volumen | Cola priorizada y revisión automática asistida |
 | 4 | Ranking en cliente | Un cliente modificado reordena lo que ve | Condición de salida en ADR 0003 |
 | 5 | Densidad baja fuera de CDMX | Estados vacíos frecuentes | Ampliar distancia sugerida y lanzar por ciudad |
-| 6 | Sin verificación de correo obligatoria | Cuentas desechables | Activar confirmación en Supabase Auth antes del lanzamiento |
-| 7 | E2E y accesibilidad sin ejecutar | Regresiones no detectadas | Playwright para el panel y pruebas manuales con VoiceOver |
+| 6 | El enlace de confirmación de correo no hace login automático en la app | Fricción extra: confirmar y volver a iniciar sesión a mano | Pantalla de deep link (`circulo://auth/confirm`) que capture el token de la URL |
+| 7 | Accesibilidad (VoiceOver, Dynamic Type) sin probar en dispositivo real | Regresiones de accesibilidad no detectadas | Pruebas manuales en dispositivo antes del lanzamiento |
 | 8 | Peer warning `react-dom` en `apps/mobile` | Cosmético: móvil no usa react-dom, viene de una dependencia fantasma de `expo-router` en el contexto web | Ninguna acción necesaria; no afecta el bundle nativo, ya verificado |
 
 ## Siguientes funciones (no en V1)

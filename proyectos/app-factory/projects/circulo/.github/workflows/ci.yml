@@ -46,3 +46,29 @@ jobs:
       - uses: actions/checkout@v4
       - name: Apply migrations and run the security assertions
         run: ./supabase/tests/run.sh
+
+  admin-e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      # GitHub-hosted runners have Docker natively; this brings up the full
+      # stack (Postgres, Auth, PostgREST, Storage) the e2e tests run against.
+      - run: supabase start
+      - name: Run the admin panel's e2e suite against the local stack
+        working-directory: apps/admin
+        run: |
+          eval "$(supabase status -o env | sed 's/^/export /')"
+          export NEXT_PUBLIC_SUPABASE_URL="$API_URL"
+          export NEXT_PUBLIC_SUPABASE_ANON_KEY="$ANON_KEY"
+          pnpm exec playwright test

@@ -14,6 +14,9 @@ export function humanError(error: unknown): string {
   if (/Invalid login credentials/i.test(message)) {
     return 'Correo o contraseña incorrectos.';
   }
+  if (/Email not confirmed/i.test(message)) {
+    return 'Confirma tu correo antes de iniciar sesión. Revisa tu bandeja de entrada.';
+  }
   if (/User already registered/i.test(message)) {
     return 'Ya existe una cuenta con este correo.';
   }
