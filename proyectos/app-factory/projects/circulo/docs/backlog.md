@@ -126,6 +126,25 @@ cuentas de demostración, exactamente como lo haría la app.
   probarlo. Se mantiene como está: la tabla `notifications` y las preferencias por categoría ya
   existen y ya se pueblan correctamente (verificado en la revisión 3), solo falta el repartidor.
 
+### Correcciones de la revisión 5 (proyecto Supabase remoto real)
+
+Se aplicaron las 8 migraciones y el seed contra un proyecto Supabase remoto real (no local/Docker),
+usando la API de gestión de Supabase (`POST /v1/projects/{ref}/database/query`) con un personal
+access token, porque el entorno de este agente no tiene salida de red directa para `supabase link`/
+`supabase db push` (el binario de la CLI no completaba la conexión; `curl` sí, así que se usó la API
+REST directamente). Verificado con un login real contra `/auth/v1/token`: la cuenta de demo
+`admin@demo.circulo.app` recibe un JWT válido contra el proyecto remoto.
+
+- El anon key y la URL del proyecto no son secretos y se le compartieron al dueño del producto para
+  su `.env` local; **no se escribieron en ningún archivo del repositorio** (`.env.example` se dejó
+  igual, apuntando a los valores por defecto de `supabase start` para desarrollo local).
+- El `service_role key` fue compartido por el dueño del producto en el chat pese a la instrucción
+  explícita de no hacerlo. No se usó ni se escribió en ningún archivo. **Pendiente por parte del
+  dueño del producto:** rotarlo desde el dashboard de Supabase (Project Settings → API → Reset
+  service_role key), ya que quedó expuesto en el historial de la conversación.
+- El personal access token usado para aplicar las migraciones tampoco se escribió en ningún archivo
+  ni se commiteó; se usó solo en memoria para las llamadas `curl` de esta ronda.
+
 ## Riesgos abiertos
 
 | # | Riesgo | Impacto | Mitigación propuesta |
