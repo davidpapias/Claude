@@ -29,12 +29,18 @@ criptomonedas, sistema público de popularidad, verificación con selfie, modo v
 premium, exportación a archivo, notificaciones push entregadas (la tabla y las preferencias
 existen; el envío queda para V1.1).
 
-## Suposiciones
+## Decisiones confirmadas (ya no son suposiciones)
+
+| # | Decisión | Confirmado |
+|---|----------|------------|
+| 1 | El nombre del producto es **Círculo** (no provisional) | 2026-08-02, por el dueño del producto |
+| 2 | Mercado inicial: Ciudad de México, español | 2026-08-02, por el dueño del producto |
+| 3 | El alcance del MVP de esta sección no se ajusta | 2026-08-02, por el dueño del producto |
+
+## Suposiciones abiertas
 
 | # | Suposición | Cómo se validará |
 |---|------------|------------------|
-| 1 | El nombre provisional es Círculo | Decisión de marca antes del lanzamiento |
-| 2 | Mercado inicial: Ciudad de México, español | Datos de registro en las primeras semanas |
-| 3 | La zona la escribe el usuario; no se lee GPS en V1 | Fricción medida en el paso de identidad |
-| 4 | La moderación de fotos es manual al inicio | Volumen de cola en el panel |
-| 5 | El ranking en cliente es suficiente para el MVP | Ver ADR 0003 y su condición de salida |
+| 1 | La zona la escribe el usuario; no se lee GPS en V1 | Fricción medida en el paso de identidad |
+| 2 | La moderación de fotos es manual al inicio | Volumen de cola en el panel |
+| 3 | El ranking en cliente es suficiente para el MVP | Ver ADR 0003 y su condición de salida |

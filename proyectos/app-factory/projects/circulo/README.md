@@ -4,7 +4,9 @@ App móvil para hacer amistades por compatibilidad mutua. No es una app de citas
 romántico, no hay corazones, no se ordena a las personas por apariencia y solo se puede escribir
 cuando las dos partes mostraron interés.
 
-`[NOMBRE_APP]` es configurable (`EXPO_PUBLIC_APP_NAME`); "Círculo" es el nombre provisional.
+El nombre del producto es **Círculo** (confirmado). El nombre de la variable de entorno
+`EXPO_PUBLIC_APP_NAME` sigue siendo configurable por si hace falta para builds de white-label,
+pero no es un placeholder pendiente de decisión.
 
 ## Qué hay aquí
 

@@ -1,6 +1,6 @@
 # Especificación de producto — Círculo
 
-`[NOMBRE_APP]` provisional: **Círculo**. Configurable en `EXPO_PUBLIC_APP_NAME`.
+Nombre del producto: **Círculo** (confirmado, no es un placeholder).
 
 ## Tesis
 
