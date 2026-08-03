@@ -1,0 +1,73 @@
+{
+  "name": "circulo",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.0.0",
+  "scripts": {
+    "test": "pnpm -r --if-present test",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "db:reset": "supabase db reset",
+    "mobile": "pnpm --filter @circulo/mobile start",
+    "admin": "pnpm --filter @circulo/admin dev"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "eslint": "^9.17.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "pnpm": {
+    "packageExtensions": {
+      "expo-router": {
+        "peerDependencies": { "@types/react": "*" },
+        "peerDependenciesMeta": { "@types/react": { "optional": true } }
+      },
+      "react-native-safe-area-context": {
+        "peerDependencies": { "@types/react": "*" },
+        "peerDependenciesMeta": { "@types/react": { "optional": true } }
+      },
+      "react-native-screens": {
+        "peerDependencies": { "@types/react": "*" },
+        "peerDependenciesMeta": { "@types/react": { "optional": true } }
+      },
+      "@react-navigation/native": {
+        "peerDependencies": { "@types/react": "*" },
+        "peerDependenciesMeta": { "@types/react": { "optional": true } }
+      },
+      "@react-navigation/bottom-tabs": {
+        "peerDependencies": { "@types/react": "*" },
+        "peerDependenciesMeta": { "@types/react": { "optional": true } }
+      },
+      "@react-navigation/native-stack": {
+        "peerDependencies": { "@types/react": "*" },
+        "peerDependenciesMeta": { "@types/react": { "optional": true } }
+      },
+      "expo": {
+        "peerDependencies": { "@types/react": "*" },
+        "peerDependenciesMeta": { "@types/react": { "optional": true } }
+      },
+      "expo-constants": {
+        "peerDependencies": { "@types/react": "*" },
+        "peerDependenciesMeta": { "@types/react": { "optional": true } }
+      },
+      "expo-linking": {
+        "peerDependencies": { "@types/react": "*" },
+        "peerDependenciesMeta": { "@types/react": { "optional": true } }
+      },
+      "expo-status-bar": {
+        "peerDependencies": { "@types/react": "*" },
+        "peerDependenciesMeta": { "@types/react": { "optional": true } }
+      },
+      "expo-image-picker": {
+        "peerDependencies": { "@types/react": "*" },
+        "peerDependenciesMeta": { "@types/react": { "optional": true } }
+      },
+      "@expo/metro-runtime": {
+        "dependencies": { "whatwg-fetch": "^3.6.20" }
+      }
+    }
+  }
+}

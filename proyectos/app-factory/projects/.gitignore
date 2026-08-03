@@ -1,0 +1,11 @@
+# Applications are tracked, their build output is not.
+node_modules/
+.expo/
+.next/
+dist/
+build/
+coverage/
+*.log
+.env
+.env.*
+!.env.example
