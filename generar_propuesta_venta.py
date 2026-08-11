@@ -154,9 +154,41 @@ s.append(box(
     'semanas después. Un servicio recurrente convierte "descubrirlo tarde" en "saberlo el mismo día".',
     colors.HexColor('#edf7ed'), VERDE, colors.HexColor('#14521a')))
 
+# ============ MEJORAS RECOMENDADAS ============
+s.append(PageBreak())
+s.append(sec('4. MEJORAS RECOMENDADAS — PÁGINA, SISTEMA Y ADS', AZULOSC))
+s.append(Spacer(1,0.2*cm))
+s.append(Paragraph(
+    'Más allá de arreglar lo roto, aquí está el mapa completo de mejoras posibles, '
+    'organizado por dónde vive cada una.', S_body))
+
+s.append(Paragraph('🌐 PÁGINA (el sitio web)', S_sub))
+s.extend(numbered([
+    ('1', 'Reimplementar los 4 eventos de pixel faltantes tras la migración a Next.js (ViewContent, InitiateCheckout, AddPaymentInfo, <b>Purchase</b>).'),
+    ('2', 'Pantalla de respaldo si WhatsApp no abre — mensaje copiable, botón a WhatsApp Web y teléfono para llamar, para que nadie se quede sin opción.'),
+    ('3', 'Reordenar el flujo de compra: guardar la reserva primero, avisar a Facebook en paralelo — para que ninguna venta real dependa de que el aviso a Facebook se complete.'),
+], AZUL, w=0.9))
+
+s.append(Paragraph('🗂️ SISTEMA (panel de reservas y pagos)', S_sub))
+s.extend(numbered([
+    ('4', 'Recordatorio automático antes de que se libere una reserva sin pagar (hoy se pierden en silencio a la hora).'),
+    ('5', 'Confirmación automática de pago — leer notificaciones bancarias/SMS y marcar el boleto como pagado sin intervención manual.'),
+    ('6', 'Migrar a WhatsApp Business API real, con confirmación de entrega del mensaje — hoy los links wa.me pueden fallar sin aviso.'),
+    ('7', 'Dashboard simple que muestre visitas → reservas → pagados en tiempo real, sin entrar a Events Manager.'),
+], VERDE, w=0.9))
+
+s.append(Paragraph('📣 ADS (campañas de Facebook)', S_sub))
+s.extend(numbered([
+    ('8', 'Completar Advanced Matching en los 6 eventos (hoy solo CompleteRegistration lo tiene, con EMQ 7.8 — el resto sigue en 6.1).'),
+    ('9', 'Purchase real vía Conversions API en el momento del pago confirmado, separado del Purchase de intención — para medir ingresos reales.'),
+    ('10', 'Remarketing a reservas "Apartado" sin pagar, y públicos similares (lookalike) basados en compradores confirmados.'),
+    ('11', 'Revisar el aviso de Facebook sobre el parámetro "value" idéntico en todos los eventos Purchase — posible dato de valor no dinámico.'),
+    ('12', 'Diversificar canales (Google Ads / TikTok Ads) para no depender de una sola fuente de tráfico.'),
+], AMBAR, w=1.1))
+
 # ============ CIERRE ============
 s.append(Spacer(1,0.35*cm))
-s.append(sec('4. PRÓXIMO PASO', AZULOSC))
+s.append(sec('5. PRÓXIMO PASO', AZULOSC))
 s.append(Spacer(1,0.2*cm))
 s.append(Paragraph(
     'La pregunta no es si tienes fugas — ya las vimos, con tus propios números, dos veces. '
