@@ -36,7 +36,7 @@ def _pg(canvas, doc):
     canvas.drawCentredString(W/2, 1*cm, f'Diagnóstico Pixel — Migración Next.js · eventosptovallartatransfer.com · {HOY} · Pág. {doc.page}')
     canvas.restoreState()
 
-doc = SimpleDocTemplate('/home/user/Claude/diagnostico_nextjs_pixel.pdf', pagesize=A4,
+doc = SimpleDocTemplate('/home/user/Claude/diagnostico_nextjs_pixel_dev.pdf', pagesize=A4,
                         rightMargin=1.6*cm, leftMargin=1.6*cm, topMargin=1.8*cm, bottomMargin=1.6*cm,
                         title='Diagnóstico - Pixel incompleto tras migración a Next.js')
 
@@ -171,15 +171,14 @@ s.append(code(
     "trackPixelEvent('Purchase', {...datos, eventId});  // <- agregar esta línea"))
 
 s.append(Spacer(1,0.3*cm))
-s.append(sec('SIGUIENTES PASOS — para no perder ni un solo registro a futuro', VERDE))
+s.append(sec('CÓMO VERIFICAR QUE QUEDÓ BIEN', AZUL))
 s.append(Spacer(1,0.15*cm))
-s.extend(numbered([
-    ('1', 'Implementar los 4 eventos faltantes con el código de arriba, empezando por <b>Purchase</b> (prioridad crítica — sin él, Facebook no mide ventas reales).'),
-    ('2', 'Verificar en vivo con el mismo método usado en esta auditoría: abrir DevTools → pestaña Network → filtro <font face="Courier">tr</font> → hacer una compra de prueba completa → confirmar que aparecen los 6 eventos (<font face="Courier">ev=PageView, ViewContent, InitiateCheckout, AddPaymentInfo, CompleteRegistration, Purchase</font>).'),
-    ('3', '<b>Checklist obligatorio de QA de pixel en cada despliegue o migración de plataforma</b> — antes de dar por cerrado un cambio grande del sitio, repetir la verificación del paso 2. Esta pérdida de eventos pasó precisamente por saltarse este paso durante la migración a Next.js.'),
-    ('4', 'Documentar el flujo de compra de prueba (con capturas o video) para que cualquier futura migración tenga una referencia clara de qué eventos deben existir y con qué datos.'),
-    ('5', 'Considerar una alerta automática (o auditoría periódica programada) que avise si el evento <font face="Courier">Purchase</font> cae a 0 por más de unas horas — hoy esta falla solo se detectó porque se hizo una revisión manual, semanas después de ocurrir.'),
-], AZUL))
+s.append(Paragraph(
+    'Abrir DevTools → pestaña <font face="Courier">Network</font> → filtro '
+    '<font face="Courier">tr</font> → marcar <font face="Courier">Preserve log</font> → hacer '
+    'una compra de prueba completa. Deben aparecer los 6 eventos: '
+    '<font face="Courier">ev=PageView, ViewContent, InitiateCheckout, AddPaymentInfo, '
+    'CompleteRegistration, Purchase</font>.', S_body))
 
 doc.build(s, onFirstPage=_pg, onLaterPages=_pg)
 print('PDF generado.')
