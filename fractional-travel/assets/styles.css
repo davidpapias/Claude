@@ -75,9 +75,14 @@ p{margin:0}
   backdrop-filter:blur(14px); border-bottom:var(--rule);
 }
 .topbar-in{display:flex; align-items:center; gap:24px; height:62px}
-.brand{display:flex; align-items:baseline; gap:10px; text-decoration:none; margin-right:auto}
+.brand{display:flex; align-items:baseline; gap:10px; text-decoration:none; margin-right:auto; white-space:nowrap}
 .brand b{font-family:var(--display); font-weight:500; font-size:1.12rem; letter-spacing:.01em}
-.brand span{font-family:var(--mono); font-size:.62rem; letter-spacing:.18em; color:var(--text-faint); text-transform:uppercase}
+.brand b .amp{font-style:italic; color:var(--brass)}
+@media (max-width:1120px){
+  .brand b{font-size:1rem}
+  .topbar-in{gap:18px}
+  .navlinks{gap:20px}
+}
 .navlinks{display:flex; gap:26px}
 .navlinks a{font-size:.86rem; color:var(--text-dim); text-decoration:none; padding-block:4px; border-bottom:1px solid transparent; transition:color .2s, border-color .2s}
 .navlinks a:hover{color:var(--text); border-color:var(--brass)}
@@ -712,3 +717,20 @@ footer{background:var(--ink-block); color:#7C9095; border-top:1px solid rgba(201
   font-size:.66rem; letter-spacing:.11em; text-transform:uppercase; cursor:pointer; padding:10px;
 }
 .exit-card .no:hover{color:var(--text-dim)}
+
+/* ---------- eslogan de marca ---------- */
+.tagline{
+  font-family:var(--display); font-style:italic; font-size:clamp(1.05rem,1.6vw,1.28rem);
+  line-height:1.35; color:var(--text); text-wrap:balance;
+  display:flex; align-items:baseline; gap:14px;
+}
+.tagline::before{
+  content:""; flex:none; width:34px; height:1px; background:var(--brass);
+  transform:translateY(-.35em);
+}
+.hero .tagline{margin-top:2px}
+.foot-tagline{
+  font-family:var(--display); font-style:italic; font-size:1.05rem;
+  color:#C9A75E; margin:6px 0 8px;
+}
+.ribbon .tagline{color:#D9BE84; margin-bottom:10px; font-size:1.1rem}

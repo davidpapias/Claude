@@ -142,7 +142,7 @@ def topbar(current, single):
                            ("preguntas", "Preguntas")])
     return """<div class="topbar">
   <div class="wrap topbar-in">
-    <a class="brand" href="{home}"><b>Fractional Travel</b><span>&amp; Investing</span></a>
+    <a class="brand" href="{home}"><b>Fractional Travel <span class="amp">&amp;</span> Investing</b></a>
     <nav class="navlinks">{nav}</nav>
     <a class="btn btn-sm" href="{book}">Agendar llamada <span class="arw">&rarr;</span></a>
     <button class="navtoggle" type="button" aria-expanded="false">Menú</button>
@@ -213,6 +213,7 @@ def footer(single):
     <div class="foot-grid">
       <div class="foot-brand">
         <b>Fractional Travel &amp; Investing</b>
+        <p class="foot-tagline">Own a piece of the places you love.</p>
         <span class="folio">Copropiedad fraccional escriturada &middot; Riviera Nayarit, México</span>
       </div>
       <div class="foot-brand">
@@ -458,6 +459,7 @@ def p_inicio(single):
     <div class="hero-copy">
       <p class="eyebrow">Nuevo Vallarta &middot; Bucerías &middot; Sayulita</p>
       <h1>La casa frente al mar, dividida entre ocho. La escritura, <em>a su nombre.</em></h1>
+      <p class="tagline">Own a piece of the places you love.</p>
       <p class="lede measure">Copropiedad fraccional de residencias de lujo en Riviera Nayarit desde <span class="num">USD&nbsp;$120,000</span>. Seis semanas de uso al año, renta administrada el resto del tiempo, y una participación real en la plusvalía del inmueble. <strong>No es tiempo compartido. No son puntos. No es una membresía.</strong></p>
       <div class="hero-cta">
         <a class="btn" href="{memo}">Descargar el memorándum <span class="arw">&rarr;</span></a>
