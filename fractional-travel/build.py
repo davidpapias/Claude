@@ -82,19 +82,25 @@ RESIDENCIAS = [
 RES_BY_SLUG = {r["slug"]: r for r in RESIDENCIAS}
 
 # ---------------------------------------------------------------- navegación
-NAV = [("residencias", "Residencias"), ("modelo", "El modelo"),
-       ("inversion", "Inversión"), ("legal", "Estructura legal"),
-       ("memorandum", "Memorándum")]
+NAV = [("fractional", "Fractional"), ("traveling", "Traveling"),
+       ("investing", "Investing"), ("legal", "Estructura legal"),
+       ("nosotros", "Nosotros")]
+
+NAV_EXTRA = [("residencias", "Residencias"), ("numeros", "Los números"),
+             ("yates", "Yates"), ("pool-de-rentas", "Pool de rentas"),
+             ("memorandum", "Memorándum"), ("diario", "Diario"),
+             ("preguntas", "Preguntas")]
 
 FOOTNAV = [
-    ("Residencias", [("residencias", "Todas las residencias")] +
-                    [(r["slug"], r["name"]) for r in RESIDENCIAS]),
-    ("El modelo", [("modelo", "Cómo funciona"), ("inversion", "Los números"),
-                   ("memorandum", "El memorándum"),
-                   ("legal", "Estructura legal"), ("preguntas", "Preguntas frecuentes")]),
-    ("La operación", [("nosotros", "Quiénes somos"), ("copropietarios", "Copropietarios"),
-                      ("diario", "Diario"), ("agendar", "Agendar una llamada")]),
-    ("Legal", [("avisos", "Aviso legal y privacidad")]),
+    ("Fractional", [("fractional", "La división"), ("residencias", "Residencias"),
+                    ("modelo", "Cómo funciona"), ("numeros", "Los números"),
+                    ("memorandum", "El memorándum")]),
+    ("Traveling", [("traveling", "La división"), ("yates", "Flota de yates"),
+                   ("pool-de-rentas", "Pool de rentas")]),
+    ("Investing", [("investing", "La división"), ("legal", "Estructura legal")]),
+    ("La casa", [("nosotros", "Quiénes somos"), ("copropietarios", "Copropietarios"),
+                 ("diario", "Diario"), ("preguntas", "Preguntas frecuentes"),
+                 ("agendar", "Hablar con alguien"), ("avisos", "Aviso legal")]),
 ]
 
 
@@ -138,8 +144,7 @@ def topbar(current, single):
         '<a href="%s"%s%s>%s</a>' % (link(s, single),
                                      ' data-nav' if single else '',
                                      ' aria-current="page"' if s == current else '', t)
-        for s, t in NAV + [("nosotros", "Nosotros"), ("diario", "Diario"),
-                           ("preguntas", "Preguntas")])
+        for s, t in NAV + NAV_EXTRA)
     return """<div class="topbar">
   <div class="wrap topbar-in">
     <a class="brand" href="{home}"><b>Fractional Travel <span class="amp">&amp;</span> Investing</b></a>
@@ -154,18 +159,36 @@ def topbar(current, single):
 
 
 RIBBONS = {
-    "inicio": ("Ocho dueños por casa. <em>Ni uno más.</em>",
-               "Empiece por el memorándum: las cifras auditadas del ejercicio anterior, sin llamada de por medio.",
-               "memorandum", "Descargar el memorándum"),
+    "inicio": ("Tres divisiones. <em>Una conversación.</em>",
+               "Cuéntenos qué busca y le decimos por cuál de las tres empezar, aunque acabe siendo ninguna.",
+               "agendar", "Hablar con alguien"),
+    "fractional": ("Ocho dueños por casa. <em>Ni uno más.</em>",
+                   "Empiece por el memorándum: cifras auditadas del ejercicio anterior, sin llamada de por medio.",
+                   "memorandum", "Descargar el memorándum"),
     "residencias": ("Quedan <em>{libres}</em> fracciones de veinticuatro.",
                     "Cuando una casa completa sus ocho copropietarios, se cierra y no la volvemos a abrir.",
                     "memorandum", "Ver las cifras de cada casa"),
     "modelo": ("Ya entiende el modelo. <em>Ahora los números.</em>",
                "La calculadora corre sobre supuestos declarados y editables, y termina en un escenario que le podemos mandar por escrito.",
-               "inversion", "Calcular mi rendimiento"),
-    "inversion": ("Los números cuadran. <em>¿Y la casa?</em>",
-                  "Las tres residencias, con fracciones disponibles y cifras auditadas por separado.",
-                  "residencias", "Ver las residencias"),
+               "numeros", "Calcular mi rendimiento"),
+    "numeros": ("Los números cuadran. <em>¿Y la casa?</em>",
+                "Las tres residencias, con fracciones disponibles y cifras auditadas por separado.",
+                "residencias", "Ver las residencias"),
+    "memorandum": ("Cuando lo haya leído, <em>hablamos.</em>",
+                   "Cuarenta y cinco minutos con quien opera las casas, y sólo si usted lo pide.",
+                   "agendar", "Agendar la llamada"),
+    "traveling": ("¿Tiene fecha? <em>Nosotros tenemos barco.</em>",
+                  "Disponibilidad real y propuesta con precio cerrado, en el mismo día hábil.",
+                  "yates", "Ver la flota"),
+    "yates": ("La bahía se ve mejor <em>desde el agua.</em>",
+              "Díganos días, personas y qué le gustaría hacer. Cotizar no cuesta ni aparta la fecha.",
+              "agendar", "Pedir disponibilidad"),
+    "pool-de-rentas": ("Su casa vacía <em>cuesta dinero.</em>",
+                       "Le estimamos el ingreso anual con lo que rentan casas comparables que ya operamos.",
+                       "agendar", "Pedir la estimación"),
+    "investing": ("Propiedad completa, <em>sin reglamento de uso.</em>",
+                  "Plano, escritura, libertad de gravamen, avalúo y el historial de renta de las casas terminadas.",
+                  "agendar", "Pedir la ficha"),
     "legal": ("Ya vio la estructura. <em>Pida el expediente.</em>",
               "Reglamento de uso, contrato de fideicomiso modelo y avalúo, en un solo correo.",
               "memorandum", "Pedir el expediente modelo"),
@@ -178,12 +201,9 @@ RIBBONS = {
     "diario": ("¿Le quedó una pregunta <em>sin contestar?</em>",
                "El memorándum contesta la mayoría, y no hay que hablar con nadie para leerlo.",
                "memorandum", "Descargar el memorándum"),
-    "memorandum": ("Cuando lo haya leído, <em>hablamos.</em>",
-                   "Cuarenta y cinco minutos con quien opera las casas, y sólo si usted lo pide.",
-                   "agendar", "Agendar la llamada"),
     "preguntas": ("¿Su pregunta no estaba? <em>Pregúntela.</em>",
-                  "En la llamada se contestan todas antes de que firme nada. Y si prefiere leer primero, empiece por el memorándum.",
-                  "agendar", "Agendar la llamada"),
+                  "En la llamada se contestan todas antes de que firme nada.",
+                  "agendar", "Hablar con alguien"),
 }
 
 
@@ -436,7 +456,7 @@ def bloque_testimonios(n=3, featured=True):
 
 # ---------------------------------------------------------------- páginas
 
-def p_inicio(single):
+def p_fractional(single):
     tarjetas = "".join("""<article class="res">
   %s
   <div class="res-body">
@@ -457,7 +477,7 @@ def p_inicio(single):
     return """<section class="hero sec" id="top">
   <div class="wrap hero-grid">
     <div class="hero-copy">
-      <p class="eyebrow">Nuevo Vallarta &middot; Bucerías &middot; Sayulita</p>
+      <p class="eyebrow">División Fractional &middot; Nuevo Vallarta, Bucerías y Sayulita</p>
       <h1>La casa frente al mar, dividida entre ocho. La escritura, <em>a su nombre.</em></h1>
       <p class="tagline">Own a piece of the places you love.</p>
       <p class="lede measure">Copropiedad fraccional de residencias de lujo en Riviera Nayarit desde <span class="num">USD&nbsp;$120,000</span>. Seis semanas de uso al año, renta administrada el resto del tiempo, y una participación real en la plusvalía del inmueble. <strong>No es tiempo compartido. No son puntos. No es una membresía.</strong></p>
@@ -1063,42 +1083,469 @@ def p_memorandum(single):
 """ % (opciones, reassure(), ladder(1, single))
 
 
+def divbar(current, single):
+    items = [("f", "fractional", "Fractional", "Copropiedad escriturada"),
+             ("t", "traveling", "Traveling", "Yates, experiencias y rentas"),
+             ("i", "investing", "Investing", "Casas y terrenos completos")]
+    return '<div class="divbar">%s</div>' % "".join(
+        '<a class="%s" href="%s"%s><span class="w">%s</span><span class="d">%s</span></a>'
+        % (k, link(s, single), ' aria-current="page"' if s == current else '', w, d)
+        for k, s, w, d in items)
+
+
+def divbar_section(current, single):
+    root = {"fractional": "fractional", "traveling": "traveling", "investing": "investing"}
+    here = root.get(current, "")
+    return """<section>
+  <div class="wrap sec" style="padding-block:clamp(44px,5vw,72px)">
+    <div class="sec-head" style="margin-bottom:26px">
+      <div class="rail"><p class="folio">Las tres divisiones</p></div>
+      <div><h2 style="font-size:clamp(1.5rem,2.6vw,2rem)">Lo demás que hacemos</h2></div>
+    </div>
+    %s
+  </div>
+</section>
+""" % divbar(here, single)
+
+
+def p_inicio(single):
+    return """<section class="hero sec" id="top">
+  <div class="wrap">
+    <p class="eyebrow">Riviera Nayarit, México</p>
+    <div class="namemap" style="margin-top:18px">
+      <span class="w1">Fractional</span><span class="w2">Travel</span>
+      <span class="amp">&amp;</span><span class="w3">Investing</span>
+    </div>
+    <p class="tagline" style="margin-top:14px">Own a piece of the places you love.</p>
+    <p class="lede measure" style="margin-top:24px">El nombre no es una frase: son tres negocios. Puede quedarse con
+      <strong>una fracción</strong> de una casa frente al mar, <strong>usar los servicios</strong> sin ser dueño de nada,
+      o <strong>comprar completo</strong> una casa o un terreno. La misma operación, la misma gente y los mismos notarios
+      atienden los tres caminos.</p>
+    <div class="hero-cta" style="margin-top:26px">
+      <a class="btn" href="{book}">Hablar con alguien <span class="arw">&rarr;</span></a>
+      <a class="btn btn-ghost" href="{memo}">Descargar el memorándum</a>
+    </div>
+    <div class="trustbar">
+      <div><b>3</b> divisiones, una operación</div>
+      <div><b>{libres}</b> fracciones disponibles</div>
+      <div><b>3</b> yates propios</div>
+      <div><b>6</b> propiedades en venta</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec">
+    <div class="sec-head">
+      <div class="rail"><p class="folio">Las tres puertas</p></div>
+      <div><h2>Elija por dónde <em>entra.</em></h2>
+      <p class="lede measure" style="margin-top:16px">No hay una puerta mejor que otra: hay una que corresponde a lo que usted quiere. Si no está seguro, entre por la que más se le parezca y en la llamada lo acomodamos.</p></div>
+    </div>
+    <div class="doors">
+      <a class="door div-fractional" href="{frac}">
+        <span class="what">División 01</span>
+        <span class="word">Fractional</span>
+        <p>Una octava parte de una residencia de lujo, escriturada a su nombre. Seis semanas y media de uso al año y renta administrada el resto del tiempo.</p>
+        <ul><li>Desde USD $120,000</li><li>Escritura pública e indiviso</li><li>Tres residencias, ocho dueños cada una</li></ul>
+        <span class="go">Ver la división <span>&rarr;</span></span>
+      </a>
+      <a class="door div-traveling" href="{trav}">
+        <span class="what">División 02</span>
+        <span class="word">Traveling</span>
+        <p>Yates propios, experiencias en la bahía, chef y traslados. Y para quien ya tiene casa aquí, el pool de rentas que la opera y le rinde cuentas.</p>
+        <ul><li>Tres embarcaciones propias</li><li>Islas Marietas, ballenas, pesca y golf</li><li>Pool de rentas sin exclusividad</li></ul>
+        <span class="go">Ver la división <span>&rarr;</span></span>
+      </a>
+      <a class="door div-investing" href="{inv}">
+        <span class="what">División 03</span>
+        <span class="word">Investing</span>
+        <p>Propiedad completa: casas terminadas y terrenos, del lote unifamiliar al macrolote apto para desarrollo. Sin copropietarios y sin reglamento de uso.</p>
+        <ul><li>Casas desde USD $780,000</li><li>Terrenos desde USD $165,000</li><li>Expediente completo antes de firmar</li></ul>
+        <span class="go">Ver la división <span>&rarr;</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec">
+    <div class="sec-head">
+      <div class="rail"><p class="folio">Por qué juntas</p></div>
+      <div><h2>Tres negocios que <em>se necesitan.</em></h2>
+      <p class="lede measure" style="margin-top:16px">No es un conglomerado: cada división existe porque la anterior la hizo falta.</p></div>
+    </div>
+    <div class="grid3">
+      <div class="panel"><span class="folio">Origen</span><h3>Primero fueron las casas</h3><p>Empezamos vendiendo propiedad completa. El problema apareció rápido: mucha gente quería la casa pero iba a usarla seis semanas al año, y pagar cincuenta y dos no tenía sentido.</p></div>
+      <div class="panel"><span class="folio">Consecuencia</span><h3>De ahí salió el fraccional</h3><p>Partir la casa en ocho resolvía la aritmética, pero obligaba a operarla de verdad: calendario, mantenimiento, huéspedes y cuentas claras entre ocho dueños que no se conocen.</p></div>
+      <div class="panel"><span class="folio">Consecuencia</span><h3>Y la operación se volvió negocio</h3><p>Para operar bien hicieron falta barcos, chef, traslados y un pool de rentas. Funcionó tan bien que se abrió a cualquiera, sea dueño o no. Eso es Traveling.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec">
+    <div class="sec-head">
+      <div class="rail"><p class="folio">Lo común</p></div>
+      <div><h2>Lo que no cambia <em>entre las tres.</em></h2></div>
+    </div>
+    {reassure}
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec">
+    <div class="sec-head">
+      <div class="rail"><p class="folio">Voces</p></div>
+      <div><h2>Quiénes ya <em>firmaron.</em></h2></div>
+    </div>
+    {testi}
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec">{capture}</div>
+</section>
+""".format(book=link("agendar", single), memo=link("memorandum", single),
+           frac=link("fractional", single), trav=link("traveling", single),
+           inv=link("investing", single), libres=TOTAL_LIBRES,
+           reassure=reassure(), testi=bloque_testimonios(3),
+           capture=mini_capture(
+               "hubMemo", "¿No sabe por cuál <em>de las tres?</em>",
+               "Déjenos su correo y le mandamos el panorama de las tres divisiones en un solo documento: "
+               "qué cuesta entrar en cada una, qué recibe y en qué se diferencia. Sin llamada de por medio.",
+               "Enviarme el panorama", fields="email"))
+
+
+# ---------------------------------------------------------------- traveling
+
+FLOTA = [
+    dict(name="Azimut 55", cls="Yate a motor &middot; día completo", eslora="16.8 m",
+         pax="12 pasajeros", cabinas="3 cabinas", trip="Capitán y marinero",
+         rate=2400, salida="Marina Nuevo Vallarta",
+         shot="Yate en navegación, banda de estribor"),
+    dict(name="Sea Ray 38", cls="Deportivo &middot; medio día", eslora="11.6 m",
+         pax="8 pasajeros", cabinas="1 cabina", trip="Capitán",
+         rate=1150, salida="Marina Nuevo Vallarta",
+         shot="Cubierta de proa con solárium"),
+    dict(name="Catamarán Lagoon 46", cls="Catamarán &middot; día completo", eslora="14.0 m",
+         pax="20 pasajeros", cabinas="4 cabinas", trip="Capitán, marinero y anfitrión",
+         rate=3200, salida="Marina Riviera Nayarit",
+         shot="Catamarán fondeado en Islas Marietas"),
+]
+
+EXPERIENCIAS = [
+    ("Islas Marietas", "Navegación a la reserva de la biosfera, con permiso de acceso gestionado y guía certificado. El cupo diario está limitado por decreto, así que se reserva con semanas de anticipación."),
+    ("Avistamiento de ballenas", "De diciembre a marzo, con biólogo a bordo y distancia de aproximación conforme a la NOM-131. Salidas de media jornada desde Nuevo Vallarta."),
+    ("Pesca deportiva", "Salidas de altura por pez vela, dorado y marlín, con equipo Shimano y captura y liberación. De ocho a diez horas, según temporada."),
+    ("Golf en la bahía", "Tee times en los campos de la zona, traslado incluido y caddie a solicitud. Se coordina con su calendario de estancia."),
+    ("Chef y servicio en casa", "Menú a convenir, compra, servicio y limpieza. Para una cena o para toda la estancia."),
+    ("Traslados y logística", "Recepción en el aeropuerto de Puerto Vallarta, vehículo con chofer y coordinación de llegadas escalonadas."),
+]
+
+
+def p_traveling(single):
+    exp = "".join('<div class="panel"><h3>%s</h3><p>%s</p></div>' % (t, d)
+                  for t, d in EXPERIENCIAS)
+    return pagehead("Traveling",
+        "La operación de servicio de la casa: yates, experiencias en la bahía, chef, traslados y logística. "
+        "Existe porque las casas necesitaban operarse bien, y acabó siendo un negocio propio abierto a cualquiera, "
+        "sea o no copropietario.",
+        [("inicio", "Inicio")], single) + """
+<section>
+  <div class="wrap sec" style="padding-top:0">
+    <div class="sec-head"><div class="rail"><p class="folio">La flota</p></div>
+      <div><h2>Tres barcos, <em>y un capitán que conoce la bahía.</em></h2>
+      <p class="lede measure" style="margin-top:16px">Embarcaciones propias, no intermediación. Eso fija la tarifa, el mantenimiento y quién responde si algo falla a veinte millas de la costa.</p></div></div>
+    %s
+    <div class="note" style="margin-top:28px"><b>Las tarifas son por salida</b> e incluyen tripulación, combustible dentro de la bahía, hielo y agua. Bebidas, alimentos y permisos de reserva se cotizan aparte.</div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Experiencias</p></div>
+      <div><h2>Lo que se puede hacer <em>en la bahía.</em></h2></div></div>
+    <div class="grid3">%s</div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Para dueños</p></div>
+      <div><h2>¿Tiene casa aquí <em>y está vacía?</em></h2>
+      <p class="lede measure" style="margin-top:16px">El pool de rentas la opera por usted: la rentamos, la mantenemos y le reportamos. Usted decide qué semanas se queda.</p></div></div>
+    <div><a class="btn" href="%s">Ver el pool de rentas <span class="arw">&rarr;</span></a></div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">%s</div>
+</section>
+""" % (fleet_cards(), exp, link("pool-de-rentas", single),
+       mini_capture("travCot", "¿Fecha en mente? <em>Le cotizamos.</em>",
+                    "Díganos qué días, cuántas personas y qué le gustaría hacer. Le devolvemos disponibilidad real y una propuesta con precio cerrado, sin anticipo para cotizar.",
+                    "Pedir disponibilidad", fields="email+tel",
+                    done="Solicitud enviada",
+                    fine="Le respondemos por WhatsApp o correo en el mismo día hábil. Cotizar no aparta la fecha; la fecha se aparta con el anticipo."))
+
+
+def fleet_cards():
+    return '<div class="fleet">%s</div>' % "".join("""<article class="vessel">
+  %s
+  <div class="vessel-b">
+    <div><p class="cls">%s</p><h3>%s</h3></div>
+    <dl><dt>Eslora</dt><dd>%s</dd><dt>Capacidad</dt><dd>%s</dd><dt>Cabinas</dt><dd>%s</dd><dt>Tripulación</dt><dd>%s</dd></dl>
+    <p class="cls" style="margin-top:-4px">Salida: %s</p>
+    <div class="rate"><span>USD por salida</span><b class="num">$%s</b></div>
+  </div>
+</article>""" % (holder("r32", v["shot"], "3:2 &middot; 2000×1333"), v["cls"], v["name"],
+                 v["eslora"], v["pax"], v["cabinas"], v["trip"],
+                 v["salida"], format(v["rate"], ",")) for v in FLOTA)
+
+
+def p_yates(single):
+    return pagehead("Flota",
+        "Tres embarcaciones propias con base en Nuevo Vallarta. Propias, no intermediadas: eso fija la tarifa, "
+        "el mantenimiento y quién responde si algo falla a veinte millas de la costa.",
+        [("inicio", "Inicio"), ("traveling", "Traveling")], single) + """
+<section>
+  <div class="wrap sec" style="padding-top:0">
+    %s
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Qué incluye</p></div>
+      <div><h2>Lo que entra <em>en la tarifa.</em></h2></div></div>
+    <div class="grid2">
+      <div class="panel"><span class="folio">Incluido</span><h3>Tripulación y combustible</h3><p>Capitán con licencia vigente, marinero y combustible para navegación dentro de la Bahía de Banderas. Hielo, agua embotellada, toallas y equipo de snorkel a bordo.</p></div>
+      <div class="panel"><span class="folio">Aparte</span><h3>Alimentos, bebidas y permisos</h3><p>Catering y bebidas se cotizan según menú. El permiso de acceso a Islas Marietas se paga por persona y tiene cupo diario limitado por decreto, así que se gestiona con anticipación.</p></div>
+      <div class="panel"><span class="folio">Reserva</span><h3>Anticipo del 50%%</h3><p>La fecha se aparta con la mitad; el resto el día de la salida. Cancelación sin costo hasta 72 horas antes. Si el capitán cancela por mar, se reprograma o se reembolsa completo.</p></div>
+      <div class="panel"><span class="folio">Seguridad</span><h3>Póliza y equipo vigente</h3><p>Seguro de pasajeros, chalecos para todos los tripulantes incluidos menores, balsa y radio VHF. El capitán decide si se sale: si el parte marítimo no acompaña, no se navega.</p></div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">%s</div>
+</section>
+""" % (fleet_cards(),
+       mini_capture("yateCot", "Díganos <em>la fecha.</em>",
+                    "Cuántas personas, qué día y qué le gustaría hacer. Le devolvemos disponibilidad real de las "
+                    "tres embarcaciones y una propuesta con precio cerrado.",
+                    "Pedir disponibilidad", fields="email+tel", done="Solicitud enviada",
+                    fine="Respondemos el mismo día hábil. Cotizar no aparta la fecha; la fecha se aparta con el anticipo."))
+
+
+def p_pool(single):
+    return pagehead("Pool de rentas",
+        "Usted pone la casa. Nosotros la operamos, la rentamos y le rendimos cuentas cada trimestre. "
+        "Sin exclusividad perpetua y sin cuota de entrada.",
+        [("inicio", "Inicio"), ("traveling", "Traveling")], single) + """
+<section>
+  <div class="wrap sec" style="padding-top:0">
+    <div class="pool">
+      <div><p class="n">Tiempo 01</p><h3>Usted reserva sus semanas</h3><p>Antes de que empiece el año marca las fechas que se queda. Esas semanas quedan bloqueadas y nadie las toca. No hay mínimo de semanas que ceder.</p><p class="fig num">0<small>Semanas obligatorias</small></p></div>
+      <div><p class="n">Tiempo 02</p><h3>Nosotros operamos el resto</h3><p>Publicación en canales, tarifa dinámica por temporada, recepción de huéspedes, limpieza entre estancias, mantenimiento preventivo y depósito de daños.</p><p class="fig num">22%%<small>Comisión sobre lo rentado</small></p></div>
+      <div><p class="n">Tiempo 03</p><h3>Le reportamos y le pagamos</h3><p>Estado trimestral con noches, tarifas obtenidas, gastos y neto. Transferencia el día 10 del mes siguiente al cierre, con CFDI.</p><p class="fig num">10<small>Día de pago, cada trimestre</small></p></div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Condiciones</p></div>
+      <div><h2>Lo que hace distinto <em>a este pool.</em></h2></div></div>
+    <div class="grid2">
+      <div class="panel"><span class="folio">Condición 01</span><h3>Sin exclusividad perpetua</h3><p>El contrato es anual y se renueva sólo si usted quiere. Puede salir al término con 60 días de aviso, sin penalización ni recompra de nada.</p></div>
+      <div class="panel"><span class="folio">Condición 02</span><h3>Sin cuota de entrada</h3><p>No se cobra alta, ni fotografía, ni «puesta a punto». Si la casa necesita obra para rentarse, se lo decimos con presupuesto y usted decide si la hace.</p></div>
+      <div class="panel"><span class="folio">Condición 03</span><h3>Su casa no entra a un fondo común</h3><p>Se renta su casa y usted cobra lo que su casa generó. No repartimos ingresos entre propiedades: quien tiene mejor casa cobra más, y quien la tiene peor lo ve en su estado.</p></div>
+      <div class="panel"><span class="folio">Condición 04</span><h3>Cuentas separadas</h3><p>Los depósitos de huéspedes y los ingresos no se mezclan con la operación de la administradora. Un concurso mercantil nuestro no alcanza su dinero.</p></div>
+    </div>
+    <div class="note" style="margin-top:28px"><b>Qué casas aceptamos.</b> Zona de Nuevo Vallarta, Bucerías, La Cruz, Punta de Mita y Sayulita; mínimo dos recámaras; alberca propia o del condominio; y disposición a mantener un estándar de mobiliario. No aceptamos todas: si su casa no va a rentarse bien, se lo decimos antes de firmar.</div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">%s</div>
+</section>
+""" % mini_capture("poolAlta", "Cuéntenos <em>de su casa.</em>",
+                   "Ubicación, recámaras y si tiene alberca. Le devolvemos una estimación de ingreso anual "
+                   "basada en lo que rentan casas comparables que ya operamos, con el desglose de temporada alta y baja.",
+                   "Pedir la estimación", fields="email+tel",
+                   done="Solicitud enviada",
+                   fine="La estimación es gratuita y no compromete a nada. Si su casa no encaja en el pool, se lo decimos en esa misma respuesta.")
+
+
+# ---------------------------------------------------------------- investing
+
+CASAS = [
+    dict(slug="casa-altamar", name="Casa Altamar", where="Punta de Mita &middot; frente de golf",
+         price=1450000, m2="380 m&sup2;", terreno="620 m&sup2; de terreno", rec="4 recámaras",
+         extra="Entrega inmediata", yield_="Renta estimada 6.2% anual",
+         desc="Obra terminada en un desarrollo con acceso controlado y campo de golf. Se vende amueblada y con historial de renta de los últimos dos ejercicios."),
+    dict(slug="casa-tamarindo", name="Casa Tamarindo", where="La Cruz de Huanacaxtle &middot; a tres calles del mar",
+         price=780000, m2="240 m&sup2;", terreno="410 m&sup2; de terreno", rec="3 recámaras",
+         extra="Escritura lista", yield_="Renta estimada 7.1% anual",
+         desc="La opción de mejor rendimiento del inventario: precio de entrada moderado y una zona con ocupación pareja todo el año por la marina y el mercado del domingo."),
+    dict(slug="villa-monteverde", name="Villa Monteverde", where="Sayulita &middot; ladera con vista",
+         price=1120000, m2="295 m&sup2;", terreno="500 m&sup2; de terreno", rec="4 recámaras",
+         extra="Entrega en 6 meses", yield_="Renta estimada 6.8% anual",
+         desc="En construcción, con avance del 70%. Admite cambios de acabados si se aparta ahora, y el precio se congela a la firma."),
+]
+
+TERRENOS = [
+    dict(slug="lote-punta-negra", name="Lote Punta Negra", where="Punta de Mita &middot; segunda línea",
+         price=420000, sup="800 m&sup2;", uso="Uso habitacional, hasta 3 niveles",
+         extra="Servicios a pie de lote", desc="Esquina con dos frentes y vista al mar desde el segundo nivel. Servidumbre de paso a playa por el condominio vecino, ya escriturada."),
+    dict(slug="lote-higuera", name="Lotes La Higuera", where="San Pancho &middot; interior",
+         price=165000, sup="500 m&sup2;", uso="Uso habitacional, hasta 2 niveles",
+         extra="Seis lotes disponibles", desc="Fraccionamiento nuevo con calles y servicios terminados. Precio por lote; hay descuento por la compra de dos o más contiguos."),
+    dict(slug="macrolote-bahia", name="Macrolote Bahía", where="Litibú &middot; frente de golf",
+         price=1900000, sup="4,200 m&sup2;", uso="Uso mixto, densidad media",
+         extra="Apto para desarrollo", desc="Superficie apta para un proyecto de doce a dieciséis unidades. Se entrega con estudio de factibilidad, levantamiento topográfico y anteproyecto."),
+]
+
+
+def listing_rows(items, kind, single):
+    out = []
+    for it in items:
+        if kind == "casa":
+            specs = "".join("<span>%s</span>" % s for s in [it["m2"], it["terreno"], it["rec"], it["extra"]])
+            per = it["yield_"]
+        else:
+            specs = "".join("<span>%s</span>" % s for s in [it["sup"], it["uso"], it["extra"]])
+            per = "USD $%s por m&sup2;" % format(round(it["price"] / int(it["sup"].replace(",", "").split()[0])), ",")
+        out.append("""<a class="lot" href="%s">
+  %s
+  <div>
+    <p class="where">%s</p>
+    <h3>%s</h3>
+    <p>%s</p>
+    <div class="tags">%s</div>
+  </div>
+  <div class="money"><span>Precio</span><b class="num">$%s</b><span class="per">%s</span></div>
+</a>""" % (link("agendar", single),
+           holder("r43", "Fachada &mdash; " + it["name"], "4:3 &middot; 1600×1200"),
+           it["where"], it["name"], it["desc"], specs,
+           format(it["price"], ","), per))
+    return '<div class="listing">%s</div>' % "".join(out)
+
+
+def p_investing(single):
+    return pagehead("Investing",
+        "Propiedad completa: casas terminadas y terrenos en Riviera Nayarit. Sin fracciones, sin copropietarios "
+        "y sin reglamento de uso. Usted escritura el cien por ciento y decide qué hacer con el inmueble.",
+        [("inicio", "Inicio")], single) + """
+<section>
+  <div class="wrap sec" style="padding-top:0">
+    <div class="sec-head"><div class="rail"><p class="folio">Casas</p></div>
+      <div><h2>Tres casas <em>en propiedad completa.</em></h2></div></div>
+    %s
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Terrenos</p></div>
+      <div><h2>Y tres superficies <em>para construir.</em></h2>
+      <p class="lede measure" style="margin-top:16px">Desde un lote unifamiliar hasta un macrolote apto para desarrollo. Todos con escritura limpia y servicios verificados.</p></div></div>
+    %s
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Por qué aquí</p></div>
+      <div><h2>La tesis de <em>Riviera Nayarit.</em></h2></div></div>
+    <div class="grid3">
+      <div class="panel"><span class="folio">Argumento 01</span><h3>Aeropuerto y conectividad</h3><p>Puerto Vallarta recibe vuelo directo desde más de treinta ciudades de Norteamérica. Eso sostiene la demanda de renta y acorta el mercado de reventa: el comprador puede venir a verla el fin de semana.</p></div>
+      <div class="panel"><span class="folio">Argumento 02</span><h3>Suelo limitado</h3><p>El corredor entre Nuevo Vallarta y Punta de Mita está acotado por la sierra y por la reserva. No hay superficie nueva de frente de playa; lo que se construye ahora es sobre lo poco que queda.</p></div>
+      <div class="panel"><span class="folio">Argumento 03</span><h3>Doble demanda</h3><p>La misma casa sirve al comprador de segunda residencia y al operador de renta vacacional. Dos mercados sobre el mismo inventario sostienen mejor el precio en un ciclo malo.</p></div>
+    </div>
+    <div class="note" style="margin-top:28px"><b>Ningún argumento es una garantía.</b> El valor de un inmueble puede bajar, y una zona bien conectada también se corrige. Estos son los motivos por los que nosotros compramos aquí, no una promesa de rendimiento.</div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Lo mismo aplica</p></div>
+      <div><h2>La estructura legal <em>no cambia.</em></h2>
+      <p class="lede measure" style="margin-top:16px">Comprar entero o comprar una fracción se escritura igual: notario público, Registro Público de la Propiedad y, si usted es extranjero, fideicomiso bancario en zona restringida.</p></div></div>
+    <div><a class="btn btn-ghost" href="%s">Ver la estructura legal <span class="arw">&rarr;</span></a></div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">%s</div>
+</section>
+""" % (listing_rows(CASAS, "casa", single), listing_rows(TERRENOS, "lote", single),
+       link("legal", single),
+       mini_capture("invFicha", "La ficha completa <em>de la que le interese.</em>",
+                    "Plano, escritura, certificado de libertad de gravamen, avalúo y, en las casas terminadas, "
+                    "el historial de renta de los dos ejercicios anteriores. Un correo con el expediente adjunto.",
+                    "Pedir la ficha", fields="email+tel",
+                    done="Solicitud enviada",
+                    fine="Le llega el expediente de la propiedad que indique. Si prefiere verla en persona, coordinamos el recorrido sin compromiso."))
+
+
 # ---------------------------------------------------------------- registro
 
 PAGES = [
-    ("inicio",     "Copropiedad fraccional en Riviera Nayarit",
-     "Copropiedad fraccional escriturada de residencias frente al mar en Riviera Nayarit. Una octava parte de la casa, seis semanas al año, renta administrada el resto.", p_inicio, True),
+    ("inicio", "Fractional, Traveling &amp; Investing",
+     "Tres divisiones en Riviera Nayarit: copropiedad fraccional escriturada, servicios de viaje y pool de rentas, y venta de casas y terrenos.",
+     p_inicio, ""),
+
+    ("fractional", "Fractional",
+     "Copropiedad fraccional escriturada de residencias frente al mar en Riviera Nayarit. Una octava parte de la casa y seis semanas al año.",
+     p_fractional, "div-fractional"),
     ("residencias", "Residencias",
-     "Tres residencias en Nuevo Vallarta, Sayulita y Bucerías, cada una dividida en ocho fracciones escrituradas.", p_residencias, True),
+     "Tres residencias en Nuevo Vallarta, Sayulita y Bucerías, cada una dividida en ocho fracciones escrituradas.",
+     p_residencias, "div-fractional"),
     ("residencia-marea", "Residencia Marea",
      "Residencia frente de playa en Nuevo Vallarta. 240 m², tres recámaras, fracción 1/8 desde USD $140,000.",
-     lambda s: p_residencia("residencia-marea", s), True),
+     lambda s: p_residencia("residencia-marea", s), "div-fractional"),
     ("residencia-sayulita-alta", "Villa Sayulita Alta",
      "Villa en la colina de Sayulita. 185 m², tres recámaras, fracción 1/8 desde USD $120,000.",
-     lambda s: p_residencia("residencia-sayulita-alta", s), True),
+     lambda s: p_residencia("residencia-sayulita-alta", s), "div-fractional"),
     ("residencia-nayar", "Penthouse Nayar",
      "Penthouse en Bucerías con doble vista a la bahía. 310 m², cuatro recámaras, fracción 1/8 desde USD $220,000.",
-     lambda s: p_residencia("residencia-nayar", s), True),
+     lambda s: p_residencia("residencia-nayar", s), "div-fractional"),
     ("modelo", "Cómo funciona",
-     "Ocho copropietarios, una escritura por fracción, un calendario que rota y una administradora que opera la casa.", p_modelo, True),
-    ("inversion", "Los números",
-     "Calculadora del modelo económico de una fracción, con los supuestos de ocupación, comisión y cuota declarados.", p_inversion, True),
-    ("legal", "Estructura legal",
-     "Escritura pública, fideicomiso bancario, reglamento de uso y administración con cuentas separadas.", p_legal, True),
-    ("copropietarios", "Copropietarios",
-     "Testimonios de copropietarios y qué esperar del primer año tras escriturar una fracción.", p_copropietarios, True),
-    ("nosotros", "Quiénes somos",
-     "El equipo que selecciona los inmuebles, opera las casas y coordina notarios y fideicomisos.", p_nosotros, True),
-    ("diario", "Diario",
-     "Notas de operación sobre copropiedad fraccional, fideicomisos y el mercado de Riviera Nayarit.", p_diario, True),
+     "Ocho copropietarios, una escritura por fracción, un calendario que rota y una administradora que opera la casa.",
+     p_modelo, "div-fractional"),
+    ("numeros", "Los números",
+     "Calculadora del modelo económico de una fracción, con los supuestos de ocupación, comisión y cuota declarados.",
+     p_inversion, "div-fractional"),
     ("memorandum", "El memorándum",
-     "Cifras auditadas, reglamento de uso y contrato de fideicomiso modelo de cada residencia, sin costo ni compromiso.", p_memorandum, True),
+     "Cifras auditadas, reglamento de uso y contrato de fideicomiso modelo de cada residencia, sin costo ni compromiso.",
+     p_memorandum, "div-fractional"),
+
+    ("traveling", "Traveling",
+     "Yates propios, experiencias en la Bahía de Banderas, chef y traslados, y el pool de rentas para dueños de casa.",
+     p_traveling, "div-traveling"),
+    ("yates", "Flota",
+     "Tres embarcaciones propias con base en Nuevo Vallarta: yate a motor, deportivo y catamarán, con tripulación.",
+     p_yates, "div-traveling"),
+    ("pool-de-rentas", "Pool de rentas",
+     "Operamos, rentamos y reportamos su casa en Riviera Nayarit. Sin exclusividad perpetua y sin cuota de entrada.",
+     p_pool, "div-traveling"),
+
+    ("investing", "Investing",
+     "Casas terminadas y terrenos en propiedad completa en Riviera Nayarit, con expediente completo antes de firmar.",
+     p_investing, "div-investing"),
+
+    ("legal", "Estructura legal",
+     "Escritura pública, fideicomiso bancario, reglamento de uso y administración con cuentas separadas.",
+     p_legal, ""),
+    ("copropietarios", "Copropietarios",
+     "Testimonios de copropietarios y qué esperar del primer año tras escriturar una fracción.",
+     p_copropietarios, "div-fractional"),
+    ("nosotros", "Quiénes somos",
+     "El equipo que selecciona los inmuebles, opera las casas y coordina notarios y fideicomisos.",
+     p_nosotros, ""),
+    ("diario", "Diario",
+     "Notas de operación sobre copropiedad fraccional, fideicomisos y el mercado de Riviera Nayarit.",
+     p_diario, ""),
     ("preguntas", "Preguntas frecuentes",
-     "Diez preguntas sobre copropiedad fraccional: salida, morosidad, calendario, fideicomiso y fiscalidad.", p_preguntas, False),
-    ("agendar", "Agendar una llamada",
-     "Llamada de calificación de cuarenta y cinco minutos para revisar si la copropiedad fraccional le conviene.", p_agendar, False),
+     "Diez preguntas sobre copropiedad fraccional: salida, morosidad, calendario, fideicomiso y fiscalidad.",
+     p_preguntas, ""),
+    ("agendar", "Hablar con alguien",
+     "Una conversación de cuarenta y cinco minutos para saber cuál de las tres divisiones le corresponde, si es que alguna.",
+     p_agendar, ""),
     ("avisos", "Aviso legal y privacidad",
-     "Naturaleza de la información publicada, tratamiento de datos personales y documentos que rigen la operación.", p_avisos, False),
+     "Naturaleza de la información publicada, tratamiento de datos personales y documentos que rigen la operación.",
+     p_avisos, ""),
 ]
 
 
@@ -1114,12 +1561,15 @@ def build():
     jsv = asset_version("assets/site.js")
     routes = []
 
-    for slug, title, desc, fn, with_ribbon in PAGES:
+    for slug, title, desc, fn, division in PAGES:
         # --- página estática del hub ---
         body = fn(False)
+        if division:
+            body += divbar_section(slug, False)
         body += ribbon(slug, False)
         if slug not in ("agendar", "avisos"):
             body += stickybar(False) + exit_invite(False)
+        body = '<div class="page %s">%s</div>' % (division, body)
         html = (HEAD.format(title=title, desc=desc, root="", cssv=cssv, jsv=jsv)
                 + topbar(slug, False) + body + footer(False)
                 + TAIL.format(root="", jsv=jsv))
@@ -1129,8 +1579,11 @@ def build():
 
         # --- misma página como ruta del previsualizador ---
         rbody = fn(True)
+        if division:
+            rbody += divbar_section(slug, True)
         rbody += ribbon(slug, True)
-        routes.append('<div class="route" data-route="/%s">%s</div>' % (slug, rbody))
+        routes.append('<div class="route page %s" data-route="/%s">%s</div>'
+                      % (division, slug, rbody))
 
     css = open(os.path.join(HERE, "assets/styles.css"), encoding="utf-8").read()
     js = open(os.path.join(HERE, "assets/site.js"), encoding="utf-8").read()

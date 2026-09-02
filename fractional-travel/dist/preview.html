@@ -740,15 +740,157 @@ footer{background:var(--ink-block); color:#7C9095; border-top:1px solid rgba(201
 }
 .ribbon .tagline{color:#D9BE84; margin-bottom:10px; font-size:1.1rem}
 
+/* ============================================================
+   LAS TRES DIVISIONES
+   El cromo del sitio se queda en latón; el contenido de cada
+   división remapea el acento. Todos los componentes leen
+   var(--brass), así que basta con redefinirlo en el contenedor.
+   ============================================================ */
+.div-fractional{ --accent-name:"Fractional" }
+.div-traveling{
+  --brass:#2C6A59; --brass-soft:#4E8C7D; --brass-wash:rgba(78,140,125,.13);
+  --accent-name:"Traveling";
+}
+.div-investing{
+  --brass:#9B5A32; --brass-soft:#C97F5E; --brass-wash:rgba(201,127,94,.13);
+  --accent-name:"Investing";
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .div-traveling{
+    --brass:#63A48D; --brass-soft:#8CC4B0; --brass-wash:rgba(99,164,141,.11);
+  }
+  :root:not([data-theme="light"]) .div-investing{
+    --brass:#D9906B; --brass-soft:#E8B394; --brass-wash:rgba(217,144,107,.11);
+  }
+}
+:root[data-theme="dark"] .div-traveling{
+  --brass:#63A48D; --brass-soft:#8CC4B0; --brass-wash:rgba(99,164,141,.11);
+}
+:root[data-theme="dark"] .div-investing{
+  --brass:#D9906B; --brass-soft:#E8B394; --brass-wash:rgba(217,144,107,.11);
+}
+
+/* ---------- las tres puertas de la portada ---------- */
+.doors{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+@media (max-width:900px){.doors{grid-template-columns:1fr}}
+.door{
+  position:relative; display:flex; flex-direction:column; gap:16px; text-decoration:none;
+  color:inherit; border:var(--rule); border-radius:3px; background:var(--surface-2);
+  padding:clamp(24px,3vw,34px); overflow:hidden; transition:border-color .25s, transform .25s;
+}
+.door::before{content:""; position:absolute; inset:0 auto 0 0; width:3px; background:var(--brass)}
+.door:hover{transform:translateY(-3px); border-color:var(--brass-soft)}
+.door .word{
+  font-family:var(--display); font-size:clamp(1.7rem,3vw,2.3rem); line-height:1;
+  color:var(--brass); letter-spacing:-.01em;
+}
+.door .what{font-family:var(--mono); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; color:var(--text-faint)}
+.door p{font-size:.94rem; color:var(--text-dim); line-height:1.55}
+.door ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:7px}
+.door li{font-size:.88rem; color:var(--text-dim); display:flex; gap:9px; align-items:baseline}
+.door li::before{content:""; width:5px; height:5px; border-radius:1px; background:var(--brass); flex:none; transform:translateY(-2px)}
+.door .go{
+  margin-top:auto; padding-top:16px; border-top:var(--rule); font-family:var(--mono);
+  font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; color:var(--brass);
+  display:flex; justify-content:space-between; align-items:center;
+}
+
+/* ---------- el nombre como mapa, en el héroe ---------- */
+.namemap{display:flex; flex-wrap:wrap; align-items:baseline; gap:0 14px; margin-bottom:6px}
+.namemap span{
+  font-family:var(--display); font-size:clamp(2.1rem,5.2vw,3.9rem); line-height:1.05;
+  letter-spacing:-.02em; position:relative;
+}
+.namemap .w1{color:#C9A75E} .namemap .w2{color:#63A48D} .namemap .w3{color:#D9906B}
+:root:not([data-theme="dark"]) .namemap .w1{color:#8A6A1E}
+:root:not([data-theme="dark"]) .namemap .w2{color:#2C6A59}
+:root:not([data-theme="dark"]) .namemap .w3{color:#9B5A32}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .namemap .w1{color:#C9A75E}
+  :root:not([data-theme="light"]) .namemap .w2{color:#63A48D}
+  :root:not([data-theme="light"]) .namemap .w3{color:#D9906B}
+}
+.namemap .amp{color:var(--text-dim); font-style:italic; font-size:.72em; padding-inline:2px}
+
+/* ---------- flota de yates y experiencias ---------- */
+.fleet{display:grid; grid-template-columns:repeat(3,1fr); gap:20px}
+@media (max-width:940px){.fleet{grid-template-columns:1fr}}
+.vessel{border:var(--rule); border-radius:3px; background:var(--surface-2); overflow:hidden; display:flex; flex-direction:column}
+.vessel .holder{aspect-ratio:3/2; border:none; border-bottom:var(--rule); border-radius:0}
+.vessel-b{padding:20px; display:flex; flex-direction:column; gap:12px; flex:1}
+.vessel h3{font-size:1.1rem}
+.vessel .cls{font-family:var(--mono); font-size:.64rem; letter-spacing:.12em; text-transform:uppercase; color:var(--text-faint)}
+.vessel dl{display:grid; grid-template-columns:1fr 1fr; gap:8px 14px; margin:0}
+.vessel dt{font-family:var(--mono); font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint)}
+.vessel dd{margin:0 0 6px; font-family:var(--mono); font-size:.85rem; font-variant-numeric:tabular-nums}
+.vessel .rate{margin-top:auto; padding-top:14px; border-top:var(--rule); display:flex; justify-content:space-between; align-items:baseline}
+.vessel .rate b{font-family:var(--display); font-size:1.3rem; font-variant-numeric:tabular-nums}
+.vessel .rate span{font-family:var(--mono); font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint)}
+
+/* ---------- listado de propiedades en venta ---------- */
+.listing{border-top:var(--rule)}
+.lot{
+  display:grid; grid-template-columns:200px 1fr 210px; gap:26px; align-items:center;
+  padding:22px 0; border-bottom:var(--rule); text-decoration:none; color:inherit; transition:background .2s;
+}
+.lot:hover{background:var(--brass-wash)}
+.lot .holder{aspect-ratio:4/3; border-radius:2px}
+.lot h3{font-size:1.15rem; margin-bottom:6px}
+.lot .where{font-family:var(--mono); font-size:.64rem; letter-spacing:.12em; text-transform:uppercase; color:var(--text-faint); margin-bottom:8px}
+.lot p{font-size:.9rem; color:var(--text-dim)}
+.lot .tags{display:flex; flex-wrap:wrap; gap:6px 14px; margin-top:10px; font-family:var(--mono); font-size:.72rem; color:var(--text-dim)}
+.lot .money{text-align:right}
+.lot .money b{display:block; font-family:var(--display); font-size:1.5rem; font-variant-numeric:tabular-nums}
+.lot .money span{font-family:var(--mono); font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint)}
+.lot .money .per{color:var(--brass); font-family:var(--mono); font-size:.78rem; display:block; margin-top:4px}
+@media (max-width:820px){
+  .lot{grid-template-columns:1fr; gap:14px}
+  .lot .money{text-align:left}
+}
+
+/* ---------- el pool de rentas, en tres tiempos ---------- */
+.pool{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:var(--rule); border-radius:3px; overflow:hidden}
+@media (max-width:820px){.pool{grid-template-columns:1fr}}
+.pool > div{background:var(--surface-2); padding:26px 24px; display:flex; flex-direction:column; gap:10px}
+.pool .n{font-family:var(--mono); font-size:.66rem; letter-spacing:.13em; color:var(--brass)}
+.pool h3{font-size:1.12rem}
+.pool p{font-size:.91rem; color:var(--text-dim); line-height:1.55}
+.pool .fig{margin-top:auto; padding-top:12px; font-family:var(--display); font-size:1.7rem; color:var(--brass); font-variant-numeric:tabular-nums}
+.pool .fig small{display:block; font-family:var(--mono); font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint); margin-top:3px}
+
+/* ---------- cinta de divisiones en páginas interiores ---------- */
+.divbar{
+  display:flex; flex-wrap:wrap; gap:0; border:var(--rule); border-radius:3px;
+  overflow:hidden; margin-bottom:0;
+}
+.divbar a{
+  flex:1 1 200px; padding:14px 18px; text-decoration:none; background:var(--surface-2);
+  border-right:1px solid var(--line); transition:background .2s;
+}
+.divbar a:last-child{border-right:none}
+.divbar a:hover{background:var(--brass-wash)}
+.divbar a[aria-current]{background:var(--brass-wash)}
+.divbar .w{font-family:var(--display); font-size:1.05rem; display:block}
+.divbar .d{font-family:var(--mono); font-size:.62rem; letter-spacing:.11em; text-transform:uppercase; color:var(--text-faint); display:block; margin-top:3px}
+.divbar .f .w{color:#8A6A1E} .divbar .t .w{color:#2C6A59} .divbar .i .w{color:#9B5A32}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .divbar .f .w{color:#C9A75E}
+  :root:not([data-theme="light"]) .divbar .t .w{color:#63A48D}
+  :root:not([data-theme="light"]) .divbar .i .w{color:#D9906B}
+}
+:root[data-theme="dark"] .divbar .f .w{color:#C9A75E}
+:root[data-theme="dark"] .divbar .t .w{color:#63A48D}
+:root[data-theme="dark"] .divbar .i .w{color:#D9906B}
+
 </style>
 <div class="topbar">
   <div class="wrap topbar-in">
     <a class="brand" href="#/inicio"><b>Fractional Travel <span class="amp">&amp;</span> Investing</b></a>
-    <nav class="navlinks"><a href="#/residencias" data-nav>Residencias</a><a href="#/modelo" data-nav>El modelo</a><a href="#/inversion" data-nav>Inversión</a><a href="#/legal" data-nav>Estructura legal</a><a href="#/memorandum" data-nav>Memorándum</a></nav>
+    <nav class="navlinks"><a href="#/fractional" data-nav>Fractional</a><a href="#/traveling" data-nav>Traveling</a><a href="#/investing" data-nav>Investing</a><a href="#/legal" data-nav>Estructura legal</a><a href="#/nosotros" data-nav>Nosotros</a></nav>
     <a class="btn btn-sm" href="#/agendar">Agendar llamada <span class="arw">&rarr;</span></a>
     <button class="navtoggle" type="button" aria-expanded="false">Menú</button>
   </div>
-  <div class="navdrawer"><a href="#/residencias" data-nav>Residencias</a><a href="#/modelo" data-nav>El modelo</a><a href="#/inversion" data-nav>Inversión</a><a href="#/legal" data-nav>Estructura legal</a><a href="#/memorandum" data-nav>Memorándum</a><a href="#/nosotros" data-nav>Nosotros</a><a href="#/diario" data-nav>Diario</a><a href="#/preguntas" data-nav>Preguntas</a><a class="btn" href="#/agendar">Agendar llamada</a></div>
+  <div class="navdrawer"><a href="#/fractional" data-nav>Fractional</a><a href="#/traveling" data-nav>Traveling</a><a href="#/investing" data-nav>Investing</a><a href="#/legal" data-nav>Estructura legal</a><a href="#/nosotros" data-nav>Nosotros</a><a href="#/residencias" data-nav>Residencias</a><a href="#/numeros" data-nav>Los números</a><a href="#/yates" data-nav>Yates</a><a href="#/pool-de-rentas" data-nav>Pool de rentas</a><a href="#/memorandum" data-nav>Memorándum</a><a href="#/diario" data-nav>Diario</a><a href="#/preguntas" data-nav>Preguntas</a><a class="btn" href="#/agendar">Agendar llamada</a></div>
 </div>
 <div class="stickybar">
   <div class="wrap stickybar-in">
@@ -774,10 +916,144 @@ footer{background:var(--ink-block); color:#7C9095; border-top:1px solid rgba(201
     <button class="no" type="button">No, gracias &mdash; sigo mirando</button>
   </div>
 </div>
-<div class="route" data-route="/inicio"><section class="hero sec" id="top">
+<div class="route page " data-route="/inicio"><section class="hero sec" id="top">
+  <div class="wrap">
+    <p class="eyebrow">Riviera Nayarit, México</p>
+    <div class="namemap" style="margin-top:18px">
+      <span class="w1">Fractional</span><span class="w2">Travel</span>
+      <span class="amp">&amp;</span><span class="w3">Investing</span>
+    </div>
+    <p class="tagline" style="margin-top:14px">Own a piece of the places you love.</p>
+    <p class="lede measure" style="margin-top:24px">El nombre no es una frase: son tres negocios. Puede quedarse con
+      <strong>una fracción</strong> de una casa frente al mar, <strong>usar los servicios</strong> sin ser dueño de nada,
+      o <strong>comprar completo</strong> una casa o un terreno. La misma operación, la misma gente y los mismos notarios
+      atienden los tres caminos.</p>
+    <div class="hero-cta" style="margin-top:26px">
+      <a class="btn" href="#/agendar">Hablar con alguien <span class="arw">&rarr;</span></a>
+      <a class="btn btn-ghost" href="#/memorandum">Descargar el memorándum</a>
+    </div>
+    <div class="trustbar">
+      <div><b>3</b> divisiones, una operación</div>
+      <div><b>10</b> fracciones disponibles</div>
+      <div><b>3</b> yates propios</div>
+      <div><b>6</b> propiedades en venta</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec">
+    <div class="sec-head">
+      <div class="rail"><p class="folio">Las tres puertas</p></div>
+      <div><h2>Elija por dónde <em>entra.</em></h2>
+      <p class="lede measure" style="margin-top:16px">No hay una puerta mejor que otra: hay una que corresponde a lo que usted quiere. Si no está seguro, entre por la que más se le parezca y en la llamada lo acomodamos.</p></div>
+    </div>
+    <div class="doors">
+      <a class="door div-fractional" href="#/fractional">
+        <span class="what">División 01</span>
+        <span class="word">Fractional</span>
+        <p>Una octava parte de una residencia de lujo, escriturada a su nombre. Seis semanas y media de uso al año y renta administrada el resto del tiempo.</p>
+        <ul><li>Desde USD $120,000</li><li>Escritura pública e indiviso</li><li>Tres residencias, ocho dueños cada una</li></ul>
+        <span class="go">Ver la división <span>&rarr;</span></span>
+      </a>
+      <a class="door div-traveling" href="#/traveling">
+        <span class="what">División 02</span>
+        <span class="word">Traveling</span>
+        <p>Yates propios, experiencias en la bahía, chef y traslados. Y para quien ya tiene casa aquí, el pool de rentas que la opera y le rinde cuentas.</p>
+        <ul><li>Tres embarcaciones propias</li><li>Islas Marietas, ballenas, pesca y golf</li><li>Pool de rentas sin exclusividad</li></ul>
+        <span class="go">Ver la división <span>&rarr;</span></span>
+      </a>
+      <a class="door div-investing" href="#/investing">
+        <span class="what">División 03</span>
+        <span class="word">Investing</span>
+        <p>Propiedad completa: casas terminadas y terrenos, del lote unifamiliar al macrolote apto para desarrollo. Sin copropietarios y sin reglamento de uso.</p>
+        <ul><li>Casas desde USD $780,000</li><li>Terrenos desde USD $165,000</li><li>Expediente completo antes de firmar</li></ul>
+        <span class="go">Ver la división <span>&rarr;</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec">
+    <div class="sec-head">
+      <div class="rail"><p class="folio">Por qué juntas</p></div>
+      <div><h2>Tres negocios que <em>se necesitan.</em></h2>
+      <p class="lede measure" style="margin-top:16px">No es un conglomerado: cada división existe porque la anterior la hizo falta.</p></div>
+    </div>
+    <div class="grid3">
+      <div class="panel"><span class="folio">Origen</span><h3>Primero fueron las casas</h3><p>Empezamos vendiendo propiedad completa. El problema apareció rápido: mucha gente quería la casa pero iba a usarla seis semanas al año, y pagar cincuenta y dos no tenía sentido.</p></div>
+      <div class="panel"><span class="folio">Consecuencia</span><h3>De ahí salió el fraccional</h3><p>Partir la casa en ocho resolvía la aritmética, pero obligaba a operarla de verdad: calendario, mantenimiento, huéspedes y cuentas claras entre ocho dueños que no se conocen.</p></div>
+      <div class="panel"><span class="folio">Consecuencia</span><h3>Y la operación se volvió negocio</h3><p>Para operar bien hicieron falta barcos, chef, traslados y un pool de rentas. Funcionó tan bien que se abrió a cualquiera, sea dueño o no. Eso es Traveling.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec">
+    <div class="sec-head">
+      <div class="rail"><p class="folio">Lo común</p></div>
+      <div><h2>Lo que no cambia <em>entre las tres.</em></h2></div>
+    </div>
+    <div class="reassure"><div><p class="h">Nada cuesta hasta la escritura</p><p>La llamada, el memorándum, la visita y el expediente completo no tienen costo ni le comprometen a nada.</p></div><div><p class="h">El apartado es reembolsable</p><p>Durante todo el periodo de due diligence puede retirarse y se le devuelve íntegro. Está en la carta de intención.</p></div><div><p class="h">Ve el expediente antes de firmar</p><p>Avalúo, libertad de gravamen, reglamento y fideicomiso llegan a sus manos antes de que firme nada.</p></div><div><p class="h">Puede salir cuando quiera</p><p>La fracción se vende como cualquier inmueble. No hay penalización ni plazo forzoso.</p></div></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec">
+    <div class="sec-head">
+      <div class="rail"><p class="folio">Voces</p></div>
+      <div><h2>Quiénes ya <em>firmaron.</em></h2></div>
+    </div>
+    <div class="testi-feature">
+  <div class="holder r45"><span class="mark"></span><span class="what">Retrato del copropietario</span><span class="spec">4:5 &middot; 1200×1500</span></div>
+  <div>
+    <span class="sample">Muestra &mdash; sustituir por testimonio verificado</span>
+    <blockquote style="margin-top:14px">Comparé una casa completa en Punta de Mita contra esto durante casi un año. Lo que me decidió no fue el precio: fue darme cuenta de que iba a usarla seis semanas y pagar cincuenta y dos.</blockquote>
+    <div class="testi-meta"><span class="name">Nombre del copropietario</span><span class="where">Residencia Marea &middot; Ciudad</span><span class="since">Copropietario desde 2024</span></div>
+  </div>
+</div>
+<div class="testi-grid"><figure class="testi">
+  <span class="sample">Muestra</span>
+  <blockquote>El primer calendario me daba miedo. Elegí tercero, me tocó Semana Santa, y al año siguiente elegí sexto y también salí bien. La rotación funciona.</blockquote>
+  <figcaption class="who"><div class="holder"><span class="mark"></span><span class="what">Foto</span></div><span><span class="n">Nombre</span><span class="s">Villa Sayulita Alta &middot; 2023</span></span></figcaption>
+</figure><figure class="testi">
+  <span class="sample">Muestra</span>
+  <blockquote>El reporte de renta llega el día 10 de cada trimestre, con el detalle de noches y tarifas. No he tenido que perseguir a nadie por un número.</blockquote>
+  <figcaption class="who"><div class="holder"><span class="mark"></span><span class="what">Foto</span></div><span><span class="n">Nombre</span><span class="s">Residencia Marea &middot; 2024</span></span></figcaption>
+</figure><figure class="testi">
+  <span class="sample">Muestra</span>
+  <blockquote>Vendí media fracción el año pasado a un conocido. Escritura, notario y quince días. Eso es lo que no existe en un tiempo compartido.</blockquote>
+  <figcaption class="who"><div class="holder"><span class="mark"></span><span class="what">Foto</span></div><span><span class="n">Nombre</span><span class="s">Penthouse Nayar &middot; 2022</span></span></figcaption>
+</figure></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec"><div class="capture">
+  <div>
+    <h3>¿No sabe por cuál <em>de las tres?</em></h3>
+    <p>Déjenos su correo y le mandamos el panorama de las tres divisiones en un solo documento: qué cuesta entrar en cada una, qué recibe y en qué se diferencia. Sin llamada de por medio.</p>
+  </div>
+  <form class="mini" data-mini data-done="Enviado" id="hubMemo">
+    <input type="email" name="email" placeholder="Correo electrónico" required aria-label="Correo electrónico">
+    <button class="btn" type="submit">Enviarme el panorama <span class="arw">&rarr;</span></button>
+    <p class="fine">Un solo correo con el documento adjunto. Ni listas, ni seguimiento automático, ni terceros.</p>
+    <p class="form-ok">Listo. Le llega en unos minutos; si no aparece, revise la carpeta de promociones.</p>
+  </form>
+</div></div>
+</section>
+<section class="ribbon">
+  <div class="wrap">
+    <div><h2>Tres divisiones. <em>Una conversación.</em></h2><p>Cuéntenos qué busca y le decimos por cuál de las tres empezar, aunque acabe siendo ninguna.</p></div>
+    <a class="btn" href="#/agendar">Hablar con alguien <span class="arw">&rarr;</span></a>
+  </div>
+</section>
+</div>
+<div class="route page div-fractional" data-route="/fractional"><section class="hero sec" id="top">
   <div class="wrap hero-grid">
     <div class="hero-copy">
-      <p class="eyebrow">Nuevo Vallarta &middot; Bucerías &middot; Sayulita</p>
+      <p class="eyebrow">División Fractional &middot; Nuevo Vallarta, Bucerías y Sayulita</p>
       <h1>La casa frente al mar, dividida entre ocho. La escritura, <em>a su nombre.</em></h1>
       <p class="tagline">Own a piece of the places you love.</p>
       <p class="lede measure">Copropiedad fraccional de residencias de lujo en Riviera Nayarit desde <span class="num">USD&nbsp;$120,000</span>. Seis semanas de uso al año, renta administrada el resto del tiempo, y una participación real en la plusvalía del inmueble. <strong>No es tiempo compartido. No son puntos. No es una membresía.</strong></p>
@@ -966,14 +1242,23 @@ footer{background:var(--ink-block); color:#7C9095; border-top:1px solid rgba(201
   </form>
 </div></div>
 </section>
+<section>
+  <div class="wrap sec" style="padding-block:clamp(44px,5vw,72px)">
+    <div class="sec-head" style="margin-bottom:26px">
+      <div class="rail"><p class="folio">Las tres divisiones</p></div>
+      <div><h2 style="font-size:clamp(1.5rem,2.6vw,2rem)">Lo demás que hacemos</h2></div>
+    </div>
+    <div class="divbar"><a class="f" href="#/fractional" aria-current="page"><span class="w">Fractional</span><span class="d">Copropiedad escriturada</span></a><a class="t" href="#/traveling"><span class="w">Traveling</span><span class="d">Yates, experiencias y rentas</span></a><a class="i" href="#/investing"><span class="w">Investing</span><span class="d">Casas y terrenos completos</span></a></div>
+  </div>
+</section>
 <section class="ribbon">
   <div class="wrap">
-    <div><h2>Ocho dueños por casa. <em>Ni uno más.</em></h2><p>Empiece por el memorándum: las cifras auditadas del ejercicio anterior, sin llamada de por medio.</p></div>
+    <div><h2>Ocho dueños por casa. <em>Ni uno más.</em></h2><p>Empiece por el memorándum: cifras auditadas del ejercicio anterior, sin llamada de por medio.</p></div>
     <a class="btn" href="#/memorandum">Descargar el memorándum <span class="arw">&rarr;</span></a>
   </div>
 </section>
 </div>
-<div class="route" data-route="/residencias"><section class="pagehead">
+<div class="route page div-fractional" data-route="/residencias"><section class="pagehead">
   <div class="wrap">
     <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><span style="opacity:1">Residencias</span></nav>
     <h1>Residencias</h1>
@@ -1053,6 +1338,15 @@ footer{background:var(--ink-block); color:#7C9095; border-top:1px solid rgba(201
   </form>
 </div></div>
 </section>
+<section>
+  <div class="wrap sec" style="padding-block:clamp(44px,5vw,72px)">
+    <div class="sec-head" style="margin-bottom:26px">
+      <div class="rail"><p class="folio">Las tres divisiones</p></div>
+      <div><h2 style="font-size:clamp(1.5rem,2.6vw,2rem)">Lo demás que hacemos</h2></div>
+    </div>
+    <div class="divbar"><a class="f" href="#/fractional"><span class="w">Fractional</span><span class="d">Copropiedad escriturada</span></a><a class="t" href="#/traveling"><span class="w">Traveling</span><span class="d">Yates, experiencias y rentas</span></a><a class="i" href="#/investing"><span class="w">Investing</span><span class="d">Casas y terrenos completos</span></a></div>
+  </div>
+</section>
 <section class="ribbon">
   <div class="wrap">
     <div><h2>Quedan <em>10</em> fracciones de veinticuatro.</h2><p>Cuando una casa completa sus ocho copropietarios, se cierra y no la volvemos a abrir.</p></div>
@@ -1060,7 +1354,7 @@ footer{background:var(--ink-block); color:#7C9095; border-top:1px solid rgba(201
   </div>
 </section>
 </div>
-<div class="route" data-route="/residencia-marea"><section class="pagehead">
+<div class="route page div-fractional" data-route="/residencia-marea"><section class="pagehead">
   <div class="wrap">
     <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><a href="#/residencias">Residencias</a><span>/</span><span style="opacity:1">Residencia Marea</span></nav>
     <h1>Residencia Marea</h1>
@@ -1113,8 +1407,17 @@ footer{background:var(--ink-block); color:#7C9095; border-top:1px solid rgba(201
   </form>
 </div></div>
 </section>
+<section>
+  <div class="wrap sec" style="padding-block:clamp(44px,5vw,72px)">
+    <div class="sec-head" style="margin-bottom:26px">
+      <div class="rail"><p class="folio">Las tres divisiones</p></div>
+      <div><h2 style="font-size:clamp(1.5rem,2.6vw,2rem)">Lo demás que hacemos</h2></div>
+    </div>
+    <div class="divbar"><a class="f" href="#/fractional"><span class="w">Fractional</span><span class="d">Copropiedad escriturada</span></a><a class="t" href="#/traveling"><span class="w">Traveling</span><span class="d">Yates, experiencias y rentas</span></a><a class="i" href="#/investing"><span class="w">Investing</span><span class="d">Casas y terrenos completos</span></a></div>
+  </div>
+</section>
 </div>
-<div class="route" data-route="/residencia-sayulita-alta"><section class="pagehead">
+<div class="route page div-fractional" data-route="/residencia-sayulita-alta"><section class="pagehead">
   <div class="wrap">
     <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><a href="#/residencias">Residencias</a><span>/</span><span style="opacity:1">Villa Sayulita Alta</span></nav>
     <h1>Villa Sayulita Alta</h1>
@@ -1167,8 +1470,17 @@ footer{background:var(--ink-block); color:#7C9095; border-top:1px solid rgba(201
   </form>
 </div></div>
 </section>
+<section>
+  <div class="wrap sec" style="padding-block:clamp(44px,5vw,72px)">
+    <div class="sec-head" style="margin-bottom:26px">
+      <div class="rail"><p class="folio">Las tres divisiones</p></div>
+      <div><h2 style="font-size:clamp(1.5rem,2.6vw,2rem)">Lo demás que hacemos</h2></div>
+    </div>
+    <div class="divbar"><a class="f" href="#/fractional"><span class="w">Fractional</span><span class="d">Copropiedad escriturada</span></a><a class="t" href="#/traveling"><span class="w">Traveling</span><span class="d">Yates, experiencias y rentas</span></a><a class="i" href="#/investing"><span class="w">Investing</span><span class="d">Casas y terrenos completos</span></a></div>
+  </div>
+</section>
 </div>
-<div class="route" data-route="/residencia-nayar"><section class="pagehead">
+<div class="route page div-fractional" data-route="/residencia-nayar"><section class="pagehead">
   <div class="wrap">
     <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><a href="#/residencias">Residencias</a><span>/</span><span style="opacity:1">Penthouse Nayar</span></nav>
     <h1>Penthouse Nayar</h1>
@@ -1221,8 +1533,17 @@ footer{background:var(--ink-block); color:#7C9095; border-top:1px solid rgba(201
   </form>
 </div></div>
 </section>
+<section>
+  <div class="wrap sec" style="padding-block:clamp(44px,5vw,72px)">
+    <div class="sec-head" style="margin-bottom:26px">
+      <div class="rail"><p class="folio">Las tres divisiones</p></div>
+      <div><h2 style="font-size:clamp(1.5rem,2.6vw,2rem)">Lo demás que hacemos</h2></div>
+    </div>
+    <div class="divbar"><a class="f" href="#/fractional"><span class="w">Fractional</span><span class="d">Copropiedad escriturada</span></a><a class="t" href="#/traveling"><span class="w">Traveling</span><span class="d">Yates, experiencias y rentas</span></a><a class="i" href="#/investing"><span class="w">Investing</span><span class="d">Casas y terrenos completos</span></a></div>
+  </div>
+</section>
 </div>
-<div class="route" data-route="/modelo"><section class="pagehead">
+<div class="route page div-fractional" data-route="/modelo"><section class="pagehead">
   <div class="wrap">
     <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><span style="opacity:1">Cómo funciona</span></nav>
     <h1>Cómo funciona</h1>
@@ -1270,14 +1591,23 @@ footer{background:var(--ink-block); color:#7C9095; border-top:1px solid rgba(201
     <div class="note" style="margin-top:28px"><b>El calendario se cierra en septiembre</b> para el año siguiente, y se publica en la plataforma de reservas el mismo día. A partir de ahí sólo cambia por intercambio entre copropietarios.</div>
   </div>
 </section>
+<section>
+  <div class="wrap sec" style="padding-block:clamp(44px,5vw,72px)">
+    <div class="sec-head" style="margin-bottom:26px">
+      <div class="rail"><p class="folio">Las tres divisiones</p></div>
+      <div><h2 style="font-size:clamp(1.5rem,2.6vw,2rem)">Lo demás que hacemos</h2></div>
+    </div>
+    <div class="divbar"><a class="f" href="#/fractional"><span class="w">Fractional</span><span class="d">Copropiedad escriturada</span></a><a class="t" href="#/traveling"><span class="w">Traveling</span><span class="d">Yates, experiencias y rentas</span></a><a class="i" href="#/investing"><span class="w">Investing</span><span class="d">Casas y terrenos completos</span></a></div>
+  </div>
+</section>
 <section class="ribbon">
   <div class="wrap">
     <div><h2>Ya entiende el modelo. <em>Ahora los números.</em></h2><p>La calculadora corre sobre supuestos declarados y editables, y termina en un escenario que le podemos mandar por escrito.</p></div>
-    <a class="btn" href="#/inversion">Calcular mi rendimiento <span class="arw">&rarr;</span></a>
+    <a class="btn" href="#/numeros">Calcular mi rendimiento <span class="arw">&rarr;</span></a>
   </div>
 </section>
 </div>
-<div class="route" data-route="/inversion"><section class="pagehead">
+<div class="route page div-fractional" data-route="/numeros"><section class="pagehead">
   <div class="wrap">
     <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><span style="opacity:1">Los números</span></nav>
     <h1>Los números</h1>
@@ -1349,6 +1679,15 @@ footer{background:var(--ink-block); color:#7C9095; border-top:1px solid rgba(201
     </div>
   </div>
 </section>
+<section>
+  <div class="wrap sec" style="padding-block:clamp(44px,5vw,72px)">
+    <div class="sec-head" style="margin-bottom:26px">
+      <div class="rail"><p class="folio">Las tres divisiones</p></div>
+      <div><h2 style="font-size:clamp(1.5rem,2.6vw,2rem)">Lo demás que hacemos</h2></div>
+    </div>
+    <div class="divbar"><a class="f" href="#/fractional"><span class="w">Fractional</span><span class="d">Copropiedad escriturada</span></a><a class="t" href="#/traveling"><span class="w">Traveling</span><span class="d">Yates, experiencias y rentas</span></a><a class="i" href="#/investing"><span class="w">Investing</span><span class="d">Casas y terrenos completos</span></a></div>
+  </div>
+</section>
 <section class="ribbon">
   <div class="wrap">
     <div><h2>Los números cuadran. <em>¿Y la casa?</em></h2><p>Las tres residencias, con fracciones disponibles y cifras auditadas por separado.</p></div>
@@ -1356,7 +1695,425 @@ footer{background:var(--ink-block); color:#7C9095; border-top:1px solid rgba(201
   </div>
 </section>
 </div>
-<div class="route" data-route="/legal"><section class="pagehead">
+<div class="route page div-fractional" data-route="/memorandum"><section class="pagehead">
+  <div class="wrap">
+    <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><span style="opacity:1">El memorándum</span></nav>
+    <h1>El memorándum</h1>
+    <p class="lede measure">Es el documento que usaría su contador, no un folleto. Cifras auditadas del ejercicio anterior, la cuota de operación partida renglón por renglón, el reglamento de uso completo y el contrato de fideicomiso modelo.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec" style="padding-top:0">
+    <div class="capture">
+      <div>
+        <h3>Qué trae <em>adentro</em></h3>
+        <p style="margin-bottom:14px">Treinta y dos páginas, sin adjetivos:</p>
+        <ul style="margin:0; padding-left:20px; color:var(--text-dim); font-size:.93rem; line-height:1.9">
+          <li>Estado de resultados de la residencia, ejercicio anterior completo</li>
+          <li>Ocupación real mes a mes y tarifa media obtenida por temporada</li>
+          <li>Cuota de operación desglosada: predial, seguro, personal, alberca, reserva</li>
+          <li>Avalúo bancario y certificado de libertad de gravamen</li>
+          <li>Reglamento de uso y mecánica de rotación del calendario</li>
+          <li>Contrato de fideicomiso modelo y costo de constitución</li>
+          <li>Fracciones colocadas y disponibles, con fecha de corte</li>
+        </ul>
+      </div>
+      <form class="mini" data-mini data-done="Enviado" id="memoForm">
+        <select name="residencia" required aria-label="Residencia"><option value="">¿De qué residencia?</option><option>Residencia Marea &mdash; Nuevo Vallarta · frente de playa</option><option>Villa Sayulita Alta &mdash; Sayulita · colina con vista</option><option>Penthouse Nayar &mdash; Bucerías · penthouse</option><option>Las tres</option></select>
+        <input type="email" name="email" placeholder="Correo electrónico" required aria-label="Correo electrónico">
+        <input type="tel" name="telefono" placeholder="WhatsApp (opcional)" aria-label="WhatsApp">
+        <button class="btn" type="submit">Enviarme el memorándum <span class="arw">&rarr;</span></button>
+        <p class="fine">Un solo correo con el documento adjunto. Ni listas, ni seguimiento automático, ni terceros. Si después quiere hablar con alguien, lo pide usted.</p>
+        <p class="form-ok">Listo. Le llega en unos minutos; si no aparece, revise la carpeta de promociones.</p>
+      </form>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Sin compromiso</p></div>
+      <div><h2>Por qué lo damos <em>sin pedir nada a cambio.</em></h2>
+      <p class="lede measure" style="margin-top:16px">Porque el documento descalifica a más gente de la que convence, y eso nos ahorra tiempo a los dos. Quien lo lee y sigue interesado, ya sabe dónde se está metiendo.</p></div></div>
+    <div class="reassure"><div><p class="h">Nada cuesta hasta la escritura</p><p>La llamada, el memorándum, la visita y el expediente completo no tienen costo ni le comprometen a nada.</p></div><div><p class="h">El apartado es reembolsable</p><p>Durante todo el periodo de due diligence puede retirarse y se le devuelve íntegro. Está en la carta de intención.</p></div><div><p class="h">Ve el expediente antes de firmar</p><p>Avalúo, libertad de gravamen, reglamento y fideicomiso llegan a sus manos antes de que firme nada.</p></div><div><p class="h">Puede salir cuando quiera</p><p>La fracción se vende como cualquier inmueble. No hay penalización ni plazo forzoso.</p></div></div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">El camino</p></div>
+      <div><h2>Dónde está usted <em>ahora.</em></h2></div></div>
+    <div class="ladder"><a class="rung here" href="#/memorandum" style="text-decoration:none; color:inherit"><span class="n">Peldaño 01</span><h4>El memorándum</h4><p>Cifras auditadas del ejercicio anterior, reglamento de uso y contrato de fideicomiso modelo, de la residencia que le interese.</p><p class="cost">Su correo</p></a><a class="rung" href="#/inversion" style="text-decoration:none; color:inherit"><span class="n">Peldaño 02</span><h4>Su escenario por escrito</h4><p>Tomamos los números que usted movió en la calculadora y le devolvemos el cálculo con las cifras reales de esa residencia.</p><p class="cost">Correo y WhatsApp</p></a><a class="rung" href="#/agendar" style="text-decoration:none; color:inherit"><span class="n">Peldaño 03</span><h4>La llamada de calificación</h4><p>Cuarenta y cinco minutos con quien opera las casas. Si el modelo no le conviene, se lo decimos ahí mismo.</p><p class="cost">45 minutos</p></a><a class="rung" href="#/agendar" style="text-decoration:none; color:inherit"><span class="n">Peldaño 04</span><h4>La visita</h4><p>Recorrido de las residencias disponibles, presencial o guiado por video. Sin apartado de por medio.</p><p class="cost">Media jornada</p></a><a class="rung" href="#/agendar" style="text-decoration:none; color:inherit"><span class="n">Peldaño 05</span><h4>Apartado y escritura</h4><p>Carta de intención, apartado reembolsable, due diligence y firma ante notario.</p><p class="cost">8 a 12 semanas</p></a></div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec" style="padding-block:clamp(44px,5vw,72px)">
+    <div class="sec-head" style="margin-bottom:26px">
+      <div class="rail"><p class="folio">Las tres divisiones</p></div>
+      <div><h2 style="font-size:clamp(1.5rem,2.6vw,2rem)">Lo demás que hacemos</h2></div>
+    </div>
+    <div class="divbar"><a class="f" href="#/fractional"><span class="w">Fractional</span><span class="d">Copropiedad escriturada</span></a><a class="t" href="#/traveling"><span class="w">Traveling</span><span class="d">Yates, experiencias y rentas</span></a><a class="i" href="#/investing"><span class="w">Investing</span><span class="d">Casas y terrenos completos</span></a></div>
+  </div>
+</section>
+<section class="ribbon">
+  <div class="wrap">
+    <div><h2>Cuando lo haya leído, <em>hablamos.</em></h2><p>Cuarenta y cinco minutos con quien opera las casas, y sólo si usted lo pide.</p></div>
+    <a class="btn" href="#/agendar">Agendar la llamada <span class="arw">&rarr;</span></a>
+  </div>
+</section>
+</div>
+<div class="route page div-traveling" data-route="/traveling"><section class="pagehead">
+  <div class="wrap">
+    <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><span style="opacity:1">Traveling</span></nav>
+    <h1>Traveling</h1>
+    <p class="lede measure">La operación de servicio de la casa: yates, experiencias en la bahía, chef, traslados y logística. Existe porque las casas necesitaban operarse bien, y acabó siendo un negocio propio abierto a cualquiera, sea o no copropietario.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec" style="padding-top:0">
+    <div class="sec-head"><div class="rail"><p class="folio">La flota</p></div>
+      <div><h2>Tres barcos, <em>y un capitán que conoce la bahía.</em></h2>
+      <p class="lede measure" style="margin-top:16px">Embarcaciones propias, no intermediación. Eso fija la tarifa, el mantenimiento y quién responde si algo falla a veinte millas de la costa.</p></div></div>
+    <div class="fleet"><article class="vessel">
+  <div class="holder r32"><span class="mark"></span><span class="what">Yate en navegación, banda de estribor</span><span class="spec">3:2 &middot; 2000×1333</span></div>
+  <div class="vessel-b">
+    <div><p class="cls">Yate a motor &middot; día completo</p><h3>Azimut 55</h3></div>
+    <dl><dt>Eslora</dt><dd>16.8 m</dd><dt>Capacidad</dt><dd>12 pasajeros</dd><dt>Cabinas</dt><dd>3 cabinas</dd><dt>Tripulación</dt><dd>Capitán y marinero</dd></dl>
+    <p class="cls" style="margin-top:-4px">Salida: Marina Nuevo Vallarta</p>
+    <div class="rate"><span>USD por salida</span><b class="num">$2,400</b></div>
+  </div>
+</article><article class="vessel">
+  <div class="holder r32"><span class="mark"></span><span class="what">Cubierta de proa con solárium</span><span class="spec">3:2 &middot; 2000×1333</span></div>
+  <div class="vessel-b">
+    <div><p class="cls">Deportivo &middot; medio día</p><h3>Sea Ray 38</h3></div>
+    <dl><dt>Eslora</dt><dd>11.6 m</dd><dt>Capacidad</dt><dd>8 pasajeros</dd><dt>Cabinas</dt><dd>1 cabina</dd><dt>Tripulación</dt><dd>Capitán</dd></dl>
+    <p class="cls" style="margin-top:-4px">Salida: Marina Nuevo Vallarta</p>
+    <div class="rate"><span>USD por salida</span><b class="num">$1,150</b></div>
+  </div>
+</article><article class="vessel">
+  <div class="holder r32"><span class="mark"></span><span class="what">Catamarán fondeado en Islas Marietas</span><span class="spec">3:2 &middot; 2000×1333</span></div>
+  <div class="vessel-b">
+    <div><p class="cls">Catamarán &middot; día completo</p><h3>Catamarán Lagoon 46</h3></div>
+    <dl><dt>Eslora</dt><dd>14.0 m</dd><dt>Capacidad</dt><dd>20 pasajeros</dd><dt>Cabinas</dt><dd>4 cabinas</dd><dt>Tripulación</dt><dd>Capitán, marinero y anfitrión</dd></dl>
+    <p class="cls" style="margin-top:-4px">Salida: Marina Riviera Nayarit</p>
+    <div class="rate"><span>USD por salida</span><b class="num">$3,200</b></div>
+  </div>
+</article></div>
+    <div class="note" style="margin-top:28px"><b>Las tarifas son por salida</b> e incluyen tripulación, combustible dentro de la bahía, hielo y agua. Bebidas, alimentos y permisos de reserva se cotizan aparte.</div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Experiencias</p></div>
+      <div><h2>Lo que se puede hacer <em>en la bahía.</em></h2></div></div>
+    <div class="grid3"><div class="panel"><h3>Islas Marietas</h3><p>Navegación a la reserva de la biosfera, con permiso de acceso gestionado y guía certificado. El cupo diario está limitado por decreto, así que se reserva con semanas de anticipación.</p></div><div class="panel"><h3>Avistamiento de ballenas</h3><p>De diciembre a marzo, con biólogo a bordo y distancia de aproximación conforme a la NOM-131. Salidas de media jornada desde Nuevo Vallarta.</p></div><div class="panel"><h3>Pesca deportiva</h3><p>Salidas de altura por pez vela, dorado y marlín, con equipo Shimano y captura y liberación. De ocho a diez horas, según temporada.</p></div><div class="panel"><h3>Golf en la bahía</h3><p>Tee times en los campos de la zona, traslado incluido y caddie a solicitud. Se coordina con su calendario de estancia.</p></div><div class="panel"><h3>Chef y servicio en casa</h3><p>Menú a convenir, compra, servicio y limpieza. Para una cena o para toda la estancia.</p></div><div class="panel"><h3>Traslados y logística</h3><p>Recepción en el aeropuerto de Puerto Vallarta, vehículo con chofer y coordinación de llegadas escalonadas.</p></div></div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Para dueños</p></div>
+      <div><h2>¿Tiene casa aquí <em>y está vacía?</em></h2>
+      <p class="lede measure" style="margin-top:16px">El pool de rentas la opera por usted: la rentamos, la mantenemos y le reportamos. Usted decide qué semanas se queda.</p></div></div>
+    <div><a class="btn" href="#/pool-de-rentas">Ver el pool de rentas <span class="arw">&rarr;</span></a></div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec"><div class="capture">
+  <div>
+    <h3>¿Fecha en mente? <em>Le cotizamos.</em></h3>
+    <p>Díganos qué días, cuántas personas y qué le gustaría hacer. Le devolvemos disponibilidad real y una propuesta con precio cerrado, sin anticipo para cotizar.</p>
+  </div>
+  <form class="mini" data-mini data-done="Solicitud enviada" id="travCot">
+    <input type="email" name="email" placeholder="Correo electrónico" required aria-label="Correo electrónico"><input type="tel" name="telefono" placeholder="WhatsApp (opcional)" aria-label="WhatsApp">
+    <button class="btn" type="submit">Pedir disponibilidad <span class="arw">&rarr;</span></button>
+    <p class="fine">Le respondemos por WhatsApp o correo en el mismo día hábil. Cotizar no aparta la fecha; la fecha se aparta con el anticipo.</p>
+    <p class="form-ok">Listo. Le llega en unos minutos; si no aparece, revise la carpeta de promociones.</p>
+  </form>
+</div></div>
+</section>
+<section>
+  <div class="wrap sec" style="padding-block:clamp(44px,5vw,72px)">
+    <div class="sec-head" style="margin-bottom:26px">
+      <div class="rail"><p class="folio">Las tres divisiones</p></div>
+      <div><h2 style="font-size:clamp(1.5rem,2.6vw,2rem)">Lo demás que hacemos</h2></div>
+    </div>
+    <div class="divbar"><a class="f" href="#/fractional"><span class="w">Fractional</span><span class="d">Copropiedad escriturada</span></a><a class="t" href="#/traveling" aria-current="page"><span class="w">Traveling</span><span class="d">Yates, experiencias y rentas</span></a><a class="i" href="#/investing"><span class="w">Investing</span><span class="d">Casas y terrenos completos</span></a></div>
+  </div>
+</section>
+<section class="ribbon">
+  <div class="wrap">
+    <div><h2>¿Tiene fecha? <em>Nosotros tenemos barco.</em></h2><p>Disponibilidad real y propuesta con precio cerrado, en el mismo día hábil.</p></div>
+    <a class="btn" href="#/yates">Ver la flota <span class="arw">&rarr;</span></a>
+  </div>
+</section>
+</div>
+<div class="route page div-traveling" data-route="/yates"><section class="pagehead">
+  <div class="wrap">
+    <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><a href="#/traveling">Traveling</a><span>/</span><span style="opacity:1">Flota</span></nav>
+    <h1>Flota</h1>
+    <p class="lede measure">Tres embarcaciones propias con base en Nuevo Vallarta. Propias, no intermediadas: eso fija la tarifa, el mantenimiento y quién responde si algo falla a veinte millas de la costa.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec" style="padding-top:0">
+    <div class="fleet"><article class="vessel">
+  <div class="holder r32"><span class="mark"></span><span class="what">Yate en navegación, banda de estribor</span><span class="spec">3:2 &middot; 2000×1333</span></div>
+  <div class="vessel-b">
+    <div><p class="cls">Yate a motor &middot; día completo</p><h3>Azimut 55</h3></div>
+    <dl><dt>Eslora</dt><dd>16.8 m</dd><dt>Capacidad</dt><dd>12 pasajeros</dd><dt>Cabinas</dt><dd>3 cabinas</dd><dt>Tripulación</dt><dd>Capitán y marinero</dd></dl>
+    <p class="cls" style="margin-top:-4px">Salida: Marina Nuevo Vallarta</p>
+    <div class="rate"><span>USD por salida</span><b class="num">$2,400</b></div>
+  </div>
+</article><article class="vessel">
+  <div class="holder r32"><span class="mark"></span><span class="what">Cubierta de proa con solárium</span><span class="spec">3:2 &middot; 2000×1333</span></div>
+  <div class="vessel-b">
+    <div><p class="cls">Deportivo &middot; medio día</p><h3>Sea Ray 38</h3></div>
+    <dl><dt>Eslora</dt><dd>11.6 m</dd><dt>Capacidad</dt><dd>8 pasajeros</dd><dt>Cabinas</dt><dd>1 cabina</dd><dt>Tripulación</dt><dd>Capitán</dd></dl>
+    <p class="cls" style="margin-top:-4px">Salida: Marina Nuevo Vallarta</p>
+    <div class="rate"><span>USD por salida</span><b class="num">$1,150</b></div>
+  </div>
+</article><article class="vessel">
+  <div class="holder r32"><span class="mark"></span><span class="what">Catamarán fondeado en Islas Marietas</span><span class="spec">3:2 &middot; 2000×1333</span></div>
+  <div class="vessel-b">
+    <div><p class="cls">Catamarán &middot; día completo</p><h3>Catamarán Lagoon 46</h3></div>
+    <dl><dt>Eslora</dt><dd>14.0 m</dd><dt>Capacidad</dt><dd>20 pasajeros</dd><dt>Cabinas</dt><dd>4 cabinas</dd><dt>Tripulación</dt><dd>Capitán, marinero y anfitrión</dd></dl>
+    <p class="cls" style="margin-top:-4px">Salida: Marina Riviera Nayarit</p>
+    <div class="rate"><span>USD por salida</span><b class="num">$3,200</b></div>
+  </div>
+</article></div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Qué incluye</p></div>
+      <div><h2>Lo que entra <em>en la tarifa.</em></h2></div></div>
+    <div class="grid2">
+      <div class="panel"><span class="folio">Incluido</span><h3>Tripulación y combustible</h3><p>Capitán con licencia vigente, marinero y combustible para navegación dentro de la Bahía de Banderas. Hielo, agua embotellada, toallas y equipo de snorkel a bordo.</p></div>
+      <div class="panel"><span class="folio">Aparte</span><h3>Alimentos, bebidas y permisos</h3><p>Catering y bebidas se cotizan según menú. El permiso de acceso a Islas Marietas se paga por persona y tiene cupo diario limitado por decreto, así que se gestiona con anticipación.</p></div>
+      <div class="panel"><span class="folio">Reserva</span><h3>Anticipo del 50%</h3><p>La fecha se aparta con la mitad; el resto el día de la salida. Cancelación sin costo hasta 72 horas antes. Si el capitán cancela por mar, se reprograma o se reembolsa completo.</p></div>
+      <div class="panel"><span class="folio">Seguridad</span><h3>Póliza y equipo vigente</h3><p>Seguro de pasajeros, chalecos para todos los tripulantes incluidos menores, balsa y radio VHF. El capitán decide si se sale: si el parte marítimo no acompaña, no se navega.</p></div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec"><div class="capture">
+  <div>
+    <h3>Díganos <em>la fecha.</em></h3>
+    <p>Cuántas personas, qué día y qué le gustaría hacer. Le devolvemos disponibilidad real de las tres embarcaciones y una propuesta con precio cerrado.</p>
+  </div>
+  <form class="mini" data-mini data-done="Solicitud enviada" id="yateCot">
+    <input type="email" name="email" placeholder="Correo electrónico" required aria-label="Correo electrónico"><input type="tel" name="telefono" placeholder="WhatsApp (opcional)" aria-label="WhatsApp">
+    <button class="btn" type="submit">Pedir disponibilidad <span class="arw">&rarr;</span></button>
+    <p class="fine">Respondemos el mismo día hábil. Cotizar no aparta la fecha; la fecha se aparta con el anticipo.</p>
+    <p class="form-ok">Listo. Le llega en unos minutos; si no aparece, revise la carpeta de promociones.</p>
+  </form>
+</div></div>
+</section>
+<section>
+  <div class="wrap sec" style="padding-block:clamp(44px,5vw,72px)">
+    <div class="sec-head" style="margin-bottom:26px">
+      <div class="rail"><p class="folio">Las tres divisiones</p></div>
+      <div><h2 style="font-size:clamp(1.5rem,2.6vw,2rem)">Lo demás que hacemos</h2></div>
+    </div>
+    <div class="divbar"><a class="f" href="#/fractional"><span class="w">Fractional</span><span class="d">Copropiedad escriturada</span></a><a class="t" href="#/traveling"><span class="w">Traveling</span><span class="d">Yates, experiencias y rentas</span></a><a class="i" href="#/investing"><span class="w">Investing</span><span class="d">Casas y terrenos completos</span></a></div>
+  </div>
+</section>
+<section class="ribbon">
+  <div class="wrap">
+    <div><h2>La bahía se ve mejor <em>desde el agua.</em></h2><p>Díganos días, personas y qué le gustaría hacer. Cotizar no cuesta ni aparta la fecha.</p></div>
+    <a class="btn" href="#/agendar">Pedir disponibilidad <span class="arw">&rarr;</span></a>
+  </div>
+</section>
+</div>
+<div class="route page div-traveling" data-route="/pool-de-rentas"><section class="pagehead">
+  <div class="wrap">
+    <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><a href="#/traveling">Traveling</a><span>/</span><span style="opacity:1">Pool de rentas</span></nav>
+    <h1>Pool de rentas</h1>
+    <p class="lede measure">Usted pone la casa. Nosotros la operamos, la rentamos y le rendimos cuentas cada trimestre. Sin exclusividad perpetua y sin cuota de entrada.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec" style="padding-top:0">
+    <div class="pool">
+      <div><p class="n">Tiempo 01</p><h3>Usted reserva sus semanas</h3><p>Antes de que empiece el año marca las fechas que se queda. Esas semanas quedan bloqueadas y nadie las toca. No hay mínimo de semanas que ceder.</p><p class="fig num">0<small>Semanas obligatorias</small></p></div>
+      <div><p class="n">Tiempo 02</p><h3>Nosotros operamos el resto</h3><p>Publicación en canales, tarifa dinámica por temporada, recepción de huéspedes, limpieza entre estancias, mantenimiento preventivo y depósito de daños.</p><p class="fig num">22%<small>Comisión sobre lo rentado</small></p></div>
+      <div><p class="n">Tiempo 03</p><h3>Le reportamos y le pagamos</h3><p>Estado trimestral con noches, tarifas obtenidas, gastos y neto. Transferencia el día 10 del mes siguiente al cierre, con CFDI.</p><p class="fig num">10<small>Día de pago, cada trimestre</small></p></div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Condiciones</p></div>
+      <div><h2>Lo que hace distinto <em>a este pool.</em></h2></div></div>
+    <div class="grid2">
+      <div class="panel"><span class="folio">Condición 01</span><h3>Sin exclusividad perpetua</h3><p>El contrato es anual y se renueva sólo si usted quiere. Puede salir al término con 60 días de aviso, sin penalización ni recompra de nada.</p></div>
+      <div class="panel"><span class="folio">Condición 02</span><h3>Sin cuota de entrada</h3><p>No se cobra alta, ni fotografía, ni «puesta a punto». Si la casa necesita obra para rentarse, se lo decimos con presupuesto y usted decide si la hace.</p></div>
+      <div class="panel"><span class="folio">Condición 03</span><h3>Su casa no entra a un fondo común</h3><p>Se renta su casa y usted cobra lo que su casa generó. No repartimos ingresos entre propiedades: quien tiene mejor casa cobra más, y quien la tiene peor lo ve en su estado.</p></div>
+      <div class="panel"><span class="folio">Condición 04</span><h3>Cuentas separadas</h3><p>Los depósitos de huéspedes y los ingresos no se mezclan con la operación de la administradora. Un concurso mercantil nuestro no alcanza su dinero.</p></div>
+    </div>
+    <div class="note" style="margin-top:28px"><b>Qué casas aceptamos.</b> Zona de Nuevo Vallarta, Bucerías, La Cruz, Punta de Mita y Sayulita; mínimo dos recámaras; alberca propia o del condominio; y disposición a mantener un estándar de mobiliario. No aceptamos todas: si su casa no va a rentarse bien, se lo decimos antes de firmar.</div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec"><div class="capture">
+  <div>
+    <h3>Cuéntenos <em>de su casa.</em></h3>
+    <p>Ubicación, recámaras y si tiene alberca. Le devolvemos una estimación de ingreso anual basada en lo que rentan casas comparables que ya operamos, con el desglose de temporada alta y baja.</p>
+  </div>
+  <form class="mini" data-mini data-done="Solicitud enviada" id="poolAlta">
+    <input type="email" name="email" placeholder="Correo electrónico" required aria-label="Correo electrónico"><input type="tel" name="telefono" placeholder="WhatsApp (opcional)" aria-label="WhatsApp">
+    <button class="btn" type="submit">Pedir la estimación <span class="arw">&rarr;</span></button>
+    <p class="fine">La estimación es gratuita y no compromete a nada. Si su casa no encaja en el pool, se lo decimos en esa misma respuesta.</p>
+    <p class="form-ok">Listo. Le llega en unos minutos; si no aparece, revise la carpeta de promociones.</p>
+  </form>
+</div></div>
+</section>
+<section>
+  <div class="wrap sec" style="padding-block:clamp(44px,5vw,72px)">
+    <div class="sec-head" style="margin-bottom:26px">
+      <div class="rail"><p class="folio">Las tres divisiones</p></div>
+      <div><h2 style="font-size:clamp(1.5rem,2.6vw,2rem)">Lo demás que hacemos</h2></div>
+    </div>
+    <div class="divbar"><a class="f" href="#/fractional"><span class="w">Fractional</span><span class="d">Copropiedad escriturada</span></a><a class="t" href="#/traveling"><span class="w">Traveling</span><span class="d">Yates, experiencias y rentas</span></a><a class="i" href="#/investing"><span class="w">Investing</span><span class="d">Casas y terrenos completos</span></a></div>
+  </div>
+</section>
+<section class="ribbon">
+  <div class="wrap">
+    <div><h2>Su casa vacía <em>cuesta dinero.</em></h2><p>Le estimamos el ingreso anual con lo que rentan casas comparables que ya operamos.</p></div>
+    <a class="btn" href="#/agendar">Pedir la estimación <span class="arw">&rarr;</span></a>
+  </div>
+</section>
+</div>
+<div class="route page div-investing" data-route="/investing"><section class="pagehead">
+  <div class="wrap">
+    <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><span style="opacity:1">Investing</span></nav>
+    <h1>Investing</h1>
+    <p class="lede measure">Propiedad completa: casas terminadas y terrenos en Riviera Nayarit. Sin fracciones, sin copropietarios y sin reglamento de uso. Usted escritura el cien por ciento y decide qué hacer con el inmueble.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec" style="padding-top:0">
+    <div class="sec-head"><div class="rail"><p class="folio">Casas</p></div>
+      <div><h2>Tres casas <em>en propiedad completa.</em></h2></div></div>
+    <div class="listing"><a class="lot" href="#/agendar">
+  <div class="holder r43"><span class="mark"></span><span class="what">Fachada &mdash; Casa Altamar</span><span class="spec">4:3 &middot; 1600×1200</span></div>
+  <div>
+    <p class="where">Punta de Mita &middot; frente de golf</p>
+    <h3>Casa Altamar</h3>
+    <p>Obra terminada en un desarrollo con acceso controlado y campo de golf. Se vende amueblada y con historial de renta de los últimos dos ejercicios.</p>
+    <div class="tags"><span>380 m&sup2;</span><span>620 m&sup2; de terreno</span><span>4 recámaras</span><span>Entrega inmediata</span></div>
+  </div>
+  <div class="money"><span>Precio</span><b class="num">$1,450,000</b><span class="per">Renta estimada 6.2% anual</span></div>
+</a><a class="lot" href="#/agendar">
+  <div class="holder r43"><span class="mark"></span><span class="what">Fachada &mdash; Casa Tamarindo</span><span class="spec">4:3 &middot; 1600×1200</span></div>
+  <div>
+    <p class="where">La Cruz de Huanacaxtle &middot; a tres calles del mar</p>
+    <h3>Casa Tamarindo</h3>
+    <p>La opción de mejor rendimiento del inventario: precio de entrada moderado y una zona con ocupación pareja todo el año por la marina y el mercado del domingo.</p>
+    <div class="tags"><span>240 m&sup2;</span><span>410 m&sup2; de terreno</span><span>3 recámaras</span><span>Escritura lista</span></div>
+  </div>
+  <div class="money"><span>Precio</span><b class="num">$780,000</b><span class="per">Renta estimada 7.1% anual</span></div>
+</a><a class="lot" href="#/agendar">
+  <div class="holder r43"><span class="mark"></span><span class="what">Fachada &mdash; Villa Monteverde</span><span class="spec">4:3 &middot; 1600×1200</span></div>
+  <div>
+    <p class="where">Sayulita &middot; ladera con vista</p>
+    <h3>Villa Monteverde</h3>
+    <p>En construcción, con avance del 70%. Admite cambios de acabados si se aparta ahora, y el precio se congela a la firma.</p>
+    <div class="tags"><span>295 m&sup2;</span><span>500 m&sup2; de terreno</span><span>4 recámaras</span><span>Entrega en 6 meses</span></div>
+  </div>
+  <div class="money"><span>Precio</span><b class="num">$1,120,000</b><span class="per">Renta estimada 6.8% anual</span></div>
+</a></div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Terrenos</p></div>
+      <div><h2>Y tres superficies <em>para construir.</em></h2>
+      <p class="lede measure" style="margin-top:16px">Desde un lote unifamiliar hasta un macrolote apto para desarrollo. Todos con escritura limpia y servicios verificados.</p></div></div>
+    <div class="listing"><a class="lot" href="#/agendar">
+  <div class="holder r43"><span class="mark"></span><span class="what">Fachada &mdash; Lote Punta Negra</span><span class="spec">4:3 &middot; 1600×1200</span></div>
+  <div>
+    <p class="where">Punta de Mita &middot; segunda línea</p>
+    <h3>Lote Punta Negra</h3>
+    <p>Esquina con dos frentes y vista al mar desde el segundo nivel. Servidumbre de paso a playa por el condominio vecino, ya escriturada.</p>
+    <div class="tags"><span>800 m&sup2;</span><span>Uso habitacional, hasta 3 niveles</span><span>Servicios a pie de lote</span></div>
+  </div>
+  <div class="money"><span>Precio</span><b class="num">$420,000</b><span class="per">USD $525 por m&sup2;</span></div>
+</a><a class="lot" href="#/agendar">
+  <div class="holder r43"><span class="mark"></span><span class="what">Fachada &mdash; Lotes La Higuera</span><span class="spec">4:3 &middot; 1600×1200</span></div>
+  <div>
+    <p class="where">San Pancho &middot; interior</p>
+    <h3>Lotes La Higuera</h3>
+    <p>Fraccionamiento nuevo con calles y servicios terminados. Precio por lote; hay descuento por la compra de dos o más contiguos.</p>
+    <div class="tags"><span>500 m&sup2;</span><span>Uso habitacional, hasta 2 niveles</span><span>Seis lotes disponibles</span></div>
+  </div>
+  <div class="money"><span>Precio</span><b class="num">$165,000</b><span class="per">USD $330 por m&sup2;</span></div>
+</a><a class="lot" href="#/agendar">
+  <div class="holder r43"><span class="mark"></span><span class="what">Fachada &mdash; Macrolote Bahía</span><span class="spec">4:3 &middot; 1600×1200</span></div>
+  <div>
+    <p class="where">Litibú &middot; frente de golf</p>
+    <h3>Macrolote Bahía</h3>
+    <p>Superficie apta para un proyecto de doce a dieciséis unidades. Se entrega con estudio de factibilidad, levantamiento topográfico y anteproyecto.</p>
+    <div class="tags"><span>4,200 m&sup2;</span><span>Uso mixto, densidad media</span><span>Apto para desarrollo</span></div>
+  </div>
+  <div class="money"><span>Precio</span><b class="num">$1,900,000</b><span class="per">USD $452 por m&sup2;</span></div>
+</a></div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Por qué aquí</p></div>
+      <div><h2>La tesis de <em>Riviera Nayarit.</em></h2></div></div>
+    <div class="grid3">
+      <div class="panel"><span class="folio">Argumento 01</span><h3>Aeropuerto y conectividad</h3><p>Puerto Vallarta recibe vuelo directo desde más de treinta ciudades de Norteamérica. Eso sostiene la demanda de renta y acorta el mercado de reventa: el comprador puede venir a verla el fin de semana.</p></div>
+      <div class="panel"><span class="folio">Argumento 02</span><h3>Suelo limitado</h3><p>El corredor entre Nuevo Vallarta y Punta de Mita está acotado por la sierra y por la reserva. No hay superficie nueva de frente de playa; lo que se construye ahora es sobre lo poco que queda.</p></div>
+      <div class="panel"><span class="folio">Argumento 03</span><h3>Doble demanda</h3><p>La misma casa sirve al comprador de segunda residencia y al operador de renta vacacional. Dos mercados sobre el mismo inventario sostienen mejor el precio en un ciclo malo.</p></div>
+    </div>
+    <div class="note" style="margin-top:28px"><b>Ningún argumento es una garantía.</b> El valor de un inmueble puede bajar, y una zona bien conectada también se corrige. Estos son los motivos por los que nosotros compramos aquí, no una promesa de rendimiento.</div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Lo mismo aplica</p></div>
+      <div><h2>La estructura legal <em>no cambia.</em></h2>
+      <p class="lede measure" style="margin-top:16px">Comprar entero o comprar una fracción se escritura igual: notario público, Registro Público de la Propiedad y, si usted es extranjero, fideicomiso bancario en zona restringida.</p></div></div>
+    <div><a class="btn btn-ghost" href="#/legal">Ver la estructura legal <span class="arw">&rarr;</span></a></div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec"><div class="capture">
+  <div>
+    <h3>La ficha completa <em>de la que le interese.</em></h3>
+    <p>Plano, escritura, certificado de libertad de gravamen, avalúo y, en las casas terminadas, el historial de renta de los dos ejercicios anteriores. Un correo con el expediente adjunto.</p>
+  </div>
+  <form class="mini" data-mini data-done="Solicitud enviada" id="invFicha">
+    <input type="email" name="email" placeholder="Correo electrónico" required aria-label="Correo electrónico"><input type="tel" name="telefono" placeholder="WhatsApp (opcional)" aria-label="WhatsApp">
+    <button class="btn" type="submit">Pedir la ficha <span class="arw">&rarr;</span></button>
+    <p class="fine">Le llega el expediente de la propiedad que indique. Si prefiere verla en persona, coordinamos el recorrido sin compromiso.</p>
+    <p class="form-ok">Listo. Le llega en unos minutos; si no aparece, revise la carpeta de promociones.</p>
+  </form>
+</div></div>
+</section>
+<section>
+  <div class="wrap sec" style="padding-block:clamp(44px,5vw,72px)">
+    <div class="sec-head" style="margin-bottom:26px">
+      <div class="rail"><p class="folio">Las tres divisiones</p></div>
+      <div><h2 style="font-size:clamp(1.5rem,2.6vw,2rem)">Lo demás que hacemos</h2></div>
+    </div>
+    <div class="divbar"><a class="f" href="#/fractional"><span class="w">Fractional</span><span class="d">Copropiedad escriturada</span></a><a class="t" href="#/traveling"><span class="w">Traveling</span><span class="d">Yates, experiencias y rentas</span></a><a class="i" href="#/investing" aria-current="page"><span class="w">Investing</span><span class="d">Casas y terrenos completos</span></a></div>
+  </div>
+</section>
+<section class="ribbon">
+  <div class="wrap">
+    <div><h2>Propiedad completa, <em>sin reglamento de uso.</em></h2><p>Plano, escritura, libertad de gravamen, avalúo y el historial de renta de las casas terminadas.</p></div>
+    <a class="btn" href="#/agendar">Pedir la ficha <span class="arw">&rarr;</span></a>
+  </div>
+</section>
+</div>
+<div class="route page " data-route="/legal"><section class="pagehead">
   <div class="wrap">
     <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><span style="opacity:1">Estructura legal</span></nav>
     <h1>Estructura legal</h1>
@@ -1424,7 +2181,7 @@ footer{background:var(--ink-block); color:#7C9095; border-top:1px solid rgba(201
   </div>
 </section>
 </div>
-<div class="route" data-route="/copropietarios"><section class="pagehead">
+<div class="route page div-fractional" data-route="/copropietarios"><section class="pagehead">
   <div class="wrap">
     <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><span style="opacity:1">Copropietarios</span></nav>
     <h1>Copropietarios</h1>
@@ -1483,6 +2240,15 @@ footer{background:var(--ink-block); color:#7C9095; border-top:1px solid rgba(201
     </div>
   </div>
 </section>
+<section>
+  <div class="wrap sec" style="padding-block:clamp(44px,5vw,72px)">
+    <div class="sec-head" style="margin-bottom:26px">
+      <div class="rail"><p class="folio">Las tres divisiones</p></div>
+      <div><h2 style="font-size:clamp(1.5rem,2.6vw,2rem)">Lo demás que hacemos</h2></div>
+    </div>
+    <div class="divbar"><a class="f" href="#/fractional"><span class="w">Fractional</span><span class="d">Copropiedad escriturada</span></a><a class="t" href="#/traveling"><span class="w">Traveling</span><span class="d">Yates, experiencias y rentas</span></a><a class="i" href="#/investing"><span class="w">Investing</span><span class="d">Casas y terrenos completos</span></a></div>
+  </div>
+</section>
 <section class="ribbon">
   <div class="wrap">
     <div><h2>Ocho personas por casa. <em>Falta usted.</em></h2><p>Cuarenta y cinco minutos con quien opera las residencias. Si el modelo no le conviene, se lo decimos ahí mismo.</p></div>
@@ -1490,7 +2256,7 @@ footer{background:var(--ink-block); color:#7C9095; border-top:1px solid rgba(201
   </div>
 </section>
 </div>
-<div class="route" data-route="/nosotros"><section class="pagehead">
+<div class="route page " data-route="/nosotros"><section class="pagehead">
   <div class="wrap">
     <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><span style="opacity:1">Quiénes somos</span></nav>
     <h1>Quiénes somos</h1>
@@ -1525,7 +2291,7 @@ footer{background:var(--ink-block); color:#7C9095; border-top:1px solid rgba(201
   </div>
 </section>
 </div>
-<div class="route" data-route="/diario"><section class="pagehead">
+<div class="route page " data-route="/diario"><section class="pagehead">
   <div class="wrap">
     <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><span style="opacity:1">Diario</span></nav>
     <h1>Diario</h1>
@@ -1546,64 +2312,7 @@ footer{background:var(--ink-block); color:#7C9095; border-top:1px solid rgba(201
   </div>
 </section>
 </div>
-<div class="route" data-route="/memorandum"><section class="pagehead">
-  <div class="wrap">
-    <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><span style="opacity:1">El memorándum</span></nav>
-    <h1>El memorándum</h1>
-    <p class="lede measure">Es el documento que usaría su contador, no un folleto. Cifras auditadas del ejercicio anterior, la cuota de operación partida renglón por renglón, el reglamento de uso completo y el contrato de fideicomiso modelo.</p>
-  </div>
-</section>
-
-<section>
-  <div class="wrap sec" style="padding-top:0">
-    <div class="capture">
-      <div>
-        <h3>Qué trae <em>adentro</em></h3>
-        <p style="margin-bottom:14px">Treinta y dos páginas, sin adjetivos:</p>
-        <ul style="margin:0; padding-left:20px; color:var(--text-dim); font-size:.93rem; line-height:1.9">
-          <li>Estado de resultados de la residencia, ejercicio anterior completo</li>
-          <li>Ocupación real mes a mes y tarifa media obtenida por temporada</li>
-          <li>Cuota de operación desglosada: predial, seguro, personal, alberca, reserva</li>
-          <li>Avalúo bancario y certificado de libertad de gravamen</li>
-          <li>Reglamento de uso y mecánica de rotación del calendario</li>
-          <li>Contrato de fideicomiso modelo y costo de constitución</li>
-          <li>Fracciones colocadas y disponibles, con fecha de corte</li>
-        </ul>
-      </div>
-      <form class="mini" data-mini data-done="Enviado" id="memoForm">
-        <select name="residencia" required aria-label="Residencia"><option value="">¿De qué residencia?</option><option>Residencia Marea &mdash; Nuevo Vallarta · frente de playa</option><option>Villa Sayulita Alta &mdash; Sayulita · colina con vista</option><option>Penthouse Nayar &mdash; Bucerías · penthouse</option><option>Las tres</option></select>
-        <input type="email" name="email" placeholder="Correo electrónico" required aria-label="Correo electrónico">
-        <input type="tel" name="telefono" placeholder="WhatsApp (opcional)" aria-label="WhatsApp">
-        <button class="btn" type="submit">Enviarme el memorándum <span class="arw">&rarr;</span></button>
-        <p class="fine">Un solo correo con el documento adjunto. Ni listas, ni seguimiento automático, ni terceros. Si después quiere hablar con alguien, lo pide usted.</p>
-        <p class="form-ok">Listo. Le llega en unos minutos; si no aparece, revise la carpeta de promociones.</p>
-      </form>
-    </div>
-  </div>
-</section>
-<section>
-  <div class="wrap sec">
-    <div class="sec-head"><div class="rail"><p class="folio">Sin compromiso</p></div>
-      <div><h2>Por qué lo damos <em>sin pedir nada a cambio.</em></h2>
-      <p class="lede measure" style="margin-top:16px">Porque el documento descalifica a más gente de la que convence, y eso nos ahorra tiempo a los dos. Quien lo lee y sigue interesado, ya sabe dónde se está metiendo.</p></div></div>
-    <div class="reassure"><div><p class="h">Nada cuesta hasta la escritura</p><p>La llamada, el memorándum, la visita y el expediente completo no tienen costo ni le comprometen a nada.</p></div><div><p class="h">El apartado es reembolsable</p><p>Durante todo el periodo de due diligence puede retirarse y se le devuelve íntegro. Está en la carta de intención.</p></div><div><p class="h">Ve el expediente antes de firmar</p><p>Avalúo, libertad de gravamen, reglamento y fideicomiso llegan a sus manos antes de que firme nada.</p></div><div><p class="h">Puede salir cuando quiera</p><p>La fracción se vende como cualquier inmueble. No hay penalización ni plazo forzoso.</p></div></div>
-  </div>
-</section>
-<section>
-  <div class="wrap sec">
-    <div class="sec-head"><div class="rail"><p class="folio">El camino</p></div>
-      <div><h2>Dónde está usted <em>ahora.</em></h2></div></div>
-    <div class="ladder"><a class="rung here" href="#/memorandum" style="text-decoration:none; color:inherit"><span class="n">Peldaño 01</span><h4>El memorándum</h4><p>Cifras auditadas del ejercicio anterior, reglamento de uso y contrato de fideicomiso modelo, de la residencia que le interese.</p><p class="cost">Su correo</p></a><a class="rung" href="#/inversion" style="text-decoration:none; color:inherit"><span class="n">Peldaño 02</span><h4>Su escenario por escrito</h4><p>Tomamos los números que usted movió en la calculadora y le devolvemos el cálculo con las cifras reales de esa residencia.</p><p class="cost">Correo y WhatsApp</p></a><a class="rung" href="#/agendar" style="text-decoration:none; color:inherit"><span class="n">Peldaño 03</span><h4>La llamada de calificación</h4><p>Cuarenta y cinco minutos con quien opera las casas. Si el modelo no le conviene, se lo decimos ahí mismo.</p><p class="cost">45 minutos</p></a><a class="rung" href="#/agendar" style="text-decoration:none; color:inherit"><span class="n">Peldaño 04</span><h4>La visita</h4><p>Recorrido de las residencias disponibles, presencial o guiado por video. Sin apartado de por medio.</p><p class="cost">Media jornada</p></a><a class="rung" href="#/agendar" style="text-decoration:none; color:inherit"><span class="n">Peldaño 05</span><h4>Apartado y escritura</h4><p>Carta de intención, apartado reembolsable, due diligence y firma ante notario.</p><p class="cost">8 a 12 semanas</p></a></div>
-  </div>
-</section>
-<section class="ribbon">
-  <div class="wrap">
-    <div><h2>Cuando lo haya leído, <em>hablamos.</em></h2><p>Cuarenta y cinco minutos con quien opera las casas, y sólo si usted lo pide.</p></div>
-    <a class="btn" href="#/agendar">Agendar la llamada <span class="arw">&rarr;</span></a>
-  </div>
-</section>
-</div>
-<div class="route" data-route="/preguntas"><section class="pagehead">
+<div class="route page " data-route="/preguntas"><section class="pagehead">
   <div class="wrap">
     <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><span style="opacity:1">Preguntas frecuentes</span></nav>
     <h1>Preguntas frecuentes</h1>
@@ -1616,12 +2325,12 @@ footer{background:var(--ink-block); color:#7C9095; border-top:1px solid rgba(201
 </section>
 <section class="ribbon">
   <div class="wrap">
-    <div><h2>¿Su pregunta no estaba? <em>Pregúntela.</em></h2><p>En la llamada se contestan todas antes de que firme nada. Y si prefiere leer primero, empiece por el memorándum.</p></div>
-    <a class="btn" href="#/agendar">Agendar la llamada <span class="arw">&rarr;</span></a>
+    <div><h2>¿Su pregunta no estaba? <em>Pregúntela.</em></h2><p>En la llamada se contestan todas antes de que firme nada.</p></div>
+    <a class="btn" href="#/agendar">Hablar con alguien <span class="arw">&rarr;</span></a>
   </div>
 </section>
 </div>
-<div class="route" data-route="/agendar"><section class="close-sec" id="agendar" style="border-top:none">
+<div class="route page " data-route="/agendar"><section class="close-sec" id="agendar" style="border-top:none">
   <div class="wrap sec close-grid">
     <div>
       <p class="eyebrow">Peldaño 03 &middot; La llamada</p>
@@ -1713,7 +2422,7 @@ footer{background:var(--ink-block); color:#7C9095; border-top:1px solid rgba(201
   </div>
 </section>
 </div>
-<div class="route" data-route="/avisos"><section class="pagehead">
+<div class="route page " data-route="/avisos"><section class="pagehead">
   <div class="wrap">
     <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><span style="opacity:1">Aviso legal y privacidad</span></nav>
     <h1>Aviso legal y privacidad</h1>
@@ -1740,7 +2449,7 @@ footer{background:var(--ink-block); color:#7C9095; border-top:1px solid rgba(201
 </section>
 </div><footer>
   <div class="wrap">
-    <div class="footnav"><div><h4>Residencias</h4><ul><li><a href="#/residencias" data-nav>Todas las residencias</a></li><li><a href="#/residencia-marea" data-nav>Residencia Marea</a></li><li><a href="#/residencia-sayulita-alta" data-nav>Villa Sayulita Alta</a></li><li><a href="#/residencia-nayar" data-nav>Penthouse Nayar</a></li></ul></div><div><h4>El modelo</h4><ul><li><a href="#/modelo" data-nav>Cómo funciona</a></li><li><a href="#/inversion" data-nav>Los números</a></li><li><a href="#/memorandum" data-nav>El memorándum</a></li><li><a href="#/legal" data-nav>Estructura legal</a></li><li><a href="#/preguntas" data-nav>Preguntas frecuentes</a></li></ul></div><div><h4>La operación</h4><ul><li><a href="#/nosotros" data-nav>Quiénes somos</a></li><li><a href="#/copropietarios" data-nav>Copropietarios</a></li><li><a href="#/diario" data-nav>Diario</a></li><li><a href="#/agendar" data-nav>Agendar una llamada</a></li></ul></div><div><h4>Legal</h4><ul><li><a href="#/avisos" data-nav>Aviso legal y privacidad</a></li></ul></div></div>
+    <div class="footnav"><div><h4>Fractional</h4><ul><li><a href="#/fractional" data-nav>La división</a></li><li><a href="#/residencias" data-nav>Residencias</a></li><li><a href="#/modelo" data-nav>Cómo funciona</a></li><li><a href="#/numeros" data-nav>Los números</a></li><li><a href="#/memorandum" data-nav>El memorándum</a></li></ul></div><div><h4>Traveling</h4><ul><li><a href="#/traveling" data-nav>La división</a></li><li><a href="#/yates" data-nav>Flota de yates</a></li><li><a href="#/pool-de-rentas" data-nav>Pool de rentas</a></li></ul></div><div><h4>Investing</h4><ul><li><a href="#/investing" data-nav>La división</a></li><li><a href="#/legal" data-nav>Estructura legal</a></li></ul></div><div><h4>La casa</h4><ul><li><a href="#/nosotros" data-nav>Quiénes somos</a></li><li><a href="#/copropietarios" data-nav>Copropietarios</a></li><li><a href="#/diario" data-nav>Diario</a></li><li><a href="#/preguntas" data-nav>Preguntas frecuentes</a></li><li><a href="#/agendar" data-nav>Hablar con alguien</a></li><li><a href="#/avisos" data-nav>Aviso legal</a></li></ul></div></div>
     <div class="foot-grid">
       <div class="foot-brand">
         <b>Fractional Travel &amp; Investing</b>

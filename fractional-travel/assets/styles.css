@@ -734,3 +734,145 @@ footer{background:var(--ink-block); color:#7C9095; border-top:1px solid rgba(201
   color:#C9A75E; margin:6px 0 8px;
 }
 .ribbon .tagline{color:#D9BE84; margin-bottom:10px; font-size:1.1rem}
+
+/* ============================================================
+   LAS TRES DIVISIONES
+   El cromo del sitio se queda en latón; el contenido de cada
+   división remapea el acento. Todos los componentes leen
+   var(--brass), así que basta con redefinirlo en el contenedor.
+   ============================================================ */
+.div-fractional{ --accent-name:"Fractional" }
+.div-traveling{
+  --brass:#2C6A59; --brass-soft:#4E8C7D; --brass-wash:rgba(78,140,125,.13);
+  --accent-name:"Traveling";
+}
+.div-investing{
+  --brass:#9B5A32; --brass-soft:#C97F5E; --brass-wash:rgba(201,127,94,.13);
+  --accent-name:"Investing";
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .div-traveling{
+    --brass:#63A48D; --brass-soft:#8CC4B0; --brass-wash:rgba(99,164,141,.11);
+  }
+  :root:not([data-theme="light"]) .div-investing{
+    --brass:#D9906B; --brass-soft:#E8B394; --brass-wash:rgba(217,144,107,.11);
+  }
+}
+:root[data-theme="dark"] .div-traveling{
+  --brass:#63A48D; --brass-soft:#8CC4B0; --brass-wash:rgba(99,164,141,.11);
+}
+:root[data-theme="dark"] .div-investing{
+  --brass:#D9906B; --brass-soft:#E8B394; --brass-wash:rgba(217,144,107,.11);
+}
+
+/* ---------- las tres puertas de la portada ---------- */
+.doors{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+@media (max-width:900px){.doors{grid-template-columns:1fr}}
+.door{
+  position:relative; display:flex; flex-direction:column; gap:16px; text-decoration:none;
+  color:inherit; border:var(--rule); border-radius:3px; background:var(--surface-2);
+  padding:clamp(24px,3vw,34px); overflow:hidden; transition:border-color .25s, transform .25s;
+}
+.door::before{content:""; position:absolute; inset:0 auto 0 0; width:3px; background:var(--brass)}
+.door:hover{transform:translateY(-3px); border-color:var(--brass-soft)}
+.door .word{
+  font-family:var(--display); font-size:clamp(1.7rem,3vw,2.3rem); line-height:1;
+  color:var(--brass); letter-spacing:-.01em;
+}
+.door .what{font-family:var(--mono); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; color:var(--text-faint)}
+.door p{font-size:.94rem; color:var(--text-dim); line-height:1.55}
+.door ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:7px}
+.door li{font-size:.88rem; color:var(--text-dim); display:flex; gap:9px; align-items:baseline}
+.door li::before{content:""; width:5px; height:5px; border-radius:1px; background:var(--brass); flex:none; transform:translateY(-2px)}
+.door .go{
+  margin-top:auto; padding-top:16px; border-top:var(--rule); font-family:var(--mono);
+  font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; color:var(--brass);
+  display:flex; justify-content:space-between; align-items:center;
+}
+
+/* ---------- el nombre como mapa, en el héroe ---------- */
+.namemap{display:flex; flex-wrap:wrap; align-items:baseline; gap:0 14px; margin-bottom:6px}
+.namemap span{
+  font-family:var(--display); font-size:clamp(2.1rem,5.2vw,3.9rem); line-height:1.05;
+  letter-spacing:-.02em; position:relative;
+}
+.namemap .w1{color:#C9A75E} .namemap .w2{color:#63A48D} .namemap .w3{color:#D9906B}
+:root:not([data-theme="dark"]) .namemap .w1{color:#8A6A1E}
+:root:not([data-theme="dark"]) .namemap .w2{color:#2C6A59}
+:root:not([data-theme="dark"]) .namemap .w3{color:#9B5A32}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .namemap .w1{color:#C9A75E}
+  :root:not([data-theme="light"]) .namemap .w2{color:#63A48D}
+  :root:not([data-theme="light"]) .namemap .w3{color:#D9906B}
+}
+.namemap .amp{color:var(--text-dim); font-style:italic; font-size:.72em; padding-inline:2px}
+
+/* ---------- flota de yates y experiencias ---------- */
+.fleet{display:grid; grid-template-columns:repeat(3,1fr); gap:20px}
+@media (max-width:940px){.fleet{grid-template-columns:1fr}}
+.vessel{border:var(--rule); border-radius:3px; background:var(--surface-2); overflow:hidden; display:flex; flex-direction:column}
+.vessel .holder{aspect-ratio:3/2; border:none; border-bottom:var(--rule); border-radius:0}
+.vessel-b{padding:20px; display:flex; flex-direction:column; gap:12px; flex:1}
+.vessel h3{font-size:1.1rem}
+.vessel .cls{font-family:var(--mono); font-size:.64rem; letter-spacing:.12em; text-transform:uppercase; color:var(--text-faint)}
+.vessel dl{display:grid; grid-template-columns:1fr 1fr; gap:8px 14px; margin:0}
+.vessel dt{font-family:var(--mono); font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint)}
+.vessel dd{margin:0 0 6px; font-family:var(--mono); font-size:.85rem; font-variant-numeric:tabular-nums}
+.vessel .rate{margin-top:auto; padding-top:14px; border-top:var(--rule); display:flex; justify-content:space-between; align-items:baseline}
+.vessel .rate b{font-family:var(--display); font-size:1.3rem; font-variant-numeric:tabular-nums}
+.vessel .rate span{font-family:var(--mono); font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint)}
+
+/* ---------- listado de propiedades en venta ---------- */
+.listing{border-top:var(--rule)}
+.lot{
+  display:grid; grid-template-columns:200px 1fr 210px; gap:26px; align-items:center;
+  padding:22px 0; border-bottom:var(--rule); text-decoration:none; color:inherit; transition:background .2s;
+}
+.lot:hover{background:var(--brass-wash)}
+.lot .holder{aspect-ratio:4/3; border-radius:2px}
+.lot h3{font-size:1.15rem; margin-bottom:6px}
+.lot .where{font-family:var(--mono); font-size:.64rem; letter-spacing:.12em; text-transform:uppercase; color:var(--text-faint); margin-bottom:8px}
+.lot p{font-size:.9rem; color:var(--text-dim)}
+.lot .tags{display:flex; flex-wrap:wrap; gap:6px 14px; margin-top:10px; font-family:var(--mono); font-size:.72rem; color:var(--text-dim)}
+.lot .money{text-align:right}
+.lot .money b{display:block; font-family:var(--display); font-size:1.5rem; font-variant-numeric:tabular-nums}
+.lot .money span{font-family:var(--mono); font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint)}
+.lot .money .per{color:var(--brass); font-family:var(--mono); font-size:.78rem; display:block; margin-top:4px}
+@media (max-width:820px){
+  .lot{grid-template-columns:1fr; gap:14px}
+  .lot .money{text-align:left}
+}
+
+/* ---------- el pool de rentas, en tres tiempos ---------- */
+.pool{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:var(--rule); border-radius:3px; overflow:hidden}
+@media (max-width:820px){.pool{grid-template-columns:1fr}}
+.pool > div{background:var(--surface-2); padding:26px 24px; display:flex; flex-direction:column; gap:10px}
+.pool .n{font-family:var(--mono); font-size:.66rem; letter-spacing:.13em; color:var(--brass)}
+.pool h3{font-size:1.12rem}
+.pool p{font-size:.91rem; color:var(--text-dim); line-height:1.55}
+.pool .fig{margin-top:auto; padding-top:12px; font-family:var(--display); font-size:1.7rem; color:var(--brass); font-variant-numeric:tabular-nums}
+.pool .fig small{display:block; font-family:var(--mono); font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint); margin-top:3px}
+
+/* ---------- cinta de divisiones en páginas interiores ---------- */
+.divbar{
+  display:flex; flex-wrap:wrap; gap:0; border:var(--rule); border-radius:3px;
+  overflow:hidden; margin-bottom:0;
+}
+.divbar a{
+  flex:1 1 200px; padding:14px 18px; text-decoration:none; background:var(--surface-2);
+  border-right:1px solid var(--line); transition:background .2s;
+}
+.divbar a:last-child{border-right:none}
+.divbar a:hover{background:var(--brass-wash)}
+.divbar a[aria-current]{background:var(--brass-wash)}
+.divbar .w{font-family:var(--display); font-size:1.05rem; display:block}
+.divbar .d{font-family:var(--mono); font-size:.62rem; letter-spacing:.11em; text-transform:uppercase; color:var(--text-faint); display:block; margin-top:3px}
+.divbar .f .w{color:#8A6A1E} .divbar .t .w{color:#2C6A59} .divbar .i .w{color:#9B5A32}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .divbar .f .w{color:#C9A75E}
+  :root:not([data-theme="light"]) .divbar .t .w{color:#63A48D}
+  :root:not([data-theme="light"]) .divbar .i .w{color:#D9906B}
+}
+:root[data-theme="dark"] .divbar .f .w{color:#C9A75E}
+:root[data-theme="dark"] .divbar .t .w{color:#63A48D}
+:root[data-theme="dark"] .divbar .i .w{color:#D9906B}
