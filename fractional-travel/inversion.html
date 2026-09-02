@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Los números &middot; La Fracción Nayarit</title>
+<meta name="description" content="Calculadora del modelo económico de una fracción, con los supuestos de ocupación, comisión y cuota declarados.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div class="topbar">
+  <div class="wrap topbar-in">
+    <a class="brand" href="index.html"><b>La Fracción</b><span>Nayarit</span></a>
+    <nav class="navlinks"><a href="residencias.html">Residencias</a><a href="modelo.html">El modelo</a><a href="inversion.html" aria-current="page">Inversión</a><a href="legal.html">Estructura legal</a><a href="copropietarios.html">Copropietarios</a></nav>
+    <a class="btn btn-sm" href="agendar.html">Agendar llamada <span class="arw">&rarr;</span></a>
+    <button class="navtoggle" type="button" aria-expanded="false">Menú</button>
+  </div>
+  <div class="navdrawer"><a href="residencias.html">Residencias</a><a href="modelo.html">El modelo</a><a href="inversion.html" aria-current="page">Inversión</a><a href="legal.html">Estructura legal</a><a href="copropietarios.html">Copropietarios</a><a href="nosotros.html">Nosotros</a><a href="diario.html">Diario</a><a href="preguntas.html">Preguntas</a><a class="btn" href="agendar.html">Agendar llamada</a></div>
+</div>
+<section class="pagehead">
+  <div class="wrap">
+    <nav class="crumbs"><a href="index.html">Inicio</a><span>/</span><span style="opacity:1">Los números</span></nav>
+    <h1>Los números</h1>
+    <p class="lede measure">Mueva las variables. La tabla se recalcula sobre supuestos conservadores de ocupación y tarifa para Riviera Nayarit, y todos los supuestos están escritos abajo.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec" style="padding-top:0"><div class="calc">
+  <div class="calc-controls">
+    <div class="ctl"><label for="cValue"><span class="lname">Valor de la residencia</span><span class="lval num" id="vValue">$1,120,000</span></label><input type="range" id="cValue" min="800000" max="2400000" step="40000" value="1120000"></div>
+    <div class="ctl"><label for="cFrac"><span class="lname">Fracciones que adquiere</span><span class="lval num" id="vFrac">1 / 8</span></label><input type="range" id="cFrac" min="1" max="4" step="1" value="1"></div>
+    <div class="ctl"><label for="cUse"><span class="lname">Semanas que realmente usa</span><span class="lval num" id="vUse">4</span></label><input type="range" id="cUse" min="0" max="26" step="1" value="4"></div>
+    <div class="ctl"><label for="cRate"><span class="lname">Tarifa promedio por noche</span><span class="lval num" id="vRate">$780</span></label><input type="range" id="cRate" min="380" max="1800" step="20" value="780"></div>
+    <div class="ctl"><label for="cApp"><span class="lname">Plusvalía anual estimada</span><span class="lval num" id="vApp">5.0%</span></label><input type="range" id="cApp" min="0" max="10" step="0.5" value="5"></div>
+  </div>
+  <div class="ledger">
+    <div class="ledger-h"><p class="folio">Estado anual estimado</p><p class="folio">USD</p></div>
+    <div class="ledger-row"><span class="k">Inversión inicial (su fracción)</span><span class="v num" id="rInv">$140,000</span></div>
+    <div class="ledger-row"><span class="k">Semanas asignadas al año</span><span class="v num" id="rWeeks">6.5</span></div>
+    <div class="ledger-row"><span class="k">Semanas que libera a renta</span><span class="v num" id="rFree">2.5</span></div>
+    <div class="ledger-row pos"><span class="k">Ingreso neto por renta <small>(tras 22% de administración)</small></span><span class="v num" id="rIncome">+$10,647</span></div>
+    <div class="ledger-row neg"><span class="k">Cuota de operación proporcional <small>(predial, seguro, mantenimiento, personal)</small></span><span class="v num" id="rFees">&minus;$9,800</span></div>
+    <div class="ledger-row pos"><span class="k">Plusvalía anual de su fracción</span><span class="v num" id="rApp">+$7,000</span></div>
+    <div class="ledger-row"><span class="k">Valor de las noches que usted disfruta</span><span class="v num" id="rEnjoy">$21,840</span></div>
+    <div class="ledger-row total"><span class="k">Rendimiento total del año</span><span class="v num" id="rTotal">+$29,687</span></div>
+    <p class="ledger-note">Cifras ilustrativas, no una garantía de rendimiento. Supuestos: ocupación del 62% sobre las semanas liberadas, comisión de administración del 22%, cuota anual de operación equivalente al 7% del valor de la fracción. La plusvalía es una estimación de mercado y puede ser negativa. Solicite el memorándum con las cifras auditadas de cada residencia.</p>
+  </div>
+</div></div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Supuestos</p></div>
+      <div><h2>De dónde salen <em>los números.</em></h2></div></div>
+    <div class="grid3">
+      <div class="panel"><span class="folio">Ocupación 62%</span><h3>Semanas liberadas</h3><p>Promedio conservador para renta vacacional administrada en Riviera Nayarit, contando temporada alta y baja. Las casas frente a playa suelen quedar por encima.</p></div>
+      <div class="panel"><span class="folio">Comisión 22%</span><h3>Administración</h3><p>Cubre canales de reserva, limpieza entre estancias, recepción de huéspedes, mantenimiento correctivo y reporte trimestral.</p></div>
+      <div class="panel"><span class="folio">Cuota 7%</span><h3>Operación anual</h3><p>Sobre el valor de su fracción: predial, seguro, mantenimiento preventivo, personal, jardinería, alberca y fondo de reserva.</p></div>
+    </div>
+    <div class="note" style="margin-top:28px"><b>Estas cifras son ilustrativas.</b> No son una garantía de rendimiento y la plusvalía puede ser negativa. El memorándum de cada residencia trae las cifras auditadas del ejercicio anterior; se entrega en la llamada de calificación.</div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Comparación</p></div>
+      <div><h2>La pregunta que <em>realmente</em> importa</h2>
+      <p class="lede measure" style="margin-top:16px">No es cuánto rinde la fracción. Es cuánto le cuesta hoy la alternativa que ya está usando.</p></div></div>
+    <div class="grid3">
+      <div class="panel"><span class="folio">Alternativa A</span><h3>Rentar cada año</h3><p>Seis semanas al año en casas equivalentes, a tarifa de mercado, son un gasto que no deja nada. En diez años supera con holgura el valor de una fracción, y usted sigue sin poseer nada.</p></div>
+      <div class="panel"><span class="folio">Alternativa B</span><h3>Comprar la casa entera</h3><p>Ocho veces el capital inmovilizado, el 100% de los costos fijos y un inmueble vacío cuarenta y seis semanas al año, salvo que usted quiera dedicarse a administrarlo.</p></div>
+      <div class="panel"><span class="folio">Alternativa C</span><h3>La fracción</h3><p>Un octavo del capital, un octavo de los costos, las mismas seis semanas y un activo escriturado que puede vender. La diferencia la absorbe la renta administrada.</p></div>
+    </div>
+  </div>
+</section>
+<section class="ribbon">
+  <div class="wrap">
+    <div><h2>Ocho dueños por casa. <em>Ni uno más.</em></h2><p>Una llamada de cuarenta y cinco minutos basta para saber si el modelo le conviene. Si no le conviene, se lo decimos en esa misma llamada.</p></div>
+    <a class="btn" href="agendar.html">Agendar llamada de calificación <span class="arw">&rarr;</span></a>
+  </div>
+</section>
+<footer>
+  <div class="wrap">
+    <div class="footnav"><div><h4>Residencias</h4><ul><li><a href="residencias.html">Todas las residencias</a></li><li><a href="residencia-marea.html">Residencia Marea</a></li><li><a href="residencia-sayulita-alta.html">Villa Sayulita Alta</a></li><li><a href="residencia-nayar.html">Penthouse Nayar</a></li></ul></div><div><h4>El modelo</h4><ul><li><a href="modelo.html">Cómo funciona</a></li><li><a href="inversion.html">Los números</a></li><li><a href="legal.html">Estructura legal</a></li><li><a href="preguntas.html">Preguntas frecuentes</a></li></ul></div><div><h4>La operación</h4><ul><li><a href="nosotros.html">Quiénes somos</a></li><li><a href="copropietarios.html">Copropietarios</a></li><li><a href="diario.html">Diario</a></li><li><a href="agendar.html">Agendar una llamada</a></li></ul></div><div><h4>Legal</h4><ul><li><a href="avisos.html">Aviso legal y privacidad</a></li></ul></div></div>
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <b>La Fracción &mdash; Nayarit</b>
+        <span class="folio">Copropiedad fraccional escriturada &middot; Riviera Nayarit, México</span>
+      </div>
+      <div class="foot-brand">
+        <span class="folio">Contacto</span>
+        <p style="font-family:var(--mono); font-size:.8rem; margin-top:6px">Nuevo Vallarta, Nayarit<br>hola@fractional-travel-investing.com</p>
+      </div>
+    </div>
+    <p class="disclaimer">Aviso: la información de este sitio tiene fines informativos y no constituye una oferta pública de valores, asesoría de inversión, fiscal o legal. Las cifras de rendimiento, plusvalía y ocupación son estimaciones ilustrativas basadas en supuestos de mercado y no garantizan resultados futuros; el valor de un inmueble puede disminuir. Toda operación se formaliza mediante escritura pública ante notario mexicano y se rige por el memorándum informativo y el reglamento de copropiedad correspondientes, documentos que prevalecen sobre cualquier contenido de esta página. Consulte a su asesor fiscal y legal antes de invertir.</p>
+  </div>
+</footer>
+<script src="assets/site.js"></script>
+</body>
+</html>

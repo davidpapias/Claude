@@ -1,0 +1,1513 @@
+<title>La Fracción Nayarit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* ============================================================
+   LA FRACCIÓN NAYARIT — sistema de diseño
+   Tinta oceánica · latón antiguo · verdigrís
+   ============================================================ */
+:root{
+  --surface:#FBF9F4; --surface-2:#F1ECE1; --surface-3:#E7E0D1;
+  --line:#D8CFBC; --line-soft:#E6DFD0;
+  --text:#122228; --text-dim:#55666B; --text-faint:#8A9598;
+  --brass:#8A6A1E; --brass-soft:#B8944D; --brass-wash:rgba(184,148,77,.13);
+  --verdigris:#2C6A59; --alert:#9B4722;
+  --ink-block:#0A1A20;
+  --shadow:0 1px 2px rgba(18,34,40,.05), 0 12px 32px -18px rgba(18,34,40,.28);
+  --display:"Bodoni Moda", "Didot", Georgia, serif;
+  --body:"Archivo", "Helvetica Neue", Arial, sans-serif;
+  --mono:"IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+  --gutter:clamp(20px, 5vw, 64px);
+  --rule:1px solid var(--line);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --surface:#08171C; --surface-2:#0E2129; --surface-3:#142C34;
+    --line:#1E3A42; --line-soft:#173038;
+    --text:#EDE8DC; --text-dim:#9AACAF; --text-faint:#6B8085;
+    --brass:#C9A75E; --brass-soft:#D9BE84; --brass-wash:rgba(201,167,94,.10);
+    --verdigris:#63A48D; --alert:#D98B62;
+    --ink-block:#040E12;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 18px 40px -22px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --surface:#08171C; --surface-2:#0E2129; --surface-3:#142C34;
+  --line:#1E3A42; --line-soft:#173038;
+  --text:#EDE8DC; --text-dim:#9AACAF; --text-faint:#6B8085;
+  --brass:#C9A75E; --brass-soft:#D9BE84; --brass-wash:rgba(201,167,94,.10);
+  --verdigris:#63A48D; --alert:#D98B62;
+  --ink-block:#040E12;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 18px 40px -22px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--surface); color:var(--text);
+  font-family:var(--body); font-size:16.5px; line-height:1.62;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *{animation-duration:.001ms !important; transition-duration:.001ms !important}
+}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--brass); outline-offset:3px; border-radius:2px}
+
+.wrap{max-width:1200px; margin:0 auto; padding-inline:var(--gutter)}
+.measure{max-width:62ch}
+
+/* ---------- tipografía ---------- */
+h1,h2,h3{font-family:var(--display); font-weight:400; text-wrap:balance; margin:0}
+h1{font-size:clamp(2.5rem, 6.2vw, 4.6rem); line-height:1.02; letter-spacing:-.015em}
+h2{font-size:clamp(1.9rem, 3.6vw, 2.9rem); line-height:1.08; letter-spacing:-.01em}
+h3{font-size:1.22rem; line-height:1.25}
+h1 em, h2 em{font-style:italic; color:var(--brass)}
+p{margin:0}
+.lede{font-size:clamp(1.05rem,1.6vw,1.22rem); color:var(--text-dim); line-height:1.6}
+.eyebrow{
+  font-family:var(--mono); font-size:.7rem; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--brass); font-weight:500;
+}
+.folio{font-family:var(--mono); font-size:.68rem; letter-spacing:.14em; color:var(--text-faint); text-transform:uppercase}
+.num{font-family:var(--mono); font-variant-numeric:tabular-nums; font-feature-settings:"tnum"}
+
+/* ---------- barra superior ---------- */
+.topbar{
+  position:sticky; top:0; z-index:60; background:color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter:blur(14px); border-bottom:var(--rule);
+}
+.topbar-in{display:flex; align-items:center; gap:24px; height:62px}
+.brand{display:flex; align-items:baseline; gap:10px; text-decoration:none; margin-right:auto}
+.brand b{font-family:var(--display); font-weight:500; font-size:1.12rem; letter-spacing:.01em}
+.brand span{font-family:var(--mono); font-size:.62rem; letter-spacing:.18em; color:var(--text-faint); text-transform:uppercase}
+.navlinks{display:flex; gap:26px}
+.navlinks a{font-size:.86rem; color:var(--text-dim); text-decoration:none; padding-block:4px; border-bottom:1px solid transparent; transition:color .2s, border-color .2s}
+.navlinks a:hover{color:var(--text); border-color:var(--brass)}
+@media (max-width:900px){.navlinks{display:none}}
+
+/* ---------- botones ---------- */
+.btn{
+  display:inline-flex; align-items:center; gap:10px; font-family:var(--body);
+  font-size:.9rem; font-weight:500; letter-spacing:.005em; text-decoration:none;
+  padding:13px 22px; border:1px solid var(--brass); border-radius:2px; cursor:pointer;
+  background:var(--brass); color:var(--surface); transition:transform .18s, box-shadow .18s, background .18s;
+}
+.btn:hover{transform:translateY(-1px); box-shadow:0 8px 22px -12px var(--brass)}
+.btn-ghost{background:transparent; color:var(--text); border-color:var(--line)}
+.btn-ghost:hover{border-color:var(--brass); color:var(--brass); box-shadow:none}
+.btn-sm{padding:9px 16px; font-size:.82rem}
+.btn .arw{font-family:var(--mono); font-size:.85em; opacity:.8}
+
+/* ---------- secciones ---------- */
+section{border-top:var(--rule)}
+.sec{padding-block:clamp(64px, 8vw, 116px)}
+.sec-head{display:grid; grid-template-columns:120px 1fr; gap:32px; align-items:start; margin-bottom:52px}
+.sec-head .rail{padding-top:.55rem; border-top:2px solid var(--brass); align-self:start}
+@media (max-width:820px){
+  .sec-head{grid-template-columns:1fr; gap:16px; margin-bottom:36px}
+  .sec-head .rail{border-top:none; padding-top:0}
+}
+
+/* ============================================================
+   HÉROE — el libro de fracciones
+   ============================================================ */
+.hero{border-top:none; padding-top:clamp(44px,6vw,80px); padding-bottom:clamp(40px,4.5vw,64px); position:relative; overflow:hidden}
+.hero::before{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(760px 380px at 82% -8%, var(--brass-wash), transparent 68%),
+    repeating-linear-gradient(90deg, transparent 0 119px, var(--line-soft) 119px 120px);
+  opacity:.55;
+}
+.hero-grid{position:relative; display:grid; grid-template-columns:1.08fr .92fr; gap:clamp(32px,5vw,68px); align-items:end}
+@media (max-width:980px){.hero-grid{grid-template-columns:1fr; align-items:start}}
+.hero-copy{display:flex; flex-direction:column; gap:22px}
+.hero h1{margin-top:14px}
+.hero-cta{display:flex; flex-wrap:wrap; gap:12px; margin-top:4px}
+
+.trustbar{
+  display:flex; flex-wrap:wrap; gap:8px 28px; margin-top:26px;
+  padding-top:20px; border-top:var(--rule);
+}
+.trustbar div{display:flex; align-items:center; gap:8px; font-family:var(--mono); font-size:.7rem; letter-spacing:.09em; text-transform:uppercase; color:var(--text-dim)}
+.trustbar b{color:var(--brass); font-weight:500}
+
+/* --- panel escritura --- */
+.deed{
+  background:var(--surface-2); border:var(--rule); border-radius:3px;
+  box-shadow:var(--shadow); padding:26px 26px 22px;
+}
+.deed-top{display:flex; justify-content:space-between; align-items:baseline; gap:16px; padding-bottom:14px; border-bottom:var(--rule)}
+.deed-title{font-family:var(--display); font-size:1.1rem}
+
+/* las ocho fracciones */
+.shares{display:grid; grid-template-columns:repeat(8,1fr); gap:3px; margin:20px 0 10px}
+.share{
+  height:56px; border:1px solid var(--line); background:var(--surface);
+  border-radius:1px; position:relative; transition:background .35s, border-color .35s;
+}
+.share::after{
+  content:attr(data-n); position:absolute; inset:auto 0 5px 0; text-align:center;
+  font-family:var(--mono); font-size:.6rem; color:var(--text-faint);
+}
+.share.mine{background:var(--brass); border-color:var(--brass)}
+.share.mine::after{color:var(--surface); opacity:.85}
+.shares-legend{display:flex; justify-content:space-between; font-family:var(--mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint)}
+.shares-legend b{color:var(--brass); font-weight:500}
+
+/* selector de fracción */
+.frac-pick{display:flex; gap:8px; margin:20px 0 6px}
+.frac-pick button{
+  flex:1; font-family:var(--mono); font-size:.82rem; padding:10px 4px; cursor:pointer;
+  background:transparent; color:var(--text-dim); border:1px solid var(--line); border-radius:2px;
+  transition:all .2s;
+}
+.frac-pick button:hover{border-color:var(--brass-soft); color:var(--text)}
+.frac-pick button[aria-pressed="true"]{background:var(--brass-wash); border-color:var(--brass); color:var(--brass); font-weight:500}
+
+/* cinta de 52 semanas */
+.weeks-block{margin-top:22px; padding-top:18px; border-top:var(--rule)}
+.weeks{display:grid; grid-template-columns:repeat(26,1fr); gap:2px; margin-top:10px}
+.wk{aspect-ratio:1/2.1; background:var(--surface-3); border-radius:1px; transition:background .3s}
+.wk.on{background:var(--brass)}
+.wk.peak{background:var(--verdigris)}
+.weeks-key{display:flex; gap:16px; margin-top:12px; font-family:var(--mono); font-size:.64rem; letter-spacing:.08em; text-transform:uppercase; color:var(--text-faint)}
+.weeks-key i{width:9px; height:9px; display:inline-block; border-radius:1px; margin-right:6px; vertical-align:-1px}
+.k-brass{background:var(--brass)} .k-verd{background:var(--verdigris)} .k-idle{background:var(--surface-3)}
+
+.deed-figures{display:grid; grid-template-columns:1fr 1fr; gap:1px; margin-top:22px; background:var(--line); border:var(--rule)}
+.fig{background:var(--surface-2); padding:14px 16px}
+.fig dt{font-family:var(--mono); font-size:.63rem; letter-spacing:.11em; text-transform:uppercase; color:var(--text-faint); margin-bottom:5px}
+.fig dd{margin:0; font-family:var(--display); font-size:1.5rem; font-variant-numeric:tabular-nums}
+.fig dd small{font-family:var(--mono); font-size:.62rem; color:var(--text-dim); letter-spacing:.05em; display:block; margin-top:2px; font-variant-numeric:normal}
+
+/* ============================================================
+   COMPARATIVA
+   ============================================================ */
+.tablewrap{overflow-x:auto; border:var(--rule); border-radius:3px; background:var(--surface-2)}
+table{width:100%; border-collapse:collapse; min-width:720px}
+th,td{text-align:left; padding:15px 18px; border-bottom:1px solid var(--line-soft); font-size:.92rem; vertical-align:top}
+thead th{
+  font-family:var(--mono); font-size:.66rem; letter-spacing:.13em; text-transform:uppercase;
+  color:var(--text-faint); font-weight:500; border-bottom:var(--rule); white-space:nowrap;
+}
+thead th.us{color:var(--brass)}
+tbody th{font-weight:500; color:var(--text); font-family:var(--body); font-size:.86rem; width:200px}
+td.us{background:var(--brass-wash); color:var(--text); font-weight:500}
+tr:last-child td, tr:last-child th{border-bottom:none}
+.mark{
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase;
+  display:inline-flex; align-items:center; gap:7px; font-weight:500;
+}
+.mark::before{content:""; width:7px; height:7px; border-radius:1px; background:currentColor; flex:none}
+.mark.yes{color:var(--verdigris)} .mark.no{color:var(--alert)}
+.mark + span{display:block; margin-top:4px; font-family:var(--body); font-size:.86rem; color:var(--text-dim); letter-spacing:0; text-transform:none}
+td.us .mark + span{color:var(--text)}
+
+/* ============================================================
+   PROCESO — secuencia real
+   ============================================================ */
+.steps{display:grid; gap:0; border-top:var(--rule)}
+.step{
+  display:grid; grid-template-columns:120px 1fr 220px; gap:32px;
+  padding:30px 0; border-bottom:var(--rule); align-items:start;
+}
+.step-n{font-family:var(--mono); font-size:.72rem; letter-spacing:.14em; color:var(--brass)}
+.step h3{margin-bottom:8px}
+.step p{color:var(--text-dim); font-size:.95rem}
+.step-when{font-family:var(--mono); font-size:.7rem; letter-spacing:.08em; color:var(--text-faint); text-transform:uppercase; text-align:right}
+@media (max-width:820px){
+  .step{grid-template-columns:1fr; gap:10px; padding:24px 0}
+  .step-when{text-align:left}
+}
+
+/* ============================================================
+   RESIDENCIAS
+   ============================================================ */
+.residences{display:grid; grid-template-columns:repeat(3,1fr); gap:22px}
+@media (max-width:940px){.residences{grid-template-columns:1fr}}
+.res{
+  border:var(--rule); border-radius:3px; background:var(--surface-2);
+  display:flex; flex-direction:column; overflow:hidden; transition:border-color .25s, transform .25s;
+}
+.res:hover{border-color:var(--brass-soft); transform:translateY(-2px)}
+.res-art{height:170px; position:relative; background:var(--ink-block); overflow:hidden}
+.res-art canvas{display:block; width:100%; height:100%}
+.res-tag{
+  position:absolute; top:12px; left:12px; font-family:var(--mono); font-size:.62rem;
+  letter-spacing:.12em; text-transform:uppercase; padding:4px 9px; border-radius:2px;
+  background:rgba(4,14,18,.72); color:#D9BE84; border:1px solid rgba(201,167,94,.42);
+}
+.res-body{padding:20px; display:flex; flex-direction:column; gap:14px; flex:1}
+.res-loc{font-family:var(--mono); font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; color:var(--text-faint)}
+.res-specs{display:flex; flex-wrap:wrap; gap:6px 14px; font-family:var(--mono); font-size:.74rem; color:var(--text-dim)}
+.res-price{margin-top:auto; padding-top:14px; border-top:var(--rule); display:flex; justify-content:space-between; align-items:flex-end; gap:10px}
+.res-price .p{font-family:var(--display); font-size:1.45rem; font-variant-numeric:tabular-nums; line-height:1}
+.res-price .l{font-family:var(--mono); font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint)}
+.res-price .r{text-align:right}
+.res-price .r b{display:block; font-family:var(--mono); font-size:.9rem; color:var(--verdigris); font-weight:500}
+
+/* ============================================================
+   CALCULADORA
+   ============================================================ */
+.calc{display:grid; grid-template-columns:1fr 1.15fr; gap:clamp(24px,4vw,52px); align-items:start}
+@media (max-width:940px){.calc{grid-template-columns:1fr}}
+.calc-controls{display:flex; flex-direction:column; gap:26px}
+.ctl label{display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom:10px}
+.ctl .lname{font-family:var(--mono); font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--text-faint)}
+.ctl .lval{font-family:var(--display); font-size:1.15rem; font-variant-numeric:tabular-nums}
+input[type=range]{
+  width:100%; -webkit-appearance:none; appearance:none; height:2px; background:var(--line);
+  border-radius:2px; cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none; width:18px; height:18px; border-radius:50%;
+  background:var(--brass); border:3px solid var(--surface); box-shadow:0 0 0 1px var(--brass);
+}
+input[type=range]::-moz-range-thumb{
+  width:14px; height:14px; border-radius:50%; background:var(--brass);
+  border:3px solid var(--surface); box-shadow:0 0 0 1px var(--brass);
+}
+.ledger{border:var(--rule); border-radius:3px; background:var(--surface-2); overflow:hidden}
+.ledger-h{padding:14px 20px; border-bottom:var(--rule); display:flex; justify-content:space-between; align-items:baseline}
+.ledger-row{display:flex; justify-content:space-between; align-items:baseline; gap:16px; padding:13px 20px; border-bottom:1px solid var(--line-soft)}
+.ledger-row .k{font-size:.9rem; color:var(--text-dim)}
+.ledger-row .v{font-family:var(--mono); font-size:.95rem; font-variant-numeric:tabular-nums; white-space:nowrap}
+.ledger-row.pos .v{color:var(--verdigris)}
+.ledger-row.neg .v{color:var(--alert)}
+.ledger-row.total{background:var(--brass-wash); border-bottom:none; padding-block:18px}
+.ledger-row.total .k{color:var(--text); font-weight:500; font-size:.95rem}
+.ledger-row.total .v{font-family:var(--display); font-size:1.7rem; color:var(--brass)}
+.ledger-note{padding:14px 20px; border-top:var(--rule); font-family:var(--mono); font-size:.66rem; line-height:1.7; color:var(--text-faint)}
+
+/* ============================================================
+   ESTRUCTURA LEGAL
+   ============================================================ */
+.legal-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line); border:var(--rule); border-radius:3px; overflow:hidden}
+@media (max-width:760px){.legal-grid{grid-template-columns:1fr}}
+.legal-cell{background:var(--surface-2); padding:26px}
+.legal-cell .folio{display:block; margin-bottom:12px}
+.legal-cell h3{margin-bottom:8px; font-size:1.1rem}
+.legal-cell p{font-size:.92rem; color:var(--text-dim)}
+
+/* ============================================================
+   VOCES — marcadores honestos
+   ============================================================ */
+.voices{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+@media (max-width:940px){.voices{grid-template-columns:1fr}}
+.voice{border:1px dashed var(--line); border-radius:3px; padding:24px; background:transparent; display:flex; flex-direction:column; gap:14px; min-height:190px}
+.voice .q{font-family:var(--display); font-size:1.05rem; font-style:italic; color:var(--text-faint); line-height:1.45}
+.voice .who{margin-top:auto; font-family:var(--mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint)}
+.voice-flag{align-self:flex-start; font-family:var(--mono); font-size:.6rem; letter-spacing:.12em; text-transform:uppercase; color:var(--brass); border:1px solid var(--brass); border-radius:2px; padding:3px 8px}
+
+/* ============================================================
+   FAQ
+   ============================================================ */
+.faq{border-top:var(--rule)}
+.faq details{border-bottom:var(--rule)}
+.faq summary{
+  cursor:pointer; list-style:none; padding:22px 0; display:flex; gap:20px; align-items:baseline;
+  font-family:var(--display); font-size:1.15rem; transition:color .2s;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:hover{color:var(--brass)}
+.faq summary .q{font-family:var(--mono); font-size:.68rem; color:var(--brass); letter-spacing:.1em; flex:none; width:38px}
+.faq summary .t{flex:1}
+.faq summary .s{font-family:var(--mono); color:var(--brass); flex:none; transition:transform .2s}
+.faq details[open] summary .s{transform:rotate(45deg)}
+.faq .a{padding:0 0 24px 58px; color:var(--text-dim); font-size:.95rem; max-width:70ch}
+@media (max-width:640px){.faq .a{padding-left:0}}
+
+/* ============================================================
+   CIERRE / FORMULARIO
+   ============================================================ */
+.close-sec{background:var(--ink-block); color:#EDE8DC; border-top:none}
+.close-grid{display:grid; grid-template-columns:1fr 1fr; gap:clamp(30px,5vw,64px); align-items:start}
+@media (max-width:940px){.close-grid{grid-template-columns:1fr}}
+.close-sec h2{color:#F4EFE3}
+.close-sec h2 em{color:#D9BE84}
+.close-sec .lede{color:#9AACAF}
+.close-sec .eyebrow{color:#D9BE84}
+.qualify{display:flex; flex-direction:column; gap:12px; margin-top:26px; padding-top:22px; border-top:1px solid rgba(201,167,94,.24)}
+.qualify li{display:flex; gap:12px; font-size:.93rem; color:#B9C7C9; list-style:none}
+.qualify li span{color:#C9A75E; font-family:var(--mono); font-size:.8rem}
+.qualify ul{margin:0; padding:0}
+
+form{background:#0C2028; border:1px solid rgba(201,167,94,.28); border-radius:3px; padding:26px}
+.field{display:flex; flex-direction:column; gap:7px; margin-bottom:16px}
+.field label{font-family:var(--mono); font-size:.65rem; letter-spacing:.12em; text-transform:uppercase; color:#8FA3A6}
+.field input, .field select{
+  font-family:var(--body); font-size:.94rem; padding:11px 13px; color:#EDE8DC;
+  background:#08171C; border:1px solid #1E3A42; border-radius:2px; transition:border-color .2s;
+}
+.field input::placeholder{color:#5A7076}
+.field input:focus, .field select:focus{border-color:#C9A75E; outline:none}
+.field-row{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+@media (max-width:520px){.field-row{grid-template-columns:1fr}}
+form .btn{width:100%; justify-content:center; margin-top:6px; background:#C9A75E; border-color:#C9A75E; color:#08171C}
+.form-fine{font-family:var(--mono); font-size:.63rem; line-height:1.7; color:#6B8085; margin-top:14px}
+.form-ok{
+  display:none; margin-top:16px; padding:14px 16px; border:1px solid var(--verdigris);
+  border-radius:2px; color:#8FD0B7; font-size:.9rem; background:rgba(99,164,141,.08);
+}
+.form-ok.show{display:block}
+
+/* ---------- pie ---------- */
+footer{background:var(--ink-block); color:#7C9095; border-top:1px solid rgba(201,167,94,.16); padding-block:44px}
+.foot-grid{display:flex; flex-wrap:wrap; gap:28px; justify-content:space-between; align-items:flex-start}
+.foot-brand b{font-family:var(--display); color:#EDE8DC; font-size:1.1rem; font-weight:500; display:block; margin-bottom:6px}
+.disclaimer{font-family:var(--mono); font-size:.63rem; line-height:1.85; max-width:64ch; color:#5F7378; margin-top:28px; padding-top:20px; border-top:1px solid rgba(255,255,255,.07)}
+
+/* ============================================================
+   HUB — componentes añadidos para el sitio multipágina
+   ============================================================ */
+
+/* ---------- navegación con página activa y menú móvil ---------- */
+.navlinks a[aria-current="page"]{color:var(--text); border-color:var(--brass)}
+.navtoggle{
+  display:none; background:transparent; border:1px solid var(--line); border-radius:2px;
+  color:var(--text); font-family:var(--mono); font-size:.68rem; letter-spacing:.14em;
+  text-transform:uppercase; padding:9px 13px; cursor:pointer;
+}
+.navtoggle:hover{border-color:var(--brass); color:var(--brass)}
+@media (max-width:900px){
+  .navtoggle{display:inline-block}
+  .topbar-in .btn{display:none}
+  .navdrawer{
+    display:none; border-top:var(--rule); background:var(--surface); padding:18px var(--gutter) 24px;
+  }
+  .navdrawer.open{display:block}
+  .navdrawer a{
+    display:block; padding:12px 0; border-bottom:1px solid var(--line-soft);
+    text-decoration:none; color:var(--text-dim); font-size:.95rem;
+  }
+  .navdrawer a[aria-current="page"]{color:var(--brass)}
+  .navdrawer .btn{display:flex; justify-content:center; margin-top:18px; color:var(--surface)}
+}
+@media (min-width:901px){.navdrawer{display:none}}
+
+/* ---------- encabezado de página interior ---------- */
+.pagehead{
+  border-top:none; padding-block:clamp(46px,6vw,84px) clamp(34px,4vw,54px);
+  position:relative; overflow:hidden;
+}
+.pagehead::before{
+  content:""; position:absolute; inset:0; pointer-events:none; opacity:.5;
+  background:
+    radial-gradient(620px 300px at 88% -20%, var(--brass-wash), transparent 70%),
+    repeating-linear-gradient(90deg, transparent 0 119px, var(--line-soft) 119px 120px);
+}
+.pagehead .wrap{position:relative}
+.crumbs{display:flex; gap:9px; align-items:center; font-family:var(--mono); font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; color:var(--text-faint); margin-bottom:22px}
+.crumbs a{text-decoration:none; color:var(--text-faint); transition:color .2s}
+.crumbs a:hover{color:var(--brass)}
+.crumbs span{opacity:.5}
+.pagehead h1{font-size:clamp(2.1rem,5vw,3.6rem)}
+.pagehead .lede{margin-top:20px}
+
+/* ---------- MARCOS DE FOTO (holders) ---------- */
+.holder{
+  position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:10px; text-align:center; background:var(--surface-2); border:1px solid var(--line);
+  border-radius:2px; overflow:hidden; color:var(--text-faint); padding:18px;
+}
+.holder::before,.holder::after{
+  content:""; position:absolute; width:14px; height:14px; border:1px solid var(--brass); opacity:.55;
+}
+.holder::before{top:9px; left:9px; border-right:none; border-bottom:none}
+.holder::after{bottom:9px; right:9px; border-left:none; border-top:none}
+.holder .mark{
+  width:34px; height:34px; border:1px solid var(--brass); border-radius:50%;
+  display:flex; align-items:center; justify-content:center; opacity:.7;
+}
+.holder .mark::before{content:""; width:14px; height:1px; background:var(--brass); position:absolute}
+.holder .mark::after{content:""; width:1px; height:14px; background:var(--brass); position:absolute}
+.holder .what{font-family:var(--mono); font-size:.68rem; letter-spacing:.13em; text-transform:uppercase; color:var(--text-dim); line-height:1.6}
+.holder .spec{font-family:var(--mono); font-size:.62rem; letter-spacing:.08em; color:var(--text-faint)}
+.holder.r32{aspect-ratio:3/2} .holder.r43{aspect-ratio:4/3} .holder.r11{aspect-ratio:1/1}
+.holder.r169{aspect-ratio:16/9} .holder.r45{aspect-ratio:4/5} .holder.r219{aspect-ratio:21/9}
+.holder.plain{background:transparent; border-style:dashed}
+
+/* ---------- galería de propiedad ---------- */
+.gallery{display:grid; grid-template-columns:2fr 1fr 1fr; grid-template-rows:repeat(2,1fr); gap:10px}
+.gallery .holder:first-child{grid-row:span 2; grid-column:span 1; aspect-ratio:auto}
+@media (max-width:820px){
+  .gallery{grid-template-columns:1fr 1fr}
+  .gallery .holder:first-child{grid-column:span 2; grid-row:auto; aspect-ratio:3/2}
+}
+
+/* ---------- ficha de propiedad ---------- */
+.proplayout{display:grid; grid-template-columns:1fr 380px; gap:clamp(28px,4vw,56px); align-items:start}
+@media (max-width:1000px){.proplayout{grid-template-columns:1fr}}
+.propaside{position:sticky; top:86px; display:flex; flex-direction:column; gap:18px}
+@media (max-width:1000px){.propaside{position:static}}
+.specsheet{border:var(--rule); border-radius:3px; background:var(--surface-2); overflow:hidden}
+.specsheet-h{padding:14px 18px; border-bottom:var(--rule)}
+.specrow{display:flex; justify-content:space-between; gap:16px; padding:11px 18px; border-bottom:1px solid var(--line-soft); font-size:.9rem}
+.specrow:last-child{border-bottom:none}
+.specrow .k{color:var(--text-dim)}
+.specrow .v{font-family:var(--mono); font-size:.86rem; font-variant-numeric:tabular-nums; text-align:right}
+
+/* barra de disponibilidad de fracciones */
+.avail{display:flex; gap:3px; margin:14px 0 8px}
+.avail i{flex:1; height:26px; border:1px solid var(--line); border-radius:1px; background:var(--surface)}
+.avail i.sold{background:var(--line); border-color:var(--line)}
+.avail i.open{background:var(--brass-wash); border-color:var(--brass)}
+.availkey{font-family:var(--mono); font-size:.64rem; letter-spacing:.09em; text-transform:uppercase; color:var(--text-faint); display:flex; justify-content:space-between}
+
+/* ---------- rejilla de contenido genérica ---------- */
+.grid2{display:grid; grid-template-columns:repeat(2,1fr); gap:22px}
+.grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:22px}
+.grid4{display:grid; grid-template-columns:repeat(4,1fr); gap:18px}
+@media (max-width:960px){.grid3,.grid4{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){.grid2,.grid3,.grid4{grid-template-columns:1fr}}
+
+.panel{border:var(--rule); border-radius:3px; background:var(--surface-2); padding:26px}
+.panel h3{margin-bottom:10px}
+.panel p{color:var(--text-dim); font-size:.93rem}
+.panel .folio{display:block; margin-bottom:12px}
+
+/* ---------- TESTIMONIOS acomodados ---------- */
+.testi-feature{
+  display:grid; grid-template-columns:300px 1fr; gap:clamp(24px,4vw,48px);
+  align-items:center; border:var(--rule); border-radius:3px; background:var(--surface-2);
+  padding:clamp(24px,3.5vw,40px); margin-bottom:22px;
+}
+@media (max-width:820px){.testi-feature{grid-template-columns:1fr}}
+.testi-feature blockquote{margin:0; font-family:var(--display); font-size:clamp(1.3rem,2.4vw,1.85rem); line-height:1.32; text-wrap:balance}
+.testi-feature blockquote::before{content:"\201C"; color:var(--brass)}
+.testi-feature blockquote::after{content:"\201D"; color:var(--brass)}
+.testi-meta{margin-top:22px; padding-top:16px; border-top:var(--rule); display:flex; flex-wrap:wrap; gap:6px 20px; align-items:baseline}
+.testi-meta .name{font-size:.95rem; font-weight:500}
+.testi-meta .where{font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint)}
+.testi-meta .since{font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--brass)}
+
+.testi-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+@media (max-width:940px){.testi-grid{grid-template-columns:1fr}}
+.testi{
+  border:var(--rule); border-radius:3px; background:var(--surface-2); padding:24px;
+  display:flex; flex-direction:column; gap:16px;
+}
+.testi blockquote{margin:0; font-size:.96rem; line-height:1.6; color:var(--text)}
+.testi blockquote::before{content:"\201C"; color:var(--brass)}
+.testi blockquote::after{content:"\201D"; color:var(--brass)}
+.testi .who{margin-top:auto; padding-top:14px; border-top:1px solid var(--line-soft); display:flex; align-items:center; gap:12px}
+.testi .who .holder{width:42px; height:42px; border-radius:50%; padding:0; flex:none}
+.testi .who .holder::before,.testi .who .holder::after{display:none}
+.testi .who .holder .what{font-size:.5rem; letter-spacing:.06em}
+.testi .who > span{display:flex; flex-direction:column; gap:3px; min-width:0}
+.testi .who .n{font-size:.88rem; font-weight:500; line-height:1.3}
+.testi .who .s{font-family:var(--mono); font-size:.64rem; letter-spacing:.09em; text-transform:uppercase; color:var(--text-faint)}
+.sample{
+  align-self:flex-start; font-family:var(--mono); font-size:.58rem; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--brass); border:1px solid var(--brass);
+  border-radius:2px; padding:3px 8px; opacity:.8;
+}
+
+/* ---------- equipo ---------- */
+.person{display:flex; flex-direction:column; gap:14px}
+.person .holder{aspect-ratio:4/5}
+.person h3{font-size:1.05rem}
+.person .role{font-family:var(--mono); font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; color:var(--brass)}
+.person p{font-size:.9rem; color:var(--text-dim)}
+
+/* ---------- diario ---------- */
+.post{display:grid; grid-template-columns:220px 1fr 130px; gap:28px; align-items:start; padding:26px 0; border-bottom:var(--rule); text-decoration:none; color:inherit; transition:background .2s}
+.post:hover{background:var(--brass-wash)}
+.post:hover h3{color:var(--brass)}
+.post .holder{aspect-ratio:3/2}
+.post h3{font-size:1.2rem; margin-bottom:8px; transition:color .2s}
+.post p{font-size:.92rem; color:var(--text-dim)}
+.post .when{font-family:var(--mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint); text-align:right}
+@media (max-width:820px){
+  .post{grid-template-columns:1fr; gap:14px}
+  .post .when{text-align:left}
+}
+
+/* ---------- cinta de llamada a la acción ---------- */
+.ribbon{background:var(--ink-block); color:#EDE8DC; border-top:none}
+.ribbon .wrap{display:flex; flex-wrap:wrap; gap:26px; align-items:center; justify-content:space-between; padding-block:clamp(38px,5vw,62px)}
+.ribbon h2{color:#F4EFE3; font-size:clamp(1.6rem,3vw,2.3rem); max-width:20ch}
+.ribbon h2 em{color:#D9BE84}
+.ribbon p{color:#9AACAF; font-size:.95rem; max-width:44ch; margin-top:10px}
+.ribbon .btn{background:#C9A75E; border-color:#C9A75E; color:#08171C}
+
+/* ---------- pie con navegación completa ---------- */
+.footnav{display:grid; grid-template-columns:repeat(4,1fr); gap:28px; margin-bottom:34px}
+@media (max-width:820px){.footnav{grid-template-columns:repeat(2,1fr)}}
+.footnav h4{font-family:var(--mono); font-size:.64rem; letter-spacing:.14em; text-transform:uppercase; color:#C9A75E; font-weight:500; margin:0 0 14px}
+.footnav ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:9px}
+.footnav a{text-decoration:none; font-size:.88rem; color:#9AACAF; transition:color .2s}
+.footnav a:hover{color:#EDE8DC}
+
+/* ---------- utilidades ---------- */
+.stack{display:flex; flex-direction:column; gap:18px}
+.mt0{margin-top:0}
+.note{
+  border-left:2px solid var(--brass); padding:14px 18px; background:var(--brass-wash);
+  border-radius:0 2px 2px 0; font-size:.9rem; color:var(--text-dim);
+}
+.note b{color:var(--text)}
+.prose p{margin-bottom:16px; color:var(--text-dim)}
+.prose p:last-child{margin-bottom:0}
+.prose h3{margin:28px 0 10px}
+.prose ul{margin:0 0 16px; padding-left:20px; color:var(--text-dim)}
+.prose li{margin-bottom:8px}
+.prose strong{color:var(--text)}
+
+/* enrutado del previsualizador de una sola página */
+.route{display:none}
+.route.active{display:block}
+
+</style>
+<div class="topbar">
+  <div class="wrap topbar-in">
+    <a class="brand" href="#/inicio"><b>La Fracción</b><span>Nayarit</span></a>
+    <nav class="navlinks"><a href="#/residencias" data-nav>Residencias</a><a href="#/modelo" data-nav>El modelo</a><a href="#/inversion" data-nav>Inversión</a><a href="#/legal" data-nav>Estructura legal</a><a href="#/copropietarios" data-nav>Copropietarios</a></nav>
+    <a class="btn btn-sm" href="#/agendar">Agendar llamada <span class="arw">&rarr;</span></a>
+    <button class="navtoggle" type="button" aria-expanded="false">Menú</button>
+  </div>
+  <div class="navdrawer"><a href="#/residencias" data-nav>Residencias</a><a href="#/modelo" data-nav>El modelo</a><a href="#/inversion" data-nav>Inversión</a><a href="#/legal" data-nav>Estructura legal</a><a href="#/copropietarios" data-nav>Copropietarios</a><a href="#/nosotros" data-nav>Nosotros</a><a href="#/diario" data-nav>Diario</a><a href="#/preguntas" data-nav>Preguntas</a><a class="btn" href="#/agendar">Agendar llamada</a></div>
+</div>
+<div class="route" data-route="/inicio"><section class="hero sec" id="top">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">Nuevo Vallarta &middot; Bucerías &middot; Sayulita</p>
+      <h1>La casa frente al mar, dividida entre ocho. La escritura, <em>a su nombre.</em></h1>
+      <p class="lede measure">Copropiedad fraccional de residencias de lujo en Riviera Nayarit desde <span class="num">USD&nbsp;$120,000</span>. Seis semanas de uso al año, renta administrada el resto del tiempo, y una participación real en la plusvalía del inmueble. <strong>No es tiempo compartido. No son puntos. No es una membresía.</strong></p>
+      <div class="hero-cta">
+        <a class="btn" href="#/agendar">Agendar llamada de calificación <span class="arw">&rarr;</span></a>
+        <a class="btn btn-ghost" href="#/inversion">Ver el modelo económico</a>
+      </div>
+      <div class="trustbar">
+        <div><b>8</b> copropietarios máximo</div>
+        <div><b>1/8</b> indiviso escriturado</div>
+        <div><b>6.5</b> semanas al año</div>
+        <div><b>0</b> cuotas de por vida</div>
+      </div>
+    </div>
+
+    <div class="deed">
+      <div class="deed-top">
+        <div><p class="folio">Folio de copropiedad</p><p class="deed-title">Residencia Marea</p></div>
+        <p class="folio" id="deedRef">NAY&mdash;0<span class="num">1</span>/08</p>
+      </div>
+      <div class="shares" id="shares" data-unit="140000" role="img" aria-label="Ocho fracciones de la residencia; las suyas aparecen en latón"></div>
+      <div class="shares-legend"><span>La residencia, en ocho partes</span><span><b id="mineLabel">1 fracción suya</b></span></div>
+      <div class="frac-pick" role="group" aria-label="Número de fracciones">
+        <button type="button" data-f="1" aria-pressed="true">1/8</button>
+        <button type="button" data-f="2" aria-pressed="false">2/8</button>
+        <button type="button" data-f="3" aria-pressed="false">3/8</button>
+        <button type="button" data-f="4" aria-pressed="false">4/8</button>
+      </div>
+      <div class="weeks-block">
+        <p class="folio">Su calendario &mdash; <span class="num">52</span> semanas del año</p>
+        <div class="weeks" id="weeks" role="img" aria-label="Cinta de 52 semanas con las semanas asignadas a su fracción"></div>
+        <div class="weeks-key"><span><i class="k-brass"></i>Uso propio</span><span><i class="k-verd"></i>Alta temporada</span><span><i class="k-idle"></i>Renta administrada</span></div>
+      </div>
+      <dl class="deed-figures">
+        <div class="fig"><dt>Su inversión</dt><dd class="num" id="figInv">$140,000</dd></div>
+        <div class="fig"><dt>Semanas al año</dt><dd class="num" id="figWeeks">6.5<small>2 en alta temporada</small></dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec">
+    <div class="sec-head">
+      <div class="rail"><p class="folio">Las residencias</p></div>
+      <div><h2>Tres casas. <em>Veinticuatro fracciones.</em></h2>
+      <p class="lede measure" style="margin-top:16px">Cada casa se cierra en ocho copropietarios y no se abre de nuevo. No operamos inventario perpetuo.</p></div>
+    </div>
+    <div class="residences"><article class="res">
+  <div class="holder r43"><span class="mark"></span><span class="what">Fachada &mdash; Residencia Marea</span><span class="spec">4:3 &middot; 1600×1200</span></div>
+  <div class="res-body">
+    <p class="res-loc">Nuevo Vallarta &middot; frente de playa</p>
+    <h3>Residencia Marea</h3>
+    <div class="res-specs"><span>240 m&sup2;</span><span>3 recámaras</span><span>Alberca privada</span></div>
+    <div class="res-price">
+      <div><p class="l">Fracción 1/8 desde</p><p class="p num">$140,000</p></div>
+      <div class="r"><p class="l">Disponibles</p><b class="num">3 de 8</b></div>
+    </div>
+    <a class="btn btn-ghost btn-sm" href="#/residencia-marea" style="justify-content:center">Ver la residencia <span class="arw">&rarr;</span></a>
+  </div>
+</article><article class="res">
+  <div class="holder r43"><span class="mark"></span><span class="what">Fachada &mdash; Villa Sayulita Alta</span><span class="spec">4:3 &middot; 1600×1200</span></div>
+  <div class="res-body">
+    <p class="res-loc">Sayulita &middot; colina con vista</p>
+    <h3>Villa Sayulita Alta</h3>
+    <div class="res-specs"><span>185 m&sup2;</span><span>3 recámaras</span><span>Terraza panorámica</span></div>
+    <div class="res-price">
+      <div><p class="l">Fracción 1/8 desde</p><p class="p num">$120,000</p></div>
+      <div class="r"><p class="l">Disponibles</p><b class="num">5 de 8</b></div>
+    </div>
+    <a class="btn btn-ghost btn-sm" href="#/residencia-sayulita-alta" style="justify-content:center">Ver la residencia <span class="arw">&rarr;</span></a>
+  </div>
+</article><article class="res">
+  <div class="holder r43"><span class="mark"></span><span class="what">Fachada &mdash; Penthouse Nayar</span><span class="spec">4:3 &middot; 1600×1200</span></div>
+  <div class="res-body">
+    <p class="res-loc">Bucerías &middot; penthouse</p>
+    <h3>Penthouse Nayar</h3>
+    <div class="res-specs"><span>310 m&sup2;</span><span>4 recámaras</span><span>Roof privado</span></div>
+    <div class="res-price">
+      <div><p class="l">Fracción 1/8 desde</p><p class="p num">$220,000</p></div>
+      <div class="r"><p class="l">Disponibles</p><b class="num">2 de 8</b></div>
+    </div>
+    <a class="btn btn-ghost btn-sm" href="#/residencia-nayar" style="justify-content:center">Ver la residencia <span class="arw">&rarr;</span></a>
+  </div>
+</article></div>
+    <div style="margin-top:28px"><a class="btn btn-ghost" href="#/residencias">Ver las tres residencias <span class="arw">&rarr;</span></a></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec">
+    <div class="sec-head">
+      <div class="rail"><p class="folio">El modelo</p></div>
+      <div><h2>Cuatro maneras de tener una casa en la playa. <em>Sólo una tiene sentido.</em></h2>
+      <p class="lede measure" style="margin-top:16px">La mayoría de las casas de descanso se usan entre cuatro y seis semanas al año. El resto del tiempo, el dueño paga por un inmueble vacío. La copropiedad fraccional corrige exactamente esa asimetría.</p></div>
+    </div>
+    <div class="tablewrap">
+  <table>
+    <thead><tr><th></th><th class="us">Fracción escriturada</th><th>Tiempo compartido</th><th>Casa completa</th><th>Renta vacacional</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Qué posee</th><td class="us">1/8 indiviso del inmueble, en escritura pública</td><td>Un derecho de uso contractual</td><td>El 100% del inmueble</td><td>Nada</td></tr>
+      <tr><th scope="row">Aparece en su patrimonio</th><td class="us"><span class="mark yes">Sí</span><span>Como activo inmobiliario</span></td><td><span class="mark no">No</span></td><td><span class="mark yes">Sí</span></td><td><span class="mark no">No</span></td></tr>
+      <tr><th scope="row">Captura plusvalía</th><td class="us"><span class="mark yes">Sí</span><span>Proporcional a su fracción</span></td><td><span class="mark no">No</span><span>El derecho se deprecia</span></td><td><span class="mark yes">Sí</span><span>Íntegra</span></td><td><span class="mark no">No</span></td></tr>
+      <tr><th scope="row">Costo de entrada</th><td class="us"><span class="num">USD $120k &ndash; $220k</span></td><td><span class="num">USD $25k &ndash; $60k</span></td><td><span class="num">USD $960k &ndash; $1.8M</span></td><td><span class="num">$0</span></td></tr>
+      <tr><th scope="row">Costo fijo anual</th><td class="us">Cuota de operación proporcional, compensada por renta</td><td>Mantenimiento vitalicio, con incrementos anuales</td><td>Predial, seguro, personal, mantenimiento: <span class="num">100%</span> suyo</td><td>Ninguno</td></tr>
+      <tr><th scope="row">Salida</th><td class="us">Venta o cesión de la fracción, como cualquier inmueble</td><td>Mercado secundario prácticamente inexistente</td><td>Venta del inmueble completo, plazos largos</td><td>Inmediata</td></tr>
+      <tr><th scope="row">Trabajo que exige</th><td class="us">Ninguno. Administración profesional incluida</td><td>Reservar con meses de anticipación</td><td>Es un segundo empleo</td><td>Buscar disponibilidad cada año</td></tr>
+    </tbody>
+  </table>
+</div>
+    <div style="margin-top:28px"><a class="btn btn-ghost" href="#/modelo">Cómo funciona, en detalle <span class="arw">&rarr;</span></a></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec">
+    <div class="sec-head">
+      <div class="rail"><p class="folio">Copropietarios</p></div>
+      <div><h2>Quiénes ya <em>firmaron.</em></h2></div>
+    </div>
+    <div class="testi-feature">
+  <div class="holder r45"><span class="mark"></span><span class="what">Retrato del copropietario</span><span class="spec">4:5 &middot; 1200×1500</span></div>
+  <div>
+    <span class="sample">Muestra &mdash; sustituir por testimonio verificado</span>
+    <blockquote style="margin-top:14px">Comparé una casa completa en Punta de Mita contra esto durante casi un año. Lo que me decidió no fue el precio: fue darme cuenta de que iba a usarla seis semanas y pagar cincuenta y dos.</blockquote>
+    <div class="testi-meta"><span class="name">Nombre del copropietario</span><span class="where">Residencia Marea &middot; Ciudad</span><span class="since">Copropietario desde 2024</span></div>
+  </div>
+</div>
+<div class="testi-grid"><figure class="testi">
+  <span class="sample">Muestra</span>
+  <blockquote>El primer calendario me daba miedo. Elegí tercero, me tocó Semana Santa, y al año siguiente elegí sexto y también salí bien. La rotación funciona.</blockquote>
+  <figcaption class="who"><div class="holder"><span class="mark"></span><span class="what">Foto</span></div><span><span class="n">Nombre</span><span class="s">Villa Sayulita Alta &middot; 2023</span></span></figcaption>
+</figure><figure class="testi">
+  <span class="sample">Muestra</span>
+  <blockquote>El reporte de renta llega el día 10 de cada trimestre, con el detalle de noches y tarifas. No he tenido que perseguir a nadie por un número.</blockquote>
+  <figcaption class="who"><div class="holder"><span class="mark"></span><span class="what">Foto</span></div><span><span class="n">Nombre</span><span class="s">Residencia Marea &middot; 2024</span></span></figcaption>
+</figure><figure class="testi">
+  <span class="sample">Muestra</span>
+  <blockquote>Vendí media fracción el año pasado a un conocido. Escritura, notario y quince días. Eso es lo que no existe en un tiempo compartido.</blockquote>
+  <figcaption class="who"><div class="holder"><span class="mark"></span><span class="what">Foto</span></div><span><span class="n">Nombre</span><span class="s">Penthouse Nayar &middot; 2022</span></span></figcaption>
+</figure></div>
+    <div style="margin-top:28px"><a class="btn btn-ghost" href="#/copropietarios">Leer a los copropietarios <span class="arw">&rarr;</span></a></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec">
+    <div class="sec-head">
+      <div class="rail"><p class="folio">Lo que firma</p></div>
+      <div><h2>Lo que firma, <em>y lo que lo protege.</em></h2>
+      <p class="lede measure" style="margin-top:16px">La diferencia entre una fracción y una promesa está en el papel.</p></div>
+    </div>
+    <div class="grid4">
+      <div class="panel"><span class="folio">Instrumento I</span><h3>Escritura pública</h3><p>Copropiedad en régimen indiviso, inscrita en el Registro Público de la Propiedad de Nayarit.</p></div>
+      <div class="panel"><span class="folio">Instrumento II</span><h3>Fideicomiso bancario</h3><p>Para copropietarios extranjeros, dentro de la franja costera de 50 km. Uso, renta, venta y sucesión plenos.</p></div>
+      <div class="panel"><span class="folio">Instrumento III</span><h3>Reglamento de uso</h3><p>Rotación anual de prioridad y dos semanas de alta temporada garantizadas por fracción.</p></div>
+      <div class="panel"><span class="folio">Instrumento IV</span><h3>Administración</h3><p>Cuenta bancaria separada por residencia y estado financiero trimestral.</p></div>
+    </div>
+    <div style="margin-top:28px"><a class="btn btn-ghost" href="#/legal">Ver la estructura legal completa <span class="arw">&rarr;</span></a></div>
+  </div>
+</section>
+<section class="ribbon">
+  <div class="wrap">
+    <div><h2>Ocho dueños por casa. <em>Ni uno más.</em></h2><p>Una llamada de cuarenta y cinco minutos basta para saber si el modelo le conviene. Si no le conviene, se lo decimos en esa misma llamada.</p></div>
+    <a class="btn" href="#/agendar">Agendar llamada de calificación <span class="arw">&rarr;</span></a>
+  </div>
+</section>
+</div>
+<div class="route" data-route="/residencias"><section class="pagehead">
+  <div class="wrap">
+    <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><span style="opacity:1">Residencias</span></nav>
+    <h1>Residencias</h1>
+    <p class="lede measure">Tres casas en Riviera Nayarit, cada una dividida en ocho fracciones escrituradas. Cuando una casa completa sus ocho copropietarios, se cierra: no volvemos a venderla.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec">
+    <div class="residences"><article class="res">
+  <div class="holder r43"><span class="mark"></span><span class="what">Fachada &mdash; Residencia Marea</span><span class="spec">4:3 &middot; 1600×1200</span></div>
+  <div class="res-body">
+    <p class="res-loc">Nuevo Vallarta &middot; frente de playa</p>
+    <h3>Residencia Marea</h3>
+    <div class="res-specs"><span>240 m&sup2;</span><span>3 recámaras</span><span>3.5 baños</span></div>
+    <div class="avail"><i class="sold"></i><i class="sold"></i><i class="sold"></i><i class="sold"></i><i class="sold"></i><i class="open"></i><i class="open"></i><i class="open"></i></div><p class="availkey"><span>5 de 8 colocadas</span><span>3 disponibles</span></p>
+    <div class="res-price">
+      <div><p class="l">Fracción 1/8 desde</p><p class="p num">$140,000</p></div>
+      <div class="r"><p class="l">Valor total</p><b class="num">$1,120,000</b></div>
+    </div>
+    <a class="btn btn-ghost btn-sm" href="#/residencia-marea" style="justify-content:center">Ver la ficha completa <span class="arw">&rarr;</span></a>
+  </div>
+</article><article class="res">
+  <div class="holder r43"><span class="mark"></span><span class="what">Fachada &mdash; Villa Sayulita Alta</span><span class="spec">4:3 &middot; 1600×1200</span></div>
+  <div class="res-body">
+    <p class="res-loc">Sayulita &middot; colina con vista</p>
+    <h3>Villa Sayulita Alta</h3>
+    <div class="res-specs"><span>185 m&sup2;</span><span>3 recámaras</span><span>3 baños</span></div>
+    <div class="avail"><i class="sold"></i><i class="sold"></i><i class="sold"></i><i class="open"></i><i class="open"></i><i class="open"></i><i class="open"></i><i class="open"></i></div><p class="availkey"><span>3 de 8 colocadas</span><span>5 disponibles</span></p>
+    <div class="res-price">
+      <div><p class="l">Fracción 1/8 desde</p><p class="p num">$120,000</p></div>
+      <div class="r"><p class="l">Valor total</p><b class="num">$960,000</b></div>
+    </div>
+    <a class="btn btn-ghost btn-sm" href="#/residencia-sayulita-alta" style="justify-content:center">Ver la ficha completa <span class="arw">&rarr;</span></a>
+  </div>
+</article><article class="res">
+  <div class="holder r43"><span class="mark"></span><span class="what">Fachada &mdash; Penthouse Nayar</span><span class="spec">4:3 &middot; 1600×1200</span></div>
+  <div class="res-body">
+    <p class="res-loc">Bucerías &middot; penthouse</p>
+    <h3>Penthouse Nayar</h3>
+    <div class="res-specs"><span>310 m&sup2;</span><span>4 recámaras</span><span>4.5 baños</span></div>
+    <div class="avail"><i class="sold"></i><i class="sold"></i><i class="sold"></i><i class="sold"></i><i class="sold"></i><i class="sold"></i><i class="open"></i><i class="open"></i></div><p class="availkey"><span>6 de 8 colocadas</span><span>2 disponibles</span></p>
+    <div class="res-price">
+      <div><p class="l">Fracción 1/8 desde</p><p class="p num">$220,000</p></div>
+      <div class="r"><p class="l">Valor total</p><b class="num">$1,760,000</b></div>
+    </div>
+    <a class="btn btn-ghost btn-sm" href="#/residencia-nayar" style="justify-content:center">Ver la ficha completa <span class="arw">&rarr;</span></a>
+  </div>
+</article></div>
+    <div class="note" style="margin-top:34px"><b>Las fotografías se cargan aquí.</b> Cada marco indica la toma y la proporción recomendada; al sustituirlo por una imagen real, la retícula no cambia.</div>
+  </div>
+</section>
+<section class="ribbon">
+  <div class="wrap">
+    <div><h2>Ocho dueños por casa. <em>Ni uno más.</em></h2><p>Una llamada de cuarenta y cinco minutos basta para saber si el modelo le conviene. Si no le conviene, se lo decimos en esa misma llamada.</p></div>
+    <a class="btn" href="#/agendar">Agendar llamada de calificación <span class="arw">&rarr;</span></a>
+  </div>
+</section>
+</div>
+<div class="route" data-route="/residencia-marea"><section class="pagehead">
+  <div class="wrap">
+    <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><a href="#/residencias">Residencias</a><span>/</span><span style="opacity:1">Residencia Marea</span></nav>
+    <h1>Residencia Marea</h1>
+    <p class="lede measure">Frente de playa directo, sin calle de por medio, en el corredor de Nuevo Vallarta. Es la residencia con mayor tarifa de renta de las tres y la que más rápido cerró sus primeras fracciones.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec" style="padding-top:0">
+    <div class="gallery" style="margin-bottom:40px"><div class="holder r32"><span class="mark"></span><span class="what">Fachada desde la playa</span><span class="spec">3:2 &middot; 2400×1600</span></div><div class="holder r11"><span class="mark"></span><span class="what">Alberca al atardecer</span><span class="spec">1:1 &middot; 1600×1600</span></div><div class="holder r11"><span class="mark"></span><span class="what">Sala y terraza</span><span class="spec">1:1 &middot; 1600×1600</span></div><div class="holder r11"><span class="mark"></span><span class="what">Recámara principal</span><span class="spec">1:1 &middot; 1600×1600</span></div><div class="holder r11"><span class="mark"></span><span class="what">Cocina</span><span class="spec">1:1 &middot; 1600×1600</span></div></div>
+    <div class="proplayout">
+      <div class="prose">
+        <h2>La casa</h2>
+        <p style="margin-top:16px">La planta baja se abre por completo a la terraza, de modo que la sala, el comedor y la alberca funcionan como una sola pieza cuando el clima acompaña, que en esta costa son diez meses al año. La recámara principal ocupa el frente del segundo nivel, con acceso directo a la playa por una servidumbre privada. La marina queda a cuatro minutos caminando, lo que explica buena parte de su tarifa de renta.</p>
+        <h3>Qué incluye</h3>
+        <ul><li>Alberca privada</li><li>Marina a 400 m</li><li>Terraza de 60 m&sup2;</li><li>Cocina de autor</li><li>Dos cajones de estacionamiento</li><li>Entrega inmediata</li></ul>
+        <h3>Cómo se reparte el año</h3>
+        <p>Su fracción le asigna 6.5 semanas anuales, de las cuales dos caen en alta temporada por reglamento. El orden de elección rota cada año y se invierte al siguiente, de modo que en ocho años cada copropietario ocupa cada posición del turno. El calendario del año siguiente se cierra en septiembre.</p>
+        <p>Las semanas que usted no reclama pasan a renta administrada, y el ingreso neto se le abona en el estado trimestral. Las semanas de temporada baja que nadie reclama quedan disponibles para los copropietarios a tarifa de costo operativo.</p>
+        <div class="note"><b>Plano y memoria de calidades.</b> Se entregan en la llamada de calificación junto con el avalúo y el certificado de libertad de gravamen.</div>
+      </div>
+      <aside class="propaside">
+        <div class="specsheet">
+          <div class="specsheet-h"><p class="folio">Ficha técnica</p></div>
+          <div class="specrow"><span class="k">Superficie</span><span class="v">240 m&sup2;</span></div><div class="specrow"><span class="k">Recámaras</span><span class="v">3 recámaras</span></div><div class="specrow"><span class="k">Baños</span><span class="v">3.5 baños</span></div><div class="specrow"><span class="k">Valor de la residencia</span><span class="v">USD $1,120,000</span></div><div class="specrow"><span class="k">Fracción 1/8</span><span class="v">USD $140,000</span></div><div class="specrow"><span class="k">Cuota anual de operación</span><span class="v">USD $9,800</span></div><div class="specrow"><span class="k">Tarifa media por noche</span><span class="v">USD $780</span></div><div class="specrow"><span class="k">Semanas por fracción</span><span class="v">6.5 al año</span></div>
+        </div>
+        <div class="specsheet">
+          <div class="specsheet-h"><p class="folio">Fracciones</p></div>
+          <div style="padding:16px 18px"><div class="avail"><i class="sold"></i><i class="sold"></i><i class="sold"></i><i class="sold"></i><i class="sold"></i><i class="open"></i><i class="open"></i><i class="open"></i></div><p class="availkey"><span>5 de 8 colocadas</span><span>3 disponibles</span></p></div>
+        </div>
+        <a class="btn" href="#/agendar" style="justify-content:center">Apartar una fracción <span class="arw">&rarr;</span></a>
+        <a class="btn btn-ghost" href="#/inversion" style="justify-content:center">Calcular el rendimiento</a>
+      </aside>
+    </div>
+  </div>
+</section>
+<section class="ribbon">
+  <div class="wrap">
+    <div><h2>Ocho dueños por casa. <em>Ni uno más.</em></h2><p>Una llamada de cuarenta y cinco minutos basta para saber si el modelo le conviene. Si no le conviene, se lo decimos en esa misma llamada.</p></div>
+    <a class="btn" href="#/agendar">Agendar llamada de calificación <span class="arw">&rarr;</span></a>
+  </div>
+</section>
+</div>
+<div class="route" data-route="/residencia-sayulita-alta"><section class="pagehead">
+  <div class="wrap">
+    <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><a href="#/residencias">Residencias</a><span>/</span><span style="opacity:1">Villa Sayulita Alta</span></nav>
+    <h1>Villa Sayulita Alta</h1>
+    <p class="lede measure">A ocho minutos a pie del pueblo y lo bastante arriba para que el ruido no llegue. La ocupación de Sayulita es la más pareja del año de las tres plazas: temporada alta larga y muy poca temporada muerta.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec" style="padding-top:0">
+    <div class="gallery" style="margin-bottom:40px"><div class="holder r32"><span class="mark"></span><span class="what">Vista desde la terraza</span><span class="spec">3:2 &middot; 2400×1600</span></div><div class="holder r11"><span class="mark"></span><span class="what">Alberca de borde infinito</span><span class="spec">1:1 &middot; 1600×1600</span></div><div class="holder r11"><span class="mark"></span><span class="what">Comedor exterior</span><span class="spec">1:1 &middot; 1600×1600</span></div><div class="holder r11"><span class="mark"></span><span class="what">Recámara con vista</span><span class="spec">1:1 &middot; 1600×1600</span></div><div class="holder r11"><span class="mark"></span><span class="what">Camino al pueblo</span><span class="spec">1:1 &middot; 1600×1600</span></div></div>
+    <div class="proplayout">
+      <div class="prose">
+        <h2>La casa</h2>
+        <p style="margin-top:16px">Está construida en tres plataformas escalonadas sobre la ladera, así que cada nivel tiene su propia terraza y ninguna recámara comparte vista con otra. El estudio independiente en la plataforma baja tiene entrada aparte: sirve para huéspedes que llegan sin avisar o para rentarse por separado en temporada alta. Los paneles solares cubren cerca de la mitad del consumo anual.</p>
+        <h3>Qué incluye</h3>
+        <ul><li>Terraza panorámica</li><li>Pueblo a pie</li><li>Alberca de borde infinito</li><li>Estudio independiente</li><li>Paneles solares</li><li>Entrega inmediata</li></ul>
+        <h3>Cómo se reparte el año</h3>
+        <p>Su fracción le asigna 6.5 semanas anuales, de las cuales dos caen en alta temporada por reglamento. El orden de elección rota cada año y se invierte al siguiente, de modo que en ocho años cada copropietario ocupa cada posición del turno. El calendario del año siguiente se cierra en septiembre.</p>
+        <p>Las semanas que usted no reclama pasan a renta administrada, y el ingreso neto se le abona en el estado trimestral. Las semanas de temporada baja que nadie reclama quedan disponibles para los copropietarios a tarifa de costo operativo.</p>
+        <div class="note"><b>Plano y memoria de calidades.</b> Se entregan en la llamada de calificación junto con el avalúo y el certificado de libertad de gravamen.</div>
+      </div>
+      <aside class="propaside">
+        <div class="specsheet">
+          <div class="specsheet-h"><p class="folio">Ficha técnica</p></div>
+          <div class="specrow"><span class="k">Superficie</span><span class="v">185 m&sup2;</span></div><div class="specrow"><span class="k">Recámaras</span><span class="v">3 recámaras</span></div><div class="specrow"><span class="k">Baños</span><span class="v">3 baños</span></div><div class="specrow"><span class="k">Valor de la residencia</span><span class="v">USD $960,000</span></div><div class="specrow"><span class="k">Fracción 1/8</span><span class="v">USD $120,000</span></div><div class="specrow"><span class="k">Cuota anual de operación</span><span class="v">USD $8,400</span></div><div class="specrow"><span class="k">Tarifa media por noche</span><span class="v">USD $640</span></div><div class="specrow"><span class="k">Semanas por fracción</span><span class="v">6.5 al año</span></div>
+        </div>
+        <div class="specsheet">
+          <div class="specsheet-h"><p class="folio">Fracciones</p></div>
+          <div style="padding:16px 18px"><div class="avail"><i class="sold"></i><i class="sold"></i><i class="sold"></i><i class="open"></i><i class="open"></i><i class="open"></i><i class="open"></i><i class="open"></i></div><p class="availkey"><span>3 de 8 colocadas</span><span>5 disponibles</span></p></div>
+        </div>
+        <a class="btn" href="#/agendar" style="justify-content:center">Apartar una fracción <span class="arw">&rarr;</span></a>
+        <a class="btn btn-ghost" href="#/inversion" style="justify-content:center">Calcular el rendimiento</a>
+      </aside>
+    </div>
+  </div>
+</section>
+<section class="ribbon">
+  <div class="wrap">
+    <div><h2>Ocho dueños por casa. <em>Ni uno más.</em></h2><p>Una llamada de cuarenta y cinco minutos basta para saber si el modelo le conviene. Si no le conviene, se lo decimos en esa misma llamada.</p></div>
+    <a class="btn" href="#/agendar">Agendar llamada de calificación <span class="arw">&rarr;</span></a>
+  </div>
+</section>
+</div>
+<div class="route" data-route="/residencia-nayar"><section class="pagehead">
+  <div class="wrap">
+    <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><a href="#/residencias">Residencias</a><span>/</span><span style="opacity:1">Penthouse Nayar</span></nav>
+    <h1>Penthouse Nayar</h1>
+    <p class="lede measure">El ticket más alto y la única en preventa. Ocupa los dos últimos niveles con vista franca a la Bahía de Banderas por el sur y a la sierra por el oriente. Admite pago diferido a 24 meses con 40% de enganche.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec" style="padding-top:0">
+    <div class="gallery" style="margin-bottom:40px"><div class="holder r32"><span class="mark"></span><span class="what">Roof privado al anochecer</span><span class="spec">3:2 &middot; 2400×1600</span></div><div class="holder r11"><span class="mark"></span><span class="what">Doble altura de la sala</span><span class="spec">1:1 &middot; 1600×1600</span></div><div class="holder r11"><span class="mark"></span><span class="what">Jacuzzi con vista</span><span class="spec">1:1 &middot; 1600×1600</span></div><div class="holder r11"><span class="mark"></span><span class="what">Recámara principal</span><span class="spec">1:1 &middot; 1600×1600</span></div><div class="holder r11"><span class="mark"></span><span class="what">Vista a la bahía</span><span class="spec">1:1 &middot; 1600×1600</span></div></div>
+    <div class="proplayout">
+      <div class="prose">
+        <h2>La casa</h2>
+        <p style="margin-top:16px">Ocupa los dos últimos niveles del edificio con elevador privado que desemboca dentro del departamento. La sala es de doble altura y da al poniente, así que la puesta de sol sobre la bahía se ve desde el sofá y desde el jacuzzi del roof. Al estar en preventa, todavía admite cambios en acabados y en la distribución de las dos recámaras secundarias.</p>
+        <h3>Qué incluye</h3>
+        <ul><li>Roof privado</li><li>Doble vista a la bahía</li><li>Jacuzzi exterior</li><li>Elevador privado</li><li>Bodega y cuarto de servicio</li><li>Preventa · entrega 2027</li></ul>
+        <h3>Cómo se reparte el año</h3>
+        <p>Su fracción le asigna 6.5 semanas anuales, de las cuales dos caen en alta temporada por reglamento. El orden de elección rota cada año y se invierte al siguiente, de modo que en ocho años cada copropietario ocupa cada posición del turno. El calendario del año siguiente se cierra en septiembre.</p>
+        <p>Las semanas que usted no reclama pasan a renta administrada, y el ingreso neto se le abona en el estado trimestral. Las semanas de temporada baja que nadie reclama quedan disponibles para los copropietarios a tarifa de costo operativo.</p>
+        <div class="note"><b>Plano y memoria de calidades.</b> Se entregan en la llamada de calificación junto con el avalúo y el certificado de libertad de gravamen.</div>
+      </div>
+      <aside class="propaside">
+        <div class="specsheet">
+          <div class="specsheet-h"><p class="folio">Ficha técnica</p></div>
+          <div class="specrow"><span class="k">Superficie</span><span class="v">310 m&sup2;</span></div><div class="specrow"><span class="k">Recámaras</span><span class="v">4 recámaras</span></div><div class="specrow"><span class="k">Baños</span><span class="v">4.5 baños</span></div><div class="specrow"><span class="k">Valor de la residencia</span><span class="v">USD $1,760,000</span></div><div class="specrow"><span class="k">Fracción 1/8</span><span class="v">USD $220,000</span></div><div class="specrow"><span class="k">Cuota anual de operación</span><span class="v">USD $15,400</span></div><div class="specrow"><span class="k">Tarifa media por noche</span><span class="v">USD $1,150</span></div><div class="specrow"><span class="k">Semanas por fracción</span><span class="v">6.5 al año</span></div>
+        </div>
+        <div class="specsheet">
+          <div class="specsheet-h"><p class="folio">Fracciones</p></div>
+          <div style="padding:16px 18px"><div class="avail"><i class="sold"></i><i class="sold"></i><i class="sold"></i><i class="sold"></i><i class="sold"></i><i class="sold"></i><i class="open"></i><i class="open"></i></div><p class="availkey"><span>6 de 8 colocadas</span><span>2 disponibles</span></p></div>
+        </div>
+        <a class="btn" href="#/agendar" style="justify-content:center">Apartar una fracción <span class="arw">&rarr;</span></a>
+        <a class="btn btn-ghost" href="#/inversion" style="justify-content:center">Calcular el rendimiento</a>
+      </aside>
+    </div>
+  </div>
+</section>
+<section class="ribbon">
+  <div class="wrap">
+    <div><h2>Ocho dueños por casa. <em>Ni uno más.</em></h2><p>Una llamada de cuarenta y cinco minutos basta para saber si el modelo le conviene. Si no le conviene, se lo decimos en esa misma llamada.</p></div>
+    <a class="btn" href="#/agendar">Agendar llamada de calificación <span class="arw">&rarr;</span></a>
+  </div>
+</section>
+</div>
+<div class="route" data-route="/modelo"><section class="pagehead">
+  <div class="wrap">
+    <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><span style="opacity:1">Cómo funciona</span></nav>
+    <h1>Cómo funciona</h1>
+    <p class="lede measure">Ocho copropietarios, una escritura por fracción, un calendario que rota y una administradora que opera la casa. Todo lo demás es detalle de ese esquema.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec" style="padding-top:0">
+    <div class="sec-head"><div class="rail"><p class="folio">Sección 01</p></div>
+      <div><h2>Cuatro maneras de tener una casa en la playa. <em>Sólo una tiene sentido.</em></h2></div></div>
+    <div class="tablewrap">
+  <table>
+    <thead><tr><th></th><th class="us">Fracción escriturada</th><th>Tiempo compartido</th><th>Casa completa</th><th>Renta vacacional</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Qué posee</th><td class="us">1/8 indiviso del inmueble, en escritura pública</td><td>Un derecho de uso contractual</td><td>El 100% del inmueble</td><td>Nada</td></tr>
+      <tr><th scope="row">Aparece en su patrimonio</th><td class="us"><span class="mark yes">Sí</span><span>Como activo inmobiliario</span></td><td><span class="mark no">No</span></td><td><span class="mark yes">Sí</span></td><td><span class="mark no">No</span></td></tr>
+      <tr><th scope="row">Captura plusvalía</th><td class="us"><span class="mark yes">Sí</span><span>Proporcional a su fracción</span></td><td><span class="mark no">No</span><span>El derecho se deprecia</span></td><td><span class="mark yes">Sí</span><span>Íntegra</span></td><td><span class="mark no">No</span></td></tr>
+      <tr><th scope="row">Costo de entrada</th><td class="us"><span class="num">USD $120k &ndash; $220k</span></td><td><span class="num">USD $25k &ndash; $60k</span></td><td><span class="num">USD $960k &ndash; $1.8M</span></td><td><span class="num">$0</span></td></tr>
+      <tr><th scope="row">Costo fijo anual</th><td class="us">Cuota de operación proporcional, compensada por renta</td><td>Mantenimiento vitalicio, con incrementos anuales</td><td>Predial, seguro, personal, mantenimiento: <span class="num">100%</span> suyo</td><td>Ninguno</td></tr>
+      <tr><th scope="row">Salida</th><td class="us">Venta o cesión de la fracción, como cualquier inmueble</td><td>Mercado secundario prácticamente inexistente</td><td>Venta del inmueble completo, plazos largos</td><td>Inmediata</td></tr>
+      <tr><th scope="row">Trabajo que exige</th><td class="us">Ninguno. Administración profesional incluida</td><td>Reservar con meses de anticipación</td><td>Es un segundo empleo</td><td>Buscar disponibilidad cada año</td></tr>
+    </tbody>
+  </table>
+</div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Sección 02</p></div>
+      <div><h2>De la primera llamada <em>a la escritura.</em></h2>
+      <p class="lede measure" style="margin-top:16px">Un proceso de cuatro etapas, con notario público mexicano y due diligence documentada. Nada avanza sin su firma.</p></div></div>
+    <div class="steps"><div class="step"><p class="step-n">Etapa 01</p><div><h3>Llamada de calificación</h3><p>Cuarenta y cinco minutos. Revisamos su horizonte de inversión, cuántas semanas usaría realmente al año y si el modelo le conviene. Si no le conviene, se lo decimos en esa misma llamada.</p></div><p class="step-when">Día 1</p></div><div class="step"><p class="step-n">Etapa 02</p><div><h3>Selección de residencia y reserva</h3><p>Recorrido presencial o virtual de las residencias disponibles. Se firma carta de intención y se deposita el apartado en cuenta de garantía; es reembolsable durante el periodo de due diligence.</p></div><p class="step-when">Semanas 1 &ndash; 3</p></div><div class="step"><p class="step-n">Etapa 03</p><div><h3>Due diligence y constitución</h3><p>Certificado de libertad de gravamen, avalúo, régimen de copropiedad, reglamento de uso y &mdash;si usted es extranjero&mdash; la constitución del fideicomiso bancario en zona restringida. Recibe el expediente completo antes de firmar.</p></div><p class="step-when">Semanas 3 &ndash; 8</p></div><div class="step"><p class="step-n">Etapa 04</p><div><h3>Escrituración y entrega</h3><p>Firma ante notario, inscripción en el Registro Público de la Propiedad y asignación de su calendario del primer año. Las llaves y el acceso a la plataforma de reservas se entregan el mismo día.</p></div><p class="step-when">Semanas 8 &ndash; 12</p></div></div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Sección 03</p></div>
+      <div><h2>El calendario, <em>sin carrera por reservar.</em></h2></div></div>
+    <div class="grid3">
+      <div class="panel"><span class="folio">Regla I</span><h3>Rotación de prioridad</h3><p>El orden de elección se sortea una vez y se invierte al año siguiente. En ocho años cada copropietario ocupa cada posición del turno. Nadie elige primero dos años seguidos.</p></div>
+      <div class="panel"><span class="folio">Regla II</span><h3>Dos semanas de alta garantizadas</h3><p>Navidad, Año Nuevo, Semana Santa y los puentes largos se reparten por reglamento, no por rapidez. Cada fracción tiene dos semanas de alta temporada al año.</p></div>
+      <div class="panel"><span class="folio">Regla III</span><h3>Semanas liberadas</h3><p>Lo que usted no reclama pasa a renta administrada y le genera ingreso. Lo que nadie reclama queda disponible para los copropietarios a tarifa de costo operativo.</p></div>
+    </div>
+    <div class="note" style="margin-top:28px"><b>El calendario se cierra en septiembre</b> para el año siguiente, y se publica en la plataforma de reservas el mismo día. A partir de ahí sólo cambia por intercambio entre copropietarios.</div>
+  </div>
+</section>
+<section class="ribbon">
+  <div class="wrap">
+    <div><h2>Ocho dueños por casa. <em>Ni uno más.</em></h2><p>Una llamada de cuarenta y cinco minutos basta para saber si el modelo le conviene. Si no le conviene, se lo decimos en esa misma llamada.</p></div>
+    <a class="btn" href="#/agendar">Agendar llamada de calificación <span class="arw">&rarr;</span></a>
+  </div>
+</section>
+</div>
+<div class="route" data-route="/inversion"><section class="pagehead">
+  <div class="wrap">
+    <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><span style="opacity:1">Los números</span></nav>
+    <h1>Los números</h1>
+    <p class="lede measure">Mueva las variables. La tabla se recalcula sobre supuestos conservadores de ocupación y tarifa para Riviera Nayarit, y todos los supuestos están escritos abajo.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec" style="padding-top:0"><div class="calc">
+  <div class="calc-controls">
+    <div class="ctl"><label for="cValue"><span class="lname">Valor de la residencia</span><span class="lval num" id="vValue">$1,120,000</span></label><input type="range" id="cValue" min="800000" max="2400000" step="40000" value="1120000"></div>
+    <div class="ctl"><label for="cFrac"><span class="lname">Fracciones que adquiere</span><span class="lval num" id="vFrac">1 / 8</span></label><input type="range" id="cFrac" min="1" max="4" step="1" value="1"></div>
+    <div class="ctl"><label for="cUse"><span class="lname">Semanas que realmente usa</span><span class="lval num" id="vUse">4</span></label><input type="range" id="cUse" min="0" max="26" step="1" value="4"></div>
+    <div class="ctl"><label for="cRate"><span class="lname">Tarifa promedio por noche</span><span class="lval num" id="vRate">$780</span></label><input type="range" id="cRate" min="380" max="1800" step="20" value="780"></div>
+    <div class="ctl"><label for="cApp"><span class="lname">Plusvalía anual estimada</span><span class="lval num" id="vApp">5.0%</span></label><input type="range" id="cApp" min="0" max="10" step="0.5" value="5"></div>
+  </div>
+  <div class="ledger">
+    <div class="ledger-h"><p class="folio">Estado anual estimado</p><p class="folio">USD</p></div>
+    <div class="ledger-row"><span class="k">Inversión inicial (su fracción)</span><span class="v num" id="rInv">$140,000</span></div>
+    <div class="ledger-row"><span class="k">Semanas asignadas al año</span><span class="v num" id="rWeeks">6.5</span></div>
+    <div class="ledger-row"><span class="k">Semanas que libera a renta</span><span class="v num" id="rFree">2.5</span></div>
+    <div class="ledger-row pos"><span class="k">Ingreso neto por renta <small>(tras 22% de administración)</small></span><span class="v num" id="rIncome">+$10,647</span></div>
+    <div class="ledger-row neg"><span class="k">Cuota de operación proporcional <small>(predial, seguro, mantenimiento, personal)</small></span><span class="v num" id="rFees">&minus;$9,800</span></div>
+    <div class="ledger-row pos"><span class="k">Plusvalía anual de su fracción</span><span class="v num" id="rApp">+$7,000</span></div>
+    <div class="ledger-row"><span class="k">Valor de las noches que usted disfruta</span><span class="v num" id="rEnjoy">$21,840</span></div>
+    <div class="ledger-row total"><span class="k">Rendimiento total del año</span><span class="v num" id="rTotal">+$29,687</span></div>
+    <p class="ledger-note">Cifras ilustrativas, no una garantía de rendimiento. Supuestos: ocupación del 62% sobre las semanas liberadas, comisión de administración del 22%, cuota anual de operación equivalente al 7% del valor de la fracción. La plusvalía es una estimación de mercado y puede ser negativa. Solicite el memorándum con las cifras auditadas de cada residencia.</p>
+  </div>
+</div></div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Supuestos</p></div>
+      <div><h2>De dónde salen <em>los números.</em></h2></div></div>
+    <div class="grid3">
+      <div class="panel"><span class="folio">Ocupación 62%</span><h3>Semanas liberadas</h3><p>Promedio conservador para renta vacacional administrada en Riviera Nayarit, contando temporada alta y baja. Las casas frente a playa suelen quedar por encima.</p></div>
+      <div class="panel"><span class="folio">Comisión 22%</span><h3>Administración</h3><p>Cubre canales de reserva, limpieza entre estancias, recepción de huéspedes, mantenimiento correctivo y reporte trimestral.</p></div>
+      <div class="panel"><span class="folio">Cuota 7%</span><h3>Operación anual</h3><p>Sobre el valor de su fracción: predial, seguro, mantenimiento preventivo, personal, jardinería, alberca y fondo de reserva.</p></div>
+    </div>
+    <div class="note" style="margin-top:28px"><b>Estas cifras son ilustrativas.</b> No son una garantía de rendimiento y la plusvalía puede ser negativa. El memorándum de cada residencia trae las cifras auditadas del ejercicio anterior; se entrega en la llamada de calificación.</div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Comparación</p></div>
+      <div><h2>La pregunta que <em>realmente</em> importa</h2>
+      <p class="lede measure" style="margin-top:16px">No es cuánto rinde la fracción. Es cuánto le cuesta hoy la alternativa que ya está usando.</p></div></div>
+    <div class="grid3">
+      <div class="panel"><span class="folio">Alternativa A</span><h3>Rentar cada año</h3><p>Seis semanas al año en casas equivalentes, a tarifa de mercado, son un gasto que no deja nada. En diez años supera con holgura el valor de una fracción, y usted sigue sin poseer nada.</p></div>
+      <div class="panel"><span class="folio">Alternativa B</span><h3>Comprar la casa entera</h3><p>Ocho veces el capital inmovilizado, el 100% de los costos fijos y un inmueble vacío cuarenta y seis semanas al año, salvo que usted quiera dedicarse a administrarlo.</p></div>
+      <div class="panel"><span class="folio">Alternativa C</span><h3>La fracción</h3><p>Un octavo del capital, un octavo de los costos, las mismas seis semanas y un activo escriturado que puede vender. La diferencia la absorbe la renta administrada.</p></div>
+    </div>
+  </div>
+</section>
+<section class="ribbon">
+  <div class="wrap">
+    <div><h2>Ocho dueños por casa. <em>Ni uno más.</em></h2><p>Una llamada de cuarenta y cinco minutos basta para saber si el modelo le conviene. Si no le conviene, se lo decimos en esa misma llamada.</p></div>
+    <a class="btn" href="#/agendar">Agendar llamada de calificación <span class="arw">&rarr;</span></a>
+  </div>
+</section>
+</div>
+<div class="route" data-route="/legal"><section class="pagehead">
+  <div class="wrap">
+    <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><span style="opacity:1">Estructura legal</span></nav>
+    <h1>Estructura legal</h1>
+    <p class="lede measure">La diferencia entre una fracción y una promesa está en el papel. Estos son los instrumentos que sostienen la operación, y lo que cada uno le garantiza.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec" style="padding-top:0">
+    <div class="legal-grid">
+      <div class="legal-cell"><span class="folio">Instrumento I</span><h3>Escritura pública ante notario</h3><p>Su fracción se transmite mediante escritura de copropiedad en régimen indiviso, inscrita en el Registro Público de la Propiedad del Estado de Nayarit. Es un derecho real, oponible frente a terceros, heredable y transmisible.</p></div>
+      <div class="legal-cell"><span class="folio">Instrumento II</span><h3>Fideicomiso bancario en zona restringida</h3><p>La costa mexicana está dentro de la franja de 50 km que la Constitución reserva. Si usted no es mexicano, su fracción se aloja en un fideicomiso con una institución bancaria mexicana como fiduciaria: usted es fideicomisario, con pleno derecho de uso, renta, venta y sucesión.</p></div>
+      <div class="legal-cell"><span class="folio">Instrumento III</span><h3>Reglamento de uso y calendario</h3><p>Rotación anual de prioridad: quien elige primero un año, elige último el siguiente. Dos semanas de alta temporada garantizadas por fracción, límite de huéspedes, política de mascotas y depósito de daños. Todo escrito antes de que usted firme.</p></div>
+      <div class="legal-cell"><span class="folio">Instrumento IV</span><h3>Administración y cuentas separadas</h3><p>Una sociedad administradora opera la casa, la renta y la reporta. Cuenta bancaria independiente por residencia, estado financiero trimestral, y derecho de los copropietarios a remover al administrador por mayoría. Sin cuotas vitalicias ni renovaciones automáticas.</p></div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Escenarios</p></div>
+      <div><h2>Qué pasa <em>cuando algo sale mal.</em></h2>
+      <p class="lede measure" style="margin-top:16px">Ninguna estructura vale por lo que promete en el escenario bueno. Estos son los cuatro casos incómodos y cómo los resuelve el reglamento.</p></div></div>
+    <div class="grid2">
+      <div class="panel"><span class="folio">Caso 01</span><h3>Un copropietario deja de pagar</h3><p>El fondo de reserva, equivalente a seis meses de operación, absorbe el hueco sin interrumpir el servicio. La fracción morosa acumula intereses y, superados 180 días, se activa la venta forzosa con derecho de preferencia para los copropietarios al corriente. Nadie queda obligado a cubrir la cuota ajena de forma permanente.</p></div>
+      <div class="panel"><span class="folio">Caso 02</span><h3>Usted quiere salir</h3><p>Vende su fracción como cualquier inmueble. Los demás copropietarios tienen derecho de preferencia de 30 días al precio ofertado; si no lo ejercen, usted vende libremente. Mantenemos lista de espera por residencia, pero usarla es opcional.</p></div>
+      <div class="panel"><span class="folio">Caso 03</span><h3>La administradora deja de servir</h3><p>Los copropietarios pueden removerla por mayoría simple, con 90 días de aviso. Las cuentas de la residencia son independientes de la administradora y no forman parte de su patrimonio; un concurso mercantil de la administradora no alcanza al inmueble ni a los fondos.</p></div>
+      <div class="panel"><span class="folio">Caso 04</span><h3>Un copropietario fallece</h3><p>La fracción pasa a sus herederos por sucesión ordinaria, o al fideicomisario sustituto designado en el fideicomiso, que es la vía más rápida. Los herederos entran al reglamento en las mismas condiciones. La operación de la casa no se detiene.</p></div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Fiscal</p></div>
+      <div><h2>Lo que le pide <em>el fisco.</em></h2></div></div>
+    <div class="proplayout">
+      <div class="prose">
+        <p>Tres obligaciones, ninguna sorpresiva:</p>
+        <ul>
+          <li><strong>Predial anual proporcional.</strong> Ya viene dentro de la cuota de operación; usted no lo tramita.</li>
+          <li><strong>ISR sobre el ingreso por renta</strong> que le corresponda. La administradora emite CFDI y entrega la constancia anual con el desglose de su fracción.</li>
+          <li><strong>ISR sobre la ganancia al vender.</strong> Se calcula ante notario en el momento de la escritura de venta, con las deducciones que la ley permite.</li>
+        </ul>
+        <p>México tiene tratados para evitar la doble tributación con más de sesenta países. Si usted tributa fuera de México, conviene revisar el suyo con su asesor antes de firmar; le entregamos toda la documentación que necesite para esa conversación.</p>
+        <div class="note"><b>No damos asesoría fiscal.</b> Damos los documentos para que su asesor la dé. Es una distinción importante y la sostenemos.</div>
+      </div>
+      <aside class="propaside">
+        <div class="specsheet">
+          <div class="specsheet-h"><p class="folio">Expediente que recibe</p></div>
+          <div class="specrow"><span class="k">Certificado de libertad de gravamen</span><span class="v">Etapa 03</span></div>
+          <div class="specrow"><span class="k">Avalúo bancario</span><span class="v">Etapa 03</span></div>
+          <div class="specrow"><span class="k">Régimen de copropiedad</span><span class="v">Etapa 03</span></div>
+          <div class="specrow"><span class="k">Reglamento de uso</span><span class="v">Etapa 03</span></div>
+          <div class="specrow"><span class="k">Contrato de fideicomiso</span><span class="v">Etapa 03</span></div>
+          <div class="specrow"><span class="k">Escritura inscrita</span><span class="v">Etapa 04</span></div>
+        </div>
+        <a class="btn" href="#/agendar" style="justify-content:center">Pedir el expediente modelo <span class="arw">&rarr;</span></a>
+      </aside>
+    </div>
+  </div>
+</section>
+<section class="ribbon">
+  <div class="wrap">
+    <div><h2>Ocho dueños por casa. <em>Ni uno más.</em></h2><p>Una llamada de cuarenta y cinco minutos basta para saber si el modelo le conviene. Si no le conviene, se lo decimos en esa misma llamada.</p></div>
+    <a class="btn" href="#/agendar">Agendar llamada de calificación <span class="arw">&rarr;</span></a>
+  </div>
+</section>
+</div>
+<div class="route" data-route="/copropietarios"><section class="pagehead">
+  <div class="wrap">
+    <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><span style="opacity:1">Copropietarios</span></nav>
+    <h1>Copropietarios</h1>
+    <p class="lede measure">Ocho personas por casa que no se conocían y comparten una escritura. Esto es lo que dicen, y lo que pueden esperar del primer año.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec" style="padding-top:0">
+    <div class="testi-feature">
+  <div class="holder r45"><span class="mark"></span><span class="what">Retrato del copropietario</span><span class="spec">4:5 &middot; 1200×1500</span></div>
+  <div>
+    <span class="sample">Muestra &mdash; sustituir por testimonio verificado</span>
+    <blockquote style="margin-top:14px">Comparé una casa completa en Punta de Mita contra esto durante casi un año. Lo que me decidió no fue el precio: fue darme cuenta de que iba a usarla seis semanas y pagar cincuenta y dos.</blockquote>
+    <div class="testi-meta"><span class="name">Nombre del copropietario</span><span class="where">Residencia Marea &middot; Ciudad</span><span class="since">Copropietario desde 2024</span></div>
+  </div>
+</div>
+<div class="testi-grid"><figure class="testi">
+  <span class="sample">Muestra</span>
+  <blockquote>El primer calendario me daba miedo. Elegí tercero, me tocó Semana Santa, y al año siguiente elegí sexto y también salí bien. La rotación funciona.</blockquote>
+  <figcaption class="who"><div class="holder"><span class="mark"></span><span class="what">Foto</span></div><span><span class="n">Nombre</span><span class="s">Villa Sayulita Alta &middot; 2023</span></span></figcaption>
+</figure><figure class="testi">
+  <span class="sample">Muestra</span>
+  <blockquote>El reporte de renta llega el día 10 de cada trimestre, con el detalle de noches y tarifas. No he tenido que perseguir a nadie por un número.</blockquote>
+  <figcaption class="who"><div class="holder"><span class="mark"></span><span class="what">Foto</span></div><span><span class="n">Nombre</span><span class="s">Residencia Marea &middot; 2024</span></span></figcaption>
+</figure><figure class="testi">
+  <span class="sample">Muestra</span>
+  <blockquote>Vendí media fracción el año pasado a un conocido. Escritura, notario y quince días. Eso es lo que no existe en un tiempo compartido.</blockquote>
+  <figcaption class="who"><div class="holder"><span class="mark"></span><span class="what">Foto</span></div><span><span class="n">Nombre</span><span class="s">Penthouse Nayar &middot; 2022</span></span></figcaption>
+</figure><figure class="testi">
+  <span class="sample">Muestra</span>
+  <blockquote>Llegamos con dos niños y la casa estaba lista: despensa, toallas, la alberca templada. No tuve que llamar a nadie.</blockquote>
+  <figcaption class="who"><div class="holder"><span class="mark"></span><span class="what">Foto</span></div><span><span class="n">Nombre</span><span class="s">Residencia Marea &middot; 2023</span></span></figcaption>
+</figure><figure class="testi">
+  <span class="sample">Muestra</span>
+  <blockquote>Lo que más pesó fue el fideicomiso. Mi contador en Chicago lo revisó y quedó tranquilo, y eso destrabó la decisión.</blockquote>
+  <figcaption class="who"><div class="holder"><span class="mark"></span><span class="what">Foto</span></div><span><span class="n">Nombre</span><span class="s">Villa Sayulita Alta &middot; 2024</span></span></figcaption>
+</figure><figure class="testi">
+  <span class="sample">Muestra</span>
+  <blockquote>Uso cuatro de mis seis semanas y las otras dos se rentan. El año pasado la renta cubrió la cuota completa y sobró.</blockquote>
+  <figcaption class="who"><div class="holder"><span class="mark"></span><span class="what">Foto</span></div><span><span class="n">Nombre</span><span class="s">Penthouse Nayar &middot; 2023</span></span></figcaption>
+</figure></div>
+    <div class="note" style="margin-top:32px"><b>Los textos de arriba son de muestra.</b> Marcan el tono, la extensión y la información que debe llevar cada testimonio: la comparación que hizo, qué lo decidió y cómo resultó. Se sustituyen por testimonios verificados, con nombre, ciudad, residencia y año de entrada.</div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">El primer año</p></div>
+      <div><h2>Qué pasa <em>después de firmar.</em></h2></div></div>
+    <div class="steps">
+      <div class="step"><p class="step-n">Mes 01</p><div><h3>Entrega y alta</h3><p>Llaves, acceso a la plataforma de reservas y alta en el grupo de copropietarios de su residencia. Se le asigna su turno de elección para el calendario en curso.</p></div><p class="step-when">Escrituración</p></div>
+      <div class="step"><p class="step-n">Mes 02</p><div><h3>Primera estancia</h3><p>La casa se prepara con la despensa y las preferencias que usted deje registradas. La administradora recibe y entrega; usted no gestiona nada.</p></div><p class="step-when">A su elección</p></div>
+      <div class="step"><p class="step-n">Mes 04</p><div><h3>Primer estado trimestral</h3><p>Noches rentadas, tarifas obtenidas, gastos del trimestre, saldo del fondo de reserva y el neto que le corresponde. Llega el día 10 del mes siguiente al cierre.</p></div><p class="step-when">Trimestral</p></div>
+      <div class="step"><p class="step-n">Mes 09</p><div><h3>Cierre del calendario</h3><p>En septiembre elige sus semanas del año siguiente en el turno que le toca. El orden se invierte respecto del año anterior.</p></div><p class="step-when">Septiembre</p></div>
+      <div class="step"><p class="step-n">Mes 12</p><div><h3>Asamblea anual</h3><p>Presupuesto del año siguiente, cuota de operación, obras mayores si las hay y ratificación o remoción de la administradora. Un voto por fracción.</p></div><p class="step-when">Diciembre</p></div>
+    </div>
+  </div>
+</section>
+<section class="ribbon">
+  <div class="wrap">
+    <div><h2>Ocho dueños por casa. <em>Ni uno más.</em></h2><p>Una llamada de cuarenta y cinco minutos basta para saber si el modelo le conviene. Si no le conviene, se lo decimos en esa misma llamada.</p></div>
+    <a class="btn" href="#/agendar">Agendar llamada de calificación <span class="arw">&rarr;</span></a>
+  </div>
+</section>
+</div>
+<div class="route" data-route="/nosotros"><section class="pagehead">
+  <div class="wrap">
+    <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><span style="opacity:1">Quiénes somos</span></nav>
+    <h1>Quiénes somos</h1>
+    <p class="lede measure">Una operación pequeña, con nombre y cara. En un producto que se apoya en la confianza, saber con quién firma es parte de la due diligence.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec" style="padding-top:0">
+    <div class="grid4"><div class="person"><div class="holder r45"><span class="mark"></span><span class="what">Retrato</span><span class="spec">4:5 &middot; 1200×1500</span></div><div><h3>Nombre y apellido</h3><p class="role">Dirección general</p></div><p>Responsable de la selección de inmuebles y de la relación con los copropietarios. Sustituya este texto por la biografía real: años en la plaza, operaciones cerradas y por qué está en esto.</p></div><div class="person"><div class="holder r45"><span class="mark"></span><span class="what">Retrato</span><span class="spec">4:5 &middot; 1200×1500</span></div><div><h3>Nombre y apellido</h3><p class="role">Dirección de operación</p></div><p>A cargo de la administradora: calendario, mantenimiento, renta y estados trimestrales. La biografía real debe incluir la experiencia previa en hospitalidad o administración de propiedades.</p></div><div class="person"><div class="holder r45"><span class="mark"></span><span class="what">Retrato</span><span class="spec">4:5 &middot; 1200×1500</span></div><div><h3>Nombre y apellido</h3><p class="role">Dirección jurídica</p></div><p>Coordina notarios, fideicomisos y due diligence de cada residencia. Indique cédula profesional y despacho de respaldo si lo hay: en esta industria pesa mucho.</p></div><div class="person"><div class="holder r45"><span class="mark"></span><span class="what">Retrato</span><span class="spec">4:5 &middot; 1200×1500</span></div><div><h3>Nombre y apellido</h3><p class="role">Relación con inversionistas</p></div><p>Atiende las llamadas de calificación y acompaña el proceso hasta la escritura. Es la persona con la que hablará primero cualquier interesado.</p></div></div>
+    <div class="note" style="margin-top:32px"><b>Sustituya los retratos y las biografías.</b> Cuatro fotos verticales, mismo encuadre y misma luz para las cuatro: la coherencia del retrato comunica más seriedad que cualquier adjetivo del texto.</div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Aliados</p></div>
+      <div><h2>Con quién <em>trabajamos.</em></h2>
+      <p class="lede measure" style="margin-top:16px">Ninguna de estas funciones es interna, y así debe ser: el notario, el banco fiduciario y el valuador tienen que ser independientes de quien le vende.</p></div></div>
+    <div class="grid4">
+      <div class="panel"><span class="folio">Notaría</span><h3>Notaría pública</h3><p>Número y titular de la notaría que escritura las operaciones. Va aquí, con su número de registro.</p></div>
+      <div class="panel"><span class="folio">Fiduciario</span><h3>Institución bancaria</h3><p>Banco que actúa como fiduciario en los fideicomisos de zona restringida.</p></div>
+      <div class="panel"><span class="folio">Valuación</span><h3>Perito valuador</h3><p>Despacho independiente que emite el avalúo de cada residencia antes de abrir sus fracciones.</p></div>
+      <div class="panel"><span class="folio">Seguro</span><h3>Aseguradora</h3><p>Póliza de daños y responsabilidad civil por residencia, con los copropietarios como beneficiarios.</p></div>
+    </div>
+    <div class="grid4" style="margin-top:22px"><div class="holder r169 plain"><span class="mark"></span><span class="what">Logotipo del aliado</span><span class="spec">16:9</span></div><div class="holder r169 plain"><span class="mark"></span><span class="what">Logotipo del aliado</span><span class="spec">16:9</span></div><div class="holder r169 plain"><span class="mark"></span><span class="what">Logotipo del aliado</span><span class="spec">16:9</span></div><div class="holder r169 plain"><span class="mark"></span><span class="what">Logotipo del aliado</span><span class="spec">16:9</span></div></div>
+  </div>
+</section>
+<section class="ribbon">
+  <div class="wrap">
+    <div><h2>Ocho dueños por casa. <em>Ni uno más.</em></h2><p>Una llamada de cuarenta y cinco minutos basta para saber si el modelo le conviene. Si no le conviene, se lo decimos en esa misma llamada.</p></div>
+    <a class="btn" href="#/agendar">Agendar llamada de calificación <span class="arw">&rarr;</span></a>
+  </div>
+</section>
+</div>
+<div class="route" data-route="/diario"><section class="pagehead">
+  <div class="wrap">
+    <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><span style="opacity:1">Diario</span></nav>
+    <h1>Diario</h1>
+    <p class="lede measure">Notas de operación, no marketing. Lo que aprendemos administrando las casas y cerrando escrituras, publicado para que usted pregunte mejor.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec" style="padding-top:0">
+    <div style="border-top:var(--rule)"><a class="post" href="#/diario"><div class="holder r32"><span class="mark"></span><span class="what">Imagen del artículo</span><span class="spec">3:2</span></div><div><h3>Cómo leer un estado trimestral de renta</h3><p>Qué mirar primero, qué partidas suelen esconder cargos duplicados y cuál es la tarifa media que debería esperar por temporada en Bahía de Banderas.</p></div><p class="when">Marzo 2026</p></a><a class="post" href="#/diario"><div class="holder r32"><span class="mark"></span><span class="what">Imagen del artículo</span><span class="spec">3:2</span></div><div><h3>Fideicomiso: lo que su contador va a preguntar</h3><p>Las seis preguntas que hace todo contador extranjero la primera vez que ve un fideicomiso mexicano, con la respuesta y el artículo que la sostiene.</p></div><p class="when">Febrero 2026</p></a><a class="post" href="#/diario"><div class="holder r32"><span class="mark"></span><span class="what">Imagen del artículo</span><span class="spec">3:2</span></div><div><h3>Por qué cerramos las casas en ocho y no en doce</h3><p>Doce fracciones abaratan el ticket y arruinan el calendario. La aritmética de por qué ocho es el punto donde el modelo todavía sirve al copropietario.</p></div><p class="when">Enero 2026</p></a><a class="post" href="#/diario"><div class="holder r32"><span class="mark"></span><span class="what">Imagen del artículo</span><span class="spec">3:2</span></div><div><h3>Temporada alta en Riviera Nayarit: el calendario real</h3><p>Semana por semana, cuándo sube la tarifa y cuándo baja la ocupación. Sirve tanto para elegir sus semanas como para estimar la renta de las que libera.</p></div><p class="when">Diciembre 2025</p></a><a class="post" href="#/diario"><div class="holder r32"><span class="mark"></span><span class="what">Imagen del artículo</span><span class="spec">3:2</span></div><div><h3>Qué revisa un avalúo y qué no</h3><p>El avalúo bancario no es una opinión de mercado ni una inspección estructural. Qué documento cubre cada cosa y cuál debe exigir antes de firmar.</p></div><p class="when">Noviembre 2025</p></a></div>
+    <div class="note" style="margin-top:32px"><b>Los artículos son títulos de trabajo.</b> Sustituya cada uno por el texto real; la plantilla de artículo hereda los estilos de <code>.prose</code> de este mismo sistema.</div>
+  </div>
+</section>
+<section class="ribbon">
+  <div class="wrap">
+    <div><h2>Ocho dueños por casa. <em>Ni uno más.</em></h2><p>Una llamada de cuarenta y cinco minutos basta para saber si el modelo le conviene. Si no le conviene, se lo decimos en esa misma llamada.</p></div>
+    <a class="btn" href="#/agendar">Agendar llamada de calificación <span class="arw">&rarr;</span></a>
+  </div>
+</section>
+</div>
+<div class="route" data-route="/preguntas"><section class="pagehead">
+  <div class="wrap">
+    <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><span style="opacity:1">Preguntas frecuentes</span></nav>
+    <h1>Preguntas frecuentes</h1>
+    <p class="lede measure">Las preguntas incómodas primero. Si la suya no está aquí, hágala en la llamada: contestamos todas antes de que firme cualquier cosa.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec" style="padding-top:0"><div class="faq"><details open><summary><span class="q">P.01</span><span class="t">¿En qué se diferencia esto de un tiempo compartido?</span><span class="s">+</span></summary><p class="a">En el objeto de la compra. En un tiempo compartido usted adquiere un derecho de uso frente a una empresa; si esa empresa cambia de manos o quiebra, su derecho se vuelve discutible, y el mercado secundario es casi inexistente. Aquí usted adquiere una parte alícuota del inmueble mediante escritura pública inscrita. Puede rentarla, heredarla, hipotecarla o venderla, y su valor se mueve con el del inmueble, no con la salud de un operador.</p></details><details><summary><span class="q">P.02</span><span class="t">¿Qué pasa si quiero salir en tres años?</span><span class="s">+</span></summary><p class="a">Vende su fracción como vendería cualquier inmueble. El reglamento otorga a los demás copropietarios un derecho de preferencia de 30 días al precio ofertado; si no lo ejercen, usted vende libremente a un tercero. Nosotros mantenemos una lista de espera por residencia y podemos gestionar la venta, pero no está obligado a usarla. La liquidez es menor que la de un instrumento financiero y mayor que la de una casa completa.</p></details><details><summary><span class="q">P.03</span><span class="t">¿Y si otro copropietario deja de pagar la cuota?</span><span class="s">+</span></summary><p class="a">El reglamento contempla un fondo de reserva equivalente a seis meses de operación, precisamente para absorber ese hueco sin interrumpir el servicio. La fracción morosa acumula intereses y, superados 180 días, se activa la venta forzosa con derecho de preferencia para los copropietarios al corriente. Los demás nunca quedan obligados a cubrir la cuota ajena de forma permanente.</p></details><details><summary><span class="q">P.04</span><span class="t">¿Cómo se reparten las semanas de Navidad y Semana Santa?</span><span class="s">+</span></summary><p class="a">Por rotación de prioridad, no por quién reserva primero. Cada año se sortea el orden de elección una sola vez y el año siguiente ese orden se invierte, de modo que en un ciclo de ocho años cada copropietario ocupa cada posición. Cada fracción tiene garantizadas dos semanas de alta temporada al año. El calendario se cierra en septiembre para el año siguiente.</p></details><details><summary><span class="q">P.05</span><span class="t">Soy extranjero. ¿Puedo realmente ser dueño en la costa mexicana?</span><span class="s">+</span></summary><p class="a">Sí, a través de un fideicomiso bancario, que es el mecanismo estándar desde 1973 para propiedad extranjera dentro de la franja de 50 km del litoral. Una institución bancaria mexicana es fiduciaria y usted es fideicomisario: usa, renta, mejora, vende y hereda el inmueble. El fideicomiso se constituye por 50 años y es renovable. Nosotros lo gestionamos como parte de la Etapa 03 y su costo está desglosado en el memorándum.</p></details><details><summary><span class="q">P.06</span><span class="t">¿Qué obligaciones fiscales me genera?</span><span class="s">+</span></summary><p class="a">Predial anual proporcional (incluido en la cuota de operación), ISR sobre el ingreso por renta que le corresponda, y ISR sobre la ganancia al momento de vender. La administradora emite CFDI y entrega la constancia anual. México tiene tratados para evitar la doble tributación con más de 60 países; conviene revisarlo con su asesor fiscal antes de firmar, y con gusto le compartimos la documentación que necesite para esa conversación.</p></details><details><summary><span class="q">P.07</span><span class="t">¿Puedo financiar la compra de la fracción?</span><span class="s">+</span></summary><p class="a">Las fracciones se adquieren de contado en la mayoría de los casos. Existen esquemas de pago diferido a 12 y 24 meses con enganche del 40% para residencias en preventa, y algunos clientes financian con una línea contra activos en su país de origen. Lo revisamos en la llamada de calificación; no ofrecemos crédito hipotecario directo.</p></details><details><summary><span class="q">P.08</span><span class="t">¿Puedo llevar invitados o prestar mi semana?</span><span class="s">+</span></summary><p class="a">Sí. Durante sus semanas la casa es suya: puede ir, prestarla a familia o amigos, o cederla. El único límite es el aforo máximo que fija el reglamento por razones de seguro y de desgaste, y el registro de huéspedes que pide la administradora. Rentar su semana por su cuenta a terceros sí requiere avisar, para que el seguro y la limpieza queden cubiertos.</p></details><details><summary><span class="q">P.09</span><span class="t">¿Qué pasa si quiero usar más semanas de las que me tocan?</span><span class="s">+</span></summary><p class="a">Se pueden tomar semanas no reclamadas por los demás copropietarios pagando sólo la tarifa de costo operativo, muy por debajo de la tarifa de renta. Se liberan en octubre, una vez cerrado el calendario. En la práctica siempre sobran semanas de temporada baja.</p></details><details><summary><span class="q">P.10</span><span class="t">¿Quién responde si algo se rompe?</span><span class="s">+</span></summary><p class="a">La administradora, con cargo al fondo de mantenimiento que ya está dentro de su cuota anual. Usted no gestiona proveedores ni adelanta dinero. Los daños atribuibles a una estancia concreta se cargan al depósito de esa estancia, según el reglamento.</p></details></div></div>
+</section>
+</div>
+<div class="route" data-route="/agendar"><section class="close-sec" id="agendar" style="border-top:none">
+  <div class="wrap sec close-grid">
+    <div>
+      <p class="eyebrow">El siguiente paso</p>
+      <h2 style="margin-top:14px">Cuarenta y cinco minutos <em>para saber si esto es para usted.</em></h2>
+      <p class="lede" style="margin-top:18px; max-width:52ch">No es una llamada de ventas. Es una revisión de números con la persona que opera las residencias. Si el modelo no le conviene, terminamos la llamada diciéndoselo.</p>
+      <div class="qualify">
+        <p class="folio" style="margin-bottom:6px">Lo que revisamos en esa llamada</p>
+        <ul>
+          <li><span>01</span> Cuántas semanas al año usaría realmente, y si compensan el ticket.</li>
+          <li><span>02</span> Su horizonte: por debajo de cinco años, el modelo rara vez funciona.</li>
+          <li><span>03</span> Estructura fiscal según su residencia y nacionalidad.</li>
+          <li><span>04</span> Qué residencia y qué fracción quedan disponibles hoy.</li>
+        </ul>
+      </div>
+      <div class="qualify">
+        <p class="folio" style="margin-bottom:6px">Lo que recibe después</p>
+        <ul>
+          <li><span>&mdash;</span> Memorándum de la residencia que le interese, con cifras del ejercicio anterior.</li>
+          <li><span>&mdash;</span> Reglamento de uso y contrato de fideicomiso modelo.</li>
+          <li><span>&mdash;</span> Calendario de fracciones disponibles, actualizado a esa semana.</li>
+        </ul>
+      </div>
+    </div>
+    <form data-lead id="agendar">
+  <div class="field-row">
+    <div class="field"><label for="agendar-n">Nombre completo</label><input id="agendar-n" name="nombre" type="text" placeholder="Como aparece en su identificación" required></div>
+    <div class="field"><label for="agendar-p">WhatsApp</label><input id="agendar-p" name="telefono" type="tel" placeholder="+52 322 000 0000" required></div>
+  </div>
+  <div class="field"><label for="agendar-m">Correo electrónico</label><input id="agendar-m" name="email" type="email" placeholder="nombre@dominio.com" required></div>
+  <div class="field">
+    <label for="agendar-t">Rango de inversión considerado</label>
+    <select id="agendar-t" name="ticket" required>
+      <option value="">Seleccione un rango</option>
+      <option>Menos de USD $100,000</option>
+      <option>USD $100,000 &ndash; $180,000</option>
+      <option>USD $180,000 &ndash; $300,000</option>
+      <option>Más de USD $300,000</option>
+    </select>
+  </div>
+  <div class="field">
+    <label for="agendar-w">Cuándo le gustaría escriturar</label>
+    <select id="agendar-w" name="horizonte" required>
+      <option value="">Seleccione un plazo</option>
+      <option>En los próximos 90 días</option>
+      <option>Este año</option>
+      <option>El próximo año</option>
+      <option>Todavía estoy explorando</option>
+    </select>
+  </div>
+  <button class="btn" type="submit">Solicitar la llamada <span class="arw">&rarr;</span></button>
+  <p class="form-fine">Al enviar, un asesor de La Fracción le contactará por WhatsApp en menos de 24 horas hábiles para confirmar el horario. No compartimos sus datos con terceros ni le inscribimos a ninguna lista de correo.</p>
+  <p class="form-ok">Solicitud registrada. Le escribimos por WhatsApp para confirmar el horario.</p>
+</form>
+  </div>
+</section>
+</div>
+<div class="route" data-route="/avisos"><section class="pagehead">
+  <div class="wrap">
+    <nav class="crumbs"><a href="#/inicio">Inicio</a><span>/</span><span style="opacity:1">Aviso legal y privacidad</span></nav>
+    <h1>Aviso legal y privacidad</h1>
+    <p class="lede measure">Qué es y qué no es este sitio, y qué hacemos con los datos que usted nos deja.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec" style="padding-top:0">
+    <div class="prose measure">
+      <h3>Naturaleza de la información</h3>
+      <p>El contenido de este sitio tiene fines informativos y promocionales. No constituye una oferta pública de valores, una invitación a invertir, ni asesoría de inversión, fiscal o legal. Ninguna cifra publicada aquí es una garantía de rendimiento.</p>
+      <h3>Cifras y estimaciones</h3>
+      <p>Los importes de renta, ocupación, cuotas y plusvalía son estimaciones ilustrativas construidas sobre supuestos de mercado que se declaran junto a cada cálculo. El valor de un inmueble puede disminuir y la ocupación puede resultar inferior a la estimada. Las cifras auditadas de cada residencia se entregan en el memorándum informativo correspondiente.</p>
+      <h3>Documentos que prevalecen</h3>
+      <p>Toda operación se formaliza mediante escritura pública ante notario mexicano. El memorándum informativo, el reglamento de copropiedad y el contrato de fideicomiso rigen la relación y prevalecen sobre cualquier contenido de esta página en caso de discrepancia.</p>
+      <h3>Datos personales</h3>
+      <p>Los datos que usted proporciona en los formularios se usan únicamente para contactarle en relación con su solicitud. No se venden, ceden ni transfieren a terceros con fines comerciales, y no se le inscribe a ninguna lista de correo sin su consentimiento expreso. Puede solicitar el acceso, la rectificación o la eliminación de sus datos escribiendo a la dirección de contacto del pie de página.</p>
+      <h3>Propiedad intelectual</h3>
+      <p>Las marcas, textos, fotografías y planos publicados en este sitio pertenecen a sus respectivos titulares y no pueden reproducirse sin autorización escrita.</p>
+      <div class="note"><b>Antes de publicar:</b> sustituya esta plantilla por el aviso de privacidad completo que exige la LFPDPPP, con el nombre y domicilio del responsable, las finalidades del tratamiento y el procedimiento para ejercer derechos ARCO.</div>
+    </div>
+  </div>
+</section>
+</div><footer>
+  <div class="wrap">
+    <div class="footnav"><div><h4>Residencias</h4><ul><li><a href="#/residencias" data-nav>Todas las residencias</a></li><li><a href="#/residencia-marea" data-nav>Residencia Marea</a></li><li><a href="#/residencia-sayulita-alta" data-nav>Villa Sayulita Alta</a></li><li><a href="#/residencia-nayar" data-nav>Penthouse Nayar</a></li></ul></div><div><h4>El modelo</h4><ul><li><a href="#/modelo" data-nav>Cómo funciona</a></li><li><a href="#/inversion" data-nav>Los números</a></li><li><a href="#/legal" data-nav>Estructura legal</a></li><li><a href="#/preguntas" data-nav>Preguntas frecuentes</a></li></ul></div><div><h4>La operación</h4><ul><li><a href="#/nosotros" data-nav>Quiénes somos</a></li><li><a href="#/copropietarios" data-nav>Copropietarios</a></li><li><a href="#/diario" data-nav>Diario</a></li><li><a href="#/agendar" data-nav>Agendar una llamada</a></li></ul></div><div><h4>Legal</h4><ul><li><a href="#/avisos" data-nav>Aviso legal y privacidad</a></li></ul></div></div>
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <b>La Fracción &mdash; Nayarit</b>
+        <span class="folio">Copropiedad fraccional escriturada &middot; Riviera Nayarit, México</span>
+      </div>
+      <div class="foot-brand">
+        <span class="folio">Contacto</span>
+        <p style="font-family:var(--mono); font-size:.8rem; margin-top:6px">Nuevo Vallarta, Nayarit<br>hola@fractional-travel-investing.com</p>
+      </div>
+    </div>
+    <p class="disclaimer">Aviso: la información de este sitio tiene fines informativos y no constituye una oferta pública de valores, asesoría de inversión, fiscal o legal. Las cifras de rendimiento, plusvalía y ocupación son estimaciones ilustrativas basadas en supuestos de mercado y no garantizan resultados futuros; el valor de un inmueble puede disminuir. Toda operación se formaliza mediante escritura pública ante notario mexicano y se rige por el memorándum informativo y el reglamento de copropiedad correspondientes, documentos que prevalecen sobre cualquier contenido de esta página. Consulte a su asesor fiscal y legal antes de invertir.</p>
+  </div>
+</footer>
+<script>
+/* ============================================================
+   La Fracción Nayarit — comportamiento compartido del sitio
+   Cada módulo comprueba sus elementos antes de correr, así el
+   mismo archivo sirve a todas las páginas del hub.
+   ============================================================ */
+(function(){
+  "use strict";
+
+  var UNIT_WEEKS = 6.5, PEAK_PER_FRACTION = 2;
+  var money = function(n){ return "$" + Math.round(n).toLocaleString("en-US"); };
+  var trim  = function(n){ return n.toFixed(1).replace(".0",""); };
+
+  /* ---------- menú móvil ---------- */
+  var toggle = document.querySelector(".navtoggle");
+  var drawer = document.querySelector(".navdrawer");
+  if (toggle && drawer){
+    toggle.addEventListener("click", function(){
+      var open = drawer.classList.toggle("open");
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      toggle.textContent = open ? "Cerrar" : "Menú";
+    });
+    drawer.addEventListener("click", function(e){
+      if (e.target.tagName === "A"){ drawer.classList.remove("open"); toggle.textContent = "Menú"; }
+    });
+  }
+
+  /* ---------- 1. El libro de fracciones (portada) ---------- */
+  var sharesEl = document.getElementById("shares");
+  var weeksEl  = document.getElementById("weeks");
+  if (sharesEl && weeksEl){
+    var UNIT_PRICE = +(sharesEl.getAttribute("data-unit") || 140000);
+    var i;
+    for (i = 1; i <= 8; i++){
+      var sq = document.createElement("div");
+      sq.className = "share"; sq.setAttribute("data-n", i);
+      sharesEl.appendChild(sq);
+    }
+    for (i = 0; i < 52; i++){
+      var wc = document.createElement("div");
+      wc.className = "wk"; weeksEl.appendChild(wc);
+    }
+    var shareNodes = sharesEl.children, weekNodes = weeksEl.children;
+
+    // repartidas por el año, no en bloque: así reparte un calendario rotativo real
+    var SLOTS = [1,7,12,16,21,26,30,34,38,43,47,50,3,9,18,23,28,32,36,41,45,51,5,14,20,25];
+    var PEAKS = [51,13,0,29,8,44,17,35];
+
+    var renderDeed = function(f){
+      var mine = Math.round(UNIT_WEEKS * f), peak = PEAK_PER_FRACTION * f, k;
+      for (k = 0; k < 8; k++) shareNodes[k].classList.toggle("mine", k < f);
+      for (k = 0; k < 52; k++) weekNodes[k].className = "wk";
+      for (k = 0; k < mine - peak && k < SLOTS.length; k++) weekNodes[SLOTS[k]].className = "wk on";
+      for (k = 0; k < peak && k < PEAKS.length; k++) weekNodes[PEAKS[k]].className = "wk peak";
+
+      var lbl = document.getElementById("mineLabel");
+      if (lbl) lbl.textContent = f + (f === 1 ? " fracción suya" : " fracciones suyas");
+      var ref = document.getElementById("deedRef");
+      if (ref) ref.innerHTML = "NAY&mdash;0<span class='num'>" + f + "</span>/08";
+      var inv = document.getElementById("figInv");
+      if (inv) inv.textContent = money(UNIT_PRICE * f);
+      var fw = document.getElementById("figWeeks");
+      if (fw) fw.innerHTML = trim(UNIT_WEEKS * f) + "<small>" + peak + " en alta temporada</small>";
+    };
+
+    var picks = Array.prototype.slice.call(document.querySelectorAll(".frac-pick button"));
+    picks.forEach(function(btn){
+      btn.addEventListener("click", function(){
+        picks.forEach(function(b){ b.setAttribute("aria-pressed", b === btn ? "true" : "false"); });
+        renderDeed(parseInt(btn.getAttribute("data-f"), 10));
+      });
+    });
+    renderDeed(1);
+  }
+
+  /* ---------- 2. Calculadora del modelo económico ---------- */
+  var cValue = document.getElementById("cValue");
+  if (cValue){
+    var OCCUPANCY = 0.62, MGMT_FEE = 0.22, OPEX_RATE = 0.07;
+    var ids = ["cValue","cFrac","cUse","cRate","cApp"], el = {};
+    ids.forEach(function(id){ el[id] = document.getElementById(id); });
+    var put = function(id, text){ var n = document.getElementById(id); if (n) n.textContent = text; };
+
+    var calc = function(){
+      var value = +el.cValue.value, frac = +el.cFrac.value,
+          use = +el.cUse.value, rate = +el.cRate.value, app = +el.cApp.value / 100;
+
+      var invest    = value / 8 * frac;
+      var allocated = UNIT_WEEKS * frac;
+      var used      = Math.min(use, allocated);
+      var freed     = Math.max(allocated - used, 0);
+      var income    = freed * 7 * rate * OCCUPANCY * (1 - MGMT_FEE);
+      var opex      = invest * OPEX_RATE;
+      var apprec    = invest * app;
+      var enjoy     = used * 7 * rate;
+      var total     = income - opex + apprec + enjoy;
+
+      put("vValue", money(value));
+      put("vFrac", frac + " / 8");
+      put("vUse", use);
+      put("vRate", money(rate));
+      put("vApp", (app * 100).toFixed(1) + "%");
+
+      put("rInv", money(invest));
+      put("rWeeks", trim(allocated));
+      put("rFree", trim(freed));
+      put("rIncome", "+" + money(income));
+      put("rFees", "−" + money(opex));
+      put("rApp", "+" + money(apprec));
+      put("rEnjoy", money(enjoy));
+      put("rTotal", (total >= 0 ? "+" : "−") + money(Math.abs(total)));
+
+      el.cUse.max = Math.round(allocated);
+      if (+el.cUse.value > +el.cUse.max) el.cUse.value = el.cUse.max;
+    };
+    ids.forEach(function(id){ if (el[id]) el[id].addEventListener("input", calc); });
+    calc();
+  }
+
+  /* ---------- 3. Formularios de calificación ---------- */
+  Array.prototype.forEach.call(document.querySelectorAll("form[data-lead]"), function(form){
+    form.addEventListener("submit", function(e){
+      e.preventDefault();
+      var required = form.querySelectorAll("[required]");
+      for (var i = 0; i < required.length; i++){
+        if (!required[i].value.trim()){ required[i].focus(); return; }
+      }
+      // TODO: conectar al CRM / endpoint de la operación antes de publicar en producción
+      var ok = form.querySelector(".form-ok");
+      if (ok) ok.classList.add("show");
+      var btn = form.querySelector("button[type=submit]");
+      if (btn){ btn.textContent = "Solicitud enviada"; btn.disabled = true; }
+    });
+  });
+
+  /* ---------- 4. Enrutado del previsualizador de una sola página ---------- */
+  var routes = document.querySelectorAll(".route");
+  if (routes.length){
+    var show = function(){
+      var want = (location.hash || "#/inicio").replace("#", "");
+      var found = false, i;
+      for (i = 0; i < routes.length; i++){
+        var on = routes[i].getAttribute("data-route") === want;
+        routes[i].classList.toggle("active", on);
+        if (on) found = true;
+      }
+      if (!found) routes[0].classList.add("active");
+      Array.prototype.forEach.call(document.querySelectorAll("a[data-nav]"), function(a){
+        if (a.getAttribute("href") === "#" + want) a.setAttribute("aria-current", "page");
+        else a.removeAttribute("aria-current");
+      });
+      window.scrollTo(0, 0);
+    };
+    window.addEventListener("hashchange", show);
+    show();
+  }
+})();
+
+</script>

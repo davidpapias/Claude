@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agendar una llamada &middot; La Fracción Nayarit</title>
+<meta name="description" content="Llamada de calificación de cuarenta y cinco minutos para revisar si la copropiedad fraccional le conviene.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div class="topbar">
+  <div class="wrap topbar-in">
+    <a class="brand" href="index.html"><b>La Fracción</b><span>Nayarit</span></a>
+    <nav class="navlinks"><a href="residencias.html">Residencias</a><a href="modelo.html">El modelo</a><a href="inversion.html">Inversión</a><a href="legal.html">Estructura legal</a><a href="copropietarios.html">Copropietarios</a></nav>
+    <a class="btn btn-sm" href="agendar.html">Agendar llamada <span class="arw">&rarr;</span></a>
+    <button class="navtoggle" type="button" aria-expanded="false">Menú</button>
+  </div>
+  <div class="navdrawer"><a href="residencias.html">Residencias</a><a href="modelo.html">El modelo</a><a href="inversion.html">Inversión</a><a href="legal.html">Estructura legal</a><a href="copropietarios.html">Copropietarios</a><a href="nosotros.html">Nosotros</a><a href="diario.html">Diario</a><a href="preguntas.html">Preguntas</a><a class="btn" href="agendar.html">Agendar llamada</a></div>
+</div>
+<section class="close-sec" id="agendar" style="border-top:none">
+  <div class="wrap sec close-grid">
+    <div>
+      <p class="eyebrow">El siguiente paso</p>
+      <h2 style="margin-top:14px">Cuarenta y cinco minutos <em>para saber si esto es para usted.</em></h2>
+      <p class="lede" style="margin-top:18px; max-width:52ch">No es una llamada de ventas. Es una revisión de números con la persona que opera las residencias. Si el modelo no le conviene, terminamos la llamada diciéndoselo.</p>
+      <div class="qualify">
+        <p class="folio" style="margin-bottom:6px">Lo que revisamos en esa llamada</p>
+        <ul>
+          <li><span>01</span> Cuántas semanas al año usaría realmente, y si compensan el ticket.</li>
+          <li><span>02</span> Su horizonte: por debajo de cinco años, el modelo rara vez funciona.</li>
+          <li><span>03</span> Estructura fiscal según su residencia y nacionalidad.</li>
+          <li><span>04</span> Qué residencia y qué fracción quedan disponibles hoy.</li>
+        </ul>
+      </div>
+      <div class="qualify">
+        <p class="folio" style="margin-bottom:6px">Lo que recibe después</p>
+        <ul>
+          <li><span>&mdash;</span> Memorándum de la residencia que le interese, con cifras del ejercicio anterior.</li>
+          <li><span>&mdash;</span> Reglamento de uso y contrato de fideicomiso modelo.</li>
+          <li><span>&mdash;</span> Calendario de fracciones disponibles, actualizado a esa semana.</li>
+        </ul>
+      </div>
+    </div>
+    <form data-lead id="agendar">
+  <div class="field-row">
+    <div class="field"><label for="agendar-n">Nombre completo</label><input id="agendar-n" name="nombre" type="text" placeholder="Como aparece en su identificación" required></div>
+    <div class="field"><label for="agendar-p">WhatsApp</label><input id="agendar-p" name="telefono" type="tel" placeholder="+52 322 000 0000" required></div>
+  </div>
+  <div class="field"><label for="agendar-m">Correo electrónico</label><input id="agendar-m" name="email" type="email" placeholder="nombre@dominio.com" required></div>
+  <div class="field">
+    <label for="agendar-t">Rango de inversión considerado</label>
+    <select id="agendar-t" name="ticket" required>
+      <option value="">Seleccione un rango</option>
+      <option>Menos de USD $100,000</option>
+      <option>USD $100,000 &ndash; $180,000</option>
+      <option>USD $180,000 &ndash; $300,000</option>
+      <option>Más de USD $300,000</option>
+    </select>
+  </div>
+  <div class="field">
+    <label for="agendar-w">Cuándo le gustaría escriturar</label>
+    <select id="agendar-w" name="horizonte" required>
+      <option value="">Seleccione un plazo</option>
+      <option>En los próximos 90 días</option>
+      <option>Este año</option>
+      <option>El próximo año</option>
+      <option>Todavía estoy explorando</option>
+    </select>
+  </div>
+  <button class="btn" type="submit">Solicitar la llamada <span class="arw">&rarr;</span></button>
+  <p class="form-fine">Al enviar, un asesor de La Fracción le contactará por WhatsApp en menos de 24 horas hábiles para confirmar el horario. No compartimos sus datos con terceros ni le inscribimos a ninguna lista de correo.</p>
+  <p class="form-ok">Solicitud registrada. Le escribimos por WhatsApp para confirmar el horario.</p>
+</form>
+  </div>
+</section>
+<footer>
+  <div class="wrap">
+    <div class="footnav"><div><h4>Residencias</h4><ul><li><a href="residencias.html">Todas las residencias</a></li><li><a href="residencia-marea.html">Residencia Marea</a></li><li><a href="residencia-sayulita-alta.html">Villa Sayulita Alta</a></li><li><a href="residencia-nayar.html">Penthouse Nayar</a></li></ul></div><div><h4>El modelo</h4><ul><li><a href="modelo.html">Cómo funciona</a></li><li><a href="inversion.html">Los números</a></li><li><a href="legal.html">Estructura legal</a></li><li><a href="preguntas.html">Preguntas frecuentes</a></li></ul></div><div><h4>La operación</h4><ul><li><a href="nosotros.html">Quiénes somos</a></li><li><a href="copropietarios.html">Copropietarios</a></li><li><a href="diario.html">Diario</a></li><li><a href="agendar.html">Agendar una llamada</a></li></ul></div><div><h4>Legal</h4><ul><li><a href="avisos.html">Aviso legal y privacidad</a></li></ul></div></div>
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <b>La Fracción &mdash; Nayarit</b>
+        <span class="folio">Copropiedad fraccional escriturada &middot; Riviera Nayarit, México</span>
+      </div>
+      <div class="foot-brand">
+        <span class="folio">Contacto</span>
+        <p style="font-family:var(--mono); font-size:.8rem; margin-top:6px">Nuevo Vallarta, Nayarit<br>hola@fractional-travel-investing.com</p>
+      </div>
+    </div>
+    <p class="disclaimer">Aviso: la información de este sitio tiene fines informativos y no constituye una oferta pública de valores, asesoría de inversión, fiscal o legal. Las cifras de rendimiento, plusvalía y ocupación son estimaciones ilustrativas basadas en supuestos de mercado y no garantizan resultados futuros; el valor de un inmueble puede disminuir. Toda operación se formaliza mediante escritura pública ante notario mexicano y se rige por el memorándum informativo y el reglamento de copropiedad correspondientes, documentos que prevalecen sobre cualquier contenido de esta página. Consulte a su asesor fiscal y legal antes de invertir.</p>
+  </div>
+</footer>
+<script src="assets/site.js"></script>
+</body>
+</html>
