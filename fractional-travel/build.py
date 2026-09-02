@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Genera el sitio de La Fracción Nayarit.
+Genera el sitio de Fractional Travel & Investing.
 
 Un solo origen produce dos salidas:
   * las páginas estáticas del hub (index.html, residencias.html, …),
@@ -105,7 +105,7 @@ HEAD = """<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{title} &middot; La Fracción Nayarit</title>
+<title>{title} &middot; Fractional Travel &amp; Investing</title>
 <meta name="description" content="{desc}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -142,7 +142,7 @@ def topbar(current, single):
                            ("preguntas", "Preguntas")])
     return """<div class="topbar">
   <div class="wrap topbar-in">
-    <a class="brand" href="{home}"><b>La Fracción</b><span>Nayarit</span></a>
+    <a class="brand" href="{home}"><b>Fractional Travel</b><span>&amp; Investing</span></a>
     <nav class="navlinks">{nav}</nav>
     <a class="btn btn-sm" href="{book}">Agendar llamada <span class="arw">&rarr;</span></a>
     <button class="navtoggle" type="button" aria-expanded="false">Menú</button>
@@ -212,7 +212,7 @@ def footer(single):
     <div class="footnav">{cols}</div>
     <div class="foot-grid">
       <div class="foot-brand">
-        <b>La Fracción &mdash; Nayarit</b>
+        <b>Fractional Travel &amp; Investing</b>
         <span class="folio">Copropiedad fraccional escriturada &middot; Riviera Nayarit, México</span>
       </div>
       <div class="foot-brand">
@@ -267,7 +267,7 @@ def leadform(ident="lead"):
     </select>
   </div>
   <button class="btn" type="submit">Solicitar la llamada <span class="arw">&rarr;</span></button>
-  <p class="form-fine">Al enviar, un asesor de La Fracción le contactará por WhatsApp en menos de 24 horas hábiles para confirmar el horario. No compartimos sus datos con terceros ni le inscribimos a ninguna lista de correo.</p>
+  <p class="form-fine">Al enviar, un asesor de Fractional Travel &amp; Investing le contactará por WhatsApp en menos de 24 horas hábiles para confirmar el horario. No compartimos sus datos con terceros ni le inscribimos a ninguna lista de correo.</p>
   <p class="form-ok">Solicitud registrada. Le escribimos por WhatsApp para confirmar el horario.</p>
 </form>""" % ((ident,) * 11)
 
@@ -1125,7 +1125,7 @@ def build():
     css = open(os.path.join(HERE, "assets/styles.css"), encoding="utf-8").read()
     js = open(os.path.join(HERE, "assets/site.js"), encoding="utf-8").read()
     preview = (
-        '<title>La Fracción Nayarit</title>\n'
+        '<title>Fractional Travel &amp; Investing</title>\n'
         '<link rel="preconnect" href="https://fonts.googleapis.com">\n'
         '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
         '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?'

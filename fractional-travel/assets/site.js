@@ -1,5 +1,5 @@
 /* ============================================================
-   La Fracción Nayarit — comportamiento compartido del sitio
+   Fractional Travel & Investing — comportamiento compartido del sitio
    Cada módulo comprueba sus elementos antes de correr, así el
    mismo archivo sirve a todas las páginas del hub.
    ============================================================ */
@@ -160,11 +160,11 @@
   var bar = document.querySelector(".stickybar");
   if (bar){
     var dismissed = false;
-    try { dismissed = localStorage.getItem("lf-bar") === "off"; } catch (e) {}
+    try { dismissed = localStorage.getItem("fti-bar") === "off"; } catch (e) {}
     var closeBtn = bar.querySelector(".x");
     if (closeBtn) closeBtn.addEventListener("click", function(){
       dismissed = true; bar.classList.remove("up");
-      try { localStorage.setItem("lf-bar", "off"); } catch (e) {}
+      try { localStorage.setItem("fti-bar", "off"); } catch (e) {}
     });
     var onScroll = function(){
       if (dismissed) return;
@@ -180,10 +180,10 @@
   var exit = document.querySelector(".exit");
   if (exit && window.matchMedia("(min-width: 900px)").matches){
     var seen = false;
-    try { seen = localStorage.getItem("lf-exit") === "seen"; } catch (e) {}
+    try { seen = localStorage.getItem("fti-exit") === "seen"; } catch (e) {}
     var close = function(){
       exit.classList.remove("show");
-      try { localStorage.setItem("lf-exit", "seen"); } catch (e) {}
+      try { localStorage.setItem("fti-exit", "seen"); } catch (e) {}
       seen = true;
     };
     exit.addEventListener("click", function(e){ if (e.target === exit) close(); });
