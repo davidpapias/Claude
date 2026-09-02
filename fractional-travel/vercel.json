@@ -1,6 +1,28 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/traveling",
+      "destination": "/travel",
+      "permanent": true
+    },
+    {
+      "source": "/traveling.html",
+      "destination": "/travel",
+      "permanent": true
+    },
+    {
+      "source": "/inversion",
+      "destination": "/numeros",
+      "permanent": true
+    },
+    {
+      "source": "/inversion.html",
+      "destination": "/numeros",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
