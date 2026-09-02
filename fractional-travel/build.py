@@ -10,7 +10,7 @@ Un solo origen produce dos salidas:
 
     python3 build.py
 """
-import os, re
+import hashlib, os, re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -110,12 +110,12 @@ HEAD = """<!DOCTYPE html>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="{root}assets/styles.css">
+<link rel="stylesheet" href="{root}assets/styles.css?v={cssv}">
 </head>
 <body>
 """
 
-TAIL = """<script src="{root}assets/site.js"></script>
+TAIL = """<script src="{root}assets/site.js?v={jsv}"></script>
 </body>
 </html>
 """
@@ -1102,8 +1102,16 @@ PAGES = [
 ]
 
 
+def asset_version(path):
+    """Hash del contenido, para versionar la URL del asset y romper la caché."""
+    with open(os.path.join(HERE, path), "rb") as f:
+        return hashlib.md5(f.read()).hexdigest()[:8]
+
+
 def build():
     os.makedirs(os.path.join(HERE, "dist"), exist_ok=True)
+    cssv = asset_version("assets/styles.css")
+    jsv = asset_version("assets/site.js")
     routes = []
 
     for slug, title, desc, fn, with_ribbon in PAGES:
@@ -1112,9 +1120,9 @@ def build():
         body += ribbon(slug, False)
         if slug not in ("agendar", "avisos"):
             body += stickybar(False) + exit_invite(False)
-        html = (HEAD.format(title=title, desc=desc, root="")
+        html = (HEAD.format(title=title, desc=desc, root="", cssv=cssv, jsv=jsv)
                 + topbar(slug, False) + body + footer(False)
-                + TAIL.format(root=""))
+                + TAIL.format(root="", jsv=jsv))
         name = "index.html" if slug == "inicio" else slug + ".html"
         with open(os.path.join(HERE, name), "w", encoding="utf-8") as f:
             f.write(html)
