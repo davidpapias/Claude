@@ -1,227 +1,179 @@
 # Apex Sitrak — sitio multipágina en WordPress + Elementor
-Prototipo navegable: `redesign/index.html` · Manifiesto de imágenes: `redesign/IMAGENES.md`
+Prototipo navegable: `redesign/index.html` · Imágenes: `redesign/IMAGENES.md`
 
-El prototipo simula la navegación con rutas de tipo `#/modelos`. **Cada ruta equivale a una
-página real de WordPress**; el enrutado por hash existe solo para poder recorrer el sitio
-en un archivo. La tabla de abajo es el mapa 1:1.
+El prototipo usa rutas de tipo `#/modelos` solo para poder recorrer el sitio en un archivo.
+**Cada ruta equivale a una página real de WordPress.**
 
 | Ruta del prototipo | Página de WordPress | Tipo en WP |
 |---|---|---|
-| `#/` | `/` | Página (plantilla de Elementor) |
-| `#/modelos` | `/modelos/` | Archivo de producto / página con Loop Grid |
-| `#/modelo/c7h540` | `/producto/c7h-540-6x4/` | Plantilla de producto único (Single) |
+| `#/` | `/` | Página (plantilla Elementor) |
+| `#/modelos` | `/modelos/` | Página con Loop Grid + filtros |
+| `#/modelos?c=tractocamiones` | `/product-category/tractocamiones/` | Archivo de producto |
+| `#/modelo/tracto-540-6x4` | `/product/sitrak-tracto-diesel-540hp-6x4/` | Single Product |
 | `#/comparar` | `/comparar/` | Página + plugin de comparación |
+| `#/cotizar` | `/agendar-cita/` | Página con formulario multipaso |
 | `#/postventa` | `/postventa-y-servicio/` | Página |
-| `#/agencias` | `/agencias/` + una página por agencia | Página + CPT `agencia` |
+| `#/agencias` | `/agencias/` + una por sucursal | Página + CPT `agencia` |
 | `#/nosotros` | `/nuestra-historia/` | Página |
-| `#/contacto` | `/agendar-cita/` | Página con Formulario |
+
+Las URLs de producto y de categoría son **las que ya existen en el sitio**, así que no hay
+redirecciones que hacer en esa parte.
 
 ---
 
-## 1. Ajustes globales (Elementor → Ajustes del sitio)
+## 1. Identidad: fiel a la marca
 
-### Colores globales
-| Nombre en Elementor | HEX | Uso |
+El rediseño se mantiene dentro del lenguaje visual del sitio actual —fondo claro, rojo Sitrak,
+negro— y sube el nivel en jerarquía, retícula y ritmo tipográfico. No introduce un mundo visual
+ajeno a la marca.
+
+### Colores globales (Elementor → Ajustes del sitio)
+| Nombre | HEX | Uso |
 |---|---|---|
-| Primario | `#E01F26` | Rojo Sitrak: CTAs, acentos, marcadores |
-| Secundario | `#F0A93B` | Ámbar: etiquetas de dato y «mejor valor» |
-| Texto | `#E7EAED` | Texto sobre fondo oscuro |
-| Acento | `#94A1AD` | Texto secundario |
-| Personalizado 1 | `#0E1114` | Fondo base |
-| Personalizado 2 | `#161A1F` | Superficie de tarjetas |
-| Personalizado 3 | `#2A323B` | Líneas y bordes |
-| Personalizado 4 | `#EDEFF1` | Sección clara |
+| Primario | `#E01F26` | Rojo Sitrak: CTAs, acentos, valores destacados |
+| Secundario | `#111418` | Negro de titulares y barras |
+| Texto | `#2B323A` | Cuerpo |
+| Acento | `#5F6A75` | Texto secundario |
+| Personalizado 1 | `#FFFFFF` | Fondo base |
+| Personalizado 2 | `#F3F5F7` | Secciones alternas |
+| Personalizado 3 | `#DFE3E8` | Líneas y bordes |
+| Personalizado 4 | `#1FA855` | Verde WhatsApp (solo ese botón) |
 
 ### Fuentes globales
 | Rol | Fuente | Ajustes |
 |---|---|---|
-| Primaria (títulos) | **Archivo Black** | Mayúsculas, interlineado 0.98 |
+| Primaria (títulos) | **Archivo Black** | Mayúsculas, interlineado 1.0 |
 | Secundaria (texto) | **IBM Plex Sans** | 16 px, interlineado 1.6 |
-| Acento (datos y etiquetas) | **IBM Plex Mono** | 11–12 px, mayúsculas, `letter-spacing: .14em` |
+| Acento (etiquetas y datos) | **IBM Plex Mono** | 10–12 px, mayúsculas, `letter-spacing:.12em` |
 
-### Layout
-Ancho de contenido **1240 px** · espacio entre widgets **20 px** · breakpoints 1024 / 767 px.
+Ancho de contenido **1220 px** · espacio entre widgets **18 px** · breakpoints 1024 / 767 px.
 
-### CSS global (Ajustes del sitio → CSS personalizado)
+---
+
+## 2. Estructura del encabezado
+
+Dos barras, como en el prototipo:
+
+1. **Barra superior negra** (contenedor full-width, fondo `#111418`): «Distribuidor autorizado
+   Sitrak · Sinotruk» · «Más de 24 agencias» · teléfono. Es prueba de autoridad permanente y
+   pone el teléfono a un clic desde cualquier página.
+2. **Encabezado principal blanco sticky**: logo · menú · botón rojo **COTIZAR**.
+   El botón rojo no scrollea fuera de vista nunca: es el ancla del embudo.
+
 ```css
-:root{
-  --ink:#0E1114; --surface:#161A1F; --surface-2:#1E242B;
-  --line:#2A323B; --line-soft:#212831; --text:#E7EAED;
-  --muted:#94A1AD; --red:#E01F26; --amber:#F0A93B; --concrete:#EDEFF1;
-}
-.apx-eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:10px}
-.apx-eyebrow:before{content:"";width:22px;height:1px;background:var(--red)}
-.apx-num{font-variant-numeric:tabular-nums}
+.current-menu-item a{border-bottom:3px solid var(--red);font-weight:600}
 ```
 
 ---
 
-## 2. Plantillas del Theme Builder
+## 3. Catálogo: las 5 líneas reales del sitio
 
-- **Header** — contenedor flex horizontal, sticky, fondo `#0E1114` al 90 % con
-  `backdrop-filter: blur(10px)`, borde inferior 1 px. Widgets: Imagen (logo) · Nav Menu ·
-  Texto (teléfono) · Botón «Cotizar». Marca la página activa con
-  `.current-menu-item a{border-bottom:2px solid var(--red)}`.
-- **Footer** — contenedor de 4 columnas (1.4fr / 1fr / 1fr / 1fr).
-- **Single Product** — plantilla única que sirve para los 9 modelos (ver §4).
-- **Archive Product** — el catálogo (ver §3).
+El prototipo usa la taxonomía que el sitio ya tiene publicada en `/modelos/`:
 
----
+| Línea | Descripción del sitio | Unidades cargadas |
+|---|---|---|
+| Camiones ligeros | Operación urbana, agilidad, eficiencia de combustible | SITRAK 6T · SITRAK 8T |
+| Camiones medianos | Versatilidad y robustez, urbano y rural, capacidad intermedia | SITRAK 62K 330HP 6×4 · SITRAK CHASIS 360HP 6×4 |
+| Camiones vocacionales | Construcción, minería, servicios municipales | SITRAK VOLTEO 6×4 · SITRAK 8×4 MINERO |
+| Grandes dimensiones | Cargas sobredimensionadas | SITRAK 6×6 ARRASTRE PESADO |
+| Tractocamiones | Larga distancia y carga pesada | TRACTO DIESEL 540HP 6×4 · TRACTO 540HP 6×4 AMT · G7 540HP 6×4 · MINI TRACTO 330HP 6×4 |
 
-## 3. Página de modelos (`/modelos/`)
+**Montaje:** Loop Grid de Elementor Pro sobre productos de WooCommerce, 3 columnas, con widget
+**Taxonomy Filter** para las cinco líneas. La plantilla de bucle lleva: imagen 4:3 → línea y uso →
+título → extracto → tres filas de especificación (campos dinámicos) → **COTIZAR** + **Ficha** +
+casilla «Agregar al comparador».
 
-1. Cabecera de página: contenedor con la rejilla de fondo:
-```css
-selector:before{content:"";position:absolute;inset:0;
-  background-image:linear-gradient(#212831 1px,transparent 1px),
-                   linear-gradient(90deg,#212831 1px,transparent 1px);
-  background-size:74px 74px;opacity:.45;
-  -webkit-mask-image:radial-gradient(110% 90% at 80% 10%,#000 10%,transparent 72%);
-          mask-image:radial-gradient(110% 90% at 80% 10%,#000 10%,transparent 72%);}
-```
-2. **Loop Grid** (Elementor Pro) con la fuente de datos en productos, 3 columnas.
-3. Filtros por categoría: widget **Taxonomy Filter** de Elementor Pro conectado al Loop Grid
-   (Tractocamiones / Construcción y volteo / Ligeros urbanos). Sin Pro: tres botones que
-   apuntan a las URLs de categoría de WooCommerce.
-4. **Loop Item** (plantilla de bucle): Imagen destacada 16:10 → Texto dinámico con la
-   categoría → Título dinámico → Extracto → tres filas de especificación con campos
-   dinámicos → Botón «Ficha técnica» + Botón «Cotizar» + botón «Comparar» del plugin.
-
-Filas de especificación:
-```css
-.apx-row{display:flex;justify-content:space-between;padding:9px 0;
-  border-top:1px dashed var(--line);font-size:13.5px}
-.apx-row dt{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--muted)}
-.apx-row dd{margin:0;font-weight:600;font-variant-numeric:tabular-nums;text-align:right}
-```
+> **Regla que sostiene todo el sistema:** las especificaciones se cargan como **atributos globales
+> de producto**, nunca dentro de la descripción. Una sola captura alimenta la ficha, el filtro del
+> catálogo y el comparador.
+>
+> Atributos a crear: `Aplicación` · `Tracción` · `Motor` · `Potencia` · `Torque` · `Cilindrada` ·
+> `Transmisión` · `Eje delantero` · `Eje trasero` · `Suspensión` · `Tanque` · `Llantas y rines` ·
+> `Capacidad`.
 
 ---
 
-## 4. Ficha de modelo (`/producto/{slug}/`)
+## 4. Mejoras de embudo — qué se agregó y cómo se construye
 
-Una sola plantilla **Single Product** en el Theme Builder cubre los nueve modelos.
-Dos columnas (1.05fr / 0.95fr):
+El sitio actual tiene un solo camino: entrar → ver producto → botón COTIZAR → formulario.
+El rediseño abre entradas al embudo en cada nivel de intención.
 
-- Izquierda: categoría (dato dinámico) → Título del producto → Descripción corta →
-  tres contadores (Potencia / Tracción / Capacidad) → **lista completa de atributos**
-  (widget *Product Additional Information*, o Loop de atributos con estilo propio) →
-  botones «Cotizar esta unidad» y «Comparar con otra».
-- Derecha: Imagen destacada + galería + nota de ficha oficial.
+### 4.1 Selector de unidad — «¿No sabes qué unidad necesitas?» *(nuevo)*
+Tres preguntas (qué mueves · dónde operas · cuánto peso) que devuelven una línea recomendada
+y dos unidades concretas con su botón COTIZAR.
 
-> **Regla que hace funcionar todo:** las especificaciones **no se escriben en la descripción**.
-> Se cargan como **atributos globales de producto** (WooCommerce → Productos → Atributos).
-> Es lo que permite que la misma información alimente la ficha, el filtro del catálogo y el
-> comparador sin volver a capturarla.
+**Por qué:** captura al visitante que todavía no sabe qué buscar y que hoy se va sin dejar rastro.
+Es la parte alta del embudo, que no existe en el sitio actual.
 
-### Atributos globales a crear
-`Aplicación` · `Tracción` · `Motor` · `Potencia` · `Torque` · `Cilindrada` · `Transmisión`
-· `Eje delantero` · `Eje trasero` · `Suspensión` · `Tanque de combustible` · `Llantas y rines`
-· `Capacidad`
+**Cómo:** widget **HTML** con el bloque del prototipo (la lógica son ~40 líneas de JS), o un plugin
+de tipo *product finder / quiz* si se prefiere administrarlo desde el panel. Los estilos ya salen
+de las variables CSS globales.
 
----
+### 4.2 Cotizador de 4 pasos *(nuevo — reemplaza el formulario largo)*
+Paso 1 tipo de unidad → 2 unidad → 3 volumen y forma de pago → 4 datos de contacto.
+Barra de progreso y resumen lateral en vivo.
 
-## 5. La página de comparación (`/comparar/`)
+**Por qué:** el formulario largo pide todo antes de dar algo. Este empieza por lo que el visitante
+contesta sin fricción y deja los datos personales al final, cuando ya invirtió tiempo. Además, al
+preguntar enganche y plazo, la cotización sale con **mensualidad estimada ya calculada** en lugar
+de gastar una segunda llamada en pedirlos.
 
-Esto era la duda principal: **sí es posible y no requiere desarrollo a medida.**
-Cuatro caminos, de mejor a peor para este caso:
+**Cómo:** widget **Formulario** de Elementor Pro con campos de tipo **Step** (multipaso nativo,
+con barra de progreso). Acciones al enviar: Correo + **Redirección a `/gracias/`** —indispensable
+para medir conversiones— + Webhook al CRM.
 
-### Opción A — WooCommerce + plugin de comparación · **recomendada**
-El sitio actual **ya corre WooCommerce** (existe `/product-category/tractocamiones/`), así que
-esta es la vía natural.
+### 4.3 Comparador de unidades *(nuevo)*
+Hasta tres unidades lado a lado, 13 renglones, valor más alto marcado en rojo. Se alimenta desde
+las tarjetas del catálogo y desde la ficha, con barra flotante de selección.
 
-1. Carga las specs como atributos globales (§4).
-2. Instala **WPC Smart Compare for WooCommerce** (gratuito) o **YITH WooCommerce Compare**.
-3. En los ajustes del plugin, elige qué atributos aparecen como renglones de la tabla y en
-   qué orden — el mismo orden del prototipo.
-4. Inserta el botón «Comparar» en la plantilla de bucle y en la de producto único mediante el
-   widget del plugin o su shortcode dentro de un widget **Shortcode** de Elementor.
-5. Crea la página `/comparar/` con el shortcode de la tabla de comparación.
-6. Dale el estilo del prototipo con CSS en la página:
+**Cómo, en orden de preferencia:**
+- **A · WooCommerce + plugin — recomendada.** El sitio ya corre WooCommerce. Con los atributos
+  cargados, **WPC Smart Compare** (gratuito) o **YITH WooCommerce Compare** generan la tabla sin
+  código; el botón se inserta en el Loop Grid y la página `/comparar/` lleva el shortcode.
+- **B · CPT + JetEngine y JetCompareWishlist** (Crocoblock) si los modelos no deben ser productos
+  de tienda. Más control de diseño; requiere suscripción.
+- **C · Tabla estática** con el widget Tabla: cero plugins, se actualiza a mano.
+- **D · Widget HTML con JS** (lo del prototipo): sin plugins, pero duplica el catálogo.
+
 ```css
-.woocommerce-page table.compare-list th{font-family:"IBM Plex Mono",monospace;font-size:11px;
-  letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500}
-.woocommerce-page table.compare-list td{border-bottom:1px solid var(--line-soft);padding:14px 18px}
+.woocommerce-page table.compare-list th{font-family:"IBM Plex Mono",monospace;font-size:10.5px;
+  letter-spacing:.11em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.woocommerce-page table.compare-list td{border-bottom:1px solid var(--line);padding:13px 16px}
 ```
 
-**Ventajas:** el catálogo es la única fuente de verdad; agregar un modelo lo suma al comparador
-automáticamente. **Límite:** el marcado de «mejor valor» por renglón no es nativo — se agrega
-con un script corto o se omite.
+### 4.4 Barra fija móvil: Llamar · WhatsApp · Cotizar *(nuevo)*
+En pantallas menores a 760 px, tres acciones siempre visibles al pie. La mayoría del tráfico de
+este sector es móvil y hoy no hay ninguna acción persistente.
+**Cómo:** contenedor con posición fija y `display:none` en escritorio, o el widget **Off-Canvas**
+de Elementor Pro.
 
-### Opción B — CPT propio + JetEngine y JetCompareWishlist (Crocoblock)
-Si prefieres que los modelos **no** sean productos de tienda (no hay carrito ni precio público),
-crea un CPT `modelo` con campos meta por especificación. JetCompareWishlist arma el comparador
-y JetEngine el listado, todo con widgets nativos dentro de Elementor. Más control de diseño;
-requiere suscripción Crocoblock.
+### 4.5 Agenda de taller en línea *(nuevo, en Postventa)*
+Agencia · tipo de servicio · VIN · fecha. Convierte la postventa —que hoy es solo texto— en un
+segundo embudo de ingresos recurrentes.
+**Cómo:** widget Formulario con notificación a la agencia seleccionada.
 
-### Opción C — Tabla estática
-Widget **Tabla** o **HTML** con la comparación fija de las tres unidades más vendidas.
-Cero plugins, cero base de datos. Se actualiza a mano cada vez que cambia una ficha.
-Sirve como versión 1 si hay prisa por salir.
+### 4.6 Agencias filtrables con contacto directo *(nuevo)*
+Selector por estado y, en cada sucursal, «Cómo llegar» y «Contactar».
+**Cómo:** CPT `agencia` + Loop Grid con filtro por taxonomía de estado. Crear además una página
+por agencia (`/agencias/monterrey/`) con dirección, teléfono, horario y datos estructurados
+`AutoDealer`: es el mayor gancho de tráfico local que el sitio no aprovecha.
 
-### Opción D — Widget HTML con JS (lo que hace este prototipo)
-Un widget **HTML** con el arreglo de modelos en JavaScript y la tabla generada en el navegador.
-Funciona sin plugins y se ve exactamente como el prototipo, pero duplica el catálogo: cada
-cambio de ficha hay que hacerlo en dos lugares. Úsalo solo si no se instala nada más.
-
-**Recomendación:** Opción A. Es la que aprovecha lo que ya está instalado y la que no obliga a
-capturar la información dos veces.
+### 4.7 CTA escalonado en la ficha
+Bloque lateral fijo con **Cotizar** (rojo) · **WhatsApp** (verde) · **Comparar** (contorno) ·
+casilla de comparador. Tres niveles de compromiso en lugar de un único botón.
 
 ---
 
-## 6. Página de agencias (`/agencias/`)
-
-- Mapa: SVG de la República con un punto por agencia, o widget **Google Maps** con marcadores.
-- Listado en 3 columnas con borde superior por renglón.
-- **Crear un CPT `agencia`** y una página por sucursal (`/agencias/monterrey/`) con dirección,
-  teléfono, horario de taller y datos estructurados `AutoDealer`. Es el mayor gancho de tráfico
-  local que el sitio no está aprovechando hoy.
+## 5. Medición mínima para que el embudo sea gestionable
+1. Página `/gracias/` como destino de cada envío, con evento de conversión.
+2. Eventos separados por origen del lead: selector de unidad, ficha, comparador, WhatsApp, taller.
+3. Campo oculto en el formulario con la unidad y la línea, para saber qué producto genera demanda.
 
 ---
 
-## 7. Formulario (`/agendar-cita/`)
-
-Widget **Formulario** de Elementor Pro: Nombre · Empresa · Teléfono · Correo ·
-Unidad de interés (select alimentado con los 9 modelos) · Unidades a adquirir · Estado.
-Acciones tras enviar: Correo + **Redirección a `/gracias/`** (indispensable para medir
-conversiones) + Webhook al CRM si existe.
-
-Campos:
-```css
-.elementor-field-group input,.elementor-field-group select{
-  background:var(--surface);border:1px solid var(--line);color:var(--text);padding:12px 13px}
-.elementor-field-group input:focus{border-color:var(--red);outline:none}
-```
-
----
-
-## 8. Catálogo cargado en el prototipo
-
-Nueve configuraciones con la información verificable encontrada en fuentes públicas
-(Sitrak México, fichas de distribuidores y publicaciones de Sinotruk):
-
-| Modelo | Categoría | Motor | Potencia | Dato distintivo |
-|---|---|---|---|---|
-| C7H 540 6×4 | Tractocamión | MT13.54-50 · MAN | 540 HP @ 1,900 rpm | 1,844 lb-ft · ZF 16 vel. c/ retardador · tanque 900 L |
-| C7H 480 6×4 | Tractocamión | Sinotruk · MAN | 480 HP | ZF 16 vel. con retardador |
-| T7H | Tractocamión | MT13 · MAN | hasta 540 HP | Línea premium CNHTC & MAN |
-| C7H Chasis 360 6×4 | Chasis | MC11.36-50 Euro V SCR | 360 HP | Hasta 25 t de carga |
-| C7H Volteo 6×4 | Volteo | Sinotruk | — | Caja de 16 m³ (el mercado ofrece 14 m³) |
-| C7H 8×4 | Volteo | Sinotruk | — | Minería, construcción y off-road |
-| C7H 6×6 | Tractor pesado | Sinotruk | — | Arrastre de hasta 150 t, tracción en 3 ejes |
-| SITRAK 6T | Ligero | G3W | 154 HP (115 kW) @ 2,600 rpm | 6 t, distribución urbana |
-| SITRAK 8T | Ligero | G3W | 168 HP | 8 t, reparto regional |
-
-Los renglones marcados **«Por confirmar»** en el prototipo son datos que no pudieron
-verificarse públicamente. Deben completarse con la hoja de especificación oficial de Apex
-antes de publicar: es exactamente la lista de lo que falta capturar.
-
----
-
-## 9. Pendientes antes de publicar
-- **Fotografía de las unidades** (ver `IMAGENES.md`: 20 huecos con medida y encuadre).
-- Teléfonos reales, directorio de agencias y horarios de taller.
-- Completar los atributos «Por confirmar» de los 9 modelos.
+## 6. Pendientes antes de publicar
+- **Fotografía de las unidades** — ver `IMAGENES.md`.
+- Teléfonos reales y directorio de agencias (el prototipo trae 12 de ejemplo).
+- Completar los atributos marcados «Por confirmar» de las 11 unidades.
 - Aviso de privacidad y consentimiento del formulario.
-- Redirecciones 301 de las URLs actuales a la nueva estructura.
+- Verificar que los slugs de producto coincidan con los del sitio actual antes de migrar.

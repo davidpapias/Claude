@@ -1,246 +1,285 @@
-<title>Apex Sitrak Diesel Grid</title>
+<title>Apex Sitrak Distribuidor</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
 <style>
 :root{
-  --ink:#0E1114; --surface:#161A1F; --surface-2:#1E242B;
-  --line:#2A323B; --line-soft:#212831;
-  --text:#E7EAED; --muted:#94A1AD;
-  --red:#E01F26; --amber:#F0A93B;
-  --concrete:#EDEFF1; --concrete-ink:#14181C;
+  --paper:#FFFFFF; --ash:#F3F5F7; --ash-2:#E9ECEF;
+  --ink:#111418; --ink-2:#2B323A; --muted:#5F6A75;
+  --line:#DFE3E8; --line-2:#CDD4DB;
+  --red:#E01F26; --red-dark:#B3161C;
+  --dark:#12161B; --dark-2:#1B2128;
   --display:"Archivo Black","Arial Black",Helvetica,sans-serif;
   --body:"IBM Plex Sans","Segoe UI",Helvetica,Arial,sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Consolas,monospace;
-  --wrap:1240px; --gut:clamp(20px,4vw,48px);
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  --wrap:1220px; --gut:clamp(18px,4vw,44px);
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--ink);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
 img{max-width:100%}
 a{color:inherit;text-decoration:none}
-:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px}
 .wrap{max-width:var(--wrap);margin:0 auto;padding-inline:var(--gut)}
 
-.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:10px}
-.eyebrow::before{content:"";width:22px;height:1px;background:var(--red);flex:none}
-h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0;line-height:.98;letter-spacing:-.01em}
-h1{font-size:clamp(34px,5.6vw,74px);text-transform:uppercase}
-h2{font-size:clamp(26px,4vw,48px);text-transform:uppercase}
-h3{font-size:clamp(17px,2vw,22px);text-transform:uppercase;line-height:1.05}
+h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0;line-height:1;letter-spacing:-.01em;text-transform:uppercase}
+h1{font-size:clamp(28px,4vw,50px)}
+h2{font-size:clamp(24px,3.4vw,40px)}
+h3{font-size:clamp(16px,1.8vw,21px);line-height:1.1}
 p{margin:0}
-.lede{font-size:clamp(15px,1.5vw,18px);color:var(--muted);max-width:62ch}
+.lede{font-size:clamp(15px,1.4vw,18px);color:var(--muted);max-width:64ch}
 .num{font-variant-numeric:tabular-nums}
-.tbd{color:#6E7A86;font-style:italic}
+.tbd{color:#98A2AD;font-style:italic}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--red);font-weight:600;display:flex;align-items:center;gap:9px}
+.kicker::before{content:"";width:20px;height:2px;background:var(--red)}
 
-.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:15px 24px;border:1px solid transparent;cursor:pointer;transition:transform .18s ease,background .18s ease,border-color .18s ease,color .18s ease}
-.btn--primary{background:var(--red);color:#fff}
-.btn--primary:hover{background:#F5323A;transform:translateY(-2px)}
-.btn--ghost{border-color:var(--line);color:var(--text);background:transparent}
-.btn--ghost:hover{border-color:var(--text);transform:translateY(-2px)}
-.btn--light{background:var(--concrete-ink);color:#fff}
-.btn--light:hover{transform:translateY(-2px)}
-.btn--sm{padding:11px 16px;font-size:11px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;padding:15px 24px;border:2px solid transparent;cursor:pointer;transition:background .16s,color .16s,border-color .16s,transform .16s}
+.btn--red{background:var(--red);color:#fff}
+.btn--red:hover{background:var(--red-dark);transform:translateY(-1px)}
+.btn--dark{background:var(--ink);color:#fff}
+.btn--dark:hover{background:#000;transform:translateY(-1px)}
+.btn--out{border-color:var(--line-2);color:var(--ink);background:transparent}
+.btn--out:hover{border-color:var(--ink);transform:translateY(-1px)}
+.btn--wa{background:#1FA855;color:#fff}
+.btn--wa:hover{background:#178644}
+.btn--sm{padding:11px 15px;font-size:11px}
+.btn--full{width:100%}
+.btn[disabled]{opacity:.4;cursor:not-allowed;transform:none}
 
-/* header */
-.top{position:sticky;top:0;z-index:50;background:rgba(14,17,20,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line-soft)}
-.top__in{display:flex;align-items:center;gap:24px;height:74px}
-.brand{display:flex;align-items:center;gap:11px;font-family:var(--display);font-size:19px;letter-spacing:.02em;text-transform:uppercase}
-.brand__mark{width:30px;height:30px;background:var(--red);clip-path:polygon(50% 0,100% 100%,0 100%);flex:none}
-.brand small{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--muted);display:block;text-transform:uppercase;font-weight:500}
-.nav{display:flex;gap:22px;margin-left:auto}
-.nav a{font-size:13.5px;font-weight:500;color:var(--muted);padding:4px 0;border-bottom:2px solid transparent;transition:color .15s ease,border-color .15s ease}
-.nav a:hover{color:var(--text)}
-.nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--red)}
-.top__cta{display:flex;gap:10px;align-items:center}
-.top__tel{font-family:var(--mono);font-size:12.5px;color:var(--muted)}
-@media(max-width:1100px){.top__tel{display:none}}
-@media(max-width:980px){.nav{display:none}}
+/* ---------- header ---------- */
+.topbar{background:var(--ink);color:#C9D1D9}
+.topbar__in{display:flex;gap:20px;align-items:center;justify-content:flex-end;padding:9px 0;font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase}
+.topbar a:hover{color:#fff}
+.topbar strong{color:#fff;font-weight:600}
+@media(max-width:760px){.topbar__in{justify-content:center;gap:14px;font-size:10px}}
 
-/* breadcrumb */
-.crumb{border-bottom:1px solid var(--line-soft);background:var(--surface)}
-.crumb__in{display:flex;gap:10px;align-items:center;padding:14px 0;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);flex-wrap:wrap}
+.top{position:sticky;top:0;z-index:60;background:var(--paper);border-bottom:1px solid var(--line);box-shadow:0 1px 0 rgba(17,20,24,.03)}
+.top__in{display:flex;align-items:center;gap:24px;height:76px}
+.brand{display:flex;align-items:center;gap:11px;font-family:var(--display);font-size:19px;text-transform:uppercase;letter-spacing:.02em}
+.brand__mark{width:32px;height:32px;background:var(--red);clip-path:polygon(50% 0,100% 100%,0 100%);flex:none}
+.brand small{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.17em;color:var(--muted);text-transform:uppercase;font-weight:500;margin-top:2px}
+.nav{display:flex;gap:24px;margin-left:auto}
+.nav a{font-size:14px;font-weight:500;color:var(--ink-2);padding:6px 0;border-bottom:3px solid transparent;transition:color .15s,border-color .15s}
+.nav a:hover{color:var(--red)}
+.nav a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--red);font-weight:600}
+.nav .isnew::after{content:"NUEVO";font-family:var(--mono);font-size:8px;letter-spacing:.1em;background:var(--red);color:#fff;padding:2px 4px;margin-left:6px;vertical-align:2px}
+@media(max-width:1060px){.nav{display:none}}
+
+/* ---------- crumb / page head ---------- */
+.crumb{background:var(--ash);border-bottom:1px solid var(--line)}
+.crumb__in{display:flex;gap:9px;align-items:center;padding:13px 0;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);flex-wrap:wrap}
 .crumb__in a:hover{color:var(--red)}
-.crumb__in span{color:#5D6873}
+.phead{padding:clamp(38px,5vw,64px) 0;border-bottom:1px solid var(--line)}
+.phead__in{display:flex;flex-direction:column;gap:14px}
 
-/* page head */
-.phead{border-bottom:1px solid var(--line-soft);padding:clamp(46px,6vw,76px) 0;position:relative;overflow:hidden}
-.phead__grid{position:absolute;inset:0;background-image:linear-gradient(var(--line-soft) 1px,transparent 1px),linear-gradient(90deg,var(--line-soft) 1px,transparent 1px);background-size:74px 74px;mask-image:radial-gradient(110% 90% at 80% 10%,#000 10%,transparent 72%);opacity:.45}
-.phead__in{position:relative;display:flex;flex-direction:column;gap:16px}
-
-/* hero */
-.hero{position:relative;border-bottom:1px solid var(--line-soft);overflow:hidden}
-.hero__grid{position:absolute;inset:0;background-image:linear-gradient(var(--line-soft) 1px,transparent 1px),linear-gradient(90deg,var(--line-soft) 1px,transparent 1px);background-size:74px 74px;mask-image:radial-gradient(120% 80% at 70% 20%,#000 20%,transparent 78%);opacity:.5}
-.hero__in{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:end;padding:76px 0 0}
-.hero__copy{display:flex;flex-direction:column;gap:20px;padding-bottom:68px}
+/* ---------- hero ---------- */
+.hero{background:var(--ash);border-bottom:1px solid var(--line)}
+.hero__in{display:grid;grid-template-columns:1fr 1.1fr;gap:44px;align-items:center;padding:clamp(38px,5vw,66px) 0}
+.hero__copy{display:flex;flex-direction:column;gap:18px}
 .hero h1 em{font-style:normal;color:var(--red)}
-.hero__acts{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}
-.hero__note{font-family:var(--mono);font-size:11.5px;color:var(--muted);letter-spacing:.06em}
-@media(max-width:900px){.hero__in{grid-template-columns:1fr;padding-top:48px;gap:32px}.hero__copy{padding-bottom:0}}
+.hero__acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+.hero__mini{display:flex;gap:22px;flex-wrap:wrap;margin-top:8px;padding-top:16px;border-top:1px solid var(--line-2)}
+.hero__mini div{display:flex;flex-direction:column}
+.hero__mini b{font-family:var(--display);font-size:22px}
+.hero__mini span{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
+@media(max-width:920px){.hero__in{grid-template-columns:1fr;gap:28px}}
 
-/* image plate = hueco de fotografía */
-.plate{position:relative;background:linear-gradient(150deg,#232A32 0%,#161A1F 55%,#0E1114 100%);border:1px solid var(--line);display:flex;align-items:flex-end;justify-content:space-between;padding:16px;gap:12px}
-.plate--hero{aspect-ratio:4/3.2}
-.plate--wide{aspect-ratio:16/10}
-.plate--sq{aspect-ratio:5/4}
-.plate::before{content:"";position:absolute;left:0;top:0;width:2px;height:100%;background:var(--red)}
-.plate::after{content:"";position:absolute;right:0;top:0;width:44%;height:100%;background:linear-gradient(200deg,rgba(224,31,38,.2),transparent 60%);clip-path:polygon(38% 0,100% 0,100% 100%,0 100%)}
-.plate b,.plate span{position:relative;font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;font-weight:500}
-.plate span{color:var(--muted)}
-.plate b{color:var(--amber);text-align:right}
+/* huecos de foto */
+.plate{position:relative;background:linear-gradient(140deg,#DDE2E7,#C7CDD4 60%,#B4BBC3);border:1px solid var(--line-2);display:flex;align-items:flex-end;justify-content:space-between;padding:14px;gap:10px}
+.plate--hero{aspect-ratio:16/10}
+.plate--wide{aspect-ratio:16/9}
+.plate--card{aspect-ratio:4/3}
+.plate--sq{aspect-ratio:1/1}
+.plate::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:4px;background:var(--red)}
+.plate span,.plate b{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#4A535D;position:relative}
+.plate b{color:var(--red)}
 
-/* strip */
-.strip{border-top:1px solid var(--line-soft);background:var(--surface)}
-.strip__in{display:grid;grid-template-columns:repeat(4,1fr)}
-.spec{padding:24px 26px;border-right:1px solid var(--line-soft);display:flex;flex-direction:column;gap:4px}
-.spec:last-child{border-right:0}
-.spec__v{font-family:var(--display);font-size:clamp(24px,3vw,36px);line-height:1}
-.spec__v i{font-style:normal;font-size:14px;color:var(--muted);margin-left:5px;font-family:var(--mono)}
-.spec__k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-@media(max-width:900px){.strip__in{grid-template-columns:repeat(2,1fr)}.spec:nth-child(2){border-right:0}.spec:nth-child(-n+2){border-bottom:1px solid var(--line-soft)}}
+/* ---------- bandas ---------- */
+.band{background:var(--ink);color:#fff}
+.band__in{display:grid;grid-template-columns:repeat(4,1fr)}
+.band__c{padding:22px 24px;border-right:1px solid rgba(255,255,255,.1);display:flex;flex-direction:column;gap:3px}
+.band__c:last-child{border-right:0}
+.band__c b{font-family:var(--display);font-size:clamp(20px,2.4vw,30px)}
+.band__c b i{font-style:normal;font-size:13px;color:#9AA5B1;font-family:var(--mono);margin-left:4px}
+.band__c span{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#9AA5B1}
+@media(max-width:820px){.band__in{grid-template-columns:repeat(2,1fr)}.band__c:nth-child(2){border-right:0}.band__c:nth-child(-n+2){border-bottom:1px solid rgba(255,255,255,.1)}}
 
-/* ticker */
-.ticker{border-bottom:1px solid var(--line-soft);overflow:hidden;padding:14px 0}
-.ticker__track{display:flex;gap:44px;width:max-content;animation:slide 34s linear infinite}
-.ticker__track span{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
-@keyframes slide{to{transform:translateX(-50%)}}
+/* ---------- secciones ---------- */
+.sec{padding:clamp(46px,6vw,84px) 0}
+.sec--ash{background:var(--ash)}
+.sec--dark{background:var(--dark);color:#E7EAED}
+.sec--dark .lede{color:#9AA5B1}
+.sec--dark h2,.sec--dark h3{color:#fff}
+.sec--line{border-top:1px solid var(--line)}
+.sec__head{display:flex;flex-direction:column;gap:13px;max-width:72ch;margin-bottom:34px}
 
-/* sections */
-.sec{padding:clamp(56px,7vw,96px) 0;border-bottom:1px solid var(--line-soft)}
-.sec__head{display:flex;flex-direction:column;gap:14px;max-width:74ch;margin-bottom:40px}
-.sec--light{background:var(--concrete);color:var(--concrete-ink)}
-.sec--light .lede{color:#4A5560}
-.sec--light .eyebrow{color:#5A6570}
+/* ---------- selector de unidad (embudo) ---------- */
+.finder{background:var(--paper);border:1px solid var(--line);border-top:4px solid var(--red);padding:clamp(22px,3vw,36px);box-shadow:0 12px 30px rgba(17,20,24,.06)}
+.finder__steps{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap}
+.fstep{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:7px}
+.fstep i{font-style:normal;width:20px;height:20px;border:1px solid var(--line-2);display:grid;place-items:center;font-size:10px}
+.fstep[data-on="true"]{color:var(--ink);font-weight:600}
+.fstep[data-on="true"] i{background:var(--red);border-color:var(--red);color:#fff}
+.fstep[data-done="true"] i{background:var(--ink);border-color:var(--ink);color:#fff}
+.fq{font-family:var(--display);font-size:clamp(18px,2.2vw,25px);text-transform:uppercase;margin-bottom:16px}
+.fopts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.fopt{text-align:left;background:var(--paper);border:1px solid var(--line);padding:16px;cursor:pointer;font-family:var(--body);font-size:14px;color:var(--ink);transition:border-color .15s,transform .15s,background .15s}
+.fopt:hover{border-color:var(--red);transform:translateY(-2px)}
+.fopt b{display:block;font-weight:600;margin-bottom:3px}
+.fopt span{color:var(--muted);font-size:12.5px}
+.fresult{display:grid;grid-template-columns:1fr 1.4fr;gap:24px;align-items:start}
+.fresult__pick{border:1px solid var(--line);padding:18px;background:var(--ash)}
+@media(max-width:920px){.fopts{grid-template-columns:repeat(2,1fr)}.fresult{grid-template-columns:1fr}}
+@media(max-width:560px){.fopts{grid-template-columns:1fr}}
 
-/* filtros catálogo */
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
-.filter{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:11px 18px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;transition:all .16s ease}
-.filter[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff}
+/* ---------- categorías ---------- */
+.cats{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.cat{border:1px solid var(--line);background:var(--paper);display:flex;flex-direction:column;transition:box-shadow .18s,transform .18s;overflow:hidden}
+.cat:hover{box-shadow:0 14px 28px rgba(17,20,24,.09);transform:translateY(-3px)}
+.cat__b{padding:18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.cat__b h3{font-size:16px}
+.cat__b p{font-size:13px;color:var(--muted)}
+.cat__b span{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--red);margin-top:auto;font-weight:600}
+@media(max-width:1000px){.cats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.cats{grid-template-columns:1fr}}
 
-/* grid de modelos */
-.models{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-soft);border:1px solid var(--line-soft)}
-.model{background:var(--surface);display:flex;flex-direction:column;transition:background .2s ease}
-.model:hover{background:var(--surface-2)}
-.model__plate{aspect-ratio:16/10;background:linear-gradient(160deg,#242B34,#12161B);border-bottom:1px solid var(--line-soft);position:relative;display:flex;align-items:flex-end;padding:14px}
-.model__plate::after{content:"";position:absolute;top:14px;right:14px;width:34px;height:3px;background:var(--red)}
-.model__plate span{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#6F7C88}
-.model__body{padding:22px;display:flex;flex-direction:column;gap:12px;flex:1}
-.model__cat{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--red);font-weight:500;text-transform:uppercase}
-.model__desc{font-size:14px;color:var(--muted)}
+/* ---------- productos ---------- */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.filter{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;padding:11px 16px;border:1px solid var(--line-2);background:var(--paper);color:var(--muted);cursor:pointer;transition:all .15s}
+.filter:hover{border-color:var(--ink)}
+.filter[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.prods{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.prod{border:1px solid var(--line);background:var(--paper);display:flex;flex-direction:column;transition:box-shadow .18s,transform .18s}
+.prod:hover{box-shadow:0 16px 32px rgba(17,20,24,.1);transform:translateY(-3px)}
+.prod__b{padding:18px;display:flex;flex-direction:column;gap:10px;flex:1}
+.prod__cat{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--red);font-weight:600}
+.prod__b h3{font-size:17px}
+.prod__d{font-size:13.5px;color:var(--muted)}
 .rows{display:flex;flex-direction:column;margin-top:auto}
-.row{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-top:1px dashed var(--line);font-size:13.5px}
-.row dt{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-top:1px solid var(--line);font-size:13.5px}
+.row dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .row dd{margin:0;font-weight:600;font-variant-numeric:tabular-nums;text-align:right}
-.model__acts{display:flex;gap:8px;align-items:center;margin-top:14px;flex-wrap:wrap}
-.model__acts .btn{flex:1;justify-content:center}
-.cmpbox{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);cursor:pointer;width:100%}
+.prod__acts{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:14px}
+.cmpbox{grid-column:span 2;display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);cursor:pointer;padding-top:4px}
 .cmpbox input{accent-color:var(--red);width:15px;height:15px}
-@media(max-width:1000px){.models{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:680px){.models{grid-template-columns:1fr}}
+@media(max-width:1000px){.prods{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.prods{grid-template-columns:1fr}}
 
-/* barra flotante de comparación */
-.cmpbar{position:fixed;left:0;right:0;bottom:0;z-index:70;background:var(--surface-2);border-top:1px solid var(--red);transform:translateY(110%);transition:transform .25s ease}
+/* ---------- comparador ---------- */
+.cmpbar{position:fixed;left:0;right:0;bottom:0;z-index:80;background:var(--ink);color:#fff;transform:translateY(110%);transition:transform .22s ease}
 .cmpbar[data-open="true"]{transform:none}
-.cmpbar__in{display:flex;align-items:center;gap:16px;padding:14px 0;flex-wrap:wrap}
-.chips{display:flex;gap:8px;flex-wrap:wrap;flex:1}
-.chip{display:inline-flex;align-items:center;gap:9px;background:var(--ink);border:1px solid var(--line);padding:8px 12px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
-.chip button{background:none;border:0;color:var(--muted);cursor:pointer;font-size:14px;line-height:1;padding:0}
+.cmpbar__in{display:flex;align-items:center;gap:14px;padding:12px 0;flex-wrap:wrap}
+.chips{display:flex;gap:7px;flex-wrap:wrap;flex:1}
+.chip{display:inline-flex;align-items:center;gap:8px;background:var(--dark-2);border:1px solid #333B44;padding:7px 11px;font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase}
+.chip button{background:none;border:0;color:#9AA5B1;cursor:pointer;font-size:14px;line-height:1;padding:0}
 .chip button:hover{color:var(--red)}
-
-/* tabla comparador */
-.cmpwrap{overflow-x:auto;border:1px solid var(--line-soft)}
-table.cmp{border-collapse:collapse;width:100%;min-width:720px;background:var(--surface)}
-table.cmp th,table.cmp td{text-align:left;padding:14px 18px;border-bottom:1px solid var(--line-soft);vertical-align:top;font-size:14px}
-table.cmp thead th{background:var(--ink);position:sticky;top:0;z-index:2}
-table.cmp tbody th{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500;width:190px;background:var(--surface)}
+.cmpwrap{overflow-x:auto;border:1px solid var(--line)}
+table.cmp{border-collapse:collapse;width:100%;min-width:720px;background:var(--paper)}
+table.cmp th,table.cmp td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--line);vertical-align:top;font-size:14px}
+table.cmp thead th{background:var(--ash);position:sticky;top:0;z-index:2}
+table.cmp tbody th{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);font-weight:500;width:180px;background:var(--ash)}
 table.cmp td{font-variant-numeric:tabular-nums}
-table.cmp tbody tr:hover td{background:var(--surface-2)}
-.cmp__name{font-family:var(--display);font-size:16px;text-transform:uppercase;display:block;margin-bottom:6px}
-.cmp__cat{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--red)}
-.best{color:var(--amber);font-weight:600}
-.best::after{content:" ▲";font-size:10px}
-.picker{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:26px}
-.picker select{background:var(--surface);border:1px solid var(--line);color:var(--text);padding:13px;font-family:var(--body);font-size:14px;width:100%}
-.picker select:focus{border-color:var(--red);outline:none}
+table.cmp tbody tr:hover td{background:#FAFBFC}
+.cmp__name{font-family:var(--display);font-size:15px;text-transform:uppercase;display:block;margin-bottom:5px}
+.cmp__cat{font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--red)}
+.best{color:var(--red);font-weight:700}
+.best::after{content:" ▲";font-size:9px}
+.picker{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}
+select,input,textarea{font-family:var(--body);font-size:14px;color:var(--ink);background:var(--paper);border:1px solid var(--line-2);padding:12px}
+select:focus,input:focus,textarea:focus{border-color:var(--red);outline:none}
 @media(max-width:760px){.picker{grid-template-columns:1fr}}
 
-/* ficha de modelo */
-.detail{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:start}
-.dspec{border-top:1px solid var(--line);margin-top:6px}
-.dspec .row{border-top:1px solid var(--line-soft);padding:12px 0}
-.dnums{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-soft);border:1px solid var(--line-soft);margin:26px 0}
-.dnums div{background:var(--surface);padding:20px;display:flex;flex-direction:column;gap:3px}
-@media(max-width:900px){.detail{grid-template-columns:1fr;gap:28px}.dnums{grid-template-columns:1fr}}
+/* ---------- ficha ---------- */
+.detail{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:start}
+.dnums{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
+.dnums div{border:1px solid var(--line);padding:15px;display:flex;flex-direction:column;gap:2px}
+.dnums b{font-family:var(--display);font-size:24px}
+.dnums span{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.dbuy{border:1px solid var(--line);border-top:4px solid var(--red);padding:20px;display:flex;flex-direction:column;gap:11px;position:sticky;top:96px}
+.dbuy__price{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.06em}
+@media(max-width:920px){.detail{grid-template-columns:1fr;gap:24px}.dbuy{position:static}.dnums{grid-template-columns:1fr}}
 
-/* cards */
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.card{background:var(--surface);border:1px solid var(--line-soft);padding:26px;display:flex;flex-direction:column;gap:11px;position:relative}
-.card__k{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber)}
-.card p{color:var(--muted);font-size:14.5px}
-.card--tick::before,.card--tick::after{content:"";position:absolute;width:12px;height:12px;border:1px solid var(--red)}
-.card--tick::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
-.card--tick::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
+/* ---------- cotizador multipaso ---------- */
+.quote{display:grid;grid-template-columns:1.5fr .9fr;gap:26px;align-items:start}
+.qbox{border:1px solid var(--line);padding:clamp(20px,3vw,32px)}
+.qprog{height:5px;background:var(--ash-2);margin-bottom:8px}
+.qprog i{display:block;height:100%;background:var(--red);transition:width .3s ease}
+.qmeta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin-bottom:22px}
+.qnav{display:flex;gap:9px;margin-top:22px;flex-wrap:wrap}
+.qsum{border:1px solid var(--line);background:var(--ash);padding:22px;position:sticky;top:96px}
+.qsum h3{font-size:15px;margin-bottom:14px}
+.qsum dl{margin:0;display:flex;flex-direction:column}
+.qsum .row dd{max-width:60%}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.f{display:flex;flex-direction:column;gap:6px}
+.f--full{grid-column:span 2}
+.f label{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.qdone{text-align:center;padding:24px 0}
+.qdone .tick{width:56px;height:56px;background:var(--red);color:#fff;display:grid;place-items:center;margin:0 auto 18px;font-size:26px}
+@media(max-width:920px){.quote{grid-template-columns:1fr}.qsum{position:static}}
+@media(max-width:560px){.fgrid{grid-template-columns:1fr}.f--full{grid-column:span 1}}
+
+/* ---------- postventa / cards ---------- */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{border:1px solid var(--line);background:var(--paper);padding:22px;display:flex;flex-direction:column;gap:9px}
+.sec--dark .card{background:var(--dark-2);border-color:#2A323B}
+.card__k{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);font-weight:600}
+.card p{color:var(--muted);font-size:14px}
+.sec--dark .card p{color:#9AA5B1}
 @media(max-width:900px){.grid3{grid-template-columns:1fr}}
 
-/* postventa */
-.svc{display:grid;grid-template-columns:repeat(12,1fr);gap:1px;background:var(--line-soft);border:1px solid var(--line-soft)}
-.svc>div{background:var(--surface);padding:26px;display:flex;flex-direction:column;gap:10px}
-.svc>div:nth-child(1){grid-column:span 5}.svc>div:nth-child(2){grid-column:span 4}
-.svc>div:nth-child(3){grid-column:span 3}.svc>div:nth-child(4){grid-column:span 4}
-.svc>div:nth-child(5){grid-column:span 4}.svc>div:nth-child(6){grid-column:span 4}
-.svc h3{font-size:17px}
-.svc p{color:var(--muted);font-size:14px}
-@media(max-width:900px){.svc>div{grid-column:span 12 !important}}
+/* ---------- agencias ---------- */
+.net{display:grid;grid-template-columns:.9fr 1.1fr;gap:32px;align-items:start}
+.map{aspect-ratio:5/4;border:1px solid var(--line-2);background:var(--ash);position:relative;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:36px 36px}
+.pin{position:absolute;width:10px;height:10px;background:var(--red);border-radius:50%;box-shadow:0 0 0 5px rgba(224,31,38,.18)}
+.map__tag{position:absolute;left:14px;bottom:12px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.agencies{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.agency{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.agency b{font-size:15px}
+.agency span{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.05em}
+@media(max-width:900px){.net{grid-template-columns:1fr}}
 
-/* red */
-.net{display:grid;grid-template-columns:.85fr 1.15fr;gap:40px;align-items:start}
-.map{aspect-ratio:5/4;border:1px solid var(--line);background:var(--surface);background-image:linear-gradient(var(--line-soft) 1px,transparent 1px),linear-gradient(90deg,var(--line-soft) 1px,transparent 1px);background-size:38px 38px;position:relative}
-.pin{position:absolute;width:9px;height:9px;background:var(--red);border-radius:50%;box-shadow:0 0 0 5px rgba(224,31,38,.16)}
-.map__tag{position:absolute;left:16px;bottom:14px;font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
-.states{display:grid;grid-template-columns:repeat(3,1fr)}
-.states div{border-top:1px solid var(--line);padding:11px 0;font-family:var(--mono);font-size:12px;color:var(--muted)}
-@media(max-width:900px){.net{grid-template-columns:1fr}.states{grid-template-columns:repeat(2,1fr)}}
-
-/* historia */
-.time{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line)}
-.time>div{padding:24px 22px 0 0;border-right:1px solid var(--line);position:relative}
+/* ---------- historia ---------- */
+.time{display:grid;grid-template-columns:repeat(4,1fr);border-top:2px solid var(--ink)}
+.time>div{padding:22px 20px 0 0;border-right:1px solid var(--line);position:relative}
 .time>div:last-child{border-right:0}
-.time>div::before{content:"";position:absolute;top:-1px;left:0;width:34px;height:3px;background:var(--red)}
-.time h3{font-family:var(--mono);font-weight:600;font-size:25px;letter-spacing:0;margin-bottom:9px}
-.time p{color:var(--muted);font-size:14px;padding-right:14px}
-@media(max-width:900px){.time{grid-template-columns:1fr}.time>div{border-right:0;border-bottom:1px solid var(--line);padding-bottom:20px}}
+.time>div::before{content:"";position:absolute;top:-2px;left:0;width:36px;height:2px;background:var(--red)}
+.time h3{font-family:var(--mono);font-weight:600;font-size:24px;margin-bottom:8px}
+.time p{color:var(--muted);font-size:14px;padding-right:12px}
+@media(max-width:900px){.time{grid-template-columns:1fr}.time>div{border-right:0;border-bottom:1px solid var(--line);padding-bottom:18px}}
 
-/* formulario */
-.cta{background:var(--surface);border:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr}
-.cta__l{padding:clamp(30px,4vw,50px);display:flex;flex-direction:column;gap:16px;justify-content:center;border-right:1px solid var(--line)}
-.cta__r{padding:clamp(30px,4vw,50px);background:var(--ink)}
-.form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.f{display:flex;flex-direction:column;gap:7px}
-.f--full{grid-column:span 2}
-.f label{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.f input,.f select,.f textarea{background:var(--surface);border:1px solid var(--line);color:var(--text);padding:12px 13px;font-family:var(--body);font-size:14px}
-.f input:focus,.f select:focus,.f textarea:focus{border-color:var(--red);outline:none}
-.form .btn{grid-column:span 2;justify-content:center}
-.legal{grid-column:span 2;font-family:var(--mono);font-size:10.5px;color:#6E7A86;line-height:1.7}
-@media(max-width:900px){.cta{grid-template-columns:1fr}.cta__l{border-right:0;border-bottom:1px solid var(--line)}.form{grid-template-columns:1fr}.f--full,.form .btn,.legal{grid-column:span 1}}
+/* ---------- nota ---------- */
+.note{border-left:3px solid var(--red);background:var(--ash);padding:16px 18px;font-family:var(--mono);font-size:11.5px;line-height:1.75;color:var(--ink-2);margin-top:22px}
+.note b{color:var(--red)}
+.sec--dark .note{background:var(--dark-2);color:#9AA5B1}
 
-/* nota de producción */
-.note{border-left:2px solid var(--amber);background:var(--surface);padding:18px 22px;font-family:var(--mono);font-size:11.5px;line-height:1.8;color:#9AA6B2;margin-top:26px}
-.note b{color:var(--amber);font-weight:600}
-
-/* footer */
-.foot{padding:52px 0 28px}
-.foot__in{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}
-.foot h4{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 14px;font-weight:600}
-.foot ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
-.foot a{font-size:14px;color:#B6C0C9}
+/* ---------- footer ---------- */
+.foot{background:var(--ink);color:#C9D1D9;padding:46px 0 24px}
+.foot__in{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:28px}
+.foot .brand{color:#fff}
+.foot h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:#8A95A1;margin:0 0 13px;font-weight:600}
+.foot ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.foot a{font-size:14px;color:#C9D1D9}
 .foot a:hover{color:var(--red)}
-.foot__bar{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--line-soft);margin-top:40px;padding-top:20px;font-family:var(--mono);font-size:11px;color:#6E7A86}
+.foot__bar{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;border-top:1px solid #2A323B;margin-top:34px;padding-top:18px;font-family:var(--mono);font-size:10.5px;color:#7C8794}
 @media(max-width:900px){.foot__in{grid-template-columns:1fr 1fr}}
 
-.wa{position:fixed;right:18px;bottom:18px;z-index:60;background:var(--red);color:#fff;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:14px 18px;box-shadow:0 10px 30px rgba(0,0,0,.45)}
+/* ---------- CTA fija móvil ---------- */
+.mobar{position:fixed;left:0;right:0;bottom:0;z-index:75;background:var(--paper);border-top:1px solid var(--line);display:none;grid-template-columns:1fr 1fr 1fr}
+.mobar a{padding:13px 6px;text-align:center;font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;font-weight:600;border-right:1px solid var(--line)}
+.mobar a:last-child{border-right:0;background:var(--red);color:#fff}
+@media(max-width:760px){.mobar{display:grid}body{padding-bottom:52px}}
+.wafloat{position:fixed;right:16px;bottom:16px;z-index:70;background:#1FA855;color:#fff;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;padding:13px 17px;box-shadow:0 8px 24px rgba(0,0,0,.22)}
+@media(max-width:760px){.wafloat{display:none}}
+
 .view[hidden]{display:none}
-@media(prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
+
+<div class="topbar"><div class="wrap topbar__in">
+  <span>Distribuidor autorizado <strong>Sitrak</strong> · Sinotruk</span>
+  <a href="#/agencias">Más de 24 agencias</a>
+  <a href="#/cotizar"><strong>Tel. 55 0000 0000</strong></a>
+</div></div>
 
 <header class="top">
   <div class="wrap top__in">
@@ -250,192 +289,214 @@ table.cmp tbody tr:hover td{background:var(--surface-2)}
     </a>
     <nav class="nav" id="nav">
       <a href="#/modelos">Modelos</a>
-      <a href="#/comparar">Comparar</a>
-      <a href="#/postventa">Postventa</a>
+      <a href="#/comparar" class="isnew">Comparar</a>
+      <a href="#/postventa">Postventa y servicio</a>
       <a href="#/agencias">Agencias</a>
-      <a href="#/nosotros">Nosotros</a>
-      <a href="#/contacto">Contacto</a>
+      <a href="#/nosotros">Nuestra historia</a>
     </nav>
-    <div class="top__cta">
-      <span class="top__tel num">55 0000 0000</span>
-      <a class="btn btn--primary btn--sm" href="#/contacto">Cotizar</a>
-    </div>
+    <a class="btn btn--red btn--sm" href="#/cotizar">Cotizar</a>
   </div>
 </header>
 
 <main id="main">
 
-<!-- ============ INICIO ============ -->
+<!-- ================= INICIO ================= -->
 <section class="view" id="v-inicio">
-  <div class="hero">
-    <div class="hero__grid" aria-hidden="true"></div>
-    <div class="wrap hero__in">
-      <div class="hero__copy">
-        <p class="eyebrow">Distribuidor autorizado Sitrak · Sinotruk</p>
-        <h1>Tonelada por tonelada,<br>el costo por kilómetro <em>más bajo</em></h1>
-        <p class="lede">De unidades de 6 toneladas a tractocamiones 6&times;4 de 540 HP. Con 24 agencias, centros de partes y servicio en carretera para que tu unidad facture, no espere.</p>
-        <div class="hero__acts">
-          <a class="btn btn--primary" href="#/contacto">Agendar cita</a>
-          <a class="btn btn--ghost" href="#/comparar">Comparar unidades</a>
-        </div>
-        <p class="hero__note">Respuesta de cotización en menos de 24 h hábiles.</p>
+  <div class="hero"><div class="wrap hero__in">
+    <div class="hero__copy">
+      <p class="kicker">Distribuidor autorizado de Sitrak</p>
+      <h1>Soluciones de transporte pesado desde <em>6T hasta tractocamiones</em></h1>
+      <p class="lede">Servicio postventa eficiente con más de 24 agencias por todo México y centros de partes estratégicamente ubicados. Líderes en tecnología y rentabilidad.</p>
+      <div class="hero__acts">
+        <a class="btn btn--red" href="#/cotizar">Cotizar unidad</a>
+        <a class="btn btn--out" href="#/modelos">Ver modelos</a>
+        <a class="btn btn--wa" href="#/cotizar">WhatsApp</a>
       </div>
-      <div class="plate plate--hero" role="img" aria-label="Tractocamión Sitrak C7H 540 6x4">
-        <span>hero-c7h-540.jpg</span><b>1920 &times; 1536</b>
+      <div class="hero__mini">
+        <div><b class="num">24+</b><span>Agencias</span></div>
+        <div><b class="num">540</b><span>HP máximos</span></div>
+        <div><b class="num">6–48</b><span>Toneladas</span></div>
+        <div><b>&lt;24 h</b><span>Respuesta</span></div>
       </div>
     </div>
-    <div class="strip">
-      <div class="wrap"><div class="strip__in">
-        <div class="spec"><span class="spec__v num">540<i>HP</i></span><span class="spec__k">Potencia máxima C7H</span></div>
-        <div class="spec"><span class="spec__v num">1,844<i>lb-ft</i></span><span class="spec__k">Torque máximo</span></div>
-        <div class="spec"><span class="spec__v num">6&ndash;48<i>ton</i></span><span class="spec__k">Rango de aplicación</span></div>
-        <div class="spec"><span class="spec__v num">24<i>+</i></span><span class="spec__k">Agencias en México</span></div>
-      </div></div>
+    <div class="plate plate--hero" role="img" aria-label="Tractocamión Sitrak 540HP 6x4">
+      <span>hero-tracto-540hp.jpg</span><b>1920 × 1200</b>
     </div>
-  </div>
+  </div></div>
 
-  <div class="ticker">
-    <div class="ticker__track" aria-hidden="true">
-      <span>Sinotruk CNHTC · fundada en 1956</span><span>Primer camión pesado de China · 1960</span>
-      <span>Capacidad 400,000 unidades al año</span><span>Presencia en más de 100 países</span>
-      <span>Motor MT13 con tecnología MAN</span><span>Planta Xalapa, Veracruz · 2,000 u/año</span>
-      <span>Sinotruk CNHTC · fundada en 1956</span><span>Primer camión pesado de China · 1960</span>
-      <span>Capacidad 400,000 unidades al año</span><span>Presencia en más de 100 países</span>
-      <span>Motor MT13 con tecnología MAN</span><span>Planta Xalapa, Veracruz · 2,000 u/año</span>
-    </div>
-  </div>
+  <div class="band"><div class="wrap"><div class="band__in">
+    <div class="band__c"><b class="num">1956</b><span>Fundación de Sinotruk</span></div>
+    <div class="band__c"><b class="num">400,000<i>u/año</i></b><span>Capacidad de producción</span></div>
+    <div class="band__c"><b class="num">100<i>+</i></b><span>Países con presencia</span></div>
+    <div class="band__c"><b class="num">2,000<i>u/año</i></b><span>Planta Xalapa, Veracruz</span></div>
+  </div></div></div>
 
-  <section class="sec">
+  <!-- EMBUDO: selector de unidad -->
+  <section class="sec sec--ash">
     <div class="wrap">
       <div class="sec__head">
-        <p class="eyebrow">Catálogo</p>
-        <h2>Una unidad para cada tramo de tu operación</h2>
-        <p class="lede">Nueve configuraciones, de la última milla a la minería. Marca las que te interesen y llévalas al comparador.</p>
+        <p class="kicker">Nuevo · Selector de unidad</p>
+        <h2>¿No sabes qué unidad necesitas?</h2>
+        <p class="lede">Tres preguntas y te decimos qué configuración corresponde a tu operación. Sin llamadas, sin esperar a un asesor.</p>
       </div>
-      <div id="home-models" class="models"></div>
-      <p style="margin-top:26px"><a class="btn btn--ghost" href="#/modelos">Ver catálogo completo</a></p>
+      <div class="finder" id="finder"></div>
     </div>
   </section>
 
   <section class="sec">
     <div class="wrap">
       <div class="sec__head">
-        <p class="eyebrow">Ingeniería</p>
-        <h2>Lo que hay debajo de la cabina</h2>
-        <p class="lede">Sitrak es la línea premium de Sinotruk, desarrollada con tecnología MAN. Esto es lo que eso significa en piso.</p>
+        <p class="kicker">Modelos</p>
+        <h2>Nuestra gama</h2>
+        <p class="lede">Cinco líneas que cubren desde el reparto urbano hasta la carga sobredimensionada.</p>
       </div>
-      <div class="grid3">
-        <div class="card card--tick"><span class="card__k">Tren motriz</span><h3>Motor MT13 con tecnología MAN</h3><p>Seis cilindros, 13 litros y 1,844 lb-ft de torque desde 1,000 rpm. Curva de par amplia para conservar velocidad en pendiente sin castigar el consumo.</p></div>
-        <div class="card card--tick"><span class="card__k">Transmisión</span><h3>ZF de 16 velocidades con retardador</h3><p>Caja ZF 16S2531TO con retardador integrado, o AMT Sinotruk de 12 velocidades. Menos desgaste de balatas en descenso largo.</p></div>
-        <div class="card card--tick"><span class="card__k">Autonomía</span><h3>Tanque de 900 litros</h3><p>Menos paradas de carga en ruta federal y más kilómetros facturables por turno de operador.</p></div>
-        <div class="card"><span class="card__k">Cabina</span><h3>Ergonomía de ruta larga</h3><p>Suspensión de cabina, litera y puesto de mando pensados para jornadas completas. El operador que descansa, entrega a tiempo.</p></div>
-        <div class="card"><span class="card__k">Calidad</span><h3>Pruebas y normas internacionales</h3><p>Producción bajo cumplimiento internacional y pruebas rigurosas, con volumen de más de 400,000 unidades anuales.</p></div>
-        <div class="card"><span class="card__k">Precio</span><h3>Costo directo de fábrica</h3><p>Esquema de mayoreo directo de planta: el mismo respaldo de ingeniería con una inversión inicial menor por unidad.</p></div>
-      </div>
+      <div class="cats" id="cats"></div>
     </div>
   </section>
 
-  <section class="sec">
+  <section class="sec sec--ash sec--line">
     <div class="wrap">
       <div class="sec__head">
-        <p class="eyebrow">Postventa y servicio</p>
-        <h2>Antes, durante y después de la compra</h2>
-        <p class="lede">Refacciones originales aprobadas por la marca, técnicos certificados y mantenimiento preventivo y correctivo para minimizar el tiempo de inactividad.</p>
+        <p class="kicker">Los más vendidos</p>
+        <h2>Unidades destacadas</h2>
+      </div>
+      <div class="prods" id="home-prods"></div>
+      <p style="margin-top:24px"><a class="btn btn--out" href="#/modelos">Ver las 11 unidades</a></p>
+    </div>
+  </section>
+
+  <section class="sec sec--dark">
+    <div class="wrap">
+      <div class="sec__head">
+        <p class="kicker">Postventa y servicio</p>
+        <h2>Te acompañamos antes, durante y después de la compra</h2>
+        <p class="lede">Refacciones originales aprobadas por la marca, técnicos especializados y mantenimiento que minimiza el tiempo de inactividad.</p>
       </div>
       <div class="grid3">
-        <div class="card"><span class="card__k">Refacciones</span><h3>Partes originales Sitrak</h3><p>Centros de partes estratégicamente ubicados, para que el paro dure horas y no semanas.</p></div>
+        <div class="card"><span class="card__k">Refacciones</span><h3>Partes originales</h3><p>Centros de partes estratégicamente ubicados para que el paro dure horas, no semanas.</p></div>
         <div class="card"><span class="card__k">Emergencias</span><h3>Asistencia en carretera</h3><p>Unidades equipadas para asistir donde sea necesario ante una falla en ruta.</p></div>
-        <div class="card"><span class="card__k">Movilidad</span><h3>Servicio en sitio</h3><p>Atendemos la unidad donde esté, para mantenimiento o reparación.</p></div>
+        <div class="card"><span class="card__k">Movilidad</span><h3>Servicio en sitio</h3><p>Atendemos la unidad en cualquier lugar, para mantenimiento o reparación.</p></div>
       </div>
-      <p style="margin-top:26px"><a class="btn btn--ghost" href="#/postventa">Todo el servicio postventa</a></p>
+      <p style="margin-top:24px"><a class="btn btn--red" href="#/postventa">Conocer el servicio</a></p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap" style="display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <p class="kicker">Agendar cita</p>
+        <h2>Cotiza tu unidad en 4 pasos</h2>
+        <p class="lede">Elige tipo de operación, unidad, volumen y plan. Recibes la cotización con disponibilidad y fecha de entrega en menos de 24 horas hábiles.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px">
+          <a class="btn btn--red" href="#/cotizar">Iniciar cotización</a>
+          <a class="btn btn--out" href="#/agencias">Contactar mi agencia</a>
+        </div>
+      </div>
+      <div class="plate plate--wide"><span>home-cta-flotilla.jpg</span><b>1600 × 900</b></div>
     </div>
   </section>
 </section>
 
-<!-- ============ MODELOS ============ -->
+<!-- ================= MODELOS ================= -->
 <section class="view" id="v-modelos" hidden>
-  <div class="crumb"><div class="wrap crumb__in"><a href="#/">Inicio</a><span>/</span><span>Modelos</span></div></div>
-  <div class="phead"><div class="phead__grid" aria-hidden="true"></div><div class="wrap phead__in">
-    <p class="eyebrow">Catálogo completo</p>
+  <div class="crumb"><div class="wrap crumb__in"><a href="#/">Inicio</a>/<span>Modelos</span></div></div>
+  <div class="phead"><div class="wrap phead__in">
+    <p class="kicker">Catálogo</p>
     <h1>Modelos</h1>
-    <p class="lede">Filtra por tipo de operación. Marca hasta tres unidades y compáralas lado a lado antes de cotizar.</p>
+    <p class="lede">Camiones ligeros, medianos, vocacionales, para grandes dimensiones y tractocamiones. Marca hasta tres unidades para compararlas.</p>
   </div></div>
   <section class="sec">
     <div class="wrap">
-      <div class="filters" id="filters">
-        <button class="filter" data-cat="todos" aria-pressed="true">Todos</button>
-        <button class="filter" data-cat="tracto" aria-pressed="false">Tractocamiones</button>
-        <button class="filter" data-cat="construccion" aria-pressed="false">Construcción y volteo</button>
-        <button class="filter" data-cat="ligero" aria-pressed="false">Ligeros urbanos</button>
-      </div>
-      <div id="all-models" class="models"></div>
-      <div class="note"><b>Nota de producción:</b> las casillas marcadas como «por confirmar» corresponden a datos que no pudieron verificarse en fuentes públicas. Deben completarse con la ficha oficial de Apex antes de publicar.</div>
+      <div class="filters" id="filters"></div>
+      <div class="prods" id="all-prods"></div>
+      <div class="note"><b>Nota de producción:</b> los renglones marcados «por confirmar» son datos que no pudieron verificarse en fuentes públicas. Se completan con la ficha oficial de Apex antes de publicar.</div>
     </div>
   </section>
 </section>
 
-<!-- ============ FICHA DE MODELO ============ -->
+<!-- ================= FICHA ================= -->
 <section class="view" id="v-modelo" hidden>
-  <div class="crumb"><div class="wrap crumb__in"><a href="#/">Inicio</a><span>/</span><a href="#/modelos">Modelos</a><span>/</span><span id="crumb-modelo">—</span></div></div>
+  <div class="crumb"><div class="wrap crumb__in"><a href="#/">Inicio</a>/<a href="#/modelos">Modelos</a>/<span id="crumb-modelo">—</span></div></div>
   <div id="modelo-body"></div>
 </section>
 
-<!-- ============ COMPARADOR ============ -->
+<!-- ================= COMPARAR ================= -->
 <section class="view" id="v-comparar" hidden>
-  <div class="crumb"><div class="wrap crumb__in"><a href="#/">Inicio</a><span>/</span><span>Comparar</span></div></div>
-  <div class="phead"><div class="phead__grid" aria-hidden="true"></div><div class="wrap phead__in">
-    <p class="eyebrow">Herramienta</p>
+  <div class="crumb"><div class="wrap crumb__in"><a href="#/">Inicio</a>/<span>Comparar</span></div></div>
+  <div class="phead"><div class="wrap phead__in">
+    <p class="kicker">Nuevo</p>
     <h1>Comparador de unidades</h1>
     <p class="lede">Elige hasta tres configuraciones y revisa motor, transmisión, ejes y capacidades en la misma tabla. El valor más alto de cada renglón numérico queda marcado.</p>
   </div></div>
-  <section class="sec">
-    <div class="wrap">
-      <div class="picker" id="picker"></div>
-      <div class="cmpwrap"><table class="cmp" id="cmp-table"></table></div>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px">
-        <a class="btn btn--primary" href="#/contacto">Cotizar la seleccionada</a>
-        <button class="btn btn--ghost" id="cmp-reset" type="button">Reiniciar comparación</button>
-      </div>
-      <div class="note"><b>Cómo se construye en WordPress:</b> el sitio ya usa WooCommerce (existe <code>/product-category/tractocamiones/</code>). Cada modelo es un producto y cada renglón de esta tabla es un <b>atributo global</b> (Potencia, Torque, Transmisión, Eje trasero, Tanque…). Con los atributos cargados, un plugin de comparación como WPC Smart Compare o YITH WooCommerce Compare genera esta misma tabla sin escribir código, y el botón «Comparar» se inserta en el Loop Grid de Elementor. El detalle está en <code>redesign/ELEMENTOR.md</code>.</div>
+  <section class="sec"><div class="wrap">
+    <div class="picker" id="picker"></div>
+    <div class="cmpwrap"><table class="cmp" id="cmp-table"></table></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:22px">
+      <a class="btn btn--red" href="#/cotizar">Cotizar la seleccionada</a>
+      <button class="btn btn--out" id="cmp-reset" type="button">Reiniciar</button>
     </div>
-  </section>
+    <div class="note"><b>Cómo se construye en WordPress:</b> el sitio ya usa WooCommerce (existen <code>/product-category/tractocamiones/</code> y fichas como <code>/product/sitrak-tracto-diesel-540hp-6x4/</code>). Cada renglón de esta tabla es un <b>atributo global de producto</b>, y un plugin como WPC Smart Compare o YITH WooCommerce Compare genera la tabla sin escribir código. Detalle en <code>redesign/ELEMENTOR.md</code>.</div>
+  </div></section>
 </section>
 
-<!-- ============ POSTVENTA ============ -->
-<section class="view" id="v-postventa" hidden>
-  <div class="crumb"><div class="wrap crumb__in"><a href="#/">Inicio</a><span>/</span><span>Postventa y servicio</span></div></div>
-  <div class="phead"><div class="phead__grid" aria-hidden="true"></div><div class="wrap phead__in">
-    <p class="eyebrow">Postventa y servicio</p>
-    <h1>Tu unidad<br>no se detiene sola</h1>
-    <p class="lede">Un modelo de servicio integral que acompaña al cliente antes, durante y después de la compra, comprometido con la productividad de tu negocio.</p>
+<!-- ================= COTIZAR ================= -->
+<section class="view" id="v-cotizar" hidden>
+  <div class="crumb"><div class="wrap crumb__in"><a href="#/">Inicio</a>/<span>Agendar cita</span></div></div>
+  <div class="phead"><div class="wrap phead__in">
+    <p class="kicker">Agendar cita</p>
+    <h1>Cotiza tu unidad</h1>
+    <p class="lede">Cuatro pasos cortos en lugar de un formulario largo. Puedes salir y volver: lo que llevas se conserva.</p>
   </div></div>
   <section class="sec"><div class="wrap">
-    <div class="svc">
-      <div><span class="card__k">Refacciones</span><h3>Partes originales Sitrak</h3><p>Piezas aprobadas por la marca en centros de partes estratégicamente ubicados, para garantizar calidad y desempeño de la unidad.</p></div>
-      <div><span class="card__k">Mantenimiento</span><h3>Preventivo y correctivo</h3><p>Planes programados con técnicos especializados que aseguran longevidad y fiabilidad, minimizando el tiempo de inactividad.</p></div>
-      <div><span class="card__k">Movilidad</span><h3>Servicio en sitio</h3><p>Atendemos la unidad en cualquier lugar, ya sea para mantenimiento o reparación.</p></div>
-      <div><span class="card__k">Emergencias</span><h3>Asistencia en carretera</h3><p>Ante una falla en ruta contamos con unidades equipadas para asistir donde sea necesario.</p></div>
-      <div><span class="card__k">Carrocería</span><h3>Hojalatería y pintura</h3><p>En caso de colisión o daños menores, dejamos la unidad como nueva con el respaldo de técnicos altamente capacitados.</p></div>
-      <div><span class="card__k">Capacitación</span><h3>Entrenamiento a operadores</h3><p>Entrenamientos especializados que aseguran un uso eficiente y seguro de la unidad, y protegen tu inversión desde la cabina.</p></div>
+    <div class="quote">
+      <div class="qbox" id="qbox"></div>
+      <aside class="qsum" id="qsum"></aside>
     </div>
-  </div></section>
-  <section class="sec sec--light"><div class="wrap">
-    <div class="sec__head">
-      <p class="eyebrow">Agenda de taller</p>
-      <h2>Programa tu servicio en línea</h2>
-      <p class="lede">Elige agencia, tipo de servicio y fecha. Te confirmamos disponibilidad de refacciones antes de que llegues.</p>
-    </div>
-    <a class="btn btn--light" href="#/contacto">Agendar servicio</a>
+    <div class="note"><b>Por qué cuatro pasos:</b> un formulario largo pide todo antes de dar nada. Este pregunta primero por la operación —que el visitante contesta sin fricción— y deja los datos de contacto al final, cuando ya invirtió tiempo. En Elementor Pro se arma con el campo <b>Step</b> del widget Formulario; la barra de progreso es nativa.</div>
   </div></section>
 </section>
 
-<!-- ============ AGENCIAS ============ -->
+<!-- ================= POSTVENTA ================= -->
+<section class="view" id="v-postventa" hidden>
+  <div class="crumb"><div class="wrap crumb__in"><a href="#/">Inicio</a>/<span>Postventa y servicio</span></div></div>
+  <div class="phead"><div class="wrap phead__in">
+    <p class="kicker">Postventa y servicio</p>
+    <h1>Tu unidad no se detiene sola</h1>
+    <p class="lede">Un modelo de servicio integral que apoya al cliente antes, durante y después de la compra, comprometido con la productividad de tu negocio y el cuidado de tus unidades.</p>
+  </div></div>
+  <section class="sec"><div class="wrap">
+    <div class="grid3">
+      <div class="card"><span class="card__k">Refacciones</span><h3>Partes originales Sitrak</h3><p>Refacciones oficiales aprobadas por la marca para garantizar la calidad y el desempeño de los vehículos, en centros de partes estratégicamente ubicados.</p></div>
+      <div class="card"><span class="card__k">Mantenimiento</span><h3>Preventivo y correctivo</h3><p>Procesos con equipo técnico especializado que aseguran longevidad y fiabilidad, minimizando el tiempo de inactividad.</p></div>
+      <div class="card"><span class="card__k">Movilidad</span><h3>Servicio en sitio</h3><p>Atendemos las unidades en cualquier lugar, ya sea para mantenimiento o reparación.</p></div>
+      <div class="card"><span class="card__k">Emergencias</span><h3>Asistencia en carretera</h3><p>Ante emergencias en ruta contamos con unidades equipadas para asistir donde sea necesario.</p></div>
+      <div class="card"><span class="card__k">Carrocería</span><h3>Hojalatería y pintura</h3><p>En caso de colisión o daños menores, dejamos la unidad como nueva con el respaldo de técnicos altamente capacitados.</p></div>
+      <div class="card"><span class="card__k">Capacitación</span><h3>Entrenamiento a operadores</h3><p>Entrenamientos especializados que aseguran un uso eficiente y seguro de la unidad.</p></div>
+    </div>
+  </div></section>
+  <section class="sec sec--ash sec--line"><div class="wrap">
+    <div class="sec__head">
+      <p class="kicker">Nuevo · Agenda de taller</p>
+      <h2>Programa tu servicio en línea</h2>
+      <p class="lede">Elige agencia, tipo de servicio y fecha. Confirmamos disponibilidad de refacciones antes de que llegues, para que la unidad no espere en el patio.</p>
+    </div>
+    <div class="fgrid" style="max-width:720px">
+      <div class="f"><label for="ag">Agencia</label><select id="ag"><option>Monterrey</option><option>Guadalajara</option><option>Xalapa</option><option>Querétaro</option><option>CDMX</option></select></div>
+      <div class="f"><label for="sv">Tipo de servicio</label><select id="sv"><option>Mantenimiento preventivo</option><option>Correctivo / diagnóstico</option><option>Hojalatería y pintura</option><option>Garantía</option></select></div>
+      <div class="f"><label for="vin">VIN o número económico</label><input id="vin" type="text" placeholder="Opcional"></div>
+      <div class="f"><label for="fe">Fecha deseada</label><input id="fe" type="date"></div>
+      <div class="f--full"><a class="btn btn--red btn--full" href="#/cotizar">Solicitar cita de taller</a></div>
+    </div>
+  </div></section>
+</section>
+
+<!-- ================= AGENCIAS ================= -->
 <section class="view" id="v-agencias" hidden>
-  <div class="crumb"><div class="wrap crumb__in"><a href="#/">Inicio</a><span>/</span><span>Red de agencias</span></div></div>
-  <div class="phead"><div class="phead__grid" aria-hidden="true"></div><div class="wrap phead__in">
-    <p class="eyebrow">Cobertura nacional</p>
-    <h1>Más de 24 agencias<br>y centros de partes</h1>
-    <p class="lede">Donde va tu ruta, va el respaldo. Consulta la agencia y el centro de partes más cercano a tu base de operación.</p>
+  <div class="crumb"><div class="wrap crumb__in"><a href="#/">Inicio</a>/<span>Agencias</span></div></div>
+  <div class="phead"><div class="wrap phead__in">
+    <p class="kicker">Cobertura nacional</p>
+    <h1>Más de 24 agencias y centros de partes</h1>
+    <p class="lede">Donde va tu ruta, va el respaldo. Filtra por estado y contacta directamente a la agencia que te corresponde.</p>
   </div></div>
   <section class="sec"><div class="wrap">
     <div class="net">
@@ -447,26 +508,21 @@ table.cmp tbody tr:hover td{background:var(--surface-2)}
         <span class="map__tag">mapa-republica.svg — sustituir</span>
       </div>
       <div>
-        <div class="states">
-          <div>Nuevo León</div><div>Jalisco</div><div>Edo. de México</div>
-          <div>Veracruz</div><div>Puebla</div><div>Querétaro</div>
-          <div>Guanajuato</div><div>Coahuila</div><div>Chihuahua</div>
-          <div>Sonora</div><div>Tamaulipas</div><div>Yucatán</div>
-          <div>Sinaloa</div><div>Michoacán</div><div>San Luis Potosí</div>
-        </div>
-        <div class="note"><b>Estructura recomendada:</b> una página por agencia (<code>/agencias/monterrey/</code>) con dirección, teléfono, horario de taller y datos estructurados <code>AutoDealer</code>. Es el mayor gancho de tráfico local del sitio y hoy no existe. Listado de ejemplo: sustituir por el directorio real.</div>
-        <p style="margin-top:20px"><a class="btn btn--ghost" href="#/contacto">Contactar a mi agencia</a></p>
+        <div class="f" style="margin-bottom:16px"><label for="edo">Filtrar por estado</label><select id="edo"></select></div>
+        <div class="agencies" id="agencies"></div>
+        <div class="note"><b>Estructura recomendada:</b> una página por agencia (<code>/agencias/monterrey/</code>) con dirección, teléfono, horario de taller y datos estructurados <code>AutoDealer</code>. Es el mayor gancho de tráfico local que el sitio no aprovecha hoy. Directorio de ejemplo: sustituir por el real.</div>
       </div>
     </div>
   </div></section>
 </section>
 
-<!-- ============ NOSOTROS ============ -->
+<!-- ================= NOSOTROS ================= -->
 <section class="view" id="v-nosotros" hidden>
-  <div class="crumb"><div class="wrap crumb__in"><a href="#/">Inicio</a><span>/</span><span>Nosotros</span></div></div>
-  <div class="phead"><div class="phead__grid" aria-hidden="true"></div><div class="wrap phead__in">
-    <p class="eyebrow">Nuestra historia</p>
-    <h1>Sesenta años de camión pesado<br>detrás de cada unidad</h1>
+  <div class="crumb"><div class="wrap crumb__in"><a href="#/">Inicio</a>/<span>Nuestra historia</span></div></div>
+  <div class="phead"><div class="wrap phead__in">
+    <p class="kicker">Nuestra historia</p>
+    <h1>Sesenta años de camión pesado detrás de cada unidad</h1>
+    <p class="lede">Sitrak es la marca premium de Sinotruk (CNHTC), nacida de la alianza con MAN de Alemania. Llegó a México en 2018 a través de AT Motors.</p>
   </div></div>
   <section class="sec"><div class="wrap">
     <div class="time">
@@ -475,38 +531,10 @@ table.cmp tbody tr:hover td{background:var(--surface-2)}
       <div><h3 class="num">2018</h3><p>Sitrak entra al mercado mexicano a través de AT Motors, con precio directo de fábrica y respaldo local.</p></div>
       <div><h3 class="num">Hoy</h3><p>Planta en Xalapa, Veracruz con capacidad de 2,000 unidades anuales y una red de más de 24 agencias.</p></div>
     </div>
-    <div class="grid3" style="margin-top:40px">
+    <div class="grid3" style="margin-top:36px">
       <div class="card"><span class="card__k">Volumen</span><h3>400,000 unidades al año</h3><p>Capacidad de producción que sostiene la disponibilidad de unidad nueva y de refacción.</p></div>
-      <div class="card"><span class="card__k">Alcance</span><h3>Más de 100 países</h3><p>Sitrak es una marca registrada en decenas de mercados, con estándares de exportación.</p></div>
-      <div class="card"><span class="card__k">Origen</span><h3>CNHTC &amp; MAN</h3><p>Sitrak nace de la alianza entre Sinotruk y MAN de Alemania como la línea premium del grupo.</p></div>
-    </div>
-  </div></section>
-</section>
-
-<!-- ============ CONTACTO ============ -->
-<section class="view" id="v-contacto" hidden>
-  <div class="crumb"><div class="wrap crumb__in"><a href="#/">Inicio</a><span>/</span><span>Agendar cita</span></div></div>
-  <section class="sec"><div class="wrap">
-    <div class="cta">
-      <div class="cta__l">
-        <p class="eyebrow">Agendar cita</p>
-        <h2>Cotiza tu unidad</h2>
-        <p class="lede">Déjanos tu operación y un asesor te contacta con disponibilidad, plan de financiamiento y fecha de entrega.</p>
-        <p class="hero__note">O escríbenos por WhatsApp al <span class="num">55 0000 0000</span>.</p>
-      </div>
-      <div class="cta__r">
-        <form class="form" onsubmit="return false">
-          <div class="f"><label for="n">Nombre</label><input id="n" type="text" placeholder="Nombre y apellido"></div>
-          <div class="f"><label for="e">Empresa</label><input id="e" type="text" placeholder="Razón social"></div>
-          <div class="f"><label for="t">Teléfono</label><input id="t" type="tel" placeholder="10 dígitos"></div>
-          <div class="f"><label for="m">Correo</label><input id="m" type="email" placeholder="nombre@empresa.mx"></div>
-          <div class="f"><label for="u">Unidad de interés</label><select id="u"></select></div>
-          <div class="f"><label for="c">Unidades a adquirir</label><select id="c"><option>1 unidad</option><option>2 a 5 unidades</option><option>6 a 20 unidades</option><option>Más de 20</option></select></div>
-          <div class="f f--full"><label for="s">Estado de operación</label><input id="s" type="text" placeholder="Base de la flotilla"></div>
-          <button class="btn btn--primary" type="submit">Solicitar cotización</button>
-          <p class="legal">Al enviar aceptas el aviso de privacidad. Usamos tus datos únicamente para contactarte sobre esta solicitud.</p>
-        </form>
-      </div>
+      <div class="card"><span class="card__k">Alcance</span><h3>Más de 100 países</h3><p>Sitrak es marca registrada en decenas de mercados, con estándares de exportación.</p></div>
+      <div class="card"><span class="card__k">Origen</span><h3>CNHTC &amp; MAN</h3><p>La línea premium del grupo, con tecnología alemana en el tren motriz.</p></div>
     </div>
   </div></section>
 </section>
@@ -517,269 +545,427 @@ table.cmp tbody tr:hover td{background:var(--surface-2)}
   <div class="wrap">
     <div class="foot__in">
       <div>
-        <a class="brand" href="#/" style="margin-bottom:14px"><span class="brand__mark" aria-hidden="true"></span><span>Apex<small>Distribuidor Sitrak</small></span></a>
-        <p class="lede" style="font-size:14px">Soluciones de transporte pesado desde 6 toneladas hasta tractocamiones, con servicio postventa en todo México.</p>
+        <a class="brand" href="#/" style="margin-bottom:13px"><span class="brand__mark" aria-hidden="true"></span><span>Apex<small>Distribuidor Sitrak</small></span></a>
+        <p style="font-size:14px;color:#9AA5B1;max-width:34ch">Soluciones de transporte pesado desde 6T hasta tractocamiones, con servicio postventa eficiente en todo México.</p>
       </div>
-      <div><h4>Unidades</h4><ul>
-        <li><a href="#/modelos">Tractocamiones</a></li><li><a href="#/modelos">Construcción y volteo</a></li>
-        <li><a href="#/modelos">Ligeros urbanos</a></li><li><a href="#/comparar">Comparador</a></li>
-      </ul></div>
+      <div><h4>Modelos</h4><ul id="foot-cats"></ul></div>
       <div><h4>Servicio</h4><ul>
-        <li><a href="#/postventa">Postventa</a></li><li><a href="#/postventa">Refacciones</a></li>
-        <li><a href="#/agencias">Red de agencias</a></li><li><a href="#/contacto">Agendar cita</a></li>
+        <li><a href="#/postventa">Postventa y servicio</a></li><li><a href="#/postventa">Refacciones</a></li>
+        <li><a href="#/agencias">Agencias</a></li><li><a href="#/cotizar">Agendar cita</a></li>
+        <li><a href="#/comparar">Comparador</a></li>
       </ul></div>
       <div><h4>Contacto</h4><ul>
-        <li><a href="#/contacto">Facebook</a></li><li><a href="#/contacto">LinkedIn</a></li>
-        <li><a href="#/contacto">Instagram</a></li><li><a href="#/contacto">YouTube</a></li><li><a href="#/contacto">WhatsApp</a></li>
+        <li><a href="#/cotizar">Facebook</a></li><li><a href="#/cotizar">LinkedIn</a></li>
+        <li><a href="#/cotizar">Instagram</a></li><li><a href="#/cotizar">YouTube</a></li><li><a href="#/cotizar">WhatsApp</a></li>
       </ul></div>
     </div>
     <div class="foot__bar"><span>© 2026 Apex · Distribuidor autorizado Sitrak</span><span>Aviso de privacidad · Términos</span></div>
   </div>
 </footer>
 
-<a class="wa" href="#/contacto">WhatsApp</a>
+<a class="wafloat" href="#/cotizar">WhatsApp</a>
+<nav class="mobar"><a href="#/cotizar">Llamar</a><a href="#/cotizar">WhatsApp</a><a href="#/cotizar">Cotizar</a></nav>
 
 <div class="cmpbar" id="cmpbar" data-open="false"><div class="wrap cmpbar__in">
   <div class="chips" id="chips"></div>
-  <a class="btn btn--primary btn--sm" href="#/comparar">Comparar ahora</a>
+  <a class="btn btn--red btn--sm" href="#/comparar">Comparar ahora</a>
 </div></div>
 
 <script>
-var PC = "Por confirmar";
-var MODELS = [
-  {id:"c7h540",cat:"tracto",catLabel:"Tractocamión",name:"C7H 540 6×4",use:"Larga distancia",
-   img:"c7h-540-6x4.jpg",
-   desc:"Doble tracción para carretera federal y arrastre full. La configuración más vendida de la gama.",
-   trac:"6×4",motor:"MT13.54-50 · tecnología MAN",hp:540,hpTxt:"540 HP @ 1,900 rpm",
-   torque:"1,844 lb-ft @ 1,000–1,400 rpm",cil:"13 L · 6 cilindros",
-   trans:"ZF 16S2531TO · 16 vel. con retardador",ejeD:"MVP09 · 20,000 lb · freno de tambor",
-   ejeT:"MCP16 · 70,500 lb",susp:"Neumática con amortiguador hidráulico",
-   tank:"900 L",tire:"315/80R22.5 · rin de aluminio 22.5",cap:"Arrastre full",app:"Carretera federal"},
-  {id:"c7h480",cat:"tracto",catLabel:"Tractocamión",name:"C7H 480 6×4",use:"Rendimiento",
-   img:"c7h-480-6x4.jpg",
-   desc:"Misma plataforma con menor potencia y mejor consumo para rutas de peso bruto moderado.",
-   trac:"6×4",motor:"Sinotruk · tecnología MAN",hp:480,hpTxt:"480 HP",
-   torque:PC,cil:"13 L · 6 cilindros",trans:"ZF · 16 vel. con retardador",
-   ejeD:PC,ejeT:PC,susp:PC,tank:PC,tire:"315/80R22.5",cap:"Arrastre full",app:"Carretera federal"},
-  {id:"t7h",cat:"tracto",catLabel:"Tractocamión",name:"T7H",use:"Premium",
-   img:"t7h-tracto.jpg",
-   desc:"Línea premium nacida de la alianza CNHTC y MAN, orientada al confort del operador en ruta larga.",
-   trac:"6×4",motor:"MT13 · tecnología MAN",hp:540,hpTxt:"Hasta 540 HP",
-   torque:PC,cil:"13 L · 6 cilindros",trans:"AMT 12 vel. / ZF 16 vel.",
-   ejeD:PC,ejeT:PC,susp:"Neumática",tank:PC,tire:PC,cap:"Arrastre full",app:"Larga distancia"},
-  {id:"c7hchasis",cat:"construccion",catLabel:"Chasis",name:"C7H Chasis 360 6×4",use:"Carga 25 t",
-   img:"c7h-chasis-360.jpg",
-   desc:"Chasis para carrocería a la medida: caja seca, refrigerada, plataforma o equipo especializado.",
-   trac:"6×4",motor:"MC11.36-50 · Euro V SCR",hp:360,hpTxt:"360 HP",
-   torque:PC,cil:"11 L · 6 cilindros",trans:"ZF · 16 velocidades",
-   ejeD:PC,ejeT:PC,susp:PC,tank:PC,tire:"Rin 22.5",cap:"Hasta 25 t de carga",app:"Distribución y carrocería"},
-  {id:"volteo64",cat:"construccion",catLabel:"Volteo",name:"C7H Volteo 6×4",use:"Obra",
-   img:"volteo-6x4.jpg",
-   desc:"Caja de volteo de 16 m³, por encima de los 14 m³ que ofrece el estándar del mercado.",
-   trac:"6×4",motor:"Sinotruk · tecnología alemana",hp:360,hpTxt:PC,
-   torque:PC,cil:PC,trans:"ZF · 16 velocidades",
-   ejeD:PC,ejeT:PC,susp:"Muelle reforzado",tank:PC,tire:PC,cap:"Caja de 16 m³",app:"Material pétreo y terracería"},
-  {id:"volteo84",cat:"construccion",catLabel:"Volteo",name:"C7H 8×4",use:"Minería",
-   img:"volteo-8x4.jpg",
-   desc:"Unidad equipada para minería, construcción y operación fuera de camino.",
-   trac:"8×4",motor:"Sinotruk · tecnología alemana",hp:400,hpTxt:PC,
-   torque:PC,cil:PC,trans:PC,ejeD:PC,ejeT:PC,susp:"Muelle reforzado",
-   tank:PC,tire:PC,cap:PC,app:"Minería y off-road"},
-  {id:"c7h6x6",cat:"construccion",catLabel:"Tractor pesado",name:"C7H 6×6",use:"Arrastre pesado",
-   img:"c7h-6x6.jpg",
-   desc:"Tracción en los tres ejes y componentes reforzados para trabajo extremo.",
-   trac:"6×6",motor:"Sinotruk · tecnología alemana",hp:540,hpTxt:PC,
-   torque:PC,cil:PC,trans:PC,ejeD:"Reforzado",ejeT:"Reforzado",susp:"Reforzada",
-   tank:PC,tire:PC,cap:"Arrastre de hasta 150 t",app:"Carga extradimensionada"},
-  {id:"sitrak6t",cat:"ligero",catLabel:"Ligero",name:"SITRAK 6T",use:"Última milla",
-   img:"ligero-6t.jpg",
-   desc:"Diseñado para operación urbana: maniobrabilidad en espacios reducidos y bajo mantenimiento.",
-   trac:"4×2",motor:"G3W",hp:154,hpTxt:"154 HP (115 kW) @ 2,600 rpm",
-   torque:PC,cil:PC,trans:PC,ejeD:PC,ejeT:PC,susp:PC,tank:PC,tire:PC,
-   cap:"6 t de capacidad",app:"Distribución urbana"},
-  {id:"sitrak8t",cat:"ligero",catLabel:"Ligero",name:"SITRAK 8T",use:"Reparto regional",
-   img:"ligero-8t.jpg",
-   desc:"Un escalón más de capacidad conservando el formato urbano y la eficiencia de combustible.",
-   trac:"4×2",motor:"G3W",hp:168,hpTxt:"168 HP",
-   torque:PC,cil:PC,trans:PC,ejeD:PC,ejeT:PC,susp:PC,tank:PC,tire:PC,
-   cap:"8 t de capacidad",app:"Distribución regional"}
+var PC="Por confirmar";
+
+var CATS=[
+ {id:"ligeros",name:"Camiones ligeros",desc:"Operación urbana con agilidad, eficiencia de combustible y capacidad de carga optimizada.",img:"cat-ligeros.jpg"},
+ {id:"medianos",name:"Camiones medianos",desc:"Versatilidad y robustez para entornos urbanos y rurales, con capacidad intermedia.",img:"cat-medianos.jpg"},
+ {id:"vocacionales",name:"Camiones vocacionales",desc:"Construcción, minería y servicios municipales. Durabilidad extrema en alta demanda.",img:"cat-vocacionales.jpg"},
+ {id:"gran-dimension",name:"Grandes dimensiones",desc:"Cargas sobredimensionadas con seguridad, estabilidad y rendimiento.",img:"cat-gran-dimension.jpg"},
+ {id:"tractocamiones",name:"Tractocamiones",desc:"Máxima eficiencia y confiabilidad en transporte de larga distancia y carga pesada.",img:"cat-tractocamiones.jpg"}
 ];
 
-var ROWS = [
-  {k:"app",label:"Aplicación"},{k:"trac",label:"Tracción"},{k:"motor",label:"Motor"},
-  {k:"hpTxt",label:"Potencia",best:"hp"},{k:"torque",label:"Torque"},{k:"cil",label:"Cilindrada"},
-  {k:"trans",label:"Transmisión"},{k:"ejeD",label:"Eje delantero"},{k:"ejeT",label:"Eje trasero"},
-  {k:"susp",label:"Suspensión"},{k:"tank",label:"Tanque de combustible"},{k:"tire",label:"Llantas y rines"},
-  {k:"cap",label:"Capacidad"}
+var P=[
+ {id:"tracto-540-6x4",cat:"tractocamiones",name:"SITRAK TRACTO DIESEL 540HP 6×4",use:"Larga distancia",img:"sitrak-tracto-diesel-540hp-6x4.jpg",
+  desc:"La configuración más vendida de la gama para carretera federal y arrastre full.",
+  app:"Carretera federal",trac:"6×4",motor:"MT13.54-50 · tecnología MAN",hp:540,hpTxt:"540 HP @ 1,900 rpm",
+  torque:"1,844 lb-ft @ 1,000–1,400 rpm",cil:"13 L · 6 cilindros",trans:"ZF 16S2531TO · 16 vel. con retardador",
+  ejeD:"MVP09 · 20,000 lb · freno de tambor",ejeT:"MCP16 · 70,500 lb",susp:"Neumática con amortiguador hidráulico",
+  tank:"900 L",tire:"315/80R22.5 · rin de aluminio 22.5",cap:"Arrastre full"},
+ {id:"tracto-540-amt",cat:"tractocamiones",name:"SITRAK TRACTO 540HP 6×4 AMT",use:"Larga distancia",img:"sitrak-tracto-540hp-6x4-amt.jpg",
+  desc:"Misma potencia con transmisión automatizada: menos fatiga de operador y consumo más parejo.",
+  app:"Carretera federal",trac:"6×4",motor:"MT13.54-50 · tecnología MAN",hp:540,hpTxt:"540 HP",
+  torque:"1,844 lb-ft",cil:"13 L · 6 cilindros",trans:"AMT Sinotruk · 12 vel. con retardador",
+  ejeD:PC,ejeT:PC,susp:"Neumática",tank:"900 L",tire:"315/80R22.5",cap:"Arrastre full"},
+ {id:"g7-540",cat:"tractocamiones",name:"SITRAK G7 540HP 6×4",use:"Premium",img:"sitrak-g7-540hp-6x4.jpg",
+  desc:"Cabina de mayor confort para operadores de ruta larga.",
+  app:"Larga distancia",trac:"6×4",motor:"MT13 · tecnología MAN",hp:540,hpTxt:"540 HP",
+  torque:PC,cil:"13 L · 6 cilindros",trans:"AMT 12 vel. / ZF 16 vel.",ejeD:PC,ejeT:PC,susp:"Neumática",
+  tank:PC,tire:PC,cap:"Arrastre full"},
+ {id:"mini-tracto-330",cat:"tractocamiones",name:"SITRAK MINI TRACTO 330HP 6×4",use:"Regional",img:"sitrak-mini-tracto-330hp-6x4.jpg",
+  desc:"Tracto compacto para rutas cortas y patio, con menor inversión inicial.",
+  app:"Regional y patio",trac:"6×4",motor:"Sinotruk",hp:330,hpTxt:"330 HP",
+  torque:PC,cil:PC,trans:PC,ejeD:PC,ejeT:PC,susp:PC,tank:PC,tire:PC,cap:"Arrastre ligero"},
+ {id:"62k-330",cat:"medianos",name:"SITRAK 62K 330HP 6×4",use:"Carga 20 t",img:"sitrak-62k-330hp-6x4.jpg",
+  desc:"Camión de carga de 20 toneladas para distribución regional y carrocería a la medida.",
+  app:"Distribución regional",trac:"6×4",motor:"Sinotruk",hp:330,hpTxt:"330 HP",
+  torque:PC,cil:PC,trans:PC,ejeD:PC,ejeT:PC,susp:PC,tank:PC,tire:PC,cap:"20 t de carga"},
+ {id:"chasis-360",cat:"medianos",name:"SITRAK CHASIS 360HP 6×4",use:"Carga 25 t",img:"sitrak-chasis-360hp-6x4.jpg",
+  desc:"Chasis para caja seca, refrigerada, plataforma o equipo especializado.",
+  app:"Carrocería a la medida",trac:"6×4",motor:"MC11.36-50 · Euro V SCR",hp:360,hpTxt:"360 HP",
+  torque:PC,cil:"11 L · 6 cilindros",trans:"ZF · 16 velocidades",ejeD:PC,ejeT:PC,susp:PC,
+  tank:PC,tire:"Rin 22.5",cap:"Hasta 25 t de carga"},
+ {id:"volteo-6x4",cat:"vocacionales",name:"SITRAK VOLTEO 6×4",use:"Obra",img:"sitrak-volteo-6x4.jpg",
+  desc:"Caja de volteo de 16 m³, por encima de los 14 m³ del estándar del mercado.",
+  app:"Material pétreo y terracería",trac:"6×4",motor:"Sinotruk · tecnología alemana",hp:360,hpTxt:PC,
+  torque:PC,cil:PC,trans:"ZF · 16 velocidades",ejeD:PC,ejeT:PC,susp:"Muelle reforzado",
+  tank:PC,tire:PC,cap:"Caja de 16 m³"},
+ {id:"volteo-8x4",cat:"vocacionales",name:"SITRAK 8×4 MINERO",use:"Minería",img:"sitrak-8x4-minero.jpg",
+  desc:"Unidad equipada para minería, construcción y operación fuera de camino.",
+  app:"Minería y off-road",trac:"8×4",motor:"Sinotruk · tecnología alemana",hp:400,hpTxt:PC,
+  torque:PC,cil:PC,trans:PC,ejeD:PC,ejeT:PC,susp:"Muelle reforzado",tank:PC,tire:PC,cap:PC},
+ {id:"c7h-6x6",cat:"gran-dimension",name:"SITRAK 6×6 ARRASTRE PESADO",use:"Sobredimensionado",img:"sitrak-6x6.jpg",
+  desc:"Tracción en los tres ejes y componentes reforzados para arrastre extremo.",
+  app:"Carga extradimensionada",trac:"6×6",motor:"Sinotruk · tecnología alemana",hp:540,hpTxt:PC,
+  torque:PC,cil:PC,trans:PC,ejeD:"Reforzado",ejeT:"Reforzado",susp:"Reforzada",
+  tank:PC,tire:PC,cap:"Arrastre de hasta 150 t"},
+ {id:"sitrak-6t",cat:"ligeros",name:"SITRAK 6T",use:"Última milla",img:"sitrak-6t.jpg",
+  desc:"Operación urbana con maniobrabilidad en espacios reducidos y bajo mantenimiento.",
+  app:"Distribución urbana",trac:"4×2",motor:"G3W",hp:154,hpTxt:"154 HP (115 kW) @ 2,600 rpm",
+  torque:PC,cil:PC,trans:PC,ejeD:PC,ejeT:PC,susp:PC,tank:PC,tire:PC,cap:"6 t de capacidad"},
+ {id:"sitrak-8t",cat:"ligeros",name:"SITRAK 8T",use:"Reparto regional",img:"sitrak-8t.jpg",
+  desc:"Un escalón más de capacidad conservando el formato urbano.",
+  app:"Distribución regional",trac:"4×2",motor:"G3W",hp:168,hpTxt:"168 HP",
+  torque:PC,cil:PC,trans:PC,ejeD:PC,ejeT:PC,susp:PC,tank:PC,tire:PC,cap:"8 t de capacidad"}
 ];
 
-var selected = [];
-var filter = "todos";
+var ROWS=[{k:"app",label:"Aplicación"},{k:"trac",label:"Tracción"},{k:"motor",label:"Motor"},
+ {k:"hpTxt",label:"Potencia",best:"hp"},{k:"torque",label:"Torque"},{k:"cil",label:"Cilindrada"},
+ {k:"trans",label:"Transmisión"},{k:"ejeD",label:"Eje delantero"},{k:"ejeT",label:"Eje trasero"},
+ {k:"susp",label:"Suspensión"},{k:"tank",label:"Tanque"},{k:"tire",label:"Llantas y rines"},{k:"cap",label:"Capacidad"}];
 
-function byId(id){for(var i=0;i<MODELS.length;i++){if(MODELS[i].id===id)return MODELS[i]}return null}
+var AGENCIAS=[
+ {edo:"Nuevo León",city:"Monterrey",tel:"81 0000 0000"},{edo:"Jalisco",city:"Guadalajara",tel:"33 0000 0000"},
+ {edo:"Veracruz",city:"Xalapa",tel:"228 000 0000"},{edo:"Querétaro",city:"Querétaro",tel:"442 000 0000"},
+ {edo:"Edo. de México",city:"Cuautitlán",tel:"55 0000 0000"},{edo:"Puebla",city:"Puebla",tel:"222 000 0000"},
+ {edo:"Guanajuato",city:"León",tel:"477 000 0000"},{edo:"Coahuila",city:"Saltillo",tel:"844 000 0000"},
+ {edo:"Chihuahua",city:"Chihuahua",tel:"614 000 0000"},{edo:"Sonora",city:"Hermosillo",tel:"662 000 0000"},
+ {edo:"Tamaulipas",city:"Nuevo Laredo",tel:"867 000 0000"},{edo:"Yucatán",city:"Mérida",tel:"999 000 0000"}
+];
+
+var selected=[],filter="todos",edo="todos";
+var finder={step:0,ans:{}};
+var quote={step:0,cat:"",unit:"",qty:"",plan:"",enganche:"",plazo:"",done:false};
+
+function byId(id){for(var i=0;i<P.length;i++)if(P[i].id===id)return P[i];return null}
+function catName(id){for(var i=0;i<CATS.length;i++)if(CATS[i].id===id)return CATS[i].name;return id}
 function val(v){return v===PC?'<span class="tbd">Por confirmar</span>':v}
 
-function cardHTML(m){
-  var checked = selected.indexOf(m.id)>-1 ? " checked" : "";
-  return '<article class="model">'+
-    '<div class="model__plate"><span>'+m.img+'</span></div>'+
-    '<div class="model__body">'+
-      '<span class="model__cat">'+m.catLabel+' · '+m.use+'</span>'+
-      '<h3>'+m.name+'</h3>'+
-      '<p class="model__desc">'+m.desc+'</p>'+
-      '<dl class="rows">'+
-        '<div class="row"><dt>Motor</dt><dd>'+(m.motor===PC?"—":m.motor)+'</dd></div>'+
-        '<div class="row"><dt>Potencia</dt><dd>'+(m.hpTxt===PC?"—":m.hpTxt)+'</dd></div>'+
-        '<div class="row"><dt>Tracción</dt><dd>'+m.trac+'</dd></div>'+
-      '</dl>'+
-      '<div class="model__acts">'+
-        '<a class="btn btn--ghost btn--sm" href="#/modelo/'+m.id+'">Ficha técnica</a>'+
-        '<a class="btn btn--primary btn--sm" href="#/contacto">Cotizar</a>'+
-        '<label class="cmpbox"><input type="checkbox" data-cmp="'+m.id+'"'+checked+'> Comparar</label>'+
-      '</div>'+
-    '</div></article>';
+/* ---------- tarjetas ---------- */
+function card(m){
+  var ch=selected.indexOf(m.id)>-1?" checked":"";
+  return '<article class="prod">'+
+   '<div class="plate plate--card"><span>'+m.img+'</span><b>1600×1200</b></div>'+
+   '<div class="prod__b">'+
+     '<span class="prod__cat">'+catName(m.cat)+' · '+m.use+'</span>'+
+     '<h3>'+m.name+'</h3><p class="prod__d">'+m.desc+'</p>'+
+     '<dl class="rows">'+
+      '<div class="row"><dt>Motor</dt><dd>'+(m.motor===PC?"—":m.motor)+'</dd></div>'+
+      '<div class="row"><dt>Potencia</dt><dd>'+(m.hpTxt===PC?"—":m.hpTxt)+'</dd></div>'+
+      '<div class="row"><dt>Capacidad</dt><dd>'+(m.cap===PC?"—":m.cap)+'</dd></div>'+
+     '</dl>'+
+     '<div class="prod__acts">'+
+       '<a class="btn btn--red btn--sm" href="#/cotizar?u='+m.id+'">Cotizar</a>'+
+       '<a class="btn btn--out btn--sm" href="#/modelo/'+m.id+'">Ficha</a>'+
+       '<label class="cmpbox"><input type="checkbox" data-cmp="'+m.id+'"'+ch+'> Agregar al comparador</label>'+
+     '</div>'+
+   '</div></article>';
 }
-
-function renderGrids(){
-  var home = document.getElementById("home-models");
-  home.innerHTML = MODELS.slice(0,3).map(cardHTML).join("");
-  var list = MODELS.filter(function(m){return filter==="todos"||m.cat===filter});
-  document.getElementById("all-models").innerHTML = list.map(cardHTML).join("");
+function renderProds(){
+  document.getElementById("home-prods").innerHTML=[P[0],P[4],P[9]].map(card).join("");
+  var l=P.filter(function(m){return filter==="todos"||m.cat===filter});
+  document.getElementById("all-prods").innerHTML=l.length?l.map(card).join(""):'<p class="lede">Sin unidades en esta línea.</p>';
 }
-
-function renderChips(){
-  var bar = document.getElementById("cmpbar");
-  document.getElementById("chips").innerHTML = selected.map(function(id){
-    var m = byId(id);
-    return '<span class="chip">'+m.name+'<button type="button" data-drop="'+id+'" aria-label="Quitar '+m.name+'">×</button></span>';
+function renderCats(){
+  document.getElementById("cats").innerHTML=CATS.map(function(c){
+    var n=P.filter(function(m){return m.cat===c.id}).length;
+    return '<a class="cat" href="#/modelos?c='+c.id+'">'+
+      '<div class="plate plate--sq"><span>'+c.img+'</span></div>'+
+      '<div class="cat__b"><h3>'+c.name+'</h3><p>'+c.desc+'</p>'+
+      '<span>'+n+' unidad'+(n===1?"":"es")+' →</span></div></a>';
   }).join("");
-  bar.setAttribute("data-open", selected.length ? "true" : "false");
-}
-
-function renderPicker(){
-  var picker = document.getElementById("picker");
-  var html = "";
-  for(var i=0;i<3;i++){
-    var cur = selected[i] || "";
-    html += '<select data-slot="'+i+'" aria-label="Unidad '+(i+1)+'"><option value="">Unidad '+(i+1)+' — elegir…</option>'+
-      MODELS.map(function(m){
-        return '<option value="'+m.id+'"'+(m.id===cur?" selected":"")+'>'+m.name+' · '+m.catLabel+'</option>';
-      }).join("")+'</select>';
-  }
-  picker.innerHTML = html;
-}
-
-function renderTable(){
-  var picks = selected.map(byId).filter(Boolean);
-  var t = document.getElementById("cmp-table");
-  if(!picks.length){
-    t.innerHTML = '<tbody><tr><td style="padding:44px 22px;color:var(--muted)">Elige al menos una unidad arriba, o marca «Comparar» en el catálogo.</td></tr></tbody>';
-    return;
-  }
-  var head = '<thead><tr><th></th>'+picks.map(function(m){
-    return '<th><span class="cmp__name">'+m.name+'</span><span class="cmp__cat">'+m.catLabel+' · '+m.use+'</span></th>';
-  }).join("")+'</tr></thead>';
-  var body = ROWS.map(function(r){
-    var top = -1;
-    if(r.best){ picks.forEach(function(m){ if(typeof m[r.best]==="number" && m[r.best]>top) top=m[r.best]; }); }
-    var cells = picks.map(function(m){
-      var isBest = r.best && picks.length>1 && m[r.best]===top && m[r.k]!==PC;
-      return '<td'+(isBest?' class="best"':'')+'>'+val(m[r.k])+'</td>';
+  document.getElementById("filters").innerHTML=
+    '<button class="filter" data-cat="todos" aria-pressed="'+(filter==="todos")+'">Todas ('+P.length+')</button>'+
+    CATS.map(function(c){
+      var n=P.filter(function(m){return m.cat===c.id}).length;
+      return '<button class="filter" data-cat="'+c.id+'" aria-pressed="'+(filter===c.id)+'">'+c.name+' ('+n+')</button>';
     }).join("");
-    return '<tr><th scope="row">'+r.label+'</th>'+cells+'</tr>';
+  document.getElementById("foot-cats").innerHTML=CATS.map(function(c){
+    return '<li><a href="#/modelos?c='+c.id+'">'+c.name+'</a></li>';
   }).join("");
-  t.innerHTML = head+'<tbody>'+body+'</tbody>';
 }
 
+/* ---------- selector de unidad ---------- */
+var FQ=[
+ {q:"¿Qué mueves?",k:"carga",opts:[
+   {v:"urbano",b:"Reparto urbano",s:"Paquetería, abarrote, última milla"},
+   {v:"general",b:"Carga general",s:"Caja seca, refrigerada o plataforma"},
+   {v:"granel",b:"Material a granel",s:"Pétreo, terracería, obra"},
+   {v:"especial",b:"Carga sobredimensionada",s:"Maquinaria, estructuras"}]},
+ {q:"¿Dónde operas?",k:"zona",opts:[
+   {v:"ciudad",b:"Ciudad",s:"Rutas cortas, muchas paradas"},
+   {v:"carretera",b:"Carretera federal",s:"Largas distancias"},
+   {v:"obra",b:"Obra o mina",s:"Fuera de camino"},
+   {v:"mixto",b:"Mixto",s:"Ciudad y carretera"}]},
+ {q:"¿Cuánto peso mueves por viaje?",k:"peso",opts:[
+   {v:"8",b:"Hasta 8 toneladas",s:"Unidad ligera"},
+   {v:"25",b:"8 a 25 toneladas",s:"Unidad mediana"},
+   {v:"35",b:"Más de 25 toneladas",s:"Vocacional o pesado"},
+   {v:"full",b:"Arrastre full",s:"Tractocamión"}]}
+];
+function recommend(a){
+  if(a.carga==="urbano"||a.peso==="8") return "ligeros";
+  if(a.carga==="especial") return "gran-dimension";
+  if(a.carga==="granel"||a.zona==="obra") return "vocacionales";
+  if(a.peso==="full"||a.zona==="carretera") return "tractocamiones";
+  return "medianos";
+}
+function renderFinder(){
+  var el=document.getElementById("finder"),h="";
+  h+='<div class="finder__steps">'+FQ.map(function(f,i){
+    return '<span class="fstep" data-on="'+(finder.step===i)+'" data-done="'+(finder.step>i)+'"><i>'+(i+1)+'</i>'+f.q.replace("¿","").replace("?","")+'</span>';
+  }).join("")+'<span class="fstep" data-on="'+(finder.step===3)+'"><i>✓</i>Resultado</span></div>';
+  if(finder.step<3){
+    var f=FQ[finder.step];
+    h+='<p class="fq">'+f.q+'</p><div class="fopts">'+f.opts.map(function(o){
+      return '<button class="fopt" data-fq="'+f.k+'" data-fv="'+o.v+'"><b>'+o.b+'</b><span>'+o.s+'</span></button>';
+    }).join("")+'</div>';
+    if(finder.step>0) h+='<div class="qnav"><button class="btn btn--out btn--sm" id="fback">Atrás</button></div>';
+  }else{
+    var cid=recommend(finder.ans);
+    var list=P.filter(function(m){return m.cat===cid}).slice(0,2);
+    h+='<div class="fresult"><div class="fresult__pick">'+
+      '<p class="kicker">Tu línea</p><h3 style="margin:8px 0 8px">'+catName(cid)+'</h3>'+
+      '<p class="lede" style="font-size:14px">'+CATS.filter(function(c){return c.id===cid})[0].desc+'</p>'+
+      '<div class="qnav"><a class="btn btn--red btn--sm" href="#/modelos?c='+cid+'">Ver la línea</a>'+
+      '<button class="btn btn--out btn--sm" id="fback">Cambiar respuestas</button></div></div>'+
+      '<div class="prods" style="grid-template-columns:repeat(2,1fr)">'+list.map(card).join("")+'</div></div>';
+  }
+  el.innerHTML=h;
+}
+
+/* ---------- comparador ---------- */
+function renderChips(){
+  document.getElementById("chips").innerHTML=selected.map(function(id){
+    var m=byId(id);
+    return '<span class="chip">'+m.name+'<button type="button" data-drop="'+id+'" aria-label="Quitar">×</button></span>';
+  }).join("");
+  document.getElementById("cmpbar").setAttribute("data-open",selected.length?"true":"false");
+}
+function renderPicker(){
+  var h="";
+  for(var i=0;i<3;i++){
+    var cur=selected[i]||"";
+    h+='<select data-slot="'+i+'" aria-label="Unidad '+(i+1)+'"><option value="">Unidad '+(i+1)+' — elegir…</option>'+
+      P.map(function(m){return '<option value="'+m.id+'"'+(m.id===cur?" selected":"")+'>'+m.name+'</option>'}).join("")+'</select>';
+  }
+  document.getElementById("picker").innerHTML=h;
+}
+function renderTable(){
+  var picks=selected.map(byId).filter(Boolean),t=document.getElementById("cmp-table");
+  if(!picks.length){t.innerHTML='<tbody><tr><td style="padding:40px 20px;color:var(--muted)">Elige al menos una unidad arriba, o marca «Agregar al comparador» en el catálogo.</td></tr></tbody>';return}
+  var head='<thead><tr><th></th>'+picks.map(function(m){
+    return '<th><span class="cmp__name">'+m.name+'</span><span class="cmp__cat">'+catName(m.cat)+'</span></th>'}).join("")+'</tr></thead>';
+  var body=ROWS.map(function(r){
+    var top=-1;
+    if(r.best)picks.forEach(function(m){if(typeof m[r.best]==="number"&&m[r.best]>top)top=m[r.best]});
+    return '<tr><th scope="row">'+r.label+'</th>'+picks.map(function(m){
+      var b=r.best&&picks.length>1&&m[r.best]===top&&m[r.k]!==PC;
+      return '<td'+(b?' class="best"':'')+'>'+val(m[r.k])+'</td>';
+    }).join("")+'</tr>';
+  }).join("");
+  t.innerHTML=head+'<tbody>'+body+'</tbody>';
+}
+function toggle(id,on){
+  var i=selected.indexOf(id);
+  if(on&&i<0){if(selected.length>=3)selected.shift();selected.push(id)}
+  if(!on&&i>-1)selected.splice(i,1);
+  renderProds();renderChips();renderPicker();renderTable();
+}
+
+/* ---------- ficha ---------- */
 function renderDetail(id){
-  var m = byId(id);
-  var box = document.getElementById("modelo-body");
-  if(!m){ box.innerHTML = '<div class="wrap sec"><h2>Modelo no encontrado</h2></div>'; return; }
-  document.getElementById("crumb-modelo").textContent = m.name;
-  var rows = ROWS.map(function(r){
-    return '<div class="row"><dt>'+r.label+'</dt><dd>'+val(m[r.k])+'</dd></div>';
+  var m=byId(id),box=document.getElementById("modelo-body");
+  if(!m){box.innerHTML='<div class="wrap sec"><h2>Modelo no encontrado</h2></div>';return}
+  document.getElementById("crumb-modelo").textContent=m.name;
+  var rows=ROWS.map(function(r){return '<div class="row"><dt>'+r.label+'</dt><dd>'+val(m[r.k])+'</dd></div>'}).join("");
+  box.innerHTML='<section class="sec"><div class="wrap"><div class="detail"><div>'+
+    '<p class="kicker">'+catName(m.cat)+' · '+m.use+'</p>'+
+    '<h1 style="margin:12px 0 14px">'+m.name+'</h1><p class="lede">'+m.desc+'</p>'+
+    '<div class="dnums">'+
+      '<div><b class="num">'+m.hp+' HP</b><span>Potencia</span></div>'+
+      '<div><b>'+m.trac+'</b><span>Tracción</span></div>'+
+      '<div><b style="font-size:17px">'+(m.cap===PC?"—":m.cap)+'</b><span>Capacidad</span></div>'+
+    '</div>'+
+    '<div class="plate plate--wide" style="margin-bottom:18px"><span>'+m.img+'</span><b>1600×900</b></div>'+
+    '<h3 style="margin-bottom:10px">Especificaciones</h3><dl class="rows" style="border-top:2px solid var(--ink)">'+rows+'</dl>'+
+    '</div><div>'+
+      '<div class="dbuy">'+
+        '<p class="kicker">Cotizar</p>'+
+        '<h3>'+m.name+'</h3>'+
+        '<p class="dbuy__price">Precio bajo cotización · financiamiento disponible</p>'+
+        '<a class="btn btn--red btn--full" href="#/cotizar?u='+m.id+'">Cotizar esta unidad</a>'+
+        '<a class="btn btn--wa btn--full" href="#/cotizar?u='+m.id+'">Preguntar por WhatsApp</a>'+
+        '<a class="btn btn--out btn--full" href="#/comparar">Comparar con otra</a>'+
+        '<label class="cmpbox" style="padding-top:8px"><input type="checkbox" data-cmp="'+m.id+'"'+(selected.indexOf(m.id)>-1?" checked":"")+'> Agregar al comparador</label>'+
+      '</div>'+
+      '<div class="note"><b>Ficha oficial:</b> los renglones «por confirmar» se llenan con la hoja de especificación de Apex. En WordPress cada renglón es un atributo de producto, no texto libre — así alimenta ficha, filtro y comparador con una sola captura.</div>'+
+    '</div></div></div></section>';
+}
+
+/* ---------- cotizador ---------- */
+var QSTEPS=["Tipo de operación","Unidad","Volumen y plan","Datos de contacto"];
+function renderQuote(){
+  var box=document.getElementById("qbox"),sum=document.getElementById("qsum"),h="";
+  if(quote.done){
+    box.innerHTML='<div class="qdone"><div class="tick">✓</div>'+
+      '<h2 style="margin-bottom:12px">Solicitud lista</h2>'+
+      '<p class="lede" style="margin:0 auto">Un asesor de tu agencia te contacta en menos de 24 horas hábiles con disponibilidad, plan de financiamiento y fecha de entrega.</p>'+
+      '<div class="qnav" style="justify-content:center"><a class="btn btn--wa" href="#/cotizar">Adelantar por WhatsApp</a>'+
+      '<button class="btn btn--out" id="qreset">Cotizar otra unidad</button></div>'+
+      '<p class="dbuy__price" style="margin-top:20px">Prototipo: el formulario no envía datos.</p></div>';
+  }else{
+    var pct=((quote.step+1)/QSTEPS.length)*100;
+    h+='<div class="qprog"><i style="width:'+pct+'%"></i></div>'+
+       '<div class="qmeta"><span>Paso '+(quote.step+1)+' de 4 · '+QSTEPS[quote.step]+'</span><span>'+Math.round(pct)+'% completo</span></div>';
+    if(quote.step===0){
+      h+='<p class="fq">¿Qué tipo de unidad buscas?</p><div class="fopts" style="grid-template-columns:repeat(2,1fr)">'+
+        CATS.map(function(c){return '<button class="fopt" data-q="cat" data-v="'+c.id+'"><b>'+c.name+'</b><span>'+c.desc+'</span></button>'}).join("")+'</div>';
+    }else if(quote.step===1){
+      var list=P.filter(function(m){return !quote.cat||m.cat===quote.cat});
+      h+='<p class="fq">¿Cuál unidad?</p><div class="fgrid"><div class="f f--full"><label for="qu">Unidad</label>'+
+        '<select id="qu" data-q="unit"><option value="">Elegir…</option>'+
+        list.map(function(m){return '<option value="'+m.id+'"'+(quote.unit===m.id?" selected":"")+'>'+m.name+'</option>'}).join("")+
+        '<option value="indeciso"'+(quote.unit==="indeciso"?" selected":"")+'>Aún no lo defino</option></select></div></div>';
+    }else if(quote.step===2){
+      h+='<p class="fq">Volumen y forma de pago</p><div class="fgrid">'+
+        '<div class="f"><label for="qq">Unidades a adquirir</label><select id="qq" data-q="qty">'+
+        ["1 unidad","2 a 5 unidades","6 a 20 unidades","Más de 20"].map(function(o){
+          return '<option'+(quote.qty===o?" selected":"")+'>'+o+'</option>'}).join("")+'</select></div>'+
+        '<div class="f"><label for="qp">Forma de pago</label><select id="qp" data-q="plan">'+
+        ["Crédito / financiamiento","Contado","Arrendamiento","Por definir"].map(function(o){
+          return '<option'+(quote.plan===o?" selected":"")+'>'+o+'</option>'}).join("")+'</select></div>'+
+        '<div class="f"><label for="qe">Enganche estimado</label><select id="qe" data-q="enganche">'+
+        ["10%","20%","30%","40% o más"].map(function(o){
+          return '<option'+(quote.enganche===o?" selected":"")+'>'+o+'</option>'}).join("")+'</select></div>'+
+        '<div class="f"><label for="qz">Plazo deseado</label><select id="qz" data-q="plazo">'+
+        ["24 meses","36 meses","48 meses","60 meses"].map(function(o){
+          return '<option'+(quote.plazo===o?" selected":"")+'>'+o+'</option>'}).join("")+'</select></div></div>'+
+        '<div class="note">Con estos datos la cotización llega con la <b>mensualidad estimada ya calculada</b>, en vez de una segunda llamada para pedirlos.</div>';
+    }else{
+      h+='<p class="fq">¿A dónde te contactamos?</p><div class="fgrid">'+
+        '<div class="f"><label for="qn">Nombre</label><input id="qn" type="text" placeholder="Nombre y apellido"></div>'+
+        '<div class="f"><label for="qem">Empresa</label><input id="qem" type="text" placeholder="Razón social"></div>'+
+        '<div class="f"><label for="qt">Teléfono</label><input id="qt" type="tel" placeholder="10 dígitos"></div>'+
+        '<div class="f"><label for="qc">Correo</label><input id="qc" type="email" placeholder="nombre@empresa.mx"></div>'+
+        '<div class="f f--full"><label for="qa">Agencia más cercana</label><select id="qa">'+
+        AGENCIAS.map(function(a){return '<option>'+a.city+' · '+a.edo+'</option>'}).join("")+'</select></div></div>'+
+        '<p class="dbuy__price" style="margin-top:14px">Al enviar aceptas el aviso de privacidad.</p>';
+    }
+    h+='<div class="qnav">'+
+      (quote.step>0?'<button class="btn btn--out" id="qback">Atrás</button>':'')+
+      (quote.step>0?'<button class="btn btn--red" id="qnext">'+(quote.step===3?"Enviar solicitud":"Continuar")+'</button>':'')+
+      '</div>';
+    box.innerHTML=h;
+  }
+  var u=quote.unit&&quote.unit!=="indeciso"?byId(quote.unit):null;
+  sum.innerHTML='<h3>Tu cotización</h3><dl class="rows" style="border-top:2px solid var(--ink)">'+
+    '<div class="row"><dt>Línea</dt><dd>'+(quote.cat?catName(quote.cat):"—")+'</dd></div>'+
+    '<div class="row"><dt>Unidad</dt><dd>'+(u?u.name:(quote.unit==="indeciso"?"Por definir":"—"))+'</dd></div>'+
+    '<div class="row"><dt>Cantidad</dt><dd>'+(quote.qty||"—")+'</dd></div>'+
+    '<div class="row"><dt>Pago</dt><dd>'+(quote.plan||"—")+'</dd></div>'+
+    '<div class="row"><dt>Enganche</dt><dd>'+(quote.enganche||"—")+'</dd></div>'+
+    '<div class="row"><dt>Plazo</dt><dd>'+(quote.plazo||"—")+'</dd></div></dl>'+
+    (u?'<div class="plate plate--card" style="margin-top:14px"><span>'+u.img+'</span></div>':'')+
+    '<p class="dbuy__price" style="margin-top:14px">Respuesta en menos de 24 h hábiles.</p>';
+}
+
+/* ---------- agencias ---------- */
+function renderAgencias(){
+  var sel=document.getElementById("edo");
+  if(!sel.options.length){
+    var estados=[];AGENCIAS.forEach(function(a){if(estados.indexOf(a.edo)<0)estados.push(a.edo)});
+    sel.innerHTML='<option value="todos">Todos los estados ('+AGENCIAS.length+')</option>'+
+      estados.sort().map(function(e){return '<option value="'+e+'">'+e+'</option>'}).join("");
+  }
+  var l=AGENCIAS.filter(function(a){return edo==="todos"||a.edo===edo});
+  document.getElementById("agencies").innerHTML=l.map(function(a){
+    return '<div class="agency"><div><b>'+a.city+'</b><br><span>'+a.edo+' · Tel. '+a.tel+'</span></div>'+
+      '<div style="display:flex;gap:7px"><a class="btn btn--out btn--sm" href="#/cotizar">Cómo llegar</a>'+
+      '<a class="btn btn--red btn--sm" href="#/cotizar">Contactar</a></div></div>';
   }).join("");
-  box.innerHTML =
-  '<section class="sec"><div class="wrap"><div class="detail">'+
-    '<div>'+
-      '<p class="eyebrow">'+m.catLabel+' · '+m.use+'</p>'+
-      '<h1 style="margin:14px 0 16px">'+m.name+'</h1>'+
-      '<p class="lede">'+m.desc+'</p>'+
-      '<div class="dnums">'+
-        '<div><span class="spec__v num">'+m.hp+'<i>HP</i></span><span class="spec__k">Potencia</span></div>'+
-        '<div><span class="spec__v" style="font-size:22px">'+m.trac+'</span><span class="spec__k">Tracción</span></div>'+
-        '<div><span class="spec__v" style="font-size:22px">'+(m.cap===PC?"—":m.cap)+'</span><span class="spec__k">Capacidad</span></div>'+
-      '</div>'+
-      '<dl class="dspec">'+rows+'</dl>'+
-      '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:26px">'+
-        '<a class="btn btn--primary" href="#/contacto">Cotizar esta unidad</a>'+
-        '<a class="btn btn--ghost" href="#/comparar">Comparar con otra</a>'+
-      '</div>'+
-    '</div>'+
-    '<div>'+
-      '<div class="plate plate--sq"><span>'+m.img+'</span><b>1600 &times; 1280</b></div>'+
-      '<div class="plate plate--wide" style="margin-top:12px"><span>'+m.id+'-cabina.jpg</span><b>1600 &times; 1000</b></div>'+
-      '<div class="note"><b>Ficha oficial:</b> los renglones «por confirmar» se llenan con la hoja de especificación de Apex. En WordPress cada renglón es un atributo de producto, no texto libre — así alimenta al comparador.</div>'+
-    '</div>'+
-  '</div></div></section>';
 }
 
-function toggle(id, on){
-  var i = selected.indexOf(id);
-  if(on && i<0){ if(selected.length>=3){ selected.shift(); } selected.push(id); }
-  if(!on && i>-1){ selected.splice(i,1); }
-  renderGrids(); renderChips(); renderPicker(); renderTable();
-}
-
-var TITLES = {inicio:"Inicio",modelos:"Modelos",modelo:"Ficha técnica",comparar:"Comparador",
-  postventa:"Postventa y servicio",agencias:"Red de agencias",nosotros:"Nosotros",contacto:"Agendar cita"};
-
+/* ---------- router ---------- */
+var TITLES={inicio:"Inicio",modelos:"Modelos",modelo:"Ficha técnica",comparar:"Comparador",
+ cotizar:"Agendar cita",postventa:"Postventa y servicio",agencias:"Agencias",nosotros:"Nuestra historia"};
 function route(){
-  var h = (location.hash || "#/").replace("#/","");
-  var parts = h.split("/");
-  var view = parts[0] || "inicio";
-  if(!document.getElementById("v-"+view)) view = "inicio";
-  if(view==="modelo") renderDetail(parts[1]);
-  if(view==="comparar"){ renderPicker(); renderTable(); }
-  [].forEach.call(document.querySelectorAll(".view"), function(v){
-    v.hidden = v.id !== "v-"+view;
-  });
-  [].forEach.call(document.querySelectorAll("#nav a"), function(a){
-    var target = a.getAttribute("href").replace("#/","");
-    if(target===view || (view==="modelo" && target==="modelos")) a.setAttribute("aria-current","page");
+  var raw=(location.hash||"#/").replace("#/",""),qs="";
+  var qi=raw.indexOf("?");
+  if(qi>-1){qs=raw.slice(qi+1);raw=raw.slice(0,qi)}
+  var parts=raw.split("/"),view=parts[0]||"inicio";
+  if(!document.getElementById("v-"+view))view="inicio";
+  if(qs.indexOf("c=")===0){filter=qs.slice(2)}
+  if(qs.indexOf("u=")===0){
+    var uid=qs.slice(2),um=byId(uid);
+    if(um){quote.cat=um.cat;quote.unit=uid;quote.step=2;quote.done=false}
+  }
+  if(view==="modelo")renderDetail(parts[1]);
+  if(view==="modelos"){renderCats();renderProds()}
+  if(view==="comparar"){renderPicker();renderTable()}
+  if(view==="cotizar")renderQuote();
+  if(view==="agencias")renderAgencias();
+  [].forEach.call(document.querySelectorAll(".view"),function(v){v.hidden=v.id!=="v-"+view});
+  [].forEach.call(document.querySelectorAll("#nav a"),function(a){
+    var t=a.getAttribute("href").replace("#/","");
+    if(t===view||(view==="modelo"&&t==="modelos"))a.setAttribute("aria-current","page");
     else a.removeAttribute("aria-current");
   });
-  document.title = "Apex Sitrak Diesel Grid — " + (TITLES[view]||"Inicio");
+  document.title="Apex Sitrak Distribuidor — "+(TITLES[view]||"Inicio");
   window.scrollTo(0,0);
 }
 
-document.addEventListener("change", function(e){
-  var t = e.target;
-  if(t.matches("[data-cmp]")) toggle(t.getAttribute("data-cmp"), t.checked);
+document.addEventListener("click",function(e){
+  var t=e.target,c=t.closest?t.closest.bind(t):null;
+  var fo=t.closest&&t.closest(".fopt");
+  if(fo&&fo.hasAttribute("data-fq")){
+    finder.ans[fo.getAttribute("data-fq")]=fo.getAttribute("data-fv");
+    finder.step++;renderFinder();return;
+  }
+  if(fo&&fo.hasAttribute("data-q")){quote.cat=fo.getAttribute("data-v");quote.step=1;renderQuote();return}
+  if(t.id==="fback"){finder.step=Math.max(0,finder.step-1);renderFinder();return}
+  if(t.id==="qback"){quote.step=Math.max(0,quote.step-1);renderQuote();return}
+  if(t.id==="qnext"){
+    if(quote.step===3){quote.done=true}else{quote.step++}
+    renderQuote();return;
+  }
+  if(t.id==="qreset"){quote={step:0,cat:"",unit:"",qty:"",plan:"",enganche:"",plazo:"",done:false};renderQuote();return}
+  var d=t.closest&&t.closest("[data-drop]");
+  if(d){toggle(d.getAttribute("data-drop"),false);return}
+  var f=t.closest&&t.closest(".filter");
+  if(f){filter=f.getAttribute("data-cat");renderCats();renderProds();return}
+  if(t.id==="cmp-reset"){selected=[];renderProds();renderChips();renderPicker();renderTable()}
+});
+document.addEventListener("change",function(e){
+  var t=e.target;
+  if(t.matches("[data-cmp]")){toggle(t.getAttribute("data-cmp"),t.checked);return}
+  if(t.matches("[data-q]")){quote[t.getAttribute("data-q")]=t.value;renderQuote();return}
+  if(t.id==="edo"){edo=t.value;renderAgencias();return}
   if(t.matches("[data-slot]")){
-    var slot = +t.getAttribute("data-slot"), v = t.value;
-    var next = selected.slice();
-    if(v){ next[slot] = v; } else { next.splice(slot,1); }
-    selected = next.filter(function(x,i,a){return x && a.indexOf(x)===i}).slice(0,3);
-    renderGrids(); renderChips(); renderPicker(); renderTable();
+    var s=+t.getAttribute("data-slot"),v=t.value,n=selected.slice();
+    if(v)n[s]=v;else n.splice(s,1);
+    selected=n.filter(function(x,i,a){return x&&a.indexOf(x)===i}).slice(0,3);
+    renderProds();renderChips();renderPicker();renderTable();
   }
 });
-document.addEventListener("click", function(e){
-  var d = e.target.closest ? e.target.closest("[data-drop]") : null;
-  if(d) toggle(d.getAttribute("data-drop"), false);
-  var f = e.target.closest ? e.target.closest(".filter") : null;
-  if(f){
-    filter = f.getAttribute("data-cat");
-    [].forEach.call(document.querySelectorAll(".filter"), function(b){
-      b.setAttribute("aria-pressed", b===f ? "true":"false");
-    });
-    renderGrids();
-  }
-  if(e.target.id==="cmp-reset"){ selected=[]; renderGrids(); renderChips(); renderPicker(); renderTable(); }
-});
-window.addEventListener("hashchange", route);
+window.addEventListener("hashchange",route);
 
-document.getElementById("u").innerHTML =
-  '<option>Aún no lo defino</option>' + MODELS.map(function(m){return '<option>'+m.name+'</option>'}).join("");
-renderGrids(); renderChips(); renderPicker(); renderTable(); route();
+renderCats();renderProds();renderFinder();renderChips();renderPicker();renderTable();renderQuote();renderAgencias();route();
 </script>
