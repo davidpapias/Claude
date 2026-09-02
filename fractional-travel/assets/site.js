@@ -111,13 +111,22 @@
 
       el.cUse.max = Math.round(allocated);
       if (+el.cUse.value > +el.cUse.max) el.cUse.value = el.cUse.max;
+
+      // el escenario que el visitante puede pedir por escrito, con sus propios números
+      var sum = document.getElementById("sceneSum");
+      if (sum){
+        sum.innerHTML = "Residencia de <b>" + money(value) + "</b> &middot; <b>" + frac +
+          "/8</b> &middot; <b>" + used + "</b> semanas de uso &middot; tarifa <b>" + money(rate) +
+          "</b> &middot; plusvalía <b>" + (app * 100).toFixed(1) + "%</b> &rarr; rendimiento anual estimado <b>" +
+          (total >= 0 ? "+" : "−") + money(Math.abs(total)) + "</b>";
+      }
     };
     ids.forEach(function(id){ if (el[id]) el[id].addEventListener("input", calc); });
     calc();
   }
 
   /* ---------- 3. Formularios de calificación ---------- */
-  Array.prototype.forEach.call(document.querySelectorAll("form[data-lead]"), function(form){
+  Array.prototype.forEach.call(document.querySelectorAll("form[data-lead], form[data-mini]"), function(form){
     form.addEventListener("submit", function(e){
       e.preventDefault();
       var required = form.querySelectorAll("[required]");
@@ -128,11 +137,71 @@
       var ok = form.querySelector(".form-ok");
       if (ok) ok.classList.add("show");
       var btn = form.querySelector("button[type=submit]");
-      if (btn){ btn.textContent = "Solicitud enviada"; btn.disabled = true; }
+      if (btn){ btn.textContent = form.getAttribute("data-done") || "Solicitud enviada"; btn.disabled = true; }
     });
   });
 
-  /* ---------- 4. Enrutado del previsualizador de una sola página ---------- */
+  /* ---------- 3b. Envío del escenario de la calculadora ---------- */
+  var scSend = document.getElementById("scSend");
+  if (scSend){
+    scSend.addEventListener("click", function(){
+      var mail = document.getElementById("scMail");
+      if (!mail.value.trim() || mail.value.indexOf("@") < 0){ mail.focus(); return; }
+      // TODO: enviar al CRM el correo, el WhatsApp y los valores actuales de la calculadora
+      scSend.textContent = "Escenario enviado";
+      scSend.disabled = true;
+      var sum = document.getElementById("sceneSum");
+      if (sum) sum.innerHTML = "Enviado a <b>" + mail.value.trim() +
+        "</b>. Le llega el recálculo contra las cifras auditadas en menos de 24 horas hábiles.";
+    });
+  }
+
+  /* ---------- 4. Barra fija de conversión ---------- */
+  var bar = document.querySelector(".stickybar");
+  if (bar){
+    var dismissed = false;
+    try { dismissed = localStorage.getItem("lf-bar") === "off"; } catch (e) {}
+    var closeBtn = bar.querySelector(".x");
+    if (closeBtn) closeBtn.addEventListener("click", function(){
+      dismissed = true; bar.classList.remove("up");
+      try { localStorage.setItem("lf-bar", "off"); } catch (e) {}
+    });
+    var onScroll = function(){
+      if (dismissed) return;
+      var past = window.scrollY > 620;
+      var atEnd = (window.innerHeight + window.scrollY) > (document.body.scrollHeight - 700);
+      bar.classList.toggle("up", past && !atEnd);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+
+  /* ---------- 5. Invitación de salida, una sola vez ---------- */
+  var exit = document.querySelector(".exit");
+  if (exit && window.matchMedia("(min-width: 900px)").matches){
+    var seen = false;
+    try { seen = localStorage.getItem("lf-exit") === "seen"; } catch (e) {}
+    var close = function(){
+      exit.classList.remove("show");
+      try { localStorage.setItem("lf-exit", "seen"); } catch (e) {}
+      seen = true;
+    };
+    exit.addEventListener("click", function(e){ if (e.target === exit) close(); });
+    Array.prototype.forEach.call(exit.querySelectorAll(".no"), function(b){
+      b.addEventListener("click", close);
+    });
+    document.addEventListener("keydown", function(e){ if (e.key === "Escape") close(); });
+    document.addEventListener("mouseout", function(e){
+      if (seen || e.relatedTarget || e.clientY > 12) return;
+      if (window.scrollY < 400) return;   // sólo a quien ya leyó algo
+      seen = true;
+      exit.classList.add("show");
+      var first = exit.querySelector("input");
+      if (first) first.focus();
+    });
+  }
+
+  /* ---------- 6. Enrutado del previsualizador de una sola página ---------- */
   var routes = document.querySelectorAll(".route");
   if (routes.length){
     var show = function(){

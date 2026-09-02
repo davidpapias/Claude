@@ -14,11 +14,11 @@
 <div class="topbar">
   <div class="wrap topbar-in">
     <a class="brand" href="index.html"><b>La Fracción</b><span>Nayarit</span></a>
-    <nav class="navlinks"><a href="residencias.html">Residencias</a><a href="modelo.html">El modelo</a><a href="inversion.html" aria-current="page">Inversión</a><a href="legal.html">Estructura legal</a><a href="copropietarios.html">Copropietarios</a></nav>
+    <nav class="navlinks"><a href="residencias.html">Residencias</a><a href="modelo.html">El modelo</a><a href="inversion.html" aria-current="page">Inversión</a><a href="legal.html">Estructura legal</a><a href="memorandum.html">Memorándum</a></nav>
     <a class="btn btn-sm" href="agendar.html">Agendar llamada <span class="arw">&rarr;</span></a>
     <button class="navtoggle" type="button" aria-expanded="false">Menú</button>
   </div>
-  <div class="navdrawer"><a href="residencias.html">Residencias</a><a href="modelo.html">El modelo</a><a href="inversion.html" aria-current="page">Inversión</a><a href="legal.html">Estructura legal</a><a href="copropietarios.html">Copropietarios</a><a href="nosotros.html">Nosotros</a><a href="diario.html">Diario</a><a href="preguntas.html">Preguntas</a><a class="btn" href="agendar.html">Agendar llamada</a></div>
+  <div class="navdrawer"><a href="residencias.html">Residencias</a><a href="modelo.html">El modelo</a><a href="inversion.html" aria-current="page">Inversión</a><a href="legal.html">Estructura legal</a><a href="memorandum.html">Memorándum</a><a href="nosotros.html">Nosotros</a><a href="diario.html">Diario</a><a href="preguntas.html">Preguntas</a><a class="btn" href="agendar.html">Agendar llamada</a></div>
 </div>
 <section class="pagehead">
   <div class="wrap">
@@ -36,7 +36,9 @@
     <div class="ctl"><label for="cUse"><span class="lname">Semanas que realmente usa</span><span class="lval num" id="vUse">4</span></label><input type="range" id="cUse" min="0" max="26" step="1" value="4"></div>
     <div class="ctl"><label for="cRate"><span class="lname">Tarifa promedio por noche</span><span class="lval num" id="vRate">$780</span></label><input type="range" id="cRate" min="380" max="1800" step="20" value="780"></div>
     <div class="ctl"><label for="cApp"><span class="lname">Plusvalía anual estimada</span><span class="lval num" id="vApp">5.0%</span></label><input type="range" id="cApp" min="0" max="10" step="0.5" value="5"></div>
+    <div class="note" style="margin-top:6px"><b>Muévalos hasta que se parezca a su caso.</b> El renglón que más cambia el resultado es el de semanas que realmente usa: por debajo de cuatro, el modelo se sostiene en la renta; por encima de seis, en el uso. Las semanas que no usa se liberan solas a renta administrada.</div>
   </div>
+  <div>
   <div class="ledger">
     <div class="ledger-h"><p class="folio">Estado anual estimado</p><p class="folio">USD</p></div>
     <div class="ledger-row"><span class="k">Inversión inicial (su fracción)</span><span class="v num" id="rInv">$140,000</span></div>
@@ -47,7 +49,21 @@
     <div class="ledger-row pos"><span class="k">Plusvalía anual de su fracción</span><span class="v num" id="rApp">+$7,000</span></div>
     <div class="ledger-row"><span class="k">Valor de las noches que usted disfruta</span><span class="v num" id="rEnjoy">$21,840</span></div>
     <div class="ledger-row total"><span class="k">Rendimiento total del año</span><span class="v num" id="rTotal">+$29,687</span></div>
-    <p class="ledger-note">Cifras ilustrativas, no una garantía de rendimiento. Supuestos: ocupación del 62% sobre las semanas liberadas, comisión de administración del 22%, cuota anual de operación equivalente al 7% del valor de la fracción. La plusvalía es una estimación de mercado y puede ser negativa. Solicite el memorándum con las cifras auditadas de cada residencia.</p>
+    <p class="ledger-note">Cifras ilustrativas, no una garantía de rendimiento. Supuestos: ocupación del 62% sobre las semanas liberadas, comisión de administración del 22%, cuota anual de operación equivalente al 7% del valor de la fracción. La plusvalía es una estimación de mercado y puede ser negativa.</p>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-h">
+      <h4>¿Le cuadra? Se lo mandamos con las cifras reales.</h4>
+      <p>Tomamos exactamente los números que usted acaba de mover y los recalculamos contra el estado de resultados auditado de la residencia que elija. Llega por correo, sin llamada de por medio.</p>
+    </div>
+    <div class="scenario-b">
+      <div class="f"><label for="scMail">Correo electrónico</label><input type="email" id="scMail" placeholder="nombre@dominio.com"></div>
+      <div class="f"><label for="scTel">WhatsApp (opcional)</label><input type="tel" id="scTel" placeholder="+52 322 000 0000"></div>
+      <button class="btn" type="button" id="scSend">Enviarme este escenario <span class="arw">&rarr;</span></button>
+    </div>
+    <p class="scenario-sum" id="sceneSum"></p>
+  </div>
   </div>
 </div></div>
 </section>
@@ -60,7 +76,8 @@
       <div class="panel"><span class="folio">Comisión 22%</span><h3>Administración</h3><p>Cubre canales de reserva, limpieza entre estancias, recepción de huéspedes, mantenimiento correctivo y reporte trimestral.</p></div>
       <div class="panel"><span class="folio">Cuota 7%</span><h3>Operación anual</h3><p>Sobre el valor de su fracción: predial, seguro, mantenimiento preventivo, personal, jardinería, alberca y fondo de reserva.</p></div>
     </div>
-    <div class="note" style="margin-top:28px"><b>Estas cifras son ilustrativas.</b> No son una garantía de rendimiento y la plusvalía puede ser negativa. El memorándum de cada residencia trae las cifras auditadas del ejercicio anterior; se entrega en la llamada de calificación.</div>
+    <div class="note" style="margin-top:28px"><b>Estas cifras son ilustrativas.</b> No son una garantía de rendimiento y la plusvalía puede ser negativa. El memorándum de cada residencia trae las cifras auditadas del ejercicio anterior, y se lo damos sin condiciones.</div>
+    <div style="margin-top:34px"><div class="reassure"><div><p class="h">Nada cuesta hasta la escritura</p><p>La llamada, el memorándum, la visita y el expediente completo no tienen costo ni le comprometen a nada.</p></div><div><p class="h">El apartado es reembolsable</p><p>Durante todo el periodo de due diligence puede retirarse y se le devuelve íntegro. Está en la carta de intención.</p></div><div><p class="h">Ve el expediente antes de firmar</p><p>Avalúo, libertad de gravamen, reglamento y fideicomiso llegan a sus manos antes de que firme nada.</p></div><div><p class="h">Puede salir cuando quiera</p><p>La fracción se vende como cualquier inmueble. No hay penalización ni plazo forzoso.</p></div></div></div>
   </div>
 </section>
 <section>
@@ -77,13 +94,37 @@
 </section>
 <section class="ribbon">
   <div class="wrap">
-    <div><h2>Ocho dueños por casa. <em>Ni uno más.</em></h2><p>Una llamada de cuarenta y cinco minutos basta para saber si el modelo le conviene. Si no le conviene, se lo decimos en esa misma llamada.</p></div>
-    <a class="btn" href="agendar.html">Agendar llamada de calificación <span class="arw">&rarr;</span></a>
+    <div><h2>Los números cuadran. <em>¿Y la casa?</em></h2><p>Las tres residencias, con fracciones disponibles y cifras auditadas por separado.</p></div>
+    <a class="btn" href="residencias.html">Ver las residencias <span class="arw">&rarr;</span></a>
   </div>
 </section>
+<div class="stickybar">
+  <div class="wrap stickybar-in">
+    <div class="txt">
+      <p class="t1">¿Le cuadran los números? El siguiente paso es una llamada de 45 minutos.</p>
+      <p class="t2"><b>10</b> de 24 fracciones disponibles &middot; sin compromiso</p>
+    </div>
+    <a class="btn ghost btn-sm" href="memorandum.html">Descargar el memorándum</a>
+    <a class="btn btn-sm" href="agendar.html">Agendar llamada <span class="arw">&rarr;</span></a>
+    <button class="x" type="button" aria-label="Cerrar">&times;</button>
+  </div>
+</div>
+<div class="exit" role="dialog" aria-modal="true" aria-label="Descargar el memorándum">
+  <div class="exit-card">
+    <p class="eyebrow">Antes de irse</p>
+    <h3 style="margin-top:12px">Llévese <em>los números reales.</em></h3>
+    <p>El memorándum de cualquiera de las tres residencias: cifras auditadas del ejercicio anterior, cuota de operación desglosada, reglamento de uso y contrato de fideicomiso modelo. Un correo, un adjunto, nada más.</p>
+    <form class="mini" data-mini data-done="Enviado" id="exitForm">
+      <input type="email" name="email" placeholder="Correo electrónico" required aria-label="Correo electrónico">
+      <button class="btn" type="submit">Enviarme el memorándum <span class="arw">&rarr;</span></button>
+      <p class="form-ok">Listo. Le llega en unos minutos.</p>
+    </form>
+    <button class="no" type="button">No, gracias &mdash; sigo mirando</button>
+  </div>
+</div>
 <footer>
   <div class="wrap">
-    <div class="footnav"><div><h4>Residencias</h4><ul><li><a href="residencias.html">Todas las residencias</a></li><li><a href="residencia-marea.html">Residencia Marea</a></li><li><a href="residencia-sayulita-alta.html">Villa Sayulita Alta</a></li><li><a href="residencia-nayar.html">Penthouse Nayar</a></li></ul></div><div><h4>El modelo</h4><ul><li><a href="modelo.html">Cómo funciona</a></li><li><a href="inversion.html">Los números</a></li><li><a href="legal.html">Estructura legal</a></li><li><a href="preguntas.html">Preguntas frecuentes</a></li></ul></div><div><h4>La operación</h4><ul><li><a href="nosotros.html">Quiénes somos</a></li><li><a href="copropietarios.html">Copropietarios</a></li><li><a href="diario.html">Diario</a></li><li><a href="agendar.html">Agendar una llamada</a></li></ul></div><div><h4>Legal</h4><ul><li><a href="avisos.html">Aviso legal y privacidad</a></li></ul></div></div>
+    <div class="footnav"><div><h4>Residencias</h4><ul><li><a href="residencias.html">Todas las residencias</a></li><li><a href="residencia-marea.html">Residencia Marea</a></li><li><a href="residencia-sayulita-alta.html">Villa Sayulita Alta</a></li><li><a href="residencia-nayar.html">Penthouse Nayar</a></li></ul></div><div><h4>El modelo</h4><ul><li><a href="modelo.html">Cómo funciona</a></li><li><a href="inversion.html">Los números</a></li><li><a href="memorandum.html">El memorándum</a></li><li><a href="legal.html">Estructura legal</a></li><li><a href="preguntas.html">Preguntas frecuentes</a></li></ul></div><div><h4>La operación</h4><ul><li><a href="nosotros.html">Quiénes somos</a></li><li><a href="copropietarios.html">Copropietarios</a></li><li><a href="diario.html">Diario</a></li><li><a href="agendar.html">Agendar una llamada</a></li></ul></div><div><h4>Legal</h4><ul><li><a href="avisos.html">Aviso legal y privacidad</a></li></ul></div></div>
     <div class="foot-grid">
       <div class="foot-brand">
         <b>La Fracción &mdash; Nayarit</b>

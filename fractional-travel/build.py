@@ -84,12 +84,13 @@ RES_BY_SLUG = {r["slug"]: r for r in RESIDENCIAS}
 # ---------------------------------------------------------------- navegación
 NAV = [("residencias", "Residencias"), ("modelo", "El modelo"),
        ("inversion", "Inversión"), ("legal", "Estructura legal"),
-       ("copropietarios", "Copropietarios")]
+       ("memorandum", "Memorándum")]
 
 FOOTNAV = [
     ("Residencias", [("residencias", "Todas las residencias")] +
                     [(r["slug"], r["name"]) for r in RESIDENCIAS]),
     ("El modelo", [("modelo", "Cómo funciona"), ("inversion", "Los números"),
+                   ("memorandum", "El memorándum"),
                    ("legal", "Estructura legal"), ("preguntas", "Preguntas frecuentes")]),
     ("La operación", [("nosotros", "Quiénes somos"), ("copropietarios", "Copropietarios"),
                       ("diario", "Diario"), ("agendar", "Agendar una llamada")]),
@@ -152,15 +153,51 @@ def topbar(current, single):
            book=link("agendar", single))
 
 
-def ribbon(single, title="Ocho dueños por casa. <em>Ni uno más.</em>",
-           text="Una llamada de cuarenta y cinco minutos basta para saber si el modelo le conviene. Si no le conviene, se lo decimos en esa misma llamada."):
+RIBBONS = {
+    "inicio": ("Ocho dueños por casa. <em>Ni uno más.</em>",
+               "Empiece por el memorándum: las cifras auditadas del ejercicio anterior, sin llamada de por medio.",
+               "memorandum", "Descargar el memorándum"),
+    "residencias": ("Quedan <em>{libres}</em> fracciones de veinticuatro.",
+                    "Cuando una casa completa sus ocho copropietarios, se cierra y no la volvemos a abrir.",
+                    "memorandum", "Ver las cifras de cada casa"),
+    "modelo": ("Ya entiende el modelo. <em>Ahora los números.</em>",
+               "La calculadora corre sobre supuestos declarados y editables, y termina en un escenario que le podemos mandar por escrito.",
+               "inversion", "Calcular mi rendimiento"),
+    "inversion": ("Los números cuadran. <em>¿Y la casa?</em>",
+                  "Las tres residencias, con fracciones disponibles y cifras auditadas por separado.",
+                  "residencias", "Ver las residencias"),
+    "legal": ("Ya vio la estructura. <em>Pida el expediente.</em>",
+              "Reglamento de uso, contrato de fideicomiso modelo y avalúo, en un solo correo.",
+              "memorandum", "Pedir el expediente modelo"),
+    "copropietarios": ("Ocho personas por casa. <em>Falta usted.</em>",
+                       "Cuarenta y cinco minutos con quien opera las residencias. Si el modelo no le conviene, se lo decimos ahí mismo.",
+                       "agendar", "Agendar la llamada"),
+    "nosotros": ("Ya sabe con quién <em>firmaría.</em>",
+                 "El siguiente paso natural es el papel: memorándum, reglamento y fideicomiso modelo.",
+                 "memorandum", "Descargar el memorándum"),
+    "diario": ("¿Le quedó una pregunta <em>sin contestar?</em>",
+               "El memorándum contesta la mayoría, y no hay que hablar con nadie para leerlo.",
+               "memorandum", "Descargar el memorándum"),
+    "memorandum": ("Cuando lo haya leído, <em>hablamos.</em>",
+                   "Cuarenta y cinco minutos con quien opera las casas, y sólo si usted lo pide.",
+                   "agendar", "Agendar la llamada"),
+    "preguntas": ("¿Su pregunta no estaba? <em>Pregúntela.</em>",
+                  "En la llamada se contestan todas antes de que firme nada. Y si prefiere leer primero, empiece por el memorándum.",
+                  "agendar", "Agendar la llamada"),
+}
+
+
+def ribbon(slug, single):
+    if slug not in RIBBONS:
+        return ""
+    title, text, dest, label = RIBBONS[slug]
     return """<section class="ribbon">
   <div class="wrap">
     <div><h2>%s</h2><p>%s</p></div>
-    <a class="btn" href="%s">Agendar llamada de calificación <span class="arw">&rarr;</span></a>
+    <a class="btn" href="%s">%s <span class="arw">&rarr;</span></a>
   </div>
 </section>
-""" % (title, text, link("agendar", single))
+""" % (title.replace("{libres}", str(TOTAL_LIBRES)), text, link(dest, single), label)
 
 
 def footer(single):
@@ -282,7 +319,9 @@ def bloque_calculadora():
     <div class="ctl"><label for="cUse"><span class="lname">Semanas que realmente usa</span><span class="lval num" id="vUse">4</span></label><input type="range" id="cUse" min="0" max="26" step="1" value="4"></div>
     <div class="ctl"><label for="cRate"><span class="lname">Tarifa promedio por noche</span><span class="lval num" id="vRate">$780</span></label><input type="range" id="cRate" min="380" max="1800" step="20" value="780"></div>
     <div class="ctl"><label for="cApp"><span class="lname">Plusvalía anual estimada</span><span class="lval num" id="vApp">5.0%</span></label><input type="range" id="cApp" min="0" max="10" step="0.5" value="5"></div>
+    <div class="note" style="margin-top:6px"><b>Muévalos hasta que se parezca a su caso.</b> El renglón que más cambia el resultado es el de semanas que realmente usa: por debajo de cuatro, el modelo se sostiene en la renta; por encima de seis, en el uso. Las semanas que no usa se liberan solas a renta administrada.</div>
   </div>
+  <div>
   <div class="ledger">
     <div class="ledger-h"><p class="folio">Estado anual estimado</p><p class="folio">USD</p></div>
     <div class="ledger-row"><span class="k">Inversión inicial (su fracción)</span><span class="v num" id="rInv">$140,000</span></div>
@@ -293,7 +332,21 @@ def bloque_calculadora():
     <div class="ledger-row pos"><span class="k">Plusvalía anual de su fracción</span><span class="v num" id="rApp">+$7,000</span></div>
     <div class="ledger-row"><span class="k">Valor de las noches que usted disfruta</span><span class="v num" id="rEnjoy">$21,840</span></div>
     <div class="ledger-row total"><span class="k">Rendimiento total del año</span><span class="v num" id="rTotal">+$29,687</span></div>
-    <p class="ledger-note">Cifras ilustrativas, no una garantía de rendimiento. Supuestos: ocupación del 62% sobre las semanas liberadas, comisión de administración del 22%, cuota anual de operación equivalente al 7% del valor de la fracción. La plusvalía es una estimación de mercado y puede ser negativa. Solicite el memorándum con las cifras auditadas de cada residencia.</p>
+    <p class="ledger-note">Cifras ilustrativas, no una garantía de rendimiento. Supuestos: ocupación del 62% sobre las semanas liberadas, comisión de administración del 22%, cuota anual de operación equivalente al 7% del valor de la fracción. La plusvalía es una estimación de mercado y puede ser negativa.</p>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-h">
+      <h4>¿Le cuadra? Se lo mandamos con las cifras reales.</h4>
+      <p>Tomamos exactamente los números que usted acaba de mover y los recalculamos contra el estado de resultados auditado de la residencia que elija. Llega por correo, sin llamada de por medio.</p>
+    </div>
+    <div class="scenario-b">
+      <div class="f"><label for="scMail">Correo electrónico</label><input type="email" id="scMail" placeholder="nombre@dominio.com"></div>
+      <div class="f"><label for="scTel">WhatsApp (opcional)</label><input type="tel" id="scTel" placeholder="+52 322 000 0000"></div>
+      <button class="btn" type="button" id="scSend">Enviarme este escenario <span class="arw">&rarr;</span></button>
+    </div>
+    <p class="scenario-sum" id="sceneSum"></p>
+  </div>
   </div>
 </div>"""
 
@@ -407,9 +460,10 @@ def p_inicio(single):
       <h1>La casa frente al mar, dividida entre ocho. La escritura, <em>a su nombre.</em></h1>
       <p class="lede measure">Copropiedad fraccional de residencias de lujo en Riviera Nayarit desde <span class="num">USD&nbsp;$120,000</span>. Seis semanas de uso al año, renta administrada el resto del tiempo, y una participación real en la plusvalía del inmueble. <strong>No es tiempo compartido. No son puntos. No es una membresía.</strong></p>
       <div class="hero-cta">
-        <a class="btn" href="{book}">Agendar llamada de calificación <span class="arw">&rarr;</span></a>
-        <a class="btn btn-ghost" href="{inv}">Ver el modelo económico</a>
+        <a class="btn" href="{memo}">Descargar el memorándum <span class="arw">&rarr;</span></a>
+        <a class="btn btn-ghost" href="{inv}">Calcular mi rendimiento</a>
       </div>
+      <p class="proof">Cifras auditadas del ejercicio anterior &middot; sin llamada de por medio &middot; <b>{libres}</b> de 24 fracciones disponibles</p>
       <div class="trustbar">
         <div><b>8</b> copropietarios máximo</div>
         <div><b>1/8</b> indiviso escriturado</div>
@@ -471,6 +525,17 @@ def p_inicio(single):
 <section>
   <div class="wrap sec">
     <div class="sec-head">
+      <div class="rail"><p class="folio">Para quién no</p></div>
+      <div><h2>Cuatro razones para <em>no hacer esto.</em></h2>
+      <p class="lede measure" style="margin-top:16px">Preferimos perderle aquí que en la escritura. Si se reconoce en alguna de estas cuatro, cierre la página con nuestra bendición.</p></div>
+    </div>
+    {notfor}
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec">
+    <div class="sec-head">
       <div class="rail"><p class="folio">Copropietarios</p></div>
       <div><h2>Quiénes ya <em>firmaron.</em></h2></div>
     </div>
@@ -495,10 +560,22 @@ def p_inicio(single):
     <div style="margin-top:28px"><a class="btn btn-ghost" href="{leg}">Ver la estructura legal completa <span class="arw">&rarr;</span></a></div>
   </div>
 </section>
+
+<section>
+  <div class="wrap sec">{capture}</div>
+</section>
 """.format(book=link("agendar", single), inv=link("inversion", single),
+           memo=link("memorandum", single), libres=TOTAL_LIBRES,
            res=link("residencias", single), mod=link("modelo", single),
            cop=link("copropietarios", single), leg=link("legal", single),
-           tarjetas=tarjetas, tabla=tabla_comparativa(), testi=bloque_testimonios(3))
+           tarjetas=tarjetas, tabla=tabla_comparativa(), testi=bloque_testimonios(3),
+           notfor=notfor(),
+           capture=mini_capture(
+               "homeMemo", "Llévese <em>los números</em> antes de decidir nada.",
+               "El memorándum de la residencia que le interese: estado de resultados del ejercicio anterior, "
+               "ocupación real mes a mes, la cuota de operación partida renglón por renglón y el contrato de "
+               "fideicomiso modelo. Es el documento que le va a pedir su contador.",
+               "Enviarme el memorándum", fields="email"))
 
 
 def p_residencias(single):
@@ -527,7 +604,21 @@ def p_residencias(single):
     <div class="note" style="margin-top:34px"><b>Las fotografías se cargan aquí.</b> Cada marco indica la toma y la proporción recomendada; al sustituirlo por una imagen real, la retícula no cambia.</div>
   </div>
 </section>
-""" % filas
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Comparar</p></div>
+      <div><h2>Las tres, <em>una al lado de la otra.</em></h2>
+      <p class="lede measure" style="margin-top:16px">En latón, la mejor de las tres en cada renglón. No hay una que gane en todo: depende de cuántas semanas piense usar y de cuánto capital quiera inmovilizar.</p></div></div>
+    %s
+  </div>
+</section>
+<section>
+  <div class="wrap sec">%s</div>
+</section>
+""" % (filas, picker(single),
+       mini_capture("resMemo", "¿Sigue dudando entre <em>dos</em>?",
+                    "Pida el memorándum de las tres y compárelas con las cifras auditadas en la mano: ocupación real mes a mes, tarifa media obtenida y cuota de operación desglosada. Decide mejor con eso que con cualquier recorrido.",
+                    "Enviarme los tres memorándums", fields="email"))
 
 
 def p_residencia(slug, single):
@@ -568,14 +659,25 @@ def p_residencia(slug, single):
           <div class="specsheet-h"><p class="folio">Fracciones</p></div>
           <div style="padding:16px 18px">%s</div>
         </div>
-        <a class="btn" href="%s" style="justify-content:center">Apartar una fracción <span class="arw">&rarr;</span></a>
+        <a class="btn" href="%s" style="justify-content:center">Memorándum de esta casa <span class="arw">&rarr;</span></a>
         <a class="btn btn-ghost" href="%s" style="justify-content:center">Calcular el rendimiento</a>
+        <p class="proof" style="margin-top:0">Sin llamada de por medio &middot; cifras auditadas</p>
       </aside>
     </div>
+    <div style="margin-top:44px">%s</div>
   </div>
 </section>
+<section>
+  <div class="wrap sec">%s</div>
+</section>
 """ % (gal, r["body"], extras, specs, avail(r["sold"]),
-       link("agendar", single), link("inversion", single))
+       link("memorandum", single), link("inversion", single), reassure(),
+       mini_capture("prop-" + r["slug"],
+                    "El memorándum de <em>%s</em>" % r["name"],
+                    "Estado de resultados del ejercicio anterior de esta residencia en concreto, ocupación real mes a mes, "
+                    "la cuota de operación desglosada y el calendario de fracciones con fecha de corte. "
+                    "Un correo con el documento adjunto.",
+                    "Enviármelo", fields="email"))
 
 
 def p_modelo(single):
@@ -624,7 +726,8 @@ def p_inversion(single):
       <div class="panel"><span class="folio">Comisión 22%%</span><h3>Administración</h3><p>Cubre canales de reserva, limpieza entre estancias, recepción de huéspedes, mantenimiento correctivo y reporte trimestral.</p></div>
       <div class="panel"><span class="folio">Cuota 7%%</span><h3>Operación anual</h3><p>Sobre el valor de su fracción: predial, seguro, mantenimiento preventivo, personal, jardinería, alberca y fondo de reserva.</p></div>
     </div>
-    <div class="note" style="margin-top:28px"><b>Estas cifras son ilustrativas.</b> No son una garantía de rendimiento y la plusvalía puede ser negativa. El memorándum de cada residencia trae las cifras auditadas del ejercicio anterior; se entrega en la llamada de calificación.</div>
+    <div class="note" style="margin-top:28px"><b>Estas cifras son ilustrativas.</b> No son una garantía de rendimiento y la plusvalía puede ser negativa. El memorándum de cada residencia trae las cifras auditadas del ejercicio anterior, y se lo damos sin condiciones.</div>
+    <div style="margin-top:34px">{reassure}</div>
   </div>
 </section>
 <section>
@@ -639,7 +742,7 @@ def p_inversion(single):
     </div>
   </div>
 </section>
-""" % bloque_calculadora()
+""".replace("{reassure}", reassure()) % bloque_calculadora()
 
 
 def p_legal(single):
@@ -798,10 +901,24 @@ def p_preguntas(single):
 
 
 def p_agendar(single):
+    objeciones = [
+        ("&ldquo;Todavía no tengo el capital listo.&rdquo;",
+         "Entonces la llamada es justo ahora, no después. La mitad de la conversación es sobre estructura de pago y plazos: hay residencias en preventa con enganche del 40% y diferido a 24 meses. Saber qué necesita reunir es distinto de reunirlo."),
+        ("&ldquo;No quiero que me persigan por teléfono.&rdquo;",
+         "No hacemos seguimiento automático ni le inscribimos a nada. Si tras la llamada nos dice que no, se acabó. Y si prefiere no hablar con nadie todavía, descargue el memorándum y léalo con calma."),
+        ("&ldquo;Quiero verlo con mi contador primero.&rdquo;",
+         "Bien pensado, y para eso está el memorándum: trae el estado de resultados, el desglose de cuotas y el contrato de fideicomiso modelo. Pídalo, mándeselo, y hablamos cuando él le haya dicho lo que piense."),
+        ("&ldquo;¿Y si no me gusta cuando la vea?&rdquo;",
+         "Entonces no compra. La visita es antes del apartado, y el apartado es reembolsable durante todo el due diligence. No hay un solo punto del proceso donde quede atrapado."),
+    ]
+    obj = "".join(
+        '<div class="panel"><span class="folio">Objeción 0%d</span><h3 style="font-size:1.05rem">%s</h3><p>%s</p></div>'
+        % (i + 1, q, a) for i, (q, a) in enumerate(objeciones))
+
     return """<section class="close-sec" id="agendar" style="border-top:none">
   <div class="wrap sec close-grid">
     <div>
-      <p class="eyebrow">El siguiente paso</p>
+      <p class="eyebrow">Peldaño 03 &middot; La llamada</p>
       <h2 style="margin-top:14px">Cuarenta y cinco minutos <em>para saber si esto es para usted.</em></h2>
       <p class="lede" style="margin-top:18px; max-width:52ch">No es una llamada de ventas. Es una revisión de números con la persona que opera las residencias. Si el modelo no le conviene, terminamos la llamada diciéndoselo.</p>
       <div class="qualify">
@@ -821,11 +938,39 @@ def p_agendar(single):
           <li><span>&mdash;</span> Calendario de fracciones disponibles, actualizado a esa semana.</li>
         </ul>
       </div>
+      <div style="margin-top:30px">%s</div>
     </div>
     %s
   </div>
 </section>
-""" % leadform("agendar")
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">El camino completo</p></div>
+      <div><h2>Cinco peldaños, <em>y usted decide dónde parar.</em></h2>
+      <p class="lede measure" style="margin-top:16px">Ninguno obliga al siguiente. Mucha gente se queda en el primero durante meses y vuelve cuando le toca.</p></div></div>
+    %s
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Lo que frena</p></div>
+      <div><h2>Las cuatro razones por las que <em>no</em> agenda.</h2>
+      <p class="lede measure" style="margin-top:16px">Las hemos oído todas. Aquí están contestadas, para que no tenga que decirlas en voz alta.</p></div></div>
+    <div class="grid2">%s</div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Si aún no</p></div>
+      <div><h2>¿No quiere hablar con nadie <em>todavía?</em></h2></div></div>
+    %s
+  </div>
+</section>
+""" % (reassure(), leadform("agendar"), ladder(3, single), obj,
+       mini_capture("agendaMemo", "Empiece por <em>el papel.</em>",
+                    "El memorándum contesta la mayoría de lo que preguntaría en la llamada, y lo puede leer a su ritmo, "
+                    "enseñárselo a su contador y volver cuando quiera. Nadie le llama por descargarlo.",
+                    "Enviarme el memorándum", fields="email"))
 
 
 def p_avisos(single):
@@ -848,6 +993,72 @@ def p_avisos(single):
   </div>
 </section>
 """
+
+
+def exit_invite(single):
+    return """<div class="exit" role="dialog" aria-modal="true" aria-label="Descargar el memorándum">
+  <div class="exit-card">
+    <p class="eyebrow">Antes de irse</p>
+    <h3 style="margin-top:12px">Llévese <em>los números reales.</em></h3>
+    <p>El memorándum de cualquiera de las tres residencias: cifras auditadas del ejercicio anterior, cuota de operación desglosada, reglamento de uso y contrato de fideicomiso modelo. Un correo, un adjunto, nada más.</p>
+    <form class="mini" data-mini data-done="Enviado" id="exitForm">
+      <input type="email" name="email" placeholder="Correo electrónico" required aria-label="Correo electrónico">
+      <button class="btn" type="submit">Enviarme el memorándum <span class="arw">&rarr;</span></button>
+      <p class="form-ok">Listo. Le llega en unos minutos.</p>
+    </form>
+    <button class="no" type="button">No, gracias &mdash; sigo mirando</button>
+  </div>
+</div>
+"""
+
+
+def p_memorandum(single):
+    opciones = "".join('<option>%s &mdash; %s</option>' % (r["name"], r["loc"].replace("&middot;", "·"))
+                       for r in RESIDENCIAS)
+    return pagehead("El memorándum", "Es el documento que usaría su contador, no un folleto. Cifras auditadas del ejercicio anterior, la cuota de operación partida renglón por renglón, el reglamento de uso completo y el contrato de fideicomiso modelo.", [("inicio", "Inicio")], single) + """
+<section>
+  <div class="wrap sec" style="padding-top:0">
+    <div class="capture">
+      <div>
+        <h3>Qué trae <em>adentro</em></h3>
+        <p style="margin-bottom:14px">Treinta y dos páginas, sin adjetivos:</p>
+        <ul style="margin:0; padding-left:20px; color:var(--text-dim); font-size:.93rem; line-height:1.9">
+          <li>Estado de resultados de la residencia, ejercicio anterior completo</li>
+          <li>Ocupación real mes a mes y tarifa media obtenida por temporada</li>
+          <li>Cuota de operación desglosada: predial, seguro, personal, alberca, reserva</li>
+          <li>Avalúo bancario y certificado de libertad de gravamen</li>
+          <li>Reglamento de uso y mecánica de rotación del calendario</li>
+          <li>Contrato de fideicomiso modelo y costo de constitución</li>
+          <li>Fracciones colocadas y disponibles, con fecha de corte</li>
+        </ul>
+      </div>
+      <form class="mini" data-mini data-done="Enviado" id="memoForm">
+        <select name="residencia" required aria-label="Residencia"><option value="">¿De qué residencia?</option>%s<option>Las tres</option></select>
+        <input type="email" name="email" placeholder="Correo electrónico" required aria-label="Correo electrónico">
+        <input type="tel" name="telefono" placeholder="WhatsApp (opcional)" aria-label="WhatsApp">
+        <button class="btn" type="submit">Enviarme el memorándum <span class="arw">&rarr;</span></button>
+        <p class="fine">Un solo correo con el documento adjunto. Ni listas, ni seguimiento automático, ni terceros. Si después quiere hablar con alguien, lo pide usted.</p>
+        <p class="form-ok">Listo. Le llega en unos minutos; si no aparece, revise la carpeta de promociones.</p>
+      </form>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Sin compromiso</p></div>
+      <div><h2>Por qué lo damos <em>sin pedir nada a cambio.</em></h2>
+      <p class="lede measure" style="margin-top:16px">Porque el documento descalifica a más gente de la que convence, y eso nos ahorra tiempo a los dos. Quien lo lee y sigue interesado, ya sabe dónde se está metiendo.</p></div></div>
+    %s
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">El camino</p></div>
+      <div><h2>Dónde está usted <em>ahora.</em></h2></div></div>
+    %s
+  </div>
+</section>
+""" % (opciones, reassure(), ladder(1, single))
 
 
 # ---------------------------------------------------------------- registro
@@ -878,6 +1089,8 @@ PAGES = [
      "El equipo que selecciona los inmuebles, opera las casas y coordina notarios y fideicomisos.", p_nosotros, True),
     ("diario", "Diario",
      "Notas de operación sobre copropiedad fraccional, fideicomisos y el mercado de Riviera Nayarit.", p_diario, True),
+    ("memorandum", "El memorándum",
+     "Cifras auditadas, reglamento de uso y contrato de fideicomiso modelo de cada residencia, sin costo ni compromiso.", p_memorandum, True),
     ("preguntas", "Preguntas frecuentes",
      "Diez preguntas sobre copropiedad fraccional: salida, morosidad, calendario, fideicomiso y fiscalidad.", p_preguntas, False),
     ("agendar", "Agendar una llamada",
@@ -894,8 +1107,9 @@ def build():
     for slug, title, desc, fn, with_ribbon in PAGES:
         # --- página estática del hub ---
         body = fn(False)
-        if with_ribbon:
-            body += ribbon(False)
+        body += ribbon(slug, False)
+        if slug not in ("agendar", "avisos"):
+            body += stickybar(False) + exit_invite(False)
         html = (HEAD.format(title=title, desc=desc, root="")
                 + topbar(slug, False) + body + footer(False)
                 + TAIL.format(root=""))
@@ -905,8 +1119,7 @@ def build():
 
         # --- misma página como ruta del previsualizador ---
         rbody = fn(True)
-        if with_ribbon:
-            rbody += ribbon(True)
+        rbody += ribbon(slug, True)
         routes.append('<div class="route" data-route="/%s">%s</div>' % (slug, rbody))
 
     css = open(os.path.join(HERE, "assets/styles.css"), encoding="utf-8").read()
@@ -920,6 +1133,7 @@ def build():
         '&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">\n'
         '<style>\n' + css + '\n</style>\n'
         + topbar("inicio", True)
+        + stickybar(True) + exit_invite(True)
         + "\n".join(routes)
         + footer(True)
         + '<script>\n' + js + '\n</script>\n')
@@ -929,5 +1143,112 @@ def build():
     print("%d páginas + dist/preview.html (%d KB)" % (len(PAGES), len(preview) // 1024))
 
 
+
+# ---------------------------------------------------------------- embudo
+
+TOTAL_LIBRES = sum(8 - r["sold"] for r in RESIDENCIAS)
+
+
+def stickybar(single, texto=None, cta="Agendar llamada"):
+    return """<div class="stickybar">
+  <div class="wrap stickybar-in">
+    <div class="txt">
+      <p class="t1">%s</p>
+      <p class="t2"><b>%d</b> de 24 fracciones disponibles &middot; sin compromiso</p>
+    </div>
+    <a class="btn ghost btn-sm" href="%s">Descargar el memorándum</a>
+    <a class="btn btn-sm" href="%s">%s <span class="arw">&rarr;</span></a>
+    <button class="x" type="button" aria-label="Cerrar">&times;</button>
+  </div>
+</div>
+""" % (texto or "¿Le cuadran los números? El siguiente paso es una llamada de 45 minutos.",
+       TOTAL_LIBRES, link("memorandum", single), link("agendar", single), cta)
+
+
+def ladder(here, single):
+    pasos = [
+        ("Peldaño 01", "El memorándum", "Cifras auditadas del ejercicio anterior, reglamento de uso y contrato de fideicomiso modelo, de la residencia que le interese.", "Su correo", "memorandum"),
+        ("Peldaño 02", "Su escenario por escrito", "Tomamos los números que usted movió en la calculadora y le devolvemos el cálculo con las cifras reales de esa residencia.", "Correo y WhatsApp", "inversion"),
+        ("Peldaño 03", "La llamada de calificación", "Cuarenta y cinco minutos con quien opera las casas. Si el modelo no le conviene, se lo decimos ahí mismo.", "45 minutos", "agendar"),
+        ("Peldaño 04", "La visita", "Recorrido de las residencias disponibles, presencial o guiado por video. Sin apartado de por medio.", "Media jornada", "agendar"),
+        ("Peldaño 05", "Apartado y escritura", "Carta de intención, apartado reembolsable, due diligence y firma ante notario.", "8 a 12 semanas", "agendar"),
+    ]
+    return '<div class="ladder">%s</div>' % "".join(
+        '<a class="rung%s" href="%s" style="text-decoration:none; color:inherit">'
+        '<span class="n">%s</span><h4>%s</h4><p>%s</p><p class="cost">%s</p></a>'
+        % (" here" if i + 1 == here else "", link(dest, single), n, t, d, c)
+        for i, (n, t, d, c, dest) in enumerate(pasos))
+
+
+REASSURE = [
+    ("Nada cuesta hasta la escritura", "La llamada, el memorándum, la visita y el expediente completo no tienen costo ni le comprometen a nada."),
+    ("El apartado es reembolsable", "Durante todo el periodo de due diligence puede retirarse y se le devuelve íntegro. Está en la carta de intención."),
+    ("Ve el expediente antes de firmar", "Avalúo, libertad de gravamen, reglamento y fideicomiso llegan a sus manos antes de que firme nada."),
+    ("Puede salir cuando quiera", "La fracción se vende como cualquier inmueble. No hay penalización ni plazo forzoso."),
+]
+
+
+def reassure():
+    return '<div class="reassure">%s</div>' % "".join(
+        '<div><p class="h">%s</p><p>%s</p></div>' % (h, p) for h, p in REASSURE)
+
+
+def mini_capture(ident, title, text, button, fields="email", done="Enviado", fine=None):
+    campos = ('<input type="email" name="email" placeholder="Correo electrónico" required aria-label="Correo electrónico">')
+    if fields == "email+tel":
+        campos += '<input type="tel" name="telefono" placeholder="WhatsApp (opcional)" aria-label="WhatsApp">'
+    return """<div class="capture">
+  <div>
+    <h3>%s</h3>
+    <p>%s</p>
+  </div>
+  <form class="mini" data-mini data-done="%s" id="%s">
+    %s
+    <button class="btn" type="submit">%s <span class="arw">&rarr;</span></button>
+    <p class="fine">%s</p>
+    <p class="form-ok">Listo. Le llega en unos minutos; si no aparece, revise la carpeta de promociones.</p>
+  </form>
+</div>""" % (title, text, done, ident, campos, button,
+             fine or "Un solo correo con el documento adjunto. Ni listas, ni seguimiento automático, ni terceros.")
+
+
+def notfor():
+    items = [
+        ("Si necesita liquidez inmediata", "Vender una fracción toma semanas, no horas. Si podría necesitar ese capital de un día para otro, este no es el lugar."),
+        ("Si su horizonte es menor a cinco años", "Los costos de entrada y salida se amortizan con el tiempo. Por debajo de cinco años, la aritmética rara vez sale."),
+        ("Si quiere usar la casa más de ocho semanas", "Con ese uso conviene comprar entera. Se lo diríamos en la llamada, y le ahorramos la llamada diciéndoselo aquí."),
+        ("Si espera rendimiento garantizado", "Nadie puede garantizarlo y quien se lo prometa le está mintiendo. Aquí la renta es una estimación y la plusvalía puede ser negativa."),
+    ]
+    return '<div class="notfor">%s</div>' % "".join(
+        '<div><span class="x">&times;</span><div><h4>%s</h4><p>%s</p></div></div>' % (h, p)
+        for h, p in items)
+
+
+def picker(single):
+    def fila(label, key, fmt=lambda r: "", best=None):
+        cells = "".join('<td%s>%s</td>' % (' class="best"' if best == r["slug"] else "", fmt(r))
+                        for r in RESIDENCIAS)
+        return '<tr><th scope="row">%s</th>%s</tr>' % (label, cells)
+
+    heads = "".join('<th><a href="%s" style="text-decoration:none; color:inherit">%s</a>'
+                    '<small>%s</small></th>' % (link(r["slug"], single), r["name"], r["loc"])
+                    for r in RESIDENCIAS)
+    filas = "".join([
+        fila("Fracción 1/8", None, lambda r: "USD $" + format(r["frac"], ","), "residencia-sayulita-alta"),
+        fila("Cuota anual", None, lambda r: "USD $" + format(r["opex"], ",")),
+        fila("Tarifa por noche", None, lambda r: "USD $" + format(r["rate"], ","), "residencia-nayar"),
+        fila("Superficie", None, lambda r: r["m2"], "residencia-nayar"),
+        fila("Recámaras", None, lambda r: r["rec"]),
+        fila("Fracciones libres", None, lambda r: "%d de 8" % (8 - r["sold"]), "residencia-sayulita-alta"),
+        fila("Entrega", None, lambda r: r["specs"][-1].replace("Preventa · ", "")),
+    ])
+    ctas = "".join('<td class="pick-cta"><a class="btn btn-ghost btn-sm" href="%s">Ver la ficha</a></td>'
+                   % link(r["slug"], single) for r in RESIDENCIAS)
+    return """<div class="picker">
+  <table>
+    <thead><tr><th></th>%s</tr></thead>
+    <tbody>%s<tr><th scope="row"></th>%s</tr></tbody>
+  </table>
+</div>""" % (heads, filas, ctas)
 if __name__ == "__main__":
     build()

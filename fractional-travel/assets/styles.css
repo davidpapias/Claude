@@ -556,3 +556,159 @@ footer{background:var(--ink-block); color:#7C9095; border-top:1px solid rgba(201
 /* enrutado del previsualizador de una sola página */
 .route{display:none}
 .route.active{display:block}
+
+/* ============================================================
+   EMBUDO — escalera de compromiso, captura y reversión de riesgo
+   ============================================================ */
+
+/* ---------- barra fija de conversión ---------- */
+.stickybar{
+  position:fixed; left:0; right:0; bottom:0; z-index:70; transform:translateY(110%);
+  transition:transform .32s cubic-bezier(.4,0,.2,1);
+  background:color-mix(in srgb, var(--ink-block) 96%, transparent);
+  border-top:1px solid rgba(201,167,94,.3); backdrop-filter:blur(12px);
+}
+.stickybar.up{transform:translateY(0)}
+.stickybar-in{display:flex; align-items:center; gap:22px; padding-block:13px}
+.stickybar .txt{margin-right:auto; min-width:0}
+.stickybar .t1{color:#EDE8DC; font-size:.94rem; font-weight:500}
+.stickybar .t2{font-family:var(--mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:#8FA3A6; margin-top:3px}
+.stickybar .t2 b{color:#C9A75E; font-weight:500}
+.stickybar .btn{background:#C9A75E; border-color:#C9A75E; color:#08171C; flex:none}
+.stickybar .ghost{background:transparent; border-color:rgba(201,167,94,.4); color:#D9BE84; flex:none}
+.stickybar .x{
+  background:transparent; border:none; color:#6B8085; cursor:pointer; font-family:var(--mono);
+  font-size:1rem; padding:6px 2px; line-height:1; flex:none;
+}
+.stickybar .x:hover{color:#C9A75E}
+@media (max-width:760px){
+  .stickybar .txt .t1{font-size:.86rem}
+  .stickybar .ghost{display:none}
+  .stickybar-in{gap:12px}
+}
+
+/* ---------- escalera de compromiso ---------- */
+.ladder{display:grid; grid-template-columns:repeat(5,1fr); gap:1px; background:var(--line); border:var(--rule); border-radius:3px; overflow:hidden}
+@media (max-width:860px){.ladder{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.ladder{grid-template-columns:1fr}}
+.rung{background:var(--surface-2); padding:20px 18px; display:flex; flex-direction:column; gap:8px; position:relative}
+.rung .n{font-family:var(--mono); font-size:.66rem; letter-spacing:.13em; color:var(--text-faint)}
+.rung h4{margin:0; font-family:var(--display); font-size:1.02rem; font-weight:400; line-height:1.2}
+.rung p{font-size:.83rem; color:var(--text-dim); line-height:1.5}
+.rung .cost{margin-top:auto; padding-top:10px; font-family:var(--mono); font-size:.63rem; letter-spacing:.1em; text-transform:uppercase; color:var(--verdigris)}
+.rung.here{background:var(--brass-wash)}
+.rung.here .n{color:var(--brass)}
+.rung.here::before{content:""; position:absolute; inset:0 0 auto 0; height:2px; background:var(--brass)}
+
+/* ---------- bloque de captura ligera ---------- */
+.capture{
+  border:var(--rule); border-radius:3px; background:var(--surface-2);
+  padding:clamp(24px,3.5vw,38px); display:grid; grid-template-columns:1fr 380px;
+  gap:clamp(24px,4vw,48px); align-items:center;
+}
+@media (max-width:900px){.capture{grid-template-columns:1fr}}
+.capture h3{font-size:clamp(1.3rem,2.2vw,1.75rem); margin-bottom:12px}
+.capture h3 em{font-style:italic; color:var(--brass)}
+.capture p{color:var(--text-dim); font-size:.94rem}
+.capture .mini{display:flex; flex-direction:column; gap:10px}
+.capture .mini input, .capture .mini select{
+  font-family:var(--body); font-size:.94rem; padding:12px 14px; color:var(--text);
+  background:var(--surface); border:1px solid var(--line); border-radius:2px; transition:border-color .2s;
+}
+.capture .mini input:focus, .capture .mini select:focus{border-color:var(--brass); outline:none}
+.capture .mini input::placeholder{color:var(--text-faint)}
+.capture .mini .btn{justify-content:center}
+.capture .fine{font-family:var(--mono); font-size:.63rem; line-height:1.7; color:var(--text-faint)}
+
+/* ---------- reversión de riesgo ---------- */
+.reassure{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:var(--rule); border-radius:3px; overflow:hidden}
+@media (max-width:900px){.reassure{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.reassure{grid-template-columns:1fr}}
+.reassure div{background:var(--surface-2); padding:18px}
+.reassure .h{display:flex; align-items:center; gap:9px; font-family:var(--mono); font-size:.66rem; letter-spacing:.11em; text-transform:uppercase; color:var(--verdigris); margin-bottom:7px}
+.reassure .h::before{content:""; width:7px; height:7px; border-radius:1px; background:var(--verdigris); flex:none}
+.reassure p{font-size:.87rem; color:var(--text-dim); line-height:1.5}
+.close-sec .reassure{background:rgba(201,167,94,.22); border-color:rgba(201,167,94,.28); grid-template-columns:1fr 1fr}
+@media (max-width:620px){.close-sec .reassure{grid-template-columns:1fr}}
+.close-sec .reassure div{background:#0C2028}
+.close-sec .reassure .h{color:#8FD0B7}
+.close-sec .reassure .h::before{background:#8FD0B7}
+.close-sec .reassure p{color:#9AACAF}
+
+/* ---------- escenario guardable de la calculadora ---------- */
+.scenario{margin-top:18px; border:1px solid var(--brass); border-radius:3px; background:var(--brass-wash); overflow:hidden}
+.scenario-h{padding:16px 20px; border-bottom:1px solid var(--brass)}
+.scenario-h h4{margin:0; font-family:var(--display); font-size:1.15rem; font-weight:400}
+.scenario-h p{font-size:.86rem; color:var(--text-dim); margin-top:5px}
+.scenario-b{padding:18px 20px; display:flex; flex-wrap:wrap; gap:12px; align-items:flex-end}
+.scenario-b .f{flex:1 1 180px; display:flex; flex-direction:column; gap:6px}
+.scenario-b label{font-family:var(--mono); font-size:.63rem; letter-spacing:.12em; text-transform:uppercase; color:var(--text-faint)}
+.scenario-b input{
+  font-family:var(--body); font-size:.92rem; padding:11px 13px; color:var(--text);
+  background:var(--surface); border:1px solid var(--line); border-radius:2px;
+}
+.scenario-b input:focus{border-color:var(--brass); outline:none}
+.scenario-b .btn{flex:1 1 190px; justify-content:center}
+.scenario-sum{
+  padding:12px 20px; border-top:1px solid var(--brass); font-family:var(--mono);
+  font-size:.68rem; letter-spacing:.05em; color:var(--text-dim); line-height:1.8;
+}
+.scenario-sum b{color:var(--brass); font-weight:500}
+
+/* ---------- descalificación honesta ---------- */
+.notfor{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line); border:var(--rule); border-radius:3px; overflow:hidden}
+@media (max-width:700px){.notfor{grid-template-columns:1fr}}
+.notfor div{background:var(--surface-2); padding:20px 22px; display:flex; gap:14px; align-items:flex-start}
+.notfor .x{font-family:var(--mono); font-size:.8rem; color:var(--alert); flex:none; margin-top:2px}
+.notfor h4{margin:0 0 5px; font-size:.98rem; font-weight:500; font-family:var(--body)}
+.notfor p{font-size:.87rem; color:var(--text-dim); line-height:1.55}
+
+/* ---------- comparador de residencias ---------- */
+.picker{overflow-x:auto; border:var(--rule); border-radius:3px; background:var(--surface-2)}
+.picker table{min-width:640px}
+.picker thead th{font-family:var(--display); font-size:1.05rem; text-transform:none; letter-spacing:0; color:var(--text); font-weight:400}
+.picker thead th small{display:block; font-family:var(--mono); font-size:.62rem; letter-spacing:.11em; text-transform:uppercase; color:var(--text-faint); margin-top:4px}
+.picker tbody th{color:var(--text-dim); font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; font-weight:400; width:190px}
+.picker td{font-family:var(--mono); font-size:.86rem; font-variant-numeric:tabular-nums}
+.picker td.best{color:var(--brass)}
+.picker .pick-cta{padding-top:18px}
+
+/* ---------- prueba junto al botón ---------- */
+.proof{
+  font-family:var(--mono); font-size:.66rem; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--text-faint); margin-top:12px; line-height:1.7;
+  position:relative; padding-left:16px;
+}
+.proof::before{
+  content:""; position:absolute; left:0; top:.5em; width:6px; height:6px;
+  border-radius:50%; background:var(--verdigris);
+}
+.proof b{color:var(--brass); font-weight:500}
+.close-sec .proof, .ribbon .proof{color:#8FA3A6}
+
+/* ---------- invitación de salida ---------- */
+.exit{
+  position:fixed; inset:0; z-index:90; display:none; align-items:center; justify-content:center;
+  background:rgba(4,14,18,.72); backdrop-filter:blur(6px); padding:24px;
+}
+.exit.show{display:flex}
+.exit-card{
+  max-width:520px; width:100%; background:var(--surface); border:1px solid var(--brass);
+  border-radius:3px; padding:clamp(26px,4vw,38px); box-shadow:0 40px 80px -30px rgba(0,0,0,.7);
+  position:relative;
+}
+.exit-card h3{font-size:clamp(1.4rem,2.6vw,1.9rem); margin-bottom:12px}
+.exit-card h3 em{font-style:italic; color:var(--brass)}
+.exit-card p{color:var(--text-dim); font-size:.94rem; margin-bottom:20px}
+.exit-card .mini{display:flex; flex-direction:column; gap:10px}
+.exit-card input{
+  font-family:var(--body); font-size:.94rem; padding:12px 14px; color:var(--text);
+  background:var(--surface-2); border:1px solid var(--line); border-radius:2px;
+}
+.exit-card input:focus{border-color:var(--brass); outline:none}
+.exit-card .btn{justify-content:center}
+.exit-card .no{
+  background:transparent; border:none; color:var(--text-faint); font-family:var(--mono);
+  font-size:.66rem; letter-spacing:.11em; text-transform:uppercase; cursor:pointer; padding:10px;
+}
+.exit-card .no:hover{color:var(--text-dim)}
