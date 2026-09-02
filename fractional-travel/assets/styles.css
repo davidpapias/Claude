@@ -742,23 +742,23 @@ footer{background:var(--ink-block); color:#7C9095; border-top:1px solid rgba(201
    var(--brass), así que basta con redefinirlo en el contenedor.
    ============================================================ */
 .div-fractional{ --accent-name:"Fractional" }
-.div-traveling{
+.div-travel{
   --brass:#2C6A59; --brass-soft:#4E8C7D; --brass-wash:rgba(78,140,125,.13);
-  --accent-name:"Traveling";
+  --accent-name:"Travel";
 }
 .div-investing{
   --brass:#9B5A32; --brass-soft:#C97F5E; --brass-wash:rgba(201,127,94,.13);
   --accent-name:"Investing";
 }
 @media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .div-traveling{
+  :root:not([data-theme="light"]) .div-travel{
     --brass:#63A48D; --brass-soft:#8CC4B0; --brass-wash:rgba(99,164,141,.11);
   }
   :root:not([data-theme="light"]) .div-investing{
     --brass:#D9906B; --brass-soft:#E8B394; --brass-wash:rgba(217,144,107,.11);
   }
 }
-:root[data-theme="dark"] .div-traveling{
+:root[data-theme="dark"] .div-travel{
   --brass:#63A48D; --brass-soft:#8CC4B0; --brass-wash:rgba(99,164,141,.11);
 }
 :root[data-theme="dark"] .div-investing{

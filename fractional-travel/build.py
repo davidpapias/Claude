@@ -82,7 +82,7 @@ RESIDENCIAS = [
 RES_BY_SLUG = {r["slug"]: r for r in RESIDENCIAS}
 
 # ---------------------------------------------------------------- navegación
-NAV = [("fractional", "Fractional"), ("traveling", "Traveling"),
+NAV = [("fractional", "Fractional"), ("travel", "Travel"),
        ("investing", "Investing"), ("legal", "Estructura legal"),
        ("nosotros", "Nosotros")]
 
@@ -95,7 +95,7 @@ FOOTNAV = [
     ("Fractional", [("fractional", "La división"), ("residencias", "Residencias"),
                     ("modelo", "Cómo funciona"), ("numeros", "Los números"),
                     ("memorandum", "El memorándum")]),
-    ("Traveling", [("traveling", "La división"), ("yates", "Flota de yates"),
+    ("Travel", [("travel", "La división"), ("yates", "Flota de yates"),
                    ("pool-de-rentas", "Pool de rentas")]),
     ("Investing", [("investing", "La división"), ("legal", "Estructura legal")]),
     ("La casa", [("nosotros", "Quiénes somos"), ("copropietarios", "Copropietarios"),
@@ -177,7 +177,7 @@ RIBBONS = {
     "memorandum": ("Cuando lo haya leído, <em>hablamos.</em>",
                    "Cuarenta y cinco minutos con quien opera las casas, y sólo si usted lo pide.",
                    "agendar", "Agendar la llamada"),
-    "traveling": ("¿Tiene fecha? <em>Nosotros tenemos barco.</em>",
+    "travel": ("¿Tiene fecha? <em>Nosotros tenemos barco.</em>",
                   "Disponibilidad real y propuesta con precio cerrado, en el mismo día hábil.",
                   "yates", "Ver la flota"),
     "yates": ("La bahía se ve mejor <em>desde el agua.</em>",
@@ -1085,7 +1085,7 @@ def p_memorandum(single):
 
 def divbar(current, single):
     items = [("f", "fractional", "Fractional", "Copropiedad escriturada"),
-             ("t", "traveling", "Traveling", "Yates, experiencias y rentas"),
+             ("t", "travel", "Travel", "Yates, experiencias y rentas"),
              ("i", "investing", "Investing", "Casas y terrenos completos")]
     return '<div class="divbar">%s</div>' % "".join(
         '<a class="%s" href="%s"%s><span class="w">%s</span><span class="d">%s</span></a>'
@@ -1094,7 +1094,7 @@ def divbar(current, single):
 
 
 def divbar_section(current, single):
-    root = {"fractional": "fractional", "traveling": "traveling", "investing": "investing"}
+    root = {"fractional": "fractional", "travel": "travel", "investing": "investing"}
     here = root.get(current, "")
     return """<section>
   <div class="wrap sec" style="padding-block:clamp(44px,5vw,72px)">
@@ -1149,9 +1149,9 @@ def p_inicio(single):
         <ul><li>Desde USD $120,000</li><li>Escritura pública e indiviso</li><li>Tres residencias, ocho dueños cada una</li></ul>
         <span class="go">Ver la división <span>&rarr;</span></span>
       </a>
-      <a class="door div-traveling" href="{trav}">
+      <a class="door div-travel" href="{trav}">
         <span class="what">División 02</span>
-        <span class="word">Traveling</span>
+        <span class="word">Travel</span>
         <p>Yates propios, experiencias en la bahía, chef y traslados. Y para quien ya tiene casa aquí, el pool de rentas que la opera y le rinde cuentas.</p>
         <ul><li>Tres embarcaciones propias</li><li>Islas Marietas, ballenas, pesca y golf</li><li>Pool de rentas sin exclusividad</li></ul>
         <span class="go">Ver la división <span>&rarr;</span></span>
@@ -1177,7 +1177,7 @@ def p_inicio(single):
     <div class="grid3">
       <div class="panel"><span class="folio">Origen</span><h3>Primero fueron las casas</h3><p>Empezamos vendiendo propiedad completa. El problema apareció rápido: mucha gente quería la casa pero iba a usarla seis semanas al año, y pagar cincuenta y dos no tenía sentido.</p></div>
       <div class="panel"><span class="folio">Consecuencia</span><h3>De ahí salió el fraccional</h3><p>Partir la casa en ocho resolvía la aritmética, pero obligaba a operarla de verdad: calendario, mantenimiento, huéspedes y cuentas claras entre ocho dueños que no se conocen.</p></div>
-      <div class="panel"><span class="folio">Consecuencia</span><h3>Y la operación se volvió negocio</h3><p>Para operar bien hicieron falta barcos, chef, traslados y un pool de rentas. Funcionó tan bien que se abrió a cualquiera, sea dueño o no. Eso es Traveling.</p></div>
+      <div class="panel"><span class="folio">Consecuencia</span><h3>Y la operación se volvió negocio</h3><p>Para operar bien hicieron falta barcos, chef, traslados y un pool de rentas. Funcionó tan bien que se abrió a cualquiera, sea dueño o no. Eso es Travel.</p></div>
     </div>
   </div>
 </section>
@@ -1206,7 +1206,7 @@ def p_inicio(single):
   <div class="wrap sec">{capture}</div>
 </section>
 """.format(book=link("agendar", single), memo=link("memorandum", single),
-           frac=link("fractional", single), trav=link("traveling", single),
+           frac=link("fractional", single), trav=link("travel", single),
            inv=link("investing", single), libres=TOTAL_LIBRES,
            reassure=reassure(), testi=bloque_testimonios(3),
            capture=mini_capture(
@@ -1216,7 +1216,7 @@ def p_inicio(single):
                "Enviarme el panorama", fields="email"))
 
 
-# ---------------------------------------------------------------- traveling
+# ---------------------------------------------------------------- travel
 
 FLOTA = [
     dict(name="Azimut 55", cls="Yate a motor &middot; día completo", eslora="16.8 m",
@@ -1243,10 +1243,10 @@ EXPERIENCIAS = [
 ]
 
 
-def p_traveling(single):
+def p_travel(single):
     exp = "".join('<div class="panel"><h3>%s</h3><p>%s</p></div>' % (t, d)
                   for t, d in EXPERIENCIAS)
-    return pagehead("Traveling",
+    return pagehead("Travel",
         "La operación de servicio de la casa: yates, experiencias en la bahía, chef, traslados y logística. "
         "Existe porque las casas necesitaban operarse bien, y acabó siendo un negocio propio abierto a cualquiera, "
         "sea o no copropietario.",
@@ -1304,7 +1304,7 @@ def p_yates(single):
     return pagehead("Flota",
         "Tres embarcaciones propias con base en Nuevo Vallarta. Propias, no intermediadas: eso fija la tarifa, "
         "el mantenimiento y quién responde si algo falla a veinte millas de la costa.",
-        [("inicio", "Inicio"), ("traveling", "Traveling")], single) + """
+        [("inicio", "Inicio"), ("travel", "Travel")], single) + """
 <section>
   <div class="wrap sec" style="padding-top:0">
     %s
@@ -1337,7 +1337,7 @@ def p_pool(single):
     return pagehead("Pool de rentas",
         "Usted pone la casa. Nosotros la operamos, la rentamos y le rendimos cuentas cada trimestre. "
         "Sin exclusividad perpetua y sin cuota de entrada.",
-        [("inicio", "Inicio"), ("traveling", "Traveling")], single) + """
+        [("inicio", "Inicio"), ("travel", "Travel")], single) + """
 <section>
   <div class="wrap sec" style="padding-top:0">
     <div class="pool">
@@ -1482,7 +1482,7 @@ def p_investing(single):
 # ---------------------------------------------------------------- registro
 
 PAGES = [
-    ("inicio", "Fractional, Traveling &amp; Investing",
+    ("inicio", "Fractional, Travel &amp; Investing",
      "Tres divisiones en Riviera Nayarit: copropiedad fraccional escriturada, servicios de viaje y pool de rentas, y venta de casas y terrenos.",
      p_inicio, ""),
 
@@ -1511,15 +1511,15 @@ PAGES = [
      "Cifras auditadas, reglamento de uso y contrato de fideicomiso modelo de cada residencia, sin costo ni compromiso.",
      p_memorandum, "div-fractional"),
 
-    ("traveling", "Traveling",
+    ("travel", "Travel",
      "Yates propios, experiencias en la Bahía de Banderas, chef y traslados, y el pool de rentas para dueños de casa.",
-     p_traveling, "div-traveling"),
+     p_travel, "div-travel"),
     ("yates", "Flota",
      "Tres embarcaciones propias con base en Nuevo Vallarta: yate a motor, deportivo y catamarán, con tripulación.",
-     p_yates, "div-traveling"),
+     p_yates, "div-travel"),
     ("pool-de-rentas", "Pool de rentas",
      "Operamos, rentamos y reportamos su casa en Riviera Nayarit. Sin exclusividad perpetua y sin cuota de entrada.",
-     p_pool, "div-traveling"),
+     p_pool, "div-travel"),
 
     ("investing", "Investing",
      "Casas terminadas y terrenos en propiedad completa en Riviera Nayarit, con expediente completo antes de firmar.",
