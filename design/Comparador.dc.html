@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+  <style>
+    body{margin:0;background:#FFFFFF;color:#16202C;font-family:"IBM Plex Sans","Segoe UI",Helvetica,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+    a{color:#223B5D;text-decoration:none;}
+    a:hover{color:#E0A03A;}
+    p{margin:0;}
+    h1,h2,h3{margin:0;font-family:"Archivo","Helvetica Neue",Helvetica,sans-serif;font-weight:700;text-transform:uppercase;text-wrap:balance;line-height:1.05;}
+    .num{font-variant-numeric:tabular-nums;font-family:"Archivo",sans-serif;}
+    .rule{width:140px;height:3px;background:#223B5D;}
+    .eyebrow{font-weight:600;font-size:12px;letter-spacing:.2em;text-transform:uppercase;}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:600;font-size:13px;letter-spacing:.14em;text-transform:uppercase;padding:16px 28px;border:2px solid transparent;}
+    .wrap{max-width:1200px;margin:0 auto;}
+    table{border-collapse:collapse;width:100%;}
+    th,td{text-align:left;padding:15px 20px;border-bottom:1px solid #E2E4E6;font-size:15px;vertical-align:top;}
+    tbody th{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#77818F;font-weight:500;width:200px;background:#F7F8F9;}
+    td{font-variant-numeric:tabular-nums;}
+    .best{color:#223B5D;font-weight:700;}
+    .ph{outline:1px dashed #9AA6B4;color:#6A7788;font-size:11px;letter-spacing:.14em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;}
+  </style>
+</helmet>
+
+<div style="width:1440px;background:#FFFFFF;">
+
+  <div style="background:#223B5D;">
+    <div class="wrap" style="display:flex;align-items:center;gap:44px;height:82px;">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <svg width="32" height="32" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+          <path d="M17 3 L31 31 L23.5 31 L17 17 L10.5 31 L3 31 Z" fill="#FFFFFF"></path>
+          <path d="M17 19 L21 27 L13 27 Z" fill="#E0A03A"></path>
+        </svg>
+        <div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:20px;letter-spacing:.06em;color:#FFFFFF;text-transform:uppercase;">Apex</div>
+      </div>
+      <div style="display:flex;gap:30px;margin-left:auto;font-size:14.5px;font-weight:500;">
+        <a href="#" style="color:#DCE0E5;">Modelos</a>
+        <a href="#" style="color:#FFFFFF;border-bottom:3px solid #E0A03A;padding-bottom:5px;">Comparar</a>
+        <a href="#" style="color:#DCE0E5;">Postventa</a>
+        <a href="#" style="color:#DCE0E5;">Agencias</a>
+      </div>
+      <a href="#" class="btn" style="background:#E0A03A;color:#16283F;padding:13px 22px;">Cotizar</a>
+    </div>
+  </div>
+
+  <div class="wrap" style="padding:56px 0 64px;display:flex;flex-direction:column;gap:32px;">
+
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div class="rule"></div>
+      <h1 style="font-size:42px;color:#223B5D;letter-spacing:.02em;">Comparador de unidades</h1>
+      <p style="font-size:18px;color:#4C5765;max-width:64ch;">Tres configuraciones lado a lado. El valor más alto de cada renglón numérico queda marcado, para que la conversación con tu área de operaciones empiece con números y no con folletos.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;">
+      <div style="border:1px solid #C6CBD1;padding:15px 18px;display:flex;justify-content:space-between;align-items:center;font-size:14.5px;color:#223B5D;font-weight:500;background:#FFFFFF;">
+        <span>Tracto Diesel 540HP 6×4</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#77818F" stroke-width="2.4"><path d="M6 9l6 6 6-6"></path></svg>
+      </div>
+      <div style="border:1px solid #C6CBD1;padding:15px 18px;display:flex;justify-content:space-between;align-items:center;font-size:14.5px;color:#223B5D;font-weight:500;background:#FFFFFF;">
+        <span>Tracto 540HP 6×4 AMT</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#77818F" stroke-width="2.4"><path d="M6 9l6 6 6-6"></path></svg>
+      </div>
+      <div style="border:1px solid #C6CBD1;padding:15px 18px;display:flex;justify-content:space-between;align-items:center;font-size:14.5px;color:#77818F;background:#FFFFFF;">
+        <span>Unidad 3 — elegir…</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#77818F" stroke-width="2.4"><path d="M6 9l6 6 6-6"></path></svg>
+      </div>
+    </div>
+
+    <div style="border:1px solid #E2E4E6;">
+      <table>
+        <thead>
+          <tr>
+            <th style="background:#223B5D;border-bottom:none;width:200px;"></th>
+            <th style="background:#223B5D;border-bottom:none;">
+              <div class="ph" style="height:120px;background:#2F4E76;outline-color:#5A7395;color:#B7C2D2;margin-bottom:14px;">Foto 540HP 6×4</div>
+              <div style="font-family:'Archivo',sans-serif;font-weight:700;font-size:16px;color:#FFFFFF;text-transform:uppercase;letter-spacing:.04em;">Tracto Diesel 540HP 6×4</div>
+              <div style="font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#E0A03A;margin-top:5px;">Tractocamiones</div>
+            </th>
+            <th style="background:#223B5D;border-bottom:none;">
+              <div class="ph" style="height:120px;background:#2F4E76;outline-color:#5A7395;color:#B7C2D2;margin-bottom:14px;">Foto 540HP AMT</div>
+              <div style="font-family:'Archivo',sans-serif;font-weight:700;font-size:16px;color:#FFFFFF;text-transform:uppercase;letter-spacing:.04em;">Tracto 540HP 6×4 AMT</div>
+              <div style="font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#E0A03A;margin-top:5px;">Tractocamiones</div>
+            </th>
+            <th style="background:#223B5D;border-bottom:none;">
+              <div class="ph" style="height:120px;background:#2F4E76;outline-color:#5A7395;color:#B7C2D2;margin-bottom:14px;">Foto 62K 330HP</div>
+              <div style="font-family:'Archivo',sans-serif;font-weight:700;font-size:16px;color:#FFFFFF;text-transform:uppercase;letter-spacing:.04em;">Sitrak 62K 330HP 6×4</div>
+              <div style="font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#E0A03A;margin-top:5px;">Medianos</div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th>Aplicación</th><td>Carretera federal</td><td>Carretera federal</td><td>Distribución regional</td></tr>
+          <tr><th>Tracción</th><td>6×4</td><td>6×4</td><td>6×4</td></tr>
+          <tr><th>Motor</th><td>MT13.54-50 · MAN</td><td>MT13.54-50 · MAN</td><td>Sinotruk</td></tr>
+          <tr><th>Potencia</th><td class="best">540 HP @ 1,900 rpm ▲</td><td class="best">540 HP ▲</td><td>330 HP</td></tr>
+          <tr><th>Torque</th><td class="best">1,844 lb-ft ▲</td><td class="best">1,844 lb-ft ▲</td><td style="color:#8B95A2;font-style:italic;">Por confirmar</td></tr>
+          <tr><th>Cilindrada</th><td>13 L · 6 cilindros</td><td>13 L · 6 cilindros</td><td style="color:#8B95A2;font-style:italic;">Por confirmar</td></tr>
+          <tr><th>Transmisión</th><td>ZF 16S2531TO · 16 vel.</td><td>AMT Sinotruk · 12 vel.</td><td style="color:#8B95A2;font-style:italic;">Por confirmar</td></tr>
+          <tr><th>Eje trasero</th><td>MCP16 · 70,500 lb</td><td style="color:#8B95A2;font-style:italic;">Por confirmar</td><td style="color:#8B95A2;font-style:italic;">Por confirmar</td></tr>
+          <tr><th>Suspensión</th><td>Neumática</td><td>Neumática</td><td style="color:#8B95A2;font-style:italic;">Por confirmar</td></tr>
+          <tr><th>Tanque</th><td class="best">900 L ▲</td><td class="best">900 L ▲</td><td style="color:#8B95A2;font-style:italic;">Por confirmar</td></tr>
+          <tr><th>Capacidad</th><td>Arrastre full</td><td>Arrastre full</td><td>20 t de carga</td></tr>
+          <tr style="border-bottom:none;">
+            <th style="border-bottom:none;"></th>
+            <td style="border-bottom:none;"><a href="#" class="btn" style="background:#E0A03A;color:#16283F;width:100%;">Cotizar</a></td>
+            <td style="border-bottom:none;"><a href="#" class="btn" style="border:2px solid #223B5D;color:#223B5D;width:100%;">Cotizar</a></td>
+            <td style="border-bottom:none;"><a href="#" class="btn" style="border:2px solid #223B5D;color:#223B5D;width:100%;">Cotizar</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="background:#F2F3F4;border-left:3px solid #B5B6B6;padding:22px 26px;">
+      <p style="font-size:13.5px;color:#5C6673;line-height:1.75;">Los renglones marcados <em>Por confirmar</em> son datos que no pudieron verificarse en fuentes públicas: esa lista es exactamente lo que falta capturar de la ficha oficial. En WordPress cada renglón es un <strong style="color:#223B5D;">atributo de producto</strong>, no texto libre — así una sola captura alimenta ficha, filtro y comparador.</p>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+</body>
+</html>
