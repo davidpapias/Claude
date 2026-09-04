@@ -1,0 +1,111 @@
+<div class="crumb">
+  <div class="wrap crumb__in">
+    <a href="../index.html">Inicio</a><span>/</span><a href="../modelos.html">Modelos</a><span>/</span><strong>{{NOMBRE}}</strong>
+  </div>
+</div>
+
+<section class="section" style="padding-top:clamp(36px,4vw,56px)">
+  <div class="wrap">
+    <div class="detail">
+
+      <div class="stack gap-26">
+        <div class="stack gap-16">
+          <div class="rule rule--navy"></div>
+          <p class="eyebrow eyebrow--amber">{{LINEA_NOMBRE}} &middot; {{USO}}</p>
+          <h1 style="color:var(--navy)">{{NOMBRE}}</h1>
+          <p class="lead">{{DESC}}</p>
+        </div>
+
+        <img class="detail__gallery" src="../{{IMG}}" alt="{{NOMBRE}}" width="1200" height="675">
+
+        <div class="kpi">
+          <div>
+            <div class="kpi__v num">{{HP}} <small>HP</small></div>
+            <div class="kpi__k">Potencia</div>
+          </div>
+          <div>
+            <div class="kpi__v num">{{TRAC}}</div>
+            <div class="kpi__k">Tracción</div>
+          </div>
+          <div>
+            <div class="kpi__v" style="font-size:19px;line-height:1.25">{{CAP}}</div>
+            <div class="kpi__k">Capacidad</div>
+          </div>
+        </div>
+
+        <div>
+          <h2 style="font-size:22px;color:var(--navy);border-bottom:2px solid var(--navy);padding-bottom:12px;margin-bottom:6px">Especificaciones</h2>
+          <div class="specs">
+            <dl>{{SPECS_1}}</dl>
+            <dl>{{SPECS_2}}</dl>
+          </div>
+        </div>
+      </div>
+
+      <div class="stack gap-16">
+        <div class="buybox">
+          <p class="eyebrow eyebrow--amber">Cotizar esta unidad</p>
+          <h3>{{NOMBRE}}</h3>
+          <div class="client__hr"></div>
+          <div class="buybox__row"><span>Precio</span><strong>Bajo cotización</strong></div>
+          <div class="buybox__row"><span>Financiamiento</span><strong>Crédito y arrendamiento</strong></div>
+          <div class="buybox__row"><span>Entrega</span><strong>[Confirmar plazo]</strong></div>
+          <a class="btn btn--amber btn--block mt-8" href="../cotizar.html?u={{SLUG}}">Cotizar ahora</a>
+          <a class="btn btn--ghost btn--block" href="#">Preguntar por WhatsApp</a>
+          <label class="unit__cmp" style="color:#B7BFC9;justify-content:center;padding-top:6px">
+            <input type="checkbox" data-cmp="{{SLUG}}"> Agregar al comparador
+          </label>
+        </div>
+
+        <div class="card">
+          <p class="eyebrow">Para el dueño de flota</p>
+          <ul class="checklist">
+            <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M20 6 L9 17 L4 12"></path></svg><span>Refacción crítica disponible en la red de 24 agencias</span></li>
+            <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M20 6 L9 17 L4 12"></path></svg><span>Asistencia en carretera con unidades de reacción</span></li>
+            <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M20 6 L9 17 L4 12"></path></svg><span>Capacitación al operador incluida en la entrega</span></li>
+          </ul>
+        </div>
+
+        <div class="note">
+          Las especificaciones marcadas <strong>Por confirmar</strong> se completan con la hoja oficial de Apex antes de publicar.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section section--dark">
+  <div class="wrap">
+    <div class="split">
+      <div class="stack gap-20">
+        <div class="rule"></div>
+        <h2>La decisión no es el precio de lista</h2>
+        <p class="lead">Un asesor arma contigo el comparativo de tu ruta real: consumo estimado, plan de mantenimiento, costo de las refacciones críticas y valor de reventa proyectado.</p>
+        <div class="row mt-8">
+          <a class="btn btn--amber" href="../cotizar.html?u={{SLUG}}">Solicitar comparativo</a>
+          <a class="btn btn--ghost" href="../comparar.html">Comparar con otra unidad</a>
+        </div>
+      </div>
+      <div class="svc-grid">
+        <div><h4>24+ agencias</h4><p>Red de servicio nacional</p></div>
+        <div><h4>6–48 t</h4><p>Rango de aplicación de la gama</p></div>
+        <div><h4>Taller móvil</h4><p>Atendemos la unidad donde esté</p></div>
+        <div><h4>&lt;24 h</h4><p>Respuesta a la cotización</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section__headrow">
+      <div class="section__head">
+        <div class="rule rule--navy"></div>
+        <h2>Otras unidades de la línea</h2>
+      </div>
+      <a class="btn btn--outline" href="../modelos.html">Ver catálogo completo</a>
+    </div>
+    <div class="units">{{RELACIONADOS}}</div>
+  </div>
+</section>

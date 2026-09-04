@@ -1,0 +1,43 @@
+<!--@{"title":"Red de agencias Sitrak | Apex","desc":"Más de 24 agencias y centros de partes en todo México. Encuentra la agencia Sitrak más cercana a tu base de operación.","nav":"agencias"}-->
+
+<div class="crumb">
+  <div class="wrap crumb__in">
+    <a href="index.html">Inicio</a><span>/</span><strong>Agencias</strong>
+  </div>
+</div>
+
+<section class="page-head">
+  <div class="wrap">
+    <div class="rule rule--navy"></div>
+    <h1>Más de 24 agencias y centros de partes</h1>
+    <p class="lead">Donde va tu ruta, va el respaldo. Filtra por estado y contacta directamente a la agencia que te corresponde.</p>
+  </div>
+</section>
+
+<section class="section" style="padding-top:clamp(32px,4vw,52px)">
+  <div class="wrap">
+    <div class="split" style="align-items:start;grid-template-columns:.9fr 1.1fr">
+      <div class="map" role="img" aria-label="Mapa de la República Mexicana con la ubicación de las agencias Apex Sitrak">
+        <span class="map__pin" style="left:22%;top:26%"></span>
+        <span class="map__pin" style="left:34%;top:18%"></span>
+        <span class="map__pin" style="left:47%;top:38%"></span>
+        <span class="map__pin" style="left:55%;top:52%"></span>
+        <span class="map__pin" style="left:62%;top:46%"></span>
+        <span class="map__pin" style="left:68%;top:62%"></span>
+        <span class="map__pin" style="left:41%;top:60%"></span>
+        <span class="map__pin" style="left:76%;top:74%"></span>
+        <span class="map__tag">mapa-republica.svg — sustituir</span>
+      </div>
+      <div>
+        <div class="field" style="margin-bottom:18px;max-width:340px">
+          <label for="filtro-estado">Filtrar por estado</label>
+          <select id="filtro-estado"></select>
+        </div>
+        <div id="lista-agencias"></div>
+        <div class="note mt-24">
+          <strong>Estructura recomendada:</strong> una página por agencia (<code>/agencias/monterrey/</code>) con dirección, teléfono, horario de taller y datos estructurados <code>AutoDealer</code>. Es el mayor gancho de tráfico local que el sitio no aprovecha hoy. El directorio de esta página es de ejemplo: sustituir por el real.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
