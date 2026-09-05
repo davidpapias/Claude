@@ -35,72 +35,62 @@ def avail(sold, total=8):
 
 # ---------------------------------------------------------------- residencias
 # Datos sin cambios: sólo se añadieron marcos de foto para mostrarlas.
-RESIDENCIAS = [
-    dict(slug="residencia-marea", body="La planta baja se abre por completo a la terraza, de modo que la sala, el comedor y la alberca funcionan como una sola pieza cuando el clima acompaña, que en esta costa son diez meses al año. La recámara principal ocupa el frente del segundo nivel, con acceso directo a la playa por una servidumbre privada. La marina queda a cuatro minutos caminando, lo que explica buena parte de su tarifa de renta.", name="Residencia Marea",
-         loc="Nuevo Vallarta &middot; frente de playa", sold=5,
-         m2="240 m&sup2;", rec="3 recámaras", ban="3.5 baños",
-         value=1120000, frac=140000, opex=9800, rate=780,
-         specs=["Alberca privada", "Marina a 400 m", "Terraza de 60 m&sup2;",
-                "Cocina de autor", "Dos cajones de estacionamiento", "Entrega inmediata"],
-         pitch=("Frente de playa directo, sin calle de por medio, en el corredor de "
-                "Nuevo Vallarta. Es la residencia con mayor tarifa de renta de las tres "
-                "y la que más rápido cerró sus primeras fracciones."),
-         shots=[("r32", "Fachada desde la playa", "3:2 &middot; 2400×1600"),
-                ("r11", "Alberca al atardecer", "1:1 &middot; 1600×1600"),
-                ("r11", "Sala y terraza", "1:1 &middot; 1600×1600"),
-                ("r11", "Recámara principal", "1:1 &middot; 1600×1600"),
-                ("r11", "Cocina", "1:1 &middot; 1600×1600")]),
-    dict(slug="residencia-sayulita-alta", body="Está construida en tres plataformas escalonadas sobre la ladera, así que cada nivel tiene su propia terraza y ninguna recámara comparte vista con otra. El estudio independiente en la plataforma baja tiene entrada aparte: sirve para huéspedes que llegan sin avisar o para rentarse por separado en temporada alta. Los paneles solares cubren cerca de la mitad del consumo anual.", name="Villa Sayulita Alta",
-         loc="Sayulita &middot; colina con vista", sold=3,
-         m2="185 m&sup2;", rec="3 recámaras", ban="3 baños",
-         value=960000, frac=120000, opex=8400, rate=640,
-         specs=["Terraza panorámica", "Pueblo a pie", "Alberca de borde infinito",
-                "Estudio independiente", "Paneles solares", "Entrega inmediata"],
-         pitch=("A ocho minutos a pie del pueblo y lo bastante arriba para que el ruido "
-                "no llegue. La ocupación de Sayulita es la más pareja del año de las tres "
-                "plazas: temporada alta larga y muy poca temporada muerta."),
-         shots=[("r32", "Vista desde la terraza", "3:2 &middot; 2400×1600"),
-                ("r11", "Alberca de borde infinito", "1:1 &middot; 1600×1600"),
-                ("r11", "Comedor exterior", "1:1 &middot; 1600×1600"),
-                ("r11", "Recámara con vista", "1:1 &middot; 1600×1600"),
-                ("r11", "Camino al pueblo", "1:1 &middot; 1600×1600")]),
-    dict(slug="residencia-nayar", body="Ocupa los dos últimos niveles del edificio con elevador privado que desemboca dentro del departamento. La sala es de doble altura y da al poniente, así que la puesta de sol sobre la bahía se ve desde el sofá y desde el jacuzzi del roof. Al estar en preventa, todavía admite cambios en acabados y en la distribución de las dos recámaras secundarias.", name="Penthouse Nayar",
-         loc="Bucerías &middot; penthouse", sold=6,
-         m2="310 m&sup2;", rec="4 recámaras", ban="4.5 baños",
-         value=1760000, frac=220000, opex=15400, rate=1150,
-         specs=["Roof privado", "Doble vista a la bahía", "Jacuzzi exterior",
-                "Elevador privado", "Bodega y cuarto de servicio", "Preventa · entrega 2027"],
-         pitch=("El ticket más alto y la única en preventa. Ocupa los dos últimos niveles "
-                "con vista franca a la Bahía de Banderas por el sur y a la sierra por el "
-                "oriente. Admite pago diferido a 24 meses con 40% de enganche."),
-         shots=[("r32", "Roof privado al anochecer", "3:2 &middot; 2400×1600"),
-                ("r11", "Doble altura de la sala", "1:1 &middot; 1600×1600"),
-                ("r11", "Jacuzzi con vista", "1:1 &middot; 1600×1600"),
-                ("r11", "Recámara principal", "1:1 &middot; 1600×1600"),
-                ("r11", "Vista a la bahía", "1:1 &middot; 1600×1600")]),
+# ---------------------------------------------------------------- fraccional
+# Anthus es el proyecto activo. Las cifras son marcadores: se sustituyen por
+# las del proyecto real antes de publicar.
+ANTHUS = dict(
+    slug="anthus", name="Anthus",
+    loc="[Ubicación del desarrollo]",
+    unidades=12, liberadas=4, fracciones=8, vendidas=13,
+    m2="[m²] por residencia", rec="[n] recámaras", ban="[n] baños",
+    value=1120000, frac=140000, opex=9800, rate=780,
+    entrega="[Fecha de entrega]",
+    specs=["[Amenidad principal]", "[Amenidad]", "[Amenidad]",
+           "[Acabados]", "[Estacionamiento]", "[Estatus de entrega]"],
+    pitch=("Anthus es el desarrollo con el que abrimos la vertical de copropiedad. "
+           "Cada residencia se divide en ocho fracciones escrituradas, y cada fracción "
+           "da seis semanas y media de uso al año. Lo que no usa, entra al programa de "
+           "rentas y le genera ingreso."),
+    body=("Sustituya este párrafo por la descripción real del desarrollo: qué lo "
+          "distingue de lo que hay alrededor, cómo está resuelta la planta, qué se ve "
+          "desde las terrazas y qué queda a distancia caminando. Es el texto que "
+          "convence a quien ya entendió el modelo y ahora quiere saber si la casa le gusta."),
+    shots=[("r32", "Fachada del desarrollo", "3:2 &middot; 2400×1600"),
+           ("r11", "Amenidad principal", "1:1 &middot; 1600×1600"),
+           ("r11", "Sala y terraza", "1:1 &middot; 1600×1600"),
+           ("r11", "Recámara principal", "1:1 &middot; 1600×1600"),
+           ("r11", "Vista desde la unidad", "1:1 &middot; 1600×1600")])
+
+FUTUROS = [
+    ("Proyecto II", "[Plaza]", "En estructuración"),
+    ("Proyecto III", "[Plaza]", "En análisis"),
 ]
-RES_BY_SLUG = {r["slug"]: r for r in RESIDENCIAS}
+
+RESIDENCIAS = [ANTHUS]
 
 # ---------------------------------------------------------------- navegación
-NAV = [("fractional", "Fractional"), ("travel", "Travel"),
-       ("investing", "Investing"), ("legal", "Estructura legal"),
-       ("nosotros", "Nosotros")]
+NAV = [("fractional", "Fraccional"), ("travel", "Travel"),
+       ("investing", "Investing"), ("club", "Club"),
+       ("servicios", "Servicios")]
 
-NAV_EXTRA = [("residencias", "Residencias"), ("numeros", "Los números"),
-             ("yates", "Yates"), ("pool-de-rentas", "Pool de rentas"),
-             ("memorandum", "Memorándum"), ("diario", "Diario"),
-             ("preguntas", "Preguntas")]
+NAV_EXTRA = [("anthus", "Anthus"), ("numeros", "Los números"),
+             ("yates", "Yates"), ("rentas", "Rentas"),
+             ("partner-agent", "Partner Agent"), ("legal", "Estructura legal"),
+             ("memorandum", "Memorándum"), ("nosotros", "Nosotros"),
+             ("diario", "Diario"), ("preguntas", "Preguntas")]
 
 FOOTNAV = [
-    ("Fractional", [("fractional", "La división"), ("residencias", "Residencias"),
+    ("Fraccional", [("fractional", "La división"), ("anthus", "Anthus"),
                     ("modelo", "Cómo funciona"), ("numeros", "Los números"),
-                    ("memorandum", "El memorándum")]),
+                    ("memorandum", "El memorándum"), ("copropietarios", "Copropietarios")]),
     ("Travel", [("travel", "La división"), ("yates", "Flota de yates"),
-                   ("pool-de-rentas", "Pool de rentas")]),
+                ("servicios", "Servicios")]),
     ("Investing", [("investing", "La división"), ("legal", "Estructura legal")]),
-    ("La casa", [("nosotros", "Quiénes somos"), ("copropietarios", "Copropietarios"),
-                 ("diario", "Diario"), ("preguntas", "Preguntas frecuentes"),
-                 ("agendar", "Hablar con alguien"), ("avisos", "Aviso legal")]),
+    ("Club y programas", [("club", "Club"), ("rentas", "Rentas"),
+                          ("partner-agent", "Partner Agent")]),
+    ("La casa", [("nosotros", "Quiénes somos"), ("diario", "Diario"),
+                 ("preguntas", "Preguntas frecuentes"), ("agendar", "Hablar con alguien"),
+                 ("avisos", "Aviso legal")]),
 ]
 
 
@@ -159,42 +149,56 @@ def topbar(current, single):
 
 
 RIBBONS = {
-    "inicio": ("Tres divisiones. <em>Una conversación.</em>",
-               "Cuéntenos qué busca y le decimos por cuál de las tres empezar, aunque acabe siendo ninguna.",
+    "inicio": ("Tres vías de entrada. <em>Una conversación.</em>",
+               "Cuéntenos qué busca y le decimos por cuál empezar, aunque acabe siendo ninguna.",
                "agendar", "Hablar con alguien"),
-    "fractional": ("Ocho dueños por casa. <em>Ni uno más.</em>",
-                   "Empiece por el memorándum: cifras auditadas del ejercicio anterior, sin llamada de por medio.",
+
+    "fractional": ("Ocho copropietarios por residencia. <em>Ni uno más.</em>",
+                   "Empiece por el memorándum de Anthus: cifras auditadas del ejercicio anterior, sin llamada de por medio.",
                    "memorandum", "Descargar el memorándum"),
-    "residencias": ("Quedan <em>{libres}</em> fracciones de veinticuatro.",
-                    "Cuando una casa completa sus ocho copropietarios, se cierra y no la volvemos a abrir.",
-                    "memorandum", "Ver las cifras de cada casa"),
+    "anthus": ("Quedan <em>{libres}</em> fracciones liberadas.",
+               "Cuando una residencia completa sus ocho copropietarios, se cierra y no la volvemos a abrir.",
+               "memorandum", "Ver las cifras de Anthus"),
     "modelo": ("Ya entiende el modelo. <em>Ahora los números.</em>",
                "La calculadora corre sobre supuestos declarados y editables, y termina en un escenario que le podemos mandar por escrito.",
                "numeros", "Calcular mi rendimiento"),
     "numeros": ("Los números cuadran. <em>¿Y la casa?</em>",
-                "Las tres residencias, con fracciones disponibles y cifras auditadas por separado.",
-                "residencias", "Ver las residencias"),
+                "Anthus, con las fracciones liberadas y las cifras auditadas por separado.",
+                "anthus", "Ver Anthus"),
     "memorandum": ("Cuando lo haya leído, <em>hablamos.</em>",
                    "Cuarenta y cinco minutos con quien opera las casas, y sólo si usted lo pide.",
                    "agendar", "Agendar la llamada"),
-    "travel": ("¿Tiene fecha? <em>Nosotros tenemos barco.</em>",
-                  "Disponibilidad real y propuesta con precio cerrado, en el mismo día hábil.",
-                  "yates", "Ver la flota"),
+    "copropietarios": ("Ocho personas por residencia. <em>Falta usted.</em>",
+                       "Cuarenta y cinco minutos con quien opera Anthus. Si el modelo no le conviene, se lo decimos ahí mismo.",
+                       "agendar", "Agendar la llamada"),
+
+    "travel": ("Lo que gasta viajando, <em>se le acredita.</em>",
+               "Disponibilidad real y propuesta con precio cerrado, en el mismo día hábil.",
+               "yates", "Ver la flota"),
     "yates": ("La bahía se ve mejor <em>desde el agua.</em>",
               "Díganos días, personas y qué le gustaría hacer. Cotizar no cuesta ni aparta la fecha.",
               "agendar", "Pedir disponibilidad"),
-    "pool-de-rentas": ("Su casa vacía <em>cuesta dinero.</em>",
-                       "Le estimamos el ingreso anual con lo que rentan casas comparables que ya operamos.",
-                       "agendar", "Pedir la estimación"),
+
     "investing": ("Propiedad completa, <em>sin reglamento de uso.</em>",
-                  "Plano, escritura, libertad de gravamen, avalúo y el historial de renta de las casas terminadas.",
+                  "Plano, escritura, libertad de gravamen, avalúo y el historial de renta de las propiedades terminadas.",
                   "agendar", "Pedir la ficha"),
+
+    "club": ("La membresía <em>se gana invirtiendo.</em>",
+             "Escriturar en Fraccional o en Investing la activa el mismo día de la firma.",
+             "agendar", "Hablar con alguien"),
+    "servicios": ("La operación resuelve, <em>usted descansa.</em>",
+                  "La misma capa está en las tres verticales. Pregunte por ella en la llamada.",
+                  "agendar", "Hablar con alguien"),
+    "rentas": ("Su propiedad vacía <em>cuesta dinero.</em>",
+               "Le estimamos el ingreso anual con lo que rentan propiedades comparables que ya operamos.",
+               "agendar", "Pedir la estimación"),
+    "partner-agent": ("¿Tiene cartera? <em>Hablemos.</em>",
+                      "Le mandamos el esquema de comisiones y el material de venta completo.",
+                      "agendar", "Ver las condiciones"),
+
     "legal": ("Ya vio la estructura. <em>Pida el expediente.</em>",
               "Reglamento de uso, contrato de fideicomiso modelo y avalúo, en un solo correo.",
               "memorandum", "Pedir el expediente modelo"),
-    "copropietarios": ("Ocho personas por casa. <em>Falta usted.</em>",
-                       "Cuarenta y cinco minutos con quien opera las residencias. Si el modelo no le conviene, se lo decimos ahí mismo.",
-                       "agendar", "Agendar la llamada"),
     "nosotros": ("Ya sabe con quién <em>firmaría.</em>",
                  "El siguiente paso natural es el papel: memorándum, reglamento y fideicomiso modelo.",
                  "memorandum", "Descargar el memorándum"),
@@ -457,37 +461,20 @@ def bloque_testimonios(n=3, featured=True):
 # ---------------------------------------------------------------- páginas
 
 def p_fractional(single):
-    tarjetas = "".join("""<article class="res">
-  %s
-  <div class="res-body">
-    <p class="res-loc">%s</p>
-    <h3>%s</h3>
-    <div class="res-specs"><span>%s</span><span>%s</span><span>%s</span></div>
-    <div class="res-price">
-      <div><p class="l">Fracción 1/8 desde</p><p class="p num">$%s</p></div>
-      <div class="r"><p class="l">Disponibles</p><b class="num">%d de 8</b></div>
-    </div>
-    <a class="btn btn-ghost btn-sm" href="%s" style="justify-content:center">Ver la residencia <span class="arw">&rarr;</span></a>
-  </div>
-</article>""" % (holder("r43", "Fachada &mdash; " + r["name"], "4:3 &middot; 1600×1200"),
-                 r["loc"], r["name"], r["m2"], r["rec"], r["specs"][0],
-                 format(r["frac"], ","), 8 - r["sold"], link(r["slug"], single))
-        for r in RESIDENCIAS)
-
     return """<section class="hero sec" id="top">
   <div class="wrap hero-grid">
     <div class="hero-copy">
-      <p class="eyebrow">División Fractional &middot; Nuevo Vallarta, Bucerías y Sayulita</p>
+      <p class="eyebrow">División Fraccional &middot; {loc}</p>
       <h1>La casa frente al mar, dividida entre ocho. La escritura, <em>a su nombre.</em></h1>
       <p class="tagline">Own a piece of the places you love.</p>
-      <p class="lede measure">Copropiedad fraccional de residencias de lujo en Riviera Nayarit desde <span class="num">USD&nbsp;$120,000</span>. Seis semanas de uso al año, renta administrada el resto del tiempo, y una participación real en la plusvalía del inmueble. <strong>No es tiempo compartido. No son puntos. No es una membresía.</strong></p>
+      <p class="lede measure">Copropiedad fraccional escriturada en <strong>Anthus</strong>, nuestro primer desarrollo. Una octava parte de la residencia, seis semanas y media de uso al año, y el resto del tiempo la rentamos por usted. <strong>No es tiempo compartido. No son puntos. No es una membresía.</strong></p>
       <div class="hero-cta">
         <a class="btn" href="{memo}">Descargar el memorándum <span class="arw">&rarr;</span></a>
-        <a class="btn btn-ghost" href="{inv}">Calcular mi rendimiento</a>
+        <a class="btn btn-ghost" href="{num}">Calcular mi rendimiento</a>
       </div>
-      <p class="proof">Cifras auditadas del ejercicio anterior &middot; sin llamada de por medio &middot; <b>{libres}</b> de 24 fracciones disponibles</p>
+      <p class="proof">Cifras auditadas del ejercicio anterior &middot; sin llamada de por medio &middot; <b>{libres}</b> de {tot} fracciones liberadas</p>
       <div class="trustbar">
-        <div><b>8</b> copropietarios máximo</div>
+        <div><b>8</b> copropietarios por residencia</div>
         <div><b>1/8</b> indiviso escriturado</div>
         <div><b>6.5</b> semanas al año</div>
         <div><b>0</b> cuotas de por vida</div>
@@ -496,8 +483,8 @@ def p_fractional(single):
 
     <div class="deed">
       <div class="deed-top">
-        <div><p class="folio">Folio de copropiedad</p><p class="deed-title">Residencia Marea</p></div>
-        <p class="folio" id="deedRef">NAY&mdash;0<span class="num">1</span>/08</p>
+        <div><p class="folio">Folio de copropiedad</p><p class="deed-title">Anthus</p></div>
+        <p class="folio" id="deedRef">ANT&mdash;0<span class="num">1</span>/08</p>
       </div>
       <div class="shares" id="shares" data-unit="140000" role="img" aria-label="Ocho fracciones de la residencia; las suyas aparecen en latón"></div>
       <div class="shares-legend"><span>La residencia, en ocho partes</span><span><b id="mineLabel">1 fracción suya</b></span></div>
@@ -523,12 +510,44 @@ def p_fractional(single):
 <section>
   <div class="wrap sec">
     <div class="sec-head">
-      <div class="rail"><p class="folio">Las residencias</p></div>
-      <div><h2>Tres casas. <em>Veinticuatro fracciones.</em></h2>
-      <p class="lede measure" style="margin-top:16px">Cada casa se cierra en ocho copropietarios y no se abre de nuevo. No operamos inventario perpetuo.</p></div>
+      <div class="rail"><p class="folio">El desarrollo</p></div>
+      <div><h2>Anthus, <em>y lo que viene después.</em></h2>
+      <p class="lede measure" style="margin-top:16px">Cada residencia se cierra en ocho copropietarios y no se abre de nuevo. No operamos inventario perpetuo: cuando Anthus se llena, se cierra y abrimos el siguiente.</p></div>
     </div>
-    <div class="residences">{tarjetas}</div>
-    <div style="margin-top:28px"><a class="btn btn-ghost" href="{res}">Ver las tres residencias <span class="arw">&rarr;</span></a></div>
+    <div class="proplayout">
+      <div>
+        {holder}
+      </div>
+      <aside class="propaside">
+        <div class="specsheet">
+          <div class="specsheet-h"><p class="folio">Anthus &mdash; {loc}</p></div>
+          <div class="specrow"><span class="k">Residencias</span><span class="v">{unidades}</span></div>
+          <div class="specrow"><span class="k">Fracción 1/8 desde</span><span class="v">USD ${frac}</span></div>
+          <div class="specrow"><span class="k">Entrega</span><span class="v">{entrega}</span></div>
+        </div>
+        <div class="specsheet">
+          <div class="specsheet-h"><p class="folio">Fracciones liberadas</p></div>
+          <div style="padding:16px 18px">{avail}</div>
+        </div>
+        <a class="btn" href="{anthus}" style="justify-content:center">Ver Anthus <span class="arw">&rarr;</span></a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec">
+    <div class="sec-head">
+      <div class="rail"><p class="folio">Va incluido</p></div>
+      <div><h2>Lo que no usa, <em>lo rentamos por usted.</em></h2>
+      <p class="lede measure" style="margin-top:16px">En Fraccional el programa de rentas no se contrata: viene dentro del modelo. Las semanas de su fracción que no reclama pasan solas a renta administrada y el neto le llega en el estado trimestral.</p></div>
+    </div>
+    <div class="grid3">
+      <div class="panel"><span class="folio">Automático</span><h3>Sin firmar nada aparte</h3><p>No hay contrato adicional, ni alta, ni cuota de entrada. Lo que no bloquea en septiembre entra a renta.</p></div>
+      <div class="panel"><span class="folio">Su casa, su ingreso</span><h3>No hay fondo común</h3><p>Cobra lo que su residencia generó en sus semanas, no un promedio repartido entre copropietarios.</p></div>
+      <div class="panel"><span class="folio">Trimestral</span><h3>Estado con CFDI</h3><p>Noches, tarifas obtenidas, gastos y neto. Transferencia el día 10 del mes siguiente al cierre.</p></div>
+    </div>
+    <div style="margin-top:26px"><a class="btn btn-ghost" href="{rentas}">Cómo funciona el programa de rentas <span class="arw">&rarr;</span></a></div>
   </div>
 </section>
 
@@ -544,6 +563,8 @@ def p_fractional(single):
   </div>
 </section>
 
+{servicios}
+
 <section>
   <div class="wrap sec">
     <div class="sec-head">
@@ -552,6 +573,23 @@ def p_fractional(single):
       <p class="lede measure" style="margin-top:16px">Preferimos perderle aquí que en la escritura. Si se reconoce en alguna de estas cuatro, cierre la página con nuestra bendición.</p></div>
     </div>
     {notfor}
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec">
+    <div class="sec-head">
+      <div class="rail"><p class="folio">Al escriturar</p></div>
+      <div><h2>Invertir aquí <em>abre la puerta del Club.</em></h2></div>
+    </div>
+    <div class="gate div-club">
+      <span class="seal" aria-hidden="true"></span>
+      <div>
+        <h3>Su fracción lo vuelve <em>elegible.</em></h3>
+        <p>Al firmar la escritura queda habilitado para la membresía del Club: la plataforma Vacation Owners, con hoteles y resorts de todo el mundo a la mitad del costo público, más los servicios de viaje de la casa. No se vende por separado ni se abre a quien no ha invertido.</p>
+        <p style="margin-top:16px"><a class="btn btn-ghost btn-sm" href="{club}">Ver qué incluye el Club <span class="arw">&rarr;</span></a></p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -574,7 +612,7 @@ def p_fractional(single):
       <p class="lede measure" style="margin-top:16px">La diferencia entre una fracción y una promesa está en el papel.</p></div>
     </div>
     <div class="grid4">
-      <div class="panel"><span class="folio">Instrumento I</span><h3>Escritura pública</h3><p>Copropiedad en régimen indiviso, inscrita en el Registro Público de la Propiedad de Nayarit.</p></div>
+      <div class="panel"><span class="folio">Instrumento I</span><h3>Escritura pública</h3><p>Copropiedad en régimen indiviso, inscrita en el Registro Público de la Propiedad.</p></div>
       <div class="panel"><span class="folio">Instrumento II</span><h3>Fideicomiso bancario</h3><p>Para copropietarios extranjeros, dentro de la franja costera de 50 km. Uso, renta, venta y sucesión plenos.</p></div>
       <div class="panel"><span class="folio">Instrumento III</span><h3>Reglamento de uso</h3><p>Rotación anual de prioridad y dos semanas de alta temporada garantizadas por fracción.</p></div>
       <div class="panel"><span class="folio">Instrumento IV</span><h3>Administración</h3><p>Cuenta bancaria separada por residencia y estado financiero trimestral.</p></div>
@@ -586,120 +624,113 @@ def p_fractional(single):
 <section>
   <div class="wrap sec">{capture}</div>
 </section>
-""".format(book=link("agendar", single), inv=link("inversion", single),
-           memo=link("memorandum", single), libres=TOTAL_LIBRES,
-           res=link("residencias", single), mod=link("modelo", single),
-           cop=link("copropietarios", single), leg=link("legal", single),
-           tarjetas=tarjetas, tabla=tabla_comparativa(), testi=bloque_testimonios(3),
-           notfor=notfor(),
-           capture=mini_capture(
-               "homeMemo", "Llévese <em>los números</em> antes de decidir nada.",
-               "El memorándum de la residencia que le interese: estado de resultados del ejercicio anterior, "
-               "ocupación real mes a mes, la cuota de operación partida renglón por renglón y el contrato de "
-               "fideicomiso modelo. Es el documento que le va a pedir su contador.",
-               "Enviarme el memorándum", fields="email"))
+""".replace("{loc}", ANTHUS["loc"]) \
+   .replace("{memo}", link("memorandum", single)) \
+   .replace("{num}", link("numeros", single)) \
+   .replace("{libres}", str(TOTAL_LIBRES)).replace("{tot}", str(TOTAL_FRACCIONES)) \
+   .replace("{holder}", holder("r32", "Anthus &mdash; fachada del desarrollo", "3:2 &middot; 2400×1600")) \
+   .replace("{unidades}", str(ANTHUS["unidades"])) \
+   .replace("{frac}", format(ANTHUS["frac"], ",")) \
+   .replace("{entrega}", ANTHUS["entrega"]) \
+   .replace("{avail}", avail(ANTHUS["vendidas"], TOTAL_FRACCIONES)) \
+   .replace("{anthus}", link("anthus", single)) \
+   .replace("{rentas}", link("rentas", single)) \
+   .replace("{tabla}", tabla_comparativa()) \
+   .replace("{mod}", link("modelo", single)) \
+   .replace("{servicios}", bloque_servicios(single,
+       "Su fracción no viene sola: la misma capa de servicios que opera la casa está "
+       "disponible cuando usted la usa, y ya está dentro de la cuota anual.")) \
+   .replace("{notfor}", notfor()) \
+   .replace("{club}", link("club", single)) \
+   .replace("{testi}", bloque_testimonios(3)) \
+   .replace("{cop}", link("copropietarios", single)) \
+   .replace("{leg}", link("legal", single)) \
+   .replace("{capture}", mini_capture(
+       "fracMemo", "Llévese <em>los números</em> antes de decidir nada.",
+       "El memorándum de Anthus: estado de resultados del ejercicio anterior, ocupación real "
+       "mes a mes, la cuota de operación partida renglón por renglón y el contrato de "
+       "fideicomiso modelo. Es el documento que le va a pedir su contador.",
+       "Enviarme el memorándum", fields="email"))
 
 
-def p_residencias(single):
-    filas = "".join("""<article class="res">
-  %s
-  <div class="res-body">
-    <p class="res-loc">%s</p>
-    <h3>%s</h3>
-    <div class="res-specs"><span>%s</span><span>%s</span><span>%s</span></div>
-    %s
-    <div class="res-price">
-      <div><p class="l">Fracción 1/8 desde</p><p class="p num">$%s</p></div>
-      <div class="r"><p class="l">Valor total</p><b class="num">$%s</b></div>
-    </div>
-    <a class="btn btn-ghost btn-sm" href="%s" style="justify-content:center">Ver la ficha completa <span class="arw">&rarr;</span></a>
-  </div>
-</article>""" % (holder("r43", "Fachada &mdash; " + r["name"], "4:3 &middot; 1600×1200"),
-                 r["loc"], r["name"], r["m2"], r["rec"], r["ban"], avail(r["sold"]),
-                 format(r["frac"], ","), format(r["value"], ","), link(r["slug"], single))
-        for r in RESIDENCIAS)
-
-    return pagehead("Residencias", "Tres casas en Riviera Nayarit, cada una dividida en ocho fracciones escrituradas. Cuando una casa completa sus ocho copropietarios, se cierra: no volvemos a venderla.", [("inicio", "Inicio")], single) + """
-<section>
-  <div class="wrap sec">
-    <div class="residences">%s</div>
-    <div class="note" style="margin-top:34px"><b>Las fotografías se cargan aquí.</b> Cada marco indica la toma y la proporción recomendada; al sustituirlo por una imagen real, la retícula no cambia.</div>
-  </div>
-</section>
-<section>
-  <div class="wrap sec">
-    <div class="sec-head"><div class="rail"><p class="folio">Comparar</p></div>
-      <div><h2>Las tres, <em>una al lado de la otra.</em></h2>
-      <p class="lede measure" style="margin-top:16px">En latón, la mejor de las tres en cada renglón. No hay una que gane en todo: depende de cuántas semanas piense usar y de cuánto capital quiera inmovilizar.</p></div></div>
-    %s
-  </div>
-</section>
-<section>
-  <div class="wrap sec">%s</div>
-</section>
-""" % (filas, picker(single),
-       mini_capture("resMemo", "¿Sigue dudando entre <em>dos</em>?",
-                    "Pida el memorándum de las tres y compárelas con las cifras auditadas en la mano: ocupación real mes a mes, tarifa media obtenida y cuota de operación desglosada. Decide mejor con eso que con cualquier recorrido.",
-                    "Enviarme los tres memorándums", fields="email"))
-
-
-def p_residencia(slug, single):
-    r = RES_BY_SLUG[slug]
+def p_anthus(single):
+    r = ANTHUS
     gal = "".join(holder(cls, what, spec) for cls, what, spec in r["shots"])
     specs = "".join('<div class="specrow"><span class="k">%s</span><span class="v">%s</span></div>' % kv
-                    for kv in [("Superficie", r["m2"]), ("Recámaras", r["rec"]),
+                    for kv in [("Superficie por residencia", r["m2"]),
+                               ("Recámaras", r["rec"]),
                                ("Baños", r["ban"]),
+                               ("Residencias en el desarrollo", str(r["unidades"])),
+                               ("Residencias liberadas", str(r["liberadas"])),
+                               ("Fracciones por residencia", str(r["fracciones"])),
                                ("Valor de la residencia", "USD $" + format(r["value"], ",")),
                                ("Fracción 1/8", "USD $" + format(r["frac"], ",")),
                                ("Cuota anual de operación", "USD $" + format(r["opex"], ",")),
-                               ("Tarifa media por noche", "USD $" + format(r["rate"], ",")),
-                               ("Semanas por fracción", "6.5 al año")])
+                               ("Entrega", r["entrega"])])
     extras = "".join('<li>%s</li>' % s for s in r["specs"])
+    futuros = "".join(
+        '<div class="panel"><span class="folio">%s</span><h3>%s</h3><p>%s</p></div>'
+        % (estado, nombre, "Plaza: %s. En cuanto se libere, los copropietarios de Anthus "
+           "tienen derecho de preferencia sobre las primeras fracciones." % plaza)
+        for nombre, plaza, estado in FUTUROS)
 
-    return pagehead(r["name"], r["pitch"],
-                    [("inicio", "Inicio"), ("residencias", "Residencias")], single) + """
+    return pagehead("Anthus", r["pitch"],
+                    [("inicio", "Inicio"), ("fractional", "Fractional")], single) + """
 <section>
   <div class="wrap sec" style="padding-top:0">
-    <div class="gallery" style="margin-bottom:40px">%s</div>
+    <div class="gallery" style="margin-bottom:40px">{gal}</div>
     <div class="proplayout">
       <div class="prose">
-        <h2>La casa</h2>
-        <p style="margin-top:16px">%s</p>
+        <h2>El desarrollo</h2>
+        <p style="margin-top:16px">{body}</p>
         <h3>Qué incluye</h3>
-        <ul>%s</ul>
+        <ul>{extras}</ul>
         <h3>Cómo se reparte el año</h3>
         <p>Su fracción le asigna 6.5 semanas anuales, de las cuales dos caen en alta temporada por reglamento. El orden de elección rota cada año y se invierte al siguiente, de modo que en ocho años cada copropietario ocupa cada posición del turno. El calendario del año siguiente se cierra en septiembre.</p>
-        <p>Las semanas que usted no reclama pasan a renta administrada, y el ingreso neto se le abona en el estado trimestral. Las semanas de temporada baja que nadie reclama quedan disponibles para los copropietarios a tarifa de costo operativo.</p>
+        <p>Las semanas que usted no reclama entran al programa de rentas y el ingreso neto se le abona en el estado trimestral. No hay que contratarlo aparte: viene dentro del modelo.</p>
         <div class="note"><b>Plano y memoria de calidades.</b> Se entregan en la llamada de calificación junto con el avalúo y el certificado de libertad de gravamen.</div>
       </div>
       <aside class="propaside">
         <div class="specsheet">
           <div class="specsheet-h"><p class="folio">Ficha técnica</p></div>
-          %s
+          {specs}
         </div>
         <div class="specsheet">
-          <div class="specsheet-h"><p class="folio">Fracciones</p></div>
-          <div style="padding:16px 18px">%s</div>
+          <div class="specsheet-h"><p class="folio">Fracciones liberadas</p></div>
+          <div style="padding:16px 18px">{avail}</div>
         </div>
-        <a class="btn" href="%s" style="justify-content:center">Memorándum de esta casa <span class="arw">&rarr;</span></a>
-        <a class="btn btn-ghost" href="%s" style="justify-content:center">Calcular el rendimiento</a>
+        <a class="btn" href="{memo}" style="justify-content:center">Memorándum de Anthus <span class="arw">&rarr;</span></a>
+        <a class="btn btn-ghost" href="{num}" style="justify-content:center">Calcular el rendimiento</a>
         <p class="proof" style="margin-top:0">Sin llamada de por medio &middot; cifras auditadas</p>
       </aside>
     </div>
-    <div style="margin-top:44px">%s</div>
+    <div style="margin-top:44px">{reassure}</div>
   </div>
 </section>
 <section>
-  <div class="wrap sec">%s</div>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Lo que sigue</p></div>
+      <div><h2>Anthus es el primero, <em>no el único.</em></h2>
+      <p class="lede measure" style="margin-top:16px">Cada desarrollo se cierra en sus copropietarios y no se abre de nuevo. Los siguientes ya están en camino, y quien ya escrituró entra antes que el mercado.</p></div></div>
+    <div class="grid2">{futuros}</div>
+  </div>
 </section>
-""" % (gal, r["body"], extras, specs, avail(r["sold"]),
-       link("memorandum", single), link("inversion", single), reassure(),
-       mini_capture("prop-" + r["slug"],
-                    "El memorándum de <em>%s</em>" % r["name"],
-                    "Estado de resultados del ejercicio anterior de esta residencia en concreto, ocupación real mes a mes, "
-                    "la cuota de operación desglosada y el calendario de fracciones con fecha de corte. "
-                    "Un correo con el documento adjunto.",
-                    "Enviármelo", fields="email"))
+<section>
+  <div class="wrap sec">{captura}</div>
+</section>
+""".replace("{gal}", gal).replace("{body}", r["body"]).replace("{extras}", extras) \
+   .replace("{specs}", specs) \
+   .replace("{avail}", avail(r["vendidas"], TOTAL_FRACCIONES)) \
+   .replace("{memo}", link("memorandum", single)) \
+   .replace("{num}", link("numeros", single)) \
+   .replace("{reassure}", reassure()) \
+   .replace("{futuros}", futuros) \
+   .replace("{captura}", mini_capture(
+       "anthusMemo", "El memorándum de <em>Anthus</em>",
+       "Estado de resultados del ejercicio anterior, ocupación real mes a mes, la cuota de "
+       "operación desglosada y el calendario de fracciones con fecha de corte. Un correo con "
+       "el documento adjunto.",
+       "Enviármelo", fields="email"))
 
 
 def p_modelo(single):
@@ -1084,9 +1115,10 @@ def p_memorandum(single):
 
 
 def divbar(current, single):
-    items = [("f", "fractional", "Fractional", "Copropiedad escriturada"),
-             ("t", "travel", "Travel", "Yates, experiencias y rentas"),
-             ("i", "investing", "Investing", "Casas y terrenos completos")]
+    items = [("f", "fractional", "Fraccional", "Copropiedad escriturada"),
+             ("t", "travel", "Travel", "Yates, circuitos y agencia"),
+             ("i", "investing", "Investing", "Propiedad completa"),
+             ("c", "club", "Club", "Sólo para inversionistas")]
     return '<div class="divbar">%s</div>' % "".join(
         '<a class="%s" href="%s"%s><span class="w">%s</span><span class="d">%s</span></a>'
         % (k, link(s, single), ' aria-current="page"' if s == current else '', w, d)
@@ -1117,19 +1149,16 @@ def p_inicio(single):
       <span class="amp">&amp;</span><span class="w3">Investing</span>
     </div>
     <p class="tagline" style="margin-top:14px">Own a piece of the places you love.</p>
-    <p class="lede measure" style="margin-top:24px">El nombre no es una frase: son tres negocios. Puede quedarse con
-      <strong>una fracción</strong> de una casa frente al mar, <strong>usar los servicios</strong> sin ser dueño de nada,
-      o <strong>comprar completo</strong> una casa o un terreno. La misma operación, la misma gente y los mismos notarios
-      atienden los tres caminos.</p>
+    <p class="lede measure" style="margin-top:24px">El nombre no es una frase: son tres negocios. Puede <strong>viajar</strong> con nosotros sin comprometerse a nada, quedarse con <strong>una fracción</strong> de una casa frente al mar, o <strong>comprar completo</strong> una propiedad o un terreno. Los tres caminos los atiende la misma operación, y los tres llevan al mismo lugar.</p>
     <div class="hero-cta" style="margin-top:26px">
       <a class="btn" href="{book}">Hablar con alguien <span class="arw">&rarr;</span></a>
       <a class="btn btn-ghost" href="{memo}">Descargar el memorándum</a>
     </div>
     <div class="trustbar">
-      <div><b>3</b> divisiones, una operación</div>
+      <div><b>3</b> vías de entrada</div>
       <div><b>{libres}</b> fracciones disponibles</div>
       <div><b>3</b> yates propios</div>
-      <div><b>6</b> propiedades en venta</div>
+      <div><b>7</b> propiedades en venta</div>
     </div>
   </div>
 </section>
@@ -1137,30 +1166,30 @@ def p_inicio(single):
 <section>
   <div class="wrap sec">
     <div class="sec-head">
-      <div class="rail"><p class="folio">Las tres puertas</p></div>
+      <div class="rail"><p class="folio">Nuestros productos</p></div>
       <div><h2>Elija por dónde <em>entra.</em></h2>
-      <p class="lede measure" style="margin-top:16px">No hay una puerta mejor que otra: hay una que corresponde a lo que usted quiere. Si no está seguro, entre por la que más se le parezca y en la llamada lo acomodamos.</p></div>
+      <p class="lede measure" style="margin-top:16px">No hay una puerta mejor que otra: hay una que corresponde a lo que usted quiere hoy. Si no está seguro, entre por la que más se le parezca y en la llamada lo acomodamos.</p></div>
     </div>
     <div class="doors">
-      <a class="door div-fractional" href="{frac}">
-        <span class="what">División 01</span>
-        <span class="word">Fractional</span>
-        <p>Una octava parte de una residencia de lujo, escriturada a su nombre. Seis semanas y media de uso al año y renta administrada el resto del tiempo.</p>
-        <ul><li>Desde USD $120,000</li><li>Escritura pública e indiviso</li><li>Tres residencias, ocho dueños cada una</li></ul>
+      <a class="door div-travel" href="{trav}">
+        <span class="what">Menor compromiso</span>
+        <span class="word">Travel</span>
+        <p>Yates propios, actividades, circuitos y agencia de viajes. La forma de conocer la zona antes de comprometer nada &mdash; y lo que gaste se le acredita si después invierte.</p>
+        <ul><li>Tres embarcaciones propias</li><li>Circuitos y viajes a la medida</li><li>Genera crédito hacia la inversión</li></ul>
         <span class="go">Ver la división <span>&rarr;</span></span>
       </a>
-      <a class="door div-travel" href="{trav}">
-        <span class="what">División 02</span>
-        <span class="word">Travel</span>
-        <p>Yates propios, experiencias en la bahía, chef y traslados. Y para quien ya tiene casa aquí, el pool de rentas que la opera y le rinde cuentas.</p>
-        <ul><li>Tres embarcaciones propias</li><li>Islas Marietas, ballenas, pesca y golf</li><li>Pool de rentas sin exclusividad</li></ul>
+      <a class="door div-fractional" href="{frac}">
+        <span class="what">Inversión compartida</span>
+        <span class="word">Fraccional</span>
+        <p>Una octava parte de una residencia en Anthus, escriturada a su nombre. Seis semanas y media de uso al año; lo que no usa, lo rentamos por usted.</p>
+        <ul><li>Desde USD ${fracp}</li><li>Escritura pública e indiviso</li><li>Programa de rentas integrado</li></ul>
         <span class="go">Ver la división <span>&rarr;</span></span>
       </a>
       <a class="door div-investing" href="{inv}">
-        <span class="what">División 03</span>
+        <span class="what">Propiedad completa</span>
         <span class="word">Investing</span>
-        <p>Propiedad completa: casas terminadas y terrenos, del lote unifamiliar al macrolote apto para desarrollo. Sin copropietarios y sin reglamento de uso.</p>
-        <ul><li>Casas desde USD $780,000</li><li>Terrenos desde USD $165,000</li><li>Expediente completo antes de firmar</li></ul>
+        <p>Condominios, casas, villas y terrenos en propiedad total. Sin copropietarios y sin reglamento de uso, con el programa de rentas como opción.</p>
+        <ul><li>Desde USD $495,000</li><li>Expediente completo antes de firmar</li><li>Rentas opcional, contrato anual</li></ul>
         <span class="go">Ver la división <span>&rarr;</span></span>
       </a>
     </div>
@@ -1170,14 +1199,55 @@ def p_inicio(single):
 <section>
   <div class="wrap sec">
     <div class="sec-head">
-      <div class="rail"><p class="folio">Por qué juntas</p></div>
-      <div><h2>Tres negocios que <em>se necesitan.</em></h2>
-      <p class="lede measure" style="margin-top:16px">No es un conglomerado: cada división existe porque la anterior la hizo falta.</p></div>
+      <div class="rail"><p class="folio">Cómo encajan</p></div>
+      <div><h2>Tres negocios <em>que se alimentan.</em></h2>
+      <p class="lede measure" style="margin-top:16px">No es un conglomerado: es un ciclo. Cada vertical existe porque resuelve lo que la anterior dejaba abierto.</p></div>
     </div>
     <div class="grid3 chain">
-      <div class="panel"><span class="folio">Origen</span><h3>Primero fueron las casas</h3><p>Empezamos vendiendo propiedad completa. El problema apareció rápido: mucha gente quería la casa pero iba a usarla seis semanas al año, y pagar cincuenta y dos no tenía sentido.</p></div>
-      <div class="panel"><span class="folio">Consecuencia</span><h3>De ahí salió el fraccional</h3><p>Partir la casa en ocho resolvía la aritmética, pero obligaba a operarla de verdad: calendario, mantenimiento, huéspedes y cuentas claras entre ocho dueños que no se conocen.</p></div>
-      <div class="panel"><span class="folio">Consecuencia</span><h3>Y la operación se volvió negocio</h3><p>Para operar bien hicieron falta barcos, chef, traslados y un pool de rentas. Funcionó tan bien que se abrió a cualquiera, sea dueño o no. Eso es Travel.</p></div>
+      <div class="panel"><span class="folio">01 &middot; Capta</span><h3>Travel abre la puerta</h3><p>Un día de yate o un circuito cuesta poco y no compromete a nada. Quien viene a pasarla bien conoce la zona, conoce a la operación, y se lleva un crédito acumulado hacia una inversión que todavía no ha decidido hacer.</p></div>
+      <div class="panel"><span class="folio">02 &middot; Convierte</span><h3>Fraccional e Investing cierran</h3><p>Aquí ocurre la inversión de verdad, con escritura y notario. El programa de rentas es el argumento que la sostiene: la propiedad no se queda vacía los meses que usted no está, y el ingreso compensa la cuota.</p></div>
+      <div class="panel"><span class="folio">03 &middot; Fideliza</span><h3>Club cierra el ciclo</h3><p>Al escriturar se abre la membresía: hoteles y resorts del mundo a la mitad. No es un producto que se persiga por separado &mdash; es la razón por la que invertir aquí vale más que invertir en otro lado.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec">
+    <div class="sec-head">
+      <div class="rail"><p class="folio">Cuarta llave</p></div>
+      <div><h2>Y lo que <em>no</em> se vende.</h2></div>
+    </div>
+    <div class="gate div-club">
+      <span class="seal" aria-hidden="true"></span>
+      <div>
+        <h3>Club: sólo para <em>quien ya invirtió.</em></h3>
+        <p>Una membresía de pago que da acceso a la plataforma Vacation Owners &mdash; hoteles y resorts de todo el mundo a la mitad del costo público, más los servicios de viaje de la casa. No tiene campaña, no tiene precio de lista público y no se abre a quien llega de fuera: se activa al escriturar en Fraccional o en Investing.</p>
+        <p style="margin-top:16px"><a class="btn btn-ghost btn-sm" href="{club}">Ver qué incluye <span class="arw">&rarr;</span></a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{servicios}
+
+<section>
+  <div class="wrap sec">
+    <div class="sec-head">
+      <div class="rail"><p class="folio">Programas</p></div>
+      <div><h2>Dos cosas que <em>no se venden solas.</em></h2>
+      <p class="lede measure" style="margin-top:16px">Ninguna de las dos es un producto de catálogo: son la manera en que operamos con quien ya está dentro.</p></div>
+    </div>
+    <div class="grid2">
+      <a class="panel" href="{rentas}" style="text-decoration:none; color:inherit; display:block">
+        <span class="folio">Programa</span><h3>Rentas</h3>
+        <p>Si el dueño no usa su unidad &mdash; sea una fracción o una propiedad completa &mdash; nosotros la administramos y la rentamos por él. Integrado en Fraccional, opcional en Investing.</p>
+        <p class="proof" style="margin-top:14px">Contrato anual &middot; sin exclusividad perpetua</p>
+      </a>
+      <a class="panel" href="{partner}" style="text-decoration:none; color:inherit; display:block">
+        <span class="folio">Programa</span><h3>Partner Agent</h3>
+        <p>Red de agentes y brokers aliados. No es producto al público: es el canal por el que trabajamos con quien ya tiene cartera y quiere colocar Fraccional, Investing o Travel.</p>
+        <p class="proof" style="margin-top:14px">Protección de prospectos &middot; comisión a la firma</p>
+      </a>
     </div>
   </div>
 </section>
@@ -1205,15 +1275,27 @@ def p_inicio(single):
 <section>
   <div class="wrap sec">{capture}</div>
 </section>
-""".format(book=link("agendar", single), memo=link("memorandum", single),
-           frac=link("fractional", single), trav=link("travel", single),
-           inv=link("investing", single), libres=TOTAL_LIBRES,
-           reassure=reassure(), testi=bloque_testimonios(3),
-           capture=mini_capture(
-               "hubMemo", "¿No sabe por cuál <em>de las tres?</em>",
-               "Déjenos su correo y le mandamos el panorama de las tres divisiones en un solo documento: "
-               "qué cuesta entrar en cada una, qué recibe y en qué se diferencia. Sin llamada de por medio.",
-               "Enviarme el panorama", fields="email"))
+""".replace("{book}", link("agendar", single)) \
+   .replace("{memo}", link("memorandum", single)) \
+   .replace("{libres}", str(TOTAL_LIBRES)) \
+   .replace("{fracp}", format(ANTHUS["frac"], ",")) \
+   .replace("{trav}", link("travel", single)) \
+   .replace("{frac}", link("fractional", single)) \
+   .replace("{inv}", link("investing", single)) \
+   .replace("{club}", link("club", single)) \
+   .replace("{rentas}", link("rentas", single)) \
+   .replace("{partner}", link("partner-agent", single)) \
+   .replace("{servicios}", bloque_servicios(single,
+       "Concierge, chef, autos y catálogo de servicios no son una vertical aparte: son la "
+       "capa que aparece dentro de las tres, operada por la misma gente.")) \
+   .replace("{reassure}", reassure()) \
+   .replace("{testi}", bloque_testimonios(3)) \
+   .replace("{capture}", mini_capture(
+       "hubMemo", "¿No sabe por cuál <em>de las tres?</em>",
+       "Déjenos su correo y le mandamos el panorama completo en un solo documento: qué cuesta "
+       "entrar en cada vertical, qué recibe, cómo funciona el crédito de Travel y qué abre el "
+       "Club. Sin llamada de por medio.",
+       "Enviarme el panorama", fields="email"))
 
 
 # ---------------------------------------------------------------- travel
@@ -1243,49 +1325,6 @@ EXPERIENCIAS = [
 ]
 
 
-def p_travel(single):
-    exp = "".join('<div class="panel"><h3>%s</h3><p>%s</p></div>' % (t, d)
-                  for t, d in EXPERIENCIAS)
-    return pagehead("Travel",
-        "La operación de servicio de la casa: yates, experiencias en la bahía, chef, traslados y logística. "
-        "Existe porque las casas necesitaban operarse bien, y acabó siendo un negocio propio abierto a cualquiera, "
-        "sea o no copropietario.",
-        [("inicio", "Inicio")], single) + """
-<section>
-  <div class="wrap sec" style="padding-top:0">
-    <div class="sec-head"><div class="rail"><p class="folio">La flota</p></div>
-      <div><h2>Tres barcos, <em>y un capitán que conoce la bahía.</em></h2>
-      <p class="lede measure" style="margin-top:16px">Embarcaciones propias, no intermediación. Eso fija la tarifa, el mantenimiento y quién responde si algo falla a veinte millas de la costa.</p></div></div>
-    %s
-    <div class="note" style="margin-top:28px"><b>Las tarifas son por salida</b> e incluyen tripulación, combustible dentro de la bahía, hielo y agua. Bebidas, alimentos y permisos de reserva se cotizan aparte.</div>
-  </div>
-</section>
-<section>
-  <div class="wrap sec">
-    <div class="sec-head"><div class="rail"><p class="folio">Experiencias</p></div>
-      <div><h2>Lo que se puede hacer <em>en la bahía.</em></h2></div></div>
-    <div class="grid3">%s</div>
-  </div>
-</section>
-<section>
-  <div class="wrap sec">
-    <div class="sec-head"><div class="rail"><p class="folio">Para dueños</p></div>
-      <div><h2>¿Tiene casa aquí <em>y está vacía?</em></h2>
-      <p class="lede measure" style="margin-top:16px">El pool de rentas la opera por usted: la rentamos, la mantenemos y le reportamos. Usted decide qué semanas se queda.</p></div></div>
-    <div><a class="btn" href="%s">Ver el pool de rentas <span class="arw">&rarr;</span></a></div>
-  </div>
-</section>
-<section>
-  <div class="wrap sec">%s</div>
-</section>
-""" % (fleet_cards(), exp, link("pool-de-rentas", single),
-       mini_capture("travCot", "¿Fecha en mente? <em>Le cotizamos.</em>",
-                    "Díganos qué días, cuántas personas y qué le gustaría hacer. Le devolvemos disponibilidad real y una propuesta con precio cerrado, sin anticipo para cotizar.",
-                    "Pedir disponibilidad", fields="email+tel",
-                    done="Solicitud enviada",
-                    fine="Le respondemos por WhatsApp o correo en el mismo día hábil. Cotizar no aparta la fecha; la fecha se aparta con el anticipo."))
-
-
 def fleet_cards():
     return '<div class="fleet">%s</div>' % "".join("""<article class="vessel">
   %s
@@ -1298,6 +1337,98 @@ def fleet_cards():
 </article>""" % (holder("r32", v["shot"], "3:2 &middot; 2000×1333"), v["cls"], v["name"],
                  v["eslora"], v["pax"], v["cabinas"], v["trip"],
                  v["salida"], format(v["rate"], ",")) for v in FLOTA)
+
+
+def p_travel(single):
+    exp = "".join('<div class="panel"><h3>%s</h3><p>%s</p></div>' % (t, d)
+                  for t, d in EXPERIENCIAS)
+    return pagehead("Travel",
+        "Agencia de experiencias: yates propios, actividades en la bahía, circuitos y viajes "
+        "a la medida. Es la puerta de entrada de menor compromiso &mdash; y cada peso que "
+        "gasta aquí se le acredita si después decide invertir.",
+        [("inicio", "Inicio")], single) + """
+<section>
+  <div class="wrap sec" style="padding-top:0">
+    <div class="sec-head"><div class="rail"><p class="folio">Lo que la hace distinta</p></div>
+      <div><h2>Su viaje <em>se convierte en enganche.</em></h2>
+      <p class="lede measure" style="margin-top:16px">Cada experiencia que reserva con nosotros genera crédito acumulable hacia una futura inversión en Fraccional o Investing. Si nunca invierte, disfrutó el viaje y ya. Si invierte, el dinero que gastó conociendo la zona no se perdió.</p></div></div>
+    <div class="credit">
+      <div>
+        <p class="step">Paso 01</p>
+        <h4>Reserva una experiencia</h4>
+        <p>Un día de yate, un circuito, una villa por temporada. Cualquier servicio de Travel cuenta, desde el primero.</p>
+        <p class="amt num">[%]<small>del consumo se acredita</small></p>
+      </div>
+      <div>
+        <p class="step">Paso 02</p>
+        <h4>El crédito se acumula</h4>
+        <p>Queda a su nombre, sin caducidad dentro del plazo del programa, y se suma con cada nueva reserva.</p>
+        <p class="amt num">[n] meses<small>Vigencia del crédito</small></p>
+      </div>
+      <div>
+        <p class="step">Paso 03</p>
+        <h4>Se aplica a la inversión</h4>
+        <p>Al escriturar una fracción en Anthus o una propiedad en Investing, el saldo se descuenta del enganche.</p>
+        <p class="amt num">[tope]<small>Máximo aplicable</small></p>
+      </div>
+    </div>
+    <div class="note" style="margin-top:26px"><b>Sustituya los corchetes por las condiciones reales del programa</b> &mdash; porcentaje acreditable, vigencia y tope máximo. Es la mecánica que más va a preguntar el cliente, y la que más rápido se cae si las cifras no cuadran con lo que firma.</div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">La flota</p></div>
+      <div><h2>Tres barcos, <em>y un capitán que conoce la bahía.</em></h2>
+      <p class="lede measure" style="margin-top:16px">Embarcaciones propias, no intermediación. Eso fija la tarifa, el mantenimiento y quién responde si algo falla a veinte millas de la costa.</p></div></div>
+    {flota}
+    <div style="margin-top:28px"><a class="btn btn-ghost" href="{yates}">Ver la flota completa <span class="arw">&rarr;</span></a></div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Experiencias</p></div>
+      <div><h2>Lo que se puede hacer <em>en la bahía.</em></h2></div></div>
+    <div class="grid3">{exp}</div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Agencia</p></div>
+      <div><h2>Y lo que se puede hacer <em>fuera de ella.</em></h2>
+      <p class="lede measure" style="margin-top:16px">Travel opera también como agencia de viajes: circuitos armados, vuelos, hoteles y salidas de varios días. Para los miembros del Club, con la tarifa de la plataforma Vacation Owners.</p></div></div>
+    <div class="grid3">
+      <div class="panel"><span class="folio">Servicio 01</span><h3>Circuitos armados</h3><p>Rutas de varios días por la costa y la sierra, con transporte, hospedaje y guía resueltos. Salidas fijas o a la medida del grupo.</p></div>
+      <div class="panel"><span class="folio">Servicio 02</span><h3>Vuelos y hospedaje</h3><p>Emisión de boletos y reservas de hotel dentro y fuera de México, con la coordinación de itinerario incluida.</p></div>
+      <div class="panel"><span class="folio">Servicio 03</span><h3>Viajes a la medida</h3><p>Luna de miel, aniversario, grupo corporativo. Se cotiza sobre lo que quiere hacer, no sobre un paquete cerrado.</p></div>
+    </div>
+  </div>
+</section>
+{servicios}
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Para dueños</p></div>
+      <div><h2>¿Tiene casa aquí <em>y está vacía?</em></h2>
+      <p class="lede measure" style="margin-top:16px">El programa de rentas la opera por usted: la rentamos, la mantenemos y le reportamos. Usted decide qué fechas se queda.</p></div></div>
+    <div><a class="btn" href="{rentas}">Ver el programa de rentas <span class="arw">&rarr;</span></a></div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">{captura}</div>
+</section>
+""".replace("{flota}", fleet_cards()) \
+   .replace("{yates}", link("yates", single)) \
+   .replace("{exp}", exp) \
+   .replace("{servicios}", bloque_servicios(single,
+       "Quien viaja con nosotros accede al mismo catálogo de servicios que un copropietario, "
+       "durante toda su estancia.")) \
+   .replace("{rentas}", link("rentas", single)) \
+   .replace("{captura}", mini_capture(
+       "travCot", "¿Fecha en mente? <em>Le cotizamos.</em>",
+       "Díganos qué días, cuántas personas y qué le gustaría hacer. Le devolvemos "
+       "disponibilidad real y una propuesta con precio cerrado, sin anticipo para cotizar. "
+       "En la misma respuesta le decimos cuánto crédito genera esa reserva.",
+       "Pedir disponibilidad", fields="email+tel", done="Solicitud enviada",
+       fine="Le respondemos por WhatsApp o correo en el mismo día hábil. Cotizar no aparta la fecha; la fecha se aparta con el anticipo."))
 
 
 def p_yates(single):
@@ -1333,47 +1464,13 @@ def p_yates(single):
                     fine="Respondemos el mismo día hábil. Cotizar no aparta la fecha; la fecha se aparta con el anticipo."))
 
 
-def p_pool(single):
-    return pagehead("Pool de rentas",
-        "Usted pone la casa. Nosotros la operamos, la rentamos y le rendimos cuentas cada trimestre. "
-        "Sin exclusividad perpetua y sin cuota de entrada.",
-        [("inicio", "Inicio"), ("travel", "Travel")], single) + """
-<section>
-  <div class="wrap sec" style="padding-top:0">
-    <div class="pool">
-      <div><p class="n">Tiempo 01</p><h3>Usted reserva sus semanas</h3><p>Antes de que empiece el año marca las fechas que se queda. Esas semanas quedan bloqueadas y nadie las toca. No hay mínimo de semanas que ceder.</p><p class="fig num">0<small>Semanas obligatorias</small></p></div>
-      <div><p class="n">Tiempo 02</p><h3>Nosotros operamos el resto</h3><p>Publicación en canales, tarifa dinámica por temporada, recepción de huéspedes, limpieza entre estancias, mantenimiento preventivo y depósito de daños.</p><p class="fig num">22%%<small>Comisión sobre lo rentado</small></p></div>
-      <div><p class="n">Tiempo 03</p><h3>Le reportamos y le pagamos</h3><p>Estado trimestral con noches, tarifas obtenidas, gastos y neto. Transferencia el día 10 del mes siguiente al cierre, con CFDI.</p><p class="fig num">10<small>Día de pago, cada trimestre</small></p></div>
-    </div>
-  </div>
-</section>
-<section>
-  <div class="wrap sec">
-    <div class="sec-head"><div class="rail"><p class="folio">Condiciones</p></div>
-      <div><h2>Lo que hace distinto <em>a este pool.</em></h2></div></div>
-    <div class="grid2">
-      <div class="panel"><span class="folio">Condición 01</span><h3>Sin exclusividad perpetua</h3><p>El contrato es anual y se renueva sólo si usted quiere. Puede salir al término con 60 días de aviso, sin penalización ni recompra de nada.</p></div>
-      <div class="panel"><span class="folio">Condición 02</span><h3>Sin cuota de entrada</h3><p>No se cobra alta, ni fotografía, ni «puesta a punto». Si la casa necesita obra para rentarse, se lo decimos con presupuesto y usted decide si la hace.</p></div>
-      <div class="panel"><span class="folio">Condición 03</span><h3>Su casa no entra a un fondo común</h3><p>Se renta su casa y usted cobra lo que su casa generó. No repartimos ingresos entre propiedades: quien tiene mejor casa cobra más, y quien la tiene peor lo ve en su estado.</p></div>
-      <div class="panel"><span class="folio">Condición 04</span><h3>Cuentas separadas</h3><p>Los depósitos de huéspedes y los ingresos no se mezclan con la operación de la administradora. Un concurso mercantil nuestro no alcanza su dinero.</p></div>
-    </div>
-    <div class="note" style="margin-top:28px"><b>Qué casas aceptamos.</b> Zona de Nuevo Vallarta, Bucerías, La Cruz, Punta de Mita y Sayulita; mínimo dos recámaras; alberca propia o del condominio; y disposición a mantener un estándar de mobiliario. No aceptamos todas: si su casa no va a rentarse bien, se lo decimos antes de firmar.</div>
-  </div>
-</section>
-<section>
-  <div class="wrap sec">%s</div>
-</section>
-""" % mini_capture("poolAlta", "Cuéntenos <em>de su casa.</em>",
-                   "Ubicación, recámaras y si tiene alberca. Le devolvemos una estimación de ingreso anual "
-                   "basada en lo que rentan casas comparables que ya operamos, con el desglose de temporada alta y baja.",
-                   "Pedir la estimación", fields="email+tel",
-                   done="Solicitud enviada",
-                   fine="La estimación es gratuita y no compromete a nada. Si su casa no encaja en el pool, se lo decimos en esa misma respuesta.")
-
-
 # ---------------------------------------------------------------- investing
 
 CASAS = [
+    dict(slug="condominio-marea", name="Condominio Marea 402", where="Nuevo Vallarta &middot; frente de playa",
+         price=495000, m2="145 m&sup2;", terreno="Torre con amenidades", rec="2 recámaras",
+         extra="Entrega inmediata", yield_="Renta estimada 7.4% anual",
+         desc="El ticket de entrada más bajo del inventario. Cuarto piso con vista franca al mar, en una torre con alberca, gimnasio y acceso directo a playa. Se vende amueblado y listo para rentar."),
     dict(slug="casa-altamar", name="Casa Altamar", where="Punta de Mita &middot; frente de golf",
          price=1450000, m2="380 m&sup2;", terreno="620 m&sup2; de terreno", rec="4 recámaras",
          extra="Entrega inmediata", yield_="Renta estimada 6.2% anual",
@@ -1428,14 +1525,16 @@ def listing_rows(items, kind, single):
 
 def p_investing(single):
     return pagehead("Investing",
-        "Propiedad completa: casas terminadas y terrenos en Riviera Nayarit. Sin fracciones, sin copropietarios "
-        "y sin reglamento de uso. Usted escritura el cien por ciento y decide qué hacer con el inmueble.",
+        "Propiedad completa: condominios, casas, villas y terrenos en Riviera Nayarit. Sin "
+        "fracciones, sin copropietarios y sin reglamento de uso. Usted escritura el cien por "
+        "ciento y decide qué hacer con el inmueble.",
         [("inicio", "Inicio")], single) + """
 <section>
   <div class="wrap sec" style="padding-top:0">
-    <div class="sec-head"><div class="rail"><p class="folio">Casas</p></div>
-      <div><h2>Tres casas <em>en propiedad completa.</em></h2></div></div>
-    %s
+    <div class="sec-head"><div class="rail"><p class="folio">Construido</p></div>
+      <div><h2>Condominios, casas <em>y villas.</em></h2>
+      <p class="lede measure" style="margin-top:16px">Desde un departamento de dos recámaras listo para rentar hasta una villa en ladera. Todos con expediente completo antes de firmar.</p></div></div>
+    {casas}
   </div>
 </section>
 <section>
@@ -1443,9 +1542,23 @@ def p_investing(single):
     <div class="sec-head"><div class="rail"><p class="folio">Terrenos</p></div>
       <div><h2>Y tres superficies <em>para construir.</em></h2>
       <p class="lede measure" style="margin-top:16px">Desde un lote unifamiliar hasta un macrolote apto para desarrollo. Todos con escritura limpia y servicios verificados.</p></div></div>
-    %s
+    {lotes}
   </div>
 </section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Si no vive ahí</p></div>
+      <div><h2>La rentamos por usted, <em>si usted quiere.</em></h2>
+      <p class="lede measure" style="margin-top:16px">A diferencia de Fraccional, aquí el programa de rentas es opcional: usted decide si entra, marca las fechas que se queda y nosotros operamos el resto del año. Contrato anual, sin exclusividad perpetua.</p></div></div>
+    <div class="grid3">
+      <div class="panel"><span class="folio">Opcional</span><h3>Entra si quiere</h3><p>Puede vivir ahí todo el año, usarla sólo en temporada o no rentarla nunca. Nadie le obliga a meterla al programa.</p></div>
+      <div class="panel"><span class="folio">Anual</span><h3>Y sale cuando quiera</h3><p>Contrato de un año, renovable sólo si le conviene. Salida al término con 60 días de aviso, sin penalización.</p></div>
+      <div class="panel"><span class="folio">Suyo</span><h3>Cobra lo que la suya generó</h3><p>No hay fondo común entre propiedades. Su estado trimestral refleja sus noches y sus tarifas.</p></div>
+    </div>
+    <div style="margin-top:26px"><a class="btn btn-ghost" href="{rentas}">Ver el programa de rentas <span class="arw">&rarr;</span></a></div>
+  </div>
+</section>
+{servicios}
 <section>
   <div class="wrap sec">
     <div class="sec-head"><div class="rail"><p class="folio">Por qué aquí</p></div>
@@ -1453,9 +1566,23 @@ def p_investing(single):
     <div class="grid3">
       <div class="panel"><span class="folio">Argumento 01</span><h3>Aeropuerto y conectividad</h3><p>Puerto Vallarta recibe vuelo directo desde más de treinta ciudades de Norteamérica. Eso sostiene la demanda de renta y acorta el mercado de reventa: el comprador puede venir a verla el fin de semana.</p></div>
       <div class="panel"><span class="folio">Argumento 02</span><h3>Suelo limitado</h3><p>El corredor entre Nuevo Vallarta y Punta de Mita está acotado por la sierra y por la reserva. No hay superficie nueva de frente de playa; lo que se construye ahora es sobre lo poco que queda.</p></div>
-      <div class="panel"><span class="folio">Argumento 03</span><h3>Doble demanda</h3><p>La misma casa sirve al comprador de segunda residencia y al operador de renta vacacional. Dos mercados sobre el mismo inventario sostienen mejor el precio en un ciclo malo.</p></div>
+      <div class="panel"><span class="folio">Argumento 03</span><h3>Doble demanda</h3><p>La misma propiedad sirve al comprador de segunda residencia y al operador de renta vacacional. Dos mercados sobre el mismo inventario sostienen mejor el precio en un ciclo malo.</p></div>
     </div>
     <div class="note" style="margin-top:28px"><b>Ningún argumento es una garantía.</b> El valor de un inmueble puede bajar, y una zona bien conectada también se corrige. Estos son los motivos por los que nosotros compramos aquí, no una promesa de rendimiento.</div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Al escriturar</p></div>
+      <div><h2>Comprar aquí <em>abre la puerta del Club.</em></h2></div></div>
+    <div class="gate div-club">
+      <span class="seal" aria-hidden="true"></span>
+      <div>
+        <h3>Sin importar <em>el monto.</em></h3>
+        <p>Escriturar cualquier propiedad de Investing &mdash; un terreno de entrada o una villa &mdash; lo habilita para la membresía del Club: la plataforma Vacation Owners, con hoteles y resorts de todo el mundo a la mitad del costo público. No se vende a quien no ha invertido.</p>
+        <p style="margin-top:16px"><a class="btn btn-ghost btn-sm" href="{club}">Ver qué incluye el Club <span class="arw">&rarr;</span></a></p>
+      </div>
+    </div>
   </div>
 </section>
 <section>
@@ -1463,44 +1590,241 @@ def p_investing(single):
     <div class="sec-head"><div class="rail"><p class="folio">Lo mismo aplica</p></div>
       <div><h2>La estructura legal <em>no cambia.</em></h2>
       <p class="lede measure" style="margin-top:16px">Comprar entero o comprar una fracción se escritura igual: notario público, Registro Público de la Propiedad y, si usted es extranjero, fideicomiso bancario en zona restringida.</p></div></div>
-    <div><a class="btn btn-ghost" href="%s">Ver la estructura legal <span class="arw">&rarr;</span></a></div>
+    <div><a class="btn btn-ghost" href="{legal}">Ver la estructura legal <span class="arw">&rarr;</span></a></div>
   </div>
 </section>
 <section>
-  <div class="wrap sec">%s</div>
+  <div class="wrap sec">{captura}</div>
 </section>
-""" % (listing_rows(CASAS, "casa", single), listing_rows(TERRENOS, "lote", single),
-       link("legal", single),
-       mini_capture("invFicha", "La ficha completa <em>de la que le interese.</em>",
-                    "Plano, escritura, certificado de libertad de gravamen, avalúo y, en las casas terminadas, "
-                    "el historial de renta de los dos ejercicios anteriores. Un correo con el expediente adjunto.",
-                    "Pedir la ficha", fields="email+tel",
-                    done="Solicitud enviada",
-                    fine="Le llega el expediente de la propiedad que indique. Si prefiere verla en persona, coordinamos el recorrido sin compromiso."))
+""".replace("{casas}", listing_rows(CASAS, "casa", single)) \
+   .replace("{lotes}", listing_rows(TERRENOS, "lote", single)) \
+   .replace("{rentas}", link("rentas", single)) \
+   .replace("{servicios}", bloque_servicios(single,
+       "Comprar completo no significa operar solo: la misma capa de servicios está "
+       "disponible cuando usted usa la propiedad, contratable por estancia.")) \
+   .replace("{club}", link("club", single)) \
+   .replace("{legal}", link("legal", single)) \
+   .replace("{captura}", mini_capture(
+       "invFicha", "La ficha completa <em>de la que le interese.</em>",
+       "Plano, escritura, certificado de libertad de gravamen, avalúo y, en las propiedades "
+       "terminadas, el historial de renta de los dos ejercicios anteriores. Un correo con el "
+       "expediente adjunto.",
+       "Pedir la ficha", fields="email+tel", done="Solicitud enviada",
+       fine="Le llega el expediente de la propiedad que indique. Si prefiere verla en persona, coordinamos el recorrido sin compromiso."))
+
+
+# ---------------------------------------------------------------- servicios
+# Capa transversal: no es vertical propia, se inserta dentro de las tres.
+SERVICIOS = [
+    ("Concierge VIP", "Una persona asignada que resuelve la estancia completa: reservas, "
+     "restaurantes, permisos, urgencias y lo que se ofrezca a media noche."),
+    ("Chef en casa", "Menú a convenir, compra, servicio y limpieza. Para una cena o para "
+     "toda la estancia, con el mercado del día."),
+    ("Renta de autos", "Vehículo entregado en la propiedad o en el aeropuerto, con seguro "
+     "y sin fila de mostrador."),
+    ("Catálogo de servicios", "Limpieza extra, niñera, masaje, fotógrafo, decoración de "
+     "aniversario. Se pide desde la plataforma y se cobra al final."),
+]
+
+
+def bloque_servicios(single, intro=None):
+    """La capa de servicios, idéntica en las tres verticales."""
+    tarjetas = "".join(
+        '<div><span class="n">Servicio 0%d</span><h4>%s</h4><p>%s</p></div>' % (i + 1, t, d)
+        for i, (t, d) in enumerate(SERVICIOS))
+    return """<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Servicios</p></div>
+      <div><h2>Lo que resuelve <em>la operación.</em></h2>
+      <p class="lede measure" style="margin-top:16px">%s</p></div></div>
+    <div class="svc">%s</div>
+    <div style="margin-top:26px"><a class="btn btn-ghost" href="%s">Ver el catálogo completo <span class="arw">&rarr;</span></a></div>
+  </div>
+</section>
+""" % (intro or "La misma capa de servicios está disponible en las tres verticales. No se "
+       "vende por separado: viene con la propiedad, con la fracción o con la experiencia.",
+       tarjetas, link("servicios", single))
+
+
+def p_servicios(single):
+    tarjetas = "".join(
+        '<div class="panel"><span class="folio">Servicio 0%d</span><h3>%s</h3><p>%s</p></div>'
+        % (i + 1, t, d) for i, (t, d) in enumerate(SERVICIOS))
+    return pagehead("Servicios",
+        "No es una vertical: es la capa que hace que tener una propiedad aquí no se sienta "
+        "como un segundo empleo. Aparece dentro de Fraccional, Travel e Investing, y la "
+        "opera la misma gente.",
+        [("inicio", "Inicio")], single) + """
+<section>
+  <div class="wrap sec" style="padding-top:0">
+    <div class="grid2">%s</div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Cómo se pide</p></div>
+      <div><h2>Desde la plataforma, <em>no por WhatsApp a las tres de la mañana.</em></h2>
+      <p class="lede measure" style="margin-top:16px">Todo lo que aparece arriba se solicita desde la plataforma de copropietarios y huéspedes, con precio a la vista antes de confirmar. Lo que se consume se cobra al cierre de la estancia, en un solo estado.</p></div></div>
+    <div class="grid3">
+      <div class="panel"><span class="folio">Para copropietarios</span><h3>Incluido en la cuota</h3><p>El concierge y la coordinación de llegada no se cobran aparte: ya están dentro de la cuota anual de operación de su fracción.</p></div>
+      <div class="panel"><span class="folio">Para dueños completos</span><h3>Contratable por estancia</h3><p>Si compró la propiedad entera, contrata la capa de servicios cuando la use, sin cuota fija todo el año.</p></div>
+      <div class="panel"><span class="folio">Para huéspedes de Travel</span><h3>Dentro de la reserva</h3><p>Quien renta una experiencia o una villa por temporada accede al mismo catálogo durante su estancia.</p></div>
+    </div>
+  </div>
+</section>
+""" % tarjetas
+
+
+# ---------------------------------------------------------------- club
+
+def p_club(single):
+    return pagehead("Club",
+        "Una membresía que no se vende a cualquiera. Da acceso a la plataforma Vacation "
+        "Owners: hoteles y resorts de todo el mundo a la mitad del costo público, más los "
+        "servicios de viaje de la casa.",
+        [("inicio", "Inicio")], single) + """
+<section>
+  <div class="wrap sec" style="padding-top:0">
+    <div class="gate">
+      <span class="seal" aria-hidden="true"></span>
+      <div>
+        <h3>Sólo para quien ya <em>invirtió con nosotros.</em></h3>
+        <p>Club no tiene campaña, no tiene precio de lista público y no se abre a quien llega de fuera. Se activa cuando usted escritura una fracción en Fraccional o una propiedad completa en Investing. Es un beneficio de haber invertido, no un producto que se persiga por separado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Qué da</p></div>
+      <div><h2>La plataforma <em>Vacation Owners.</em></h2>
+      <p class="lede measure" style="margin-top:16px">La red que los grandes desarrollos vacacionales usan para colocar inventario que de otro modo saldría vacío. Como miembro entra a esa misma red.</p></div></div>
+    <div class="grid3">
+      <div class="panel"><span class="folio">Beneficio 01</span><h3>Hoteles y resorts al 50%</h3><p>Inventario mundial de hoteles y resorts a la mitad del costo público. No son puntos ni semanas: es tarifa preferente sobre disponibilidad real, reservable en línea.</p></div>
+      <div class="panel"><span class="folio">Beneficio 02</span><h3>Servicios de viaje incluidos</h3><p>Vuelos, traslados y coordinación de itinerario a través de la agencia de Travel, sin la comisión que pagaría por fuera.</p></div>
+      <div class="panel"><span class="folio">Beneficio 03</span><h3>La capa de servicios, en viaje</h3><p>El mismo concierge que le resuelve la estancia en Riviera Nayarit le arma el viaje cuando se va a otro lado.</p></div>
+    </div>
+    <div class="note" style="margin-top:28px"><b>Cuota de membresía: [importe] al año.</b> Sustituya por el precio real y por las condiciones de renovación. El descuento sobre tarifa pública depende del inventario disponible en cada fecha y destino; no es un porcentaje garantizado sobre todo el catálogo.</div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Cómo se llega</p></div>
+      <div><h2>Dos puertas, <em>y las dos pasan por invertir.</em></h2></div></div>
+    <div class="grid2">
+      <div class="panel"><span class="folio">Vía 01</span><h3>Desde Fraccional</h3><p>Al escriturar su fracción en Anthus queda elegible. La membresía se activa el mismo día de la firma, sin trámite aparte.</p><p style="margin-top:14px"><a class="btn btn-ghost btn-sm" href="{frac}">Ver Fraccional <span class="arw">&rarr;</span></a></p></div>
+      <div class="panel"><span class="folio">Vía 02</span><h3>Desde Investing</h3><p>Al escriturar una casa, villa, condominio o terreno queda elegible en las mismas condiciones, sin importar el monto.</p><p style="margin-top:14px"><a class="btn btn-ghost btn-sm" href="{inv}">Ver Investing <span class="arw">&rarr;</span></a></p></div>
+    </div>
+  </div>
+</section>
+""".replace("{frac}", link("fractional", single)).replace("{inv}", link("investing", single))
+
+
+# ---------------------------------------------------------------- programas
+
+def p_rentas(single):
+    return pagehead("Rentas",
+        "Si no usa su propiedad, la rentamos por usted. Aplica igual a una fracción de "
+        "Anthus que a una casa completa: usted marca las fechas que se queda y nosotros "
+        "operamos el resto del año.",
+        [("inicio", "Inicio")], single) + """
+<section>
+  <div class="wrap sec" style="padding-top:0">
+    <div class="pool">
+      <div><p class="n">Tiempo 01</p><h3>Usted reserva sus fechas</h3><p>Antes de que empiece el año marca lo que se queda. Esas fechas quedan bloqueadas y nadie las toca. No hay mínimo de noches que ceder.</p><p class="fig num">0<small>Noches obligatorias</small></p></div>
+      <div><p class="n">Tiempo 02</p><h3>Nosotros operamos el resto</h3><p>Publicación en canales, tarifa dinámica por temporada, recepción de huéspedes, limpieza entre estancias, mantenimiento preventivo y depósito de daños.</p><p class="fig num">22%<small>Comisión sobre lo rentado</small></p></div>
+      <div><p class="n">Tiempo 03</p><h3>Le reportamos y le pagamos</h3><p>Estado trimestral con noches, tarifas obtenidas, gastos y neto. Transferencia el día 10 del mes siguiente al cierre, con CFDI.</p><p class="fig num">10<small>Día de pago, cada trimestre</small></p></div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Según qué compró</p></div>
+      <div><h2>La misma operación, <em>dos puntos de partida.</em></h2></div></div>
+    <div class="grid2">
+      <div class="panel"><span class="folio">Si tiene una fracción</span><h3>Va integrado, no se contrata</h3><p>En Fraccional el programa de rentas ya viene dentro del modelo: las semanas de su fracción que no reclama pasan automáticamente a renta administrada, y el neto le llega en el estado trimestral. No firma nada aparte.</p></div>
+      <div class="panel"><span class="folio">Si compró completo</span><h3>Es opcional, y se puede dejar</h3><p>En Investing usted decide si entra. El contrato es anual, se renueva sólo si quiere, y puede salir al término con 60 días de aviso, sin penalización ni recompra de nada.</p></div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Condiciones</p></div>
+      <div><h2>Lo que hace distinto <em>a este programa.</em></h2></div></div>
+    <div class="grid2">
+      <div class="panel"><span class="folio">Condición 01</span><h3>Sin exclusividad perpetua</h3><p>El contrato es anual. No hay cláusula que lo amarre por diez años ni penalización por no renovar.</p></div>
+      <div class="panel"><span class="folio">Condición 02</span><h3>Sin cuota de entrada</h3><p>No se cobra alta, ni fotografía, ni «puesta a punto». Si la propiedad necesita obra para rentarse, se lo decimos con presupuesto y usted decide.</p></div>
+      <div class="panel"><span class="folio">Condición 03</span><h3>Su propiedad no entra a un fondo común</h3><p>Se renta la suya y usted cobra lo que la suya generó. No repartimos ingresos entre propiedades: quien tiene mejor unidad cobra más, y quien la tiene peor lo ve en su estado.</p></div>
+      <div class="panel"><span class="folio">Condición 04</span><h3>Cuentas separadas</h3><p>Los depósitos de huéspedes y los ingresos no se mezclan con la operación de la administradora. Un concurso mercantil nuestro no alcanza su dinero.</p></div>
+    </div>
+    <div class="note" style="margin-top:28px"><b>Qué propiedades aceptamos.</b> Zona de [plazas donde opera]; mínimo [n] recámaras; alberca propia o del condominio; y disposición a mantener un estándar de mobiliario. No aceptamos todas: si su propiedad no va a rentarse bien, se lo decimos antes de firmar.</div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">{captura}</div>
+</section>
+""".replace("{captura}", mini_capture(
+    "rentasAlta", "Cuéntenos <em>de su propiedad.</em>",
+    "Ubicación, recámaras y si tiene alberca. Le devolvemos una estimación de ingreso anual "
+    "basada en lo que rentan propiedades comparables que ya operamos, con el desglose de "
+    "temporada alta y baja.",
+    "Pedir la estimación", fields="email+tel", done="Solicitud enviada",
+    fine="La estimación es gratuita y no compromete a nada. Si su propiedad no encaja, se lo decimos en esa misma respuesta."))
+
+
+def p_partner(single):
+    return pagehead("Partner Agent",
+        "Red de agentes y brokers aliados. No es un producto al público: es el canal por el "
+        "que trabajamos con quien ya tiene cartera de compradores y quiere colocar Fraccional, "
+        "Investing o Travel sin dejar de ser independiente.",
+        [("inicio", "Inicio")], single) + """
+<section>
+  <div class="wrap sec" style="padding-top:0">
+    <div class="grid3">
+      <div class="panel"><span class="folio">Cómo funciona 01</span><h3>Usted trae al cliente</h3><p>Registra al prospecto y queda protegido por [n] días. Si cierra en ese periodo, la comisión es suya aunque el cliente haya vuelto por su cuenta.</p></div>
+      <div class="panel"><span class="folio">Cómo funciona 02</span><h3>Nosotros cerramos la operación</h3><p>Due diligence, notario, fideicomiso y escrituración los lleva nuestro equipo. Usted acompaña al cliente sin tener que volverse experto en copropiedad.</p></div>
+      <div class="panel"><span class="folio">Cómo funciona 03</span><h3>Se le paga a la firma</h3><p>Comisión de [porcentaje] sobre el valor de la operación, liquidada dentro de los [n] días siguientes a la escritura, con factura.</p></div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Qué recibe</p></div>
+      <div><h2>Material para vender, <em>no un folleto.</em></h2></div></div>
+    <div class="grid2">
+      <div class="panel"><span class="folio">Herramienta 01</span><h3>Memorándum y expedientes</h3><p>Las mismas cifras auditadas, avalúos y contratos modelo que recibe un inversionista. Sin versión recortada para agentes.</p></div>
+      <div class="panel"><span class="folio">Herramienta 02</span><h3>Calculadora del modelo</h3><p>Puede correr el escenario del cliente delante de él, con los supuestos a la vista, y mandárselo por escrito.</p></div>
+      <div class="panel"><span class="folio">Herramienta 03</span><h3>Recorridos coordinados</h3><p>Agendamos la visita al desarrollo y la salida en yate el mismo día si conviene. Usted acompaña, nosotros operamos.</p></div>
+      <div class="panel"><span class="folio">Herramienta 04</span><h3>Registro de prospectos</h3><p>Alta en línea con folio y fecha, para que la protección de cartera no dependa de un correo perdido.</p></div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">{captura}</div>
+</section>
+""".replace("{captura}", mini_capture(
+    "partnerAlta", "¿Tiene cartera <em>y quiere colocarla?</em>",
+    "Déjenos su correo y le mandamos las condiciones de la red: esquema de comisiones, "
+    "protección de prospectos y el material de venta completo. Si ya trabaja una plaza "
+    "de Riviera Nayarit, dígalo en el mensaje.",
+    "Ver las condiciones", fields="email+tel", done="Solicitud enviada",
+    fine="Le respondemos en el mismo día hábil. No publicamos su nombre ni lo listamos en el sitio sin su permiso."))
 
 
 # ---------------------------------------------------------------- registro
 
 PAGES = [
     ("inicio", "Fractional, Travel &amp; Investing",
-     "Tres divisiones en Riviera Nayarit: copropiedad fraccional escriturada, servicios de viaje y pool de rentas, y venta de casas y terrenos.",
+     "Tres vías de entrada en Riviera Nayarit: viajes que generan crédito, copropiedad fraccional escriturada y propiedad completa. Más el Club, sólo para inversionistas.",
      p_inicio, ""),
 
-    ("fractional", "Fractional",
-     "Copropiedad fraccional escriturada de residencias frente al mar en Riviera Nayarit. Una octava parte de la casa y seis semanas al año.",
+    # --- Fraccional -------------------------------------------------------
+    ("fractional", "Fraccional",
+     "Copropiedad fraccional escriturada en Anthus. Una octava parte de la residencia, seis semanas y media al año, y programa de rentas integrado.",
      p_fractional, "div-fractional"),
-    ("residencias", "Residencias",
-     "Tres residencias en Nuevo Vallarta, Sayulita y Bucerías, cada una dividida en ocho fracciones escrituradas.",
-     p_residencias, "div-fractional"),
-    ("residencia-marea", "Residencia Marea",
-     "Residencia frente de playa en Nuevo Vallarta. 240 m², tres recámaras, fracción 1/8 desde USD $140,000.",
-     lambda s: p_residencia("residencia-marea", s), "div-fractional"),
-    ("residencia-sayulita-alta", "Villa Sayulita Alta",
-     "Villa en la colina de Sayulita. 185 m², tres recámaras, fracción 1/8 desde USD $120,000.",
-     lambda s: p_residencia("residencia-sayulita-alta", s), "div-fractional"),
-    ("residencia-nayar", "Penthouse Nayar",
-     "Penthouse en Bucerías con doble vista a la bahía. 310 m², cuatro recámaras, fracción 1/8 desde USD $220,000.",
-     lambda s: p_residencia("residencia-nayar", s), "div-fractional"),
+    ("anthus", "Anthus",
+     "El desarrollo con el que abrimos la vertical de copropiedad. Cada residencia dividida en ocho fracciones escrituradas.",
+     p_anthus, "div-fractional"),
     ("modelo", "Cómo funciona",
      "Ocho copropietarios, una escritura por fracción, un calendario que rota y una administradora que opera la casa.",
      p_modelo, "div-fractional"),
@@ -1508,29 +1832,45 @@ PAGES = [
      "Calculadora del modelo económico de una fracción, con los supuestos de ocupación, comisión y cuota declarados.",
      p_inversion, "div-fractional"),
     ("memorandum", "El memorándum",
-     "Cifras auditadas, reglamento de uso y contrato de fideicomiso modelo de cada residencia, sin costo ni compromiso.",
+     "Cifras auditadas, reglamento de uso y contrato de fideicomiso modelo de Anthus, sin costo ni compromiso.",
      p_memorandum, "div-fractional"),
+    ("copropietarios", "Copropietarios",
+     "Testimonios de copropietarios y qué esperar del primer año tras escriturar una fracción.",
+     p_copropietarios, "div-fractional"),
 
+    # --- Travel -----------------------------------------------------------
     ("travel", "Travel",
-     "Yates propios, experiencias en la Bahía de Banderas, chef y traslados, y el pool de rentas para dueños de casa.",
+     "Yates propios, actividades, circuitos y agencia de viajes. Cada experiencia genera crédito hacia una futura inversión.",
      p_travel, "div-travel"),
     ("yates", "Flota",
      "Tres embarcaciones propias con base en Nuevo Vallarta: yate a motor, deportivo y catamarán, con tripulación.",
      p_yates, "div-travel"),
-    ("pool-de-rentas", "Pool de rentas",
-     "Operamos, rentamos y reportamos su casa en Riviera Nayarit. Sin exclusividad perpetua y sin cuota de entrada.",
-     p_pool, "div-travel"),
 
+    # --- Investing --------------------------------------------------------
     ("investing", "Investing",
-     "Casas terminadas y terrenos en propiedad completa en Riviera Nayarit, con expediente completo antes de firmar.",
+     "Condominios, casas, villas y terrenos en propiedad completa en Riviera Nayarit, con expediente completo antes de firmar.",
      p_investing, "div-investing"),
 
+    # --- Club -------------------------------------------------------------
+    ("club", "Club",
+     "Membresía exclusiva para quienes ya invirtieron: plataforma Vacation Owners con hoteles y resorts al 50% del costo público.",
+     p_club, "div-club"),
+
+    # --- Capa y programas transversales -----------------------------------
+    ("servicios", "Servicios",
+     "Concierge VIP, chef, renta de autos y catálogo de servicios. La capa que aparece dentro de las tres verticales.",
+     p_servicios, ""),
+    ("rentas", "Rentas",
+     "Si no usa su propiedad, la rentamos por usted. Integrado en Fraccional, opcional en Investing.",
+     p_rentas, ""),
+    ("partner-agent", "Partner Agent",
+     "Red de agentes y brokers aliados: protección de prospectos, material de venta y comisión a la firma.",
+     p_partner, ""),
+
+    # --- Casa -------------------------------------------------------------
     ("legal", "Estructura legal",
      "Escritura pública, fideicomiso bancario, reglamento de uso y administración con cuentas separadas.",
      p_legal, ""),
-    ("copropietarios", "Copropietarios",
-     "Testimonios de copropietarios y qué esperar del primer año tras escriturar una fracción.",
-     p_copropietarios, "div-fractional"),
     ("nosotros", "Quiénes somos",
      "El equipo que selecciona los inmuebles, opera las casas y coordina notarios y fideicomisos.",
      p_nosotros, ""),
@@ -1541,7 +1881,7 @@ PAGES = [
      "Diez preguntas sobre copropiedad fraccional: salida, morosidad, calendario, fideicomiso y fiscalidad.",
      p_preguntas, ""),
     ("agendar", "Hablar con alguien",
-     "Una conversación de cuarenta y cinco minutos para saber cuál de las tres divisiones le corresponde, si es que alguna.",
+     "Una conversación de cuarenta y cinco minutos para saber cuál de las vías le corresponde, si es que alguna.",
      p_agendar, ""),
     ("avisos", "Aviso legal y privacidad",
      "Naturaleza de la información publicada, tratamiento de datos personales y documentos que rigen la operación.",
@@ -1609,7 +1949,8 @@ def build():
 
 # ---------------------------------------------------------------- embudo
 
-TOTAL_LIBRES = sum(8 - r["sold"] for r in RESIDENCIAS)
+TOTAL_FRACCIONES = ANTHUS["liberadas"] * ANTHUS["fracciones"]
+TOTAL_LIBRES = TOTAL_FRACCIONES - ANTHUS["vendidas"]
 
 
 def stickybar(single, texto=None, cta="Agendar llamada"):
@@ -1617,7 +1958,7 @@ def stickybar(single, texto=None, cta="Agendar llamada"):
   <div class="wrap stickybar-in">
     <div class="txt">
       <p class="t1">%s</p>
-      <p class="t2"><b>%d</b> de 24 fracciones disponibles &middot; sin compromiso</p>
+      <p class="t2"><b>%d</b> de %d fracciones disponibles &middot; sin compromiso</p>
     </div>
     <a class="btn ghost btn-sm" href="%s">Descargar el memorándum</a>
     <a class="btn btn-sm" href="%s">%s <span class="arw">&rarr;</span></a>
@@ -1625,7 +1966,7 @@ def stickybar(single, texto=None, cta="Agendar llamada"):
   </div>
 </div>
 """ % (texto or "¿Le cuadran los números? El siguiente paso es una llamada de 45 minutos.",
-       TOTAL_LIBRES, link("memorandum", single), link("agendar", single), cta)
+       TOTAL_LIBRES, TOTAL_FRACCIONES, link("memorandum", single), link("agendar", single), cta)
 
 
 def ladder(here, single):
@@ -1687,31 +2028,5 @@ def notfor():
         for h, p in items)
 
 
-def picker(single):
-    def fila(label, key, fmt=lambda r: "", best=None):
-        cells = "".join('<td%s>%s</td>' % (' class="best"' if best == r["slug"] else "", fmt(r))
-                        for r in RESIDENCIAS)
-        return '<tr><th scope="row">%s</th>%s</tr>' % (label, cells)
-
-    heads = "".join('<th><a href="%s" style="text-decoration:none; color:inherit">%s</a>'
-                    '<small>%s</small></th>' % (link(r["slug"], single), r["name"], r["loc"])
-                    for r in RESIDENCIAS)
-    filas = "".join([
-        fila("Fracción 1/8", None, lambda r: "USD $" + format(r["frac"], ","), "residencia-sayulita-alta"),
-        fila("Cuota anual", None, lambda r: "USD $" + format(r["opex"], ",")),
-        fila("Tarifa por noche", None, lambda r: "USD $" + format(r["rate"], ","), "residencia-nayar"),
-        fila("Superficie", None, lambda r: r["m2"], "residencia-nayar"),
-        fila("Recámaras", None, lambda r: r["rec"]),
-        fila("Fracciones libres", None, lambda r: "%d de 8" % (8 - r["sold"]), "residencia-sayulita-alta"),
-        fila("Entrega", None, lambda r: r["specs"][-1].replace("Preventa · ", "")),
-    ])
-    ctas = "".join('<td class="pick-cta"><a class="btn btn-ghost btn-sm" href="%s">Ver la ficha</a></td>'
-                   % link(r["slug"], single) for r in RESIDENCIAS)
-    return """<div class="picker">
-  <table>
-    <thead><tr><th></th>%s</tr></thead>
-    <tbody>%s<tr><th scope="row"></th>%s</tr></tbody>
-  </table>
-</div>""" % (heads, filas, ctas)
 if __name__ == "__main__":
     build()

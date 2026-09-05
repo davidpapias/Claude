@@ -21,6 +21,56 @@
       "source": "/inversion.html",
       "destination": "/numeros",
       "permanent": true
+    },
+    {
+      "source": "/residencias",
+      "destination": "/anthus",
+      "permanent": true
+    },
+    {
+      "source": "/residencias.html",
+      "destination": "/anthus",
+      "permanent": true
+    },
+    {
+      "source": "/residencia-marea",
+      "destination": "/anthus",
+      "permanent": true
+    },
+    {
+      "source": "/residencia-marea.html",
+      "destination": "/anthus",
+      "permanent": true
+    },
+    {
+      "source": "/residencia-sayulita-alta",
+      "destination": "/anthus",
+      "permanent": true
+    },
+    {
+      "source": "/residencia-sayulita-alta.html",
+      "destination": "/anthus",
+      "permanent": true
+    },
+    {
+      "source": "/residencia-nayar",
+      "destination": "/anthus",
+      "permanent": true
+    },
+    {
+      "source": "/residencia-nayar.html",
+      "destination": "/anthus",
+      "permanent": true
+    },
+    {
+      "source": "/pool-de-rentas",
+      "destination": "/rentas",
+      "permanent": true
+    },
+    {
+      "source": "/pool-de-rentas.html",
+      "destination": "/rentas",
+      "permanent": true
     }
   ],
   "headers": [
