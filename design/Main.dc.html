@@ -1,0 +1,376 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+  <style>
+    :root{
+      --navy:#223B5D; --navy-900:#16283F; --navy-700:#1C3350; --navy-500:#2F4E76;
+      --gray:#B5B6B6; --gray-100:#F2F3F4; --gray-200:#E2E4E6;
+      --ink:#16202C; --white:#FFFFFF; --amber:#E0A03A;
+      --display:"Archivo","Helvetica Neue",Helvetica,sans-serif;
+      --body:"IBM Plex Sans","Segoe UI",Helvetica,sans-serif;
+    }
+    body{margin:0;background:#16283F;color:#16202C;font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+    a{color:#223B5D;text-decoration:none;}
+    a:hover{color:#E0A03A;}
+    p{margin:0;}
+    h1,h2,h3,h4{margin:0;font-family:var(--display);font-weight:700;text-transform:uppercase;text-wrap:balance;line-height:1.04;}
+    .num{font-variant-numeric:tabular-nums;font-family:var(--display);}
+    .rule{width:140px;height:3px;background:#B5B6B6;}
+    .eyebrow{font-family:var(--body);font-weight:600;font-size:12px;letter-spacing:.2em;text-transform:uppercase;}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:var(--body);font-weight:600;font-size:13px;letter-spacing:.14em;text-transform:uppercase;padding:16px 28px;border:2px solid transparent;}
+    .wrap{max-width:1200px;margin:0 auto;}
+    .ph{outline:1px dashed #9AA6B4;color:#6A7788;font-family:var(--body);font-size:11px;letter-spacing:.14em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;}
+  </style>
+</helmet>
+
+<div style="width:1440px;background:#FFFFFF;">
+
+  <!-- ══ BARRA SUPERIOR ══ -->
+  <div style="background:#16283F;color:#B5B6B6;">
+    <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;height:42px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;">
+      <span>Distribuidor autorizado <span style="color:#FFFFFF;font-weight:600;">Sitrak</span> · Sinotruk</span>
+      <div style="display:flex;gap:28px;align-items:center;">
+        <span>Más de 24 agencias en México</span>
+        <span style="color:#FFFFFF;font-weight:600;">Tel. [55 0000 0000]</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ENCABEZADO ══ -->
+  <div style="background:#223B5D;">
+    <div class="wrap" style="display:flex;align-items:center;gap:44px;height:88px;">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+          <path d="M17 3 L31 31 L23.5 31 L17 17 L10.5 31 L3 31 Z" fill="#FFFFFF"></path>
+          <path d="M17 19 L21 27 L13 27 Z" fill="#E0A03A"></path>
+        </svg>
+        <div>
+          <div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:21px;letter-spacing:.06em;color:#FFFFFF;text-transform:uppercase;">Apex</div>
+          <div style="font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:#B5B6B6;font-weight:500;margin-top:1px;">Distribuidor Sitrak</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:30px;margin-left:auto;font-size:14.5px;font-weight:500;color:#DCE0E5;">
+        <a href="#" style="color:#FFFFFF;border-bottom:3px solid #E0A03A;padding-bottom:5px;">Modelos</a>
+        <a href="#" style="color:#DCE0E5;">Beneficios</a>
+        <a href="#" style="color:#DCE0E5;">Postventa</a>
+        <a href="#" style="color:#DCE0E5;">Agencias</a>
+        <a href="#" style="color:#DCE0E5;">Nosotros</a>
+      </div>
+      <a href="#" class="btn" style="background:#E0A03A;color:#16283F;padding:14px 24px;">Cotizar</a>
+    </div>
+  </div>
+
+  <!-- ══ HERO ══ -->
+  <div style="display:flex;background:#223B5D;">
+    <div style="flex:1 1 58%;padding:96px 0 96px 120px;display:flex;flex-direction:column;gap:30px;">
+      <div class="rule"></div>
+      <h1 style="font-size:104px;font-weight:800;letter-spacing:.15em;color:#FFFFFF;line-height:0.95;">Sitrak</h1>
+      <p style="font-size:25px;color:#C9CDD3;max-width:19ch;line-height:1.35;">Tecnología europea al servicio del transporte pesado en México</p>
+      <p style="font-size:17px;color:#8E9AAA;max-width:44ch;border-left:3px solid #2F4E76;padding-left:18px;">Para el dueño de flota que mide el negocio por kilómetro recorrido, no por unidad comprada.</p>
+      <div style="display:flex;gap:12px;margin-top:6px;">
+        <a href="#" class="btn" style="background:#E0A03A;color:#16283F;">Cotizar mi flotilla</a>
+        <a href="#" class="btn" style="border:2px solid #47618A;color:#FFFFFF;">Calcular costo por km</a>
+      </div>
+      <p style="font-size:14px;letter-spacing:.08em;color:#7C8899;margin-top:12px;">apexsitrak.com</p>
+    </div>
+    <div style="flex:0 0 528px;position:relative;">
+      <img src="tracto-hero.jpg" alt="Tractocamión Sitrak C7H 540 6x4" style="width:100%;height:100%;object-fit:cover;display:block;">
+    </div>
+  </div>
+
+  <!-- ══ CIFRAS / NOSOTROS ══ -->
+  <div style="background:#16283F;">
+    <div class="wrap" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));">
+      <div style="padding:34px 32px 34px 0;border-right:1px solid #2A3D57;">
+        <div class="num" style="font-size:42px;font-weight:800;color:#FFFFFF;">24<span style="color:#E0A03A;">+</span></div>
+        <div class="eyebrow" style="color:#93A0B0;margin-top:6px;">Agencias en México</div>
+      </div>
+      <div style="padding:34px 32px;border-right:1px solid #2A3D57;">
+        <div class="num" style="font-size:42px;font-weight:800;color:#FFFFFF;">400,000</div>
+        <div class="eyebrow" style="color:#93A0B0;margin-top:6px;">Unidades al año · Sinotruk</div>
+      </div>
+      <div style="padding:34px 32px;border-right:1px solid #2A3D57;">
+        <div class="num" style="font-size:42px;font-weight:800;color:#FFFFFF;">100<span style="color:#E0A03A;">+</span></div>
+        <div class="eyebrow" style="color:#93A0B0;margin-top:6px;">Países con presencia</div>
+      </div>
+      <div style="padding:34px 0 34px 32px;">
+        <div class="num" style="font-size:42px;font-weight:800;color:#FFFFFF;">1956</div>
+        <div class="eyebrow" style="color:#93A0B0;margin-top:6px;">Fundación de Sinotruk</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CLIENTES ══ -->
+  <div style="background:#FFFFFF;padding:96px 0;">
+    <div class="wrap" style="display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;">
+      <div style="display:flex;flex-direction:column;gap:22px;">
+        <div class="rule" style="background:#223B5D;"></div>
+        <h2 style="font-size:46px;color:#223B5D;letter-spacing:.02em;">Clientes</h2>
+        <p style="font-size:20px;color:#4C5765;max-width:36ch;">Aprobados por las flotas más exigentes de México.</p>
+        <p style="font-size:16px;color:#6A7482;max-width:44ch;">Antes de firmar, un dueño de flota quiere saber quién ya opera la unidad y desde cuándo. Esta es la respuesta corta.</p>
+      </div>
+      <div style="background:#223B5D;padding:52px 48px;display:flex;flex-direction:column;gap:18px;">
+        <span class="eyebrow" style="color:#E0A03A;">Aprobado</span>
+        <div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:58px;letter-spacing:.1em;color:#FFFFFF;">CEMEX</div>
+        <div style="height:1px;background:#3A5273;"></div>
+        <p style="font-size:17px;color:#C2C8D0;">
+          <span class="num" style="font-size:24px;font-weight:700;color:#FFFFFF;">5,000+</span>
+          &nbsp;unidades operando
+        </p>
+        <p style="font-size:13px;color:#7E8CA0;letter-spacing:.04em;">[Verificar cifra y vigencia con el área comercial antes de publicar]</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ MARCAS QUE CONFÍAN ══ -->
+  <div style="background:#F2F3F4;padding:64px 0;">
+    <div class="wrap" style="display:flex;flex-direction:column;gap:34px;">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;">
+        <h3 style="font-size:22px;color:#223B5D;letter-spacing:.08em;">Marcas que confían en nosotros</h3>
+        <span style="font-size:13px;color:#77818F;">Cada uno de los giros que atiende nuestra red</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px;">
+        <div class="ph" style="height:76px;background:#FFFFFF;">Logo cliente</div>
+        <div class="ph" style="height:76px;background:#FFFFFF;">Logo cliente</div>
+        <div class="ph" style="height:76px;background:#FFFFFF;">Logo cliente</div>
+        <div class="ph" style="height:76px;background:#FFFFFF;">Logo cliente</div>
+        <div class="ph" style="height:76px;background:#FFFFFF;">Logo cliente</div>
+        <div class="ph" style="height:76px;background:#FFFFFF;">Logo cliente</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ BENEFICIOS SITRAK ══ -->
+  <div style="background:#223B5D;padding:96px 0;">
+    <div class="wrap" style="display:flex;flex-direction:column;gap:44px;">
+      <div style="display:flex;flex-direction:column;gap:20px;">
+        <div class="rule"></div>
+        <h2 style="font-size:46px;color:#FFFFFF;letter-spacing:.03em;">Beneficios Sitrak</h2>
+        <p style="font-size:19px;color:#A9B3C0;max-width:56ch;">Lo que cambia en tu estado de resultados cuando la unidad es Sitrak.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;">
+
+        <div style="background:#1C3350;border:1px solid #33496A;padding:32px;display:flex;flex-direction:column;gap:14px;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E0A03A" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+            <path d="M12 20a8 8 0 1 1 8-8"></path><path d="M12 12l5-4"></path><circle cx="12" cy="12" r="1.4" fill="#E0A03A"></circle>
+          </svg>
+          <h4 style="font-size:19px;color:#FFFFFF;">Rendimiento de combustible</h4>
+          <p style="font-size:14.5px;color:#9FAAB9;">El rubro que más pesa en el costo por kilómetro. Gestión electrónica del motor y aerodinámica de cabina trabajando sobre él.</p>
+        </div>
+
+        <div style="background:#1C3350;border:1px solid #33496A;padding:32px;display:flex;flex-direction:column;gap:14px;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E0A03A" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+            <rect x="3" y="8" width="13" height="9" rx="1.5"></rect><path d="M16 11h3l2 2v2h-5"></path><path d="M6 8V5h5v3"></path>
+          </svg>
+          <h4 style="font-size:19px;color:#FFFFFF;">Motor con tecnología MAN</h4>
+          <p style="font-size:14.5px;color:#9FAAB9;">MT13.54-50 de 13 litros y 6 cilindros: 540 HP y 1,844 lb-ft desde las 1,000 rpm. Par amplio para no perder velocidad en pendiente.</p>
+        </div>
+
+        <div style="background:#1C3350;border:1px solid #33496A;padding:32px;display:flex;flex-direction:column;gap:14px;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E0A03A" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="3"></circle><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"></path>
+          </svg>
+          <h4 style="font-size:19px;color:#FFFFFF;">Transmisión ZF con retardador</h4>
+          <p style="font-size:14.5px;color:#9FAAB9;">ZF 16S2531TO de 16 velocidades con retardador integrado, o AMT de 12. Menos desgaste de balatas en descenso largo.</p>
+        </div>
+
+        <div style="background:#1C3350;border:1px solid #33496A;padding:32px;display:flex;flex-direction:column;gap:14px;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E0A03A" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+            <path d="M12 21s6-5.3 6-10a6 6 0 1 0-12 0c0 4.7 6 10 6 10z"></path><circle cx="12" cy="11" r="2.2"></circle>
+          </svg>
+          <h4 style="font-size:19px;color:#FFFFFF;">Telemetría de fábrica</h4>
+          <p style="font-size:14.5px;color:#9FAAB9;">Ubicación, consumo y conducta de manejo por unidad. El tablero que un dueño de flota necesita para administrar operadores.</p>
+        </div>
+
+        <div style="background:#1C3350;border:1px solid #33496A;padding:32px;display:flex;flex-direction:column;gap:14px;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E0A03A" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+            <path d="M14.5 4.5a4.5 4.5 0 0 0-6 5.9L4 15v4h4l4.6-4.6a4.5 4.5 0 0 0 5.9-6l-2.8 2.8-2.4-2.4z"></path>
+          </svg>
+          <h4 style="font-size:19px;color:#FFFFFF;">Refacciones originales</h4>
+          <p style="font-size:14.5px;color:#9FAAB9;">Centros de partes estratégicamente ubicados en la red. Que el paro dure horas y no semanas es la diferencia rentable.</p>
+        </div>
+
+        <div style="background:#1C3350;border:1px solid #33496A;padding:32px;display:flex;flex-direction:column;gap:14px;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E0A03A" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+            <path d="M3 7h11v9H3z"></path><path d="M14 10h4l3 3v3h-7z"></path><circle cx="7" cy="18" r="1.6"></circle><circle cx="17.5" cy="18" r="1.6"></circle>
+          </svg>
+          <h4 style="font-size:19px;color:#FFFFFF;">Entrega y financiamiento</h4>
+          <p style="font-size:14.5px;color:#9FAAB9;">Precio directo de planta, esquemas de crédito y arrendamiento, y fecha de entrega confirmada desde la cotización.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ MODELOS ══ -->
+  <div style="background:#FFFFFF;padding:96px 0;">
+    <div class="wrap" style="display:flex;flex-direction:column;gap:40px;">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;">
+        <div style="display:flex;flex-direction:column;gap:20px;">
+          <div class="rule" style="background:#223B5D;"></div>
+          <h2 style="font-size:46px;color:#223B5D;letter-spacing:.02em;">Modelos</h2>
+          <p style="font-size:19px;color:#4C5765;max-width:52ch;">Desde 6 toneladas hasta tractocamiones. Cinco líneas que cubren el reparto urbano, la obra y la carretera federal.</p>
+        </div>
+        <a href="#" class="btn" style="border:2px solid #223B5D;color:#223B5D;flex:none;">Ver las 11 unidades</a>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;">
+        <div style="border:1px solid #E2E4E6;background:#FFFFFF;">
+          <div class="ph" style="height:132px;background:#F2F3F4;">Foto ligeros</div>
+          <div style="padding:22px;display:flex;flex-direction:column;gap:9px;">
+            <span class="eyebrow" style="color:#E0A03A;font-size:11px;">2 unidades</span>
+            <h4 style="font-size:16px;color:#223B5D;">Ligeros</h4>
+            <p style="font-size:13.5px;color:#6A7482;">Urbanos, 6 y 8 t. Agilidad y consumo para la última milla.</p>
+          </div>
+        </div>
+        <div style="border:1px solid #E2E4E6;background:#FFFFFF;">
+          <div class="ph" style="height:132px;background:#F2F3F4;">Foto medianos</div>
+          <div style="padding:22px;display:flex;flex-direction:column;gap:9px;">
+            <span class="eyebrow" style="color:#E0A03A;font-size:11px;">2 unidades</span>
+            <h4 style="font-size:16px;color:#223B5D;">Medianos</h4>
+            <p style="font-size:13.5px;color:#6A7482;">Hasta 25 t de carga. Chasis para carrocería a la medida.</p>
+          </div>
+        </div>
+        <div style="border:1px solid #E2E4E6;background:#FFFFFF;">
+          <div class="ph" style="height:132px;background:#F2F3F4;">Foto vocacionales</div>
+          <div style="padding:22px;display:flex;flex-direction:column;gap:9px;">
+            <span class="eyebrow" style="color:#E0A03A;font-size:11px;">2 unidades</span>
+            <h4 style="font-size:16px;color:#223B5D;">Vocacionales</h4>
+            <p style="font-size:13.5px;color:#6A7482;">Obra y minería. Volteo de 16 m³ y configuración 8×4.</p>
+          </div>
+        </div>
+        <div style="border:1px solid #E2E4E6;background:#FFFFFF;">
+          <div class="ph" style="height:132px;background:#F2F3F4;">Foto gran dimensión</div>
+          <div style="padding:22px;display:flex;flex-direction:column;gap:9px;">
+            <span class="eyebrow" style="color:#E0A03A;font-size:11px;">1 unidad</span>
+            <h4 style="font-size:16px;color:#223B5D;">Gran dimensión</h4>
+            <p style="font-size:13.5px;color:#6A7482;">6×6 con arrastre de hasta 150 t para carga especial.</p>
+          </div>
+        </div>
+        <div style="border:2px solid #223B5D;background:#FFFFFF;">
+          <img src="tracto-wide.jpg" alt="Tractocamión Sitrak" style="width:100%;height:132px;object-fit:cover;display:block;">
+          <div style="padding:22px;display:flex;flex-direction:column;gap:9px;">
+            <span class="eyebrow" style="color:#E0A03A;font-size:11px;">4 unidades · más vendida</span>
+            <h4 style="font-size:16px;color:#223B5D;">Tractocamiones</h4>
+            <p style="font-size:13.5px;color:#6A7482;">540 HP y 1,844 lb-ft para carretera federal y arrastre full.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ REVOLUCIONANDO EL SERVICIO ══ -->
+  <div style="display:flex;background:#16283F;">
+    <div style="flex:0 0 560px;">
+      <img src="tracto-frente.jpg" alt="Unidad Sitrak en taller" style="width:100%;height:100%;object-fit:cover;display:block;">
+    </div>
+    <div style="flex:1;padding:88px 120px 88px 72px;display:flex;flex-direction:column;gap:32px;">
+      <div style="display:flex;flex-direction:column;gap:18px;">
+        <div class="rule"></div>
+        <h2 style="font-size:42px;color:#FFFFFF;letter-spacing:.02em;line-height:1.06;">Revolucionando<br>el servicio</h2>
+        <p style="font-size:17px;color:#A2AEBD;max-width:46ch;">Una unidad parada no cuesta refacciones: cuesta viajes. Por eso el modelo Apex se mide en disponibilidad.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:#2A3D57;border:1px solid #2A3D57;">
+        <div style="background:#16283F;padding:20px 22px;"><div style="font-family:'Archivo',sans-serif;font-weight:700;font-size:14.5px;color:#FFFFFF;text-transform:uppercase;letter-spacing:.05em;">Taller móvil</div><p style="font-size:13px;color:#8E9BAB;margin-top:5px;">Atendemos la unidad donde esté</p></div>
+        <div style="background:#16283F;padding:20px 22px;"><div style="font-family:'Archivo',sans-serif;font-weight:700;font-size:14.5px;color:#FFFFFF;text-transform:uppercase;letter-spacing:.05em;">Unidades de reacción</div><p style="font-size:13px;color:#8E9BAB;margin-top:5px;">Asistencia en carretera</p></div>
+        <div style="background:#16283F;padding:20px 22px;"><div style="font-family:'Archivo',sans-serif;font-weight:700;font-size:14.5px;color:#FFFFFF;text-transform:uppercase;letter-spacing:.05em;">Herramienta especializada</div><p style="font-size:13px;color:#8E9BAB;margin-top:5px;">Diagnóstico propio de la marca</p></div>
+        <div style="background:#16283F;padding:20px 22px;"><div style="font-family:'Archivo',sans-serif;font-weight:700;font-size:14.5px;color:#FFFFFF;text-transform:uppercase;letter-spacing:.05em;">Técnicos capacitados</div><p style="font-size:13px;color:#8E9BAB;margin-top:5px;">Certificados por Sitrak</p></div>
+        <div style="background:#16283F;padding:20px 22px;"><div style="font-family:'Archivo',sans-serif;font-weight:700;font-size:14.5px;color:#FFFFFF;text-transform:uppercase;letter-spacing:.05em;">Partes de mantenimiento</div><p style="font-size:13px;color:#8E9BAB;margin-top:5px;">Planes preventivos programados</p></div>
+        <div style="background:#16283F;padding:20px 22px;"><div style="font-family:'Archivo',sans-serif;font-weight:700;font-size:14.5px;color:#FFFFFF;text-transform:uppercase;letter-spacing:.05em;">Disponibilidad de refacciones</div><p style="font-size:13px;color:#8E9BAB;margin-top:5px;">Centros de partes en la red</p></div>
+      </div>
+      <a href="#" class="btn" style="border:2px solid #47618A;color:#FFFFFF;align-self:flex-start;">Agendar servicio de taller</a>
+    </div>
+  </div>
+
+  <!-- ══ EMBUDO: COTIZADOR ══ -->
+  <div style="background:#FFFFFF;padding:96px 0;">
+    <div class="wrap" style="border:2px solid #223B5D;display:grid;grid-template-columns:1.15fr 1fr;">
+      <div style="padding:56px 52px;display:flex;flex-direction:column;gap:22px;">
+        <div class="rule" style="background:#223B5D;"></div>
+        <h2 style="font-size:40px;color:#223B5D;letter-spacing:.02em;line-height:1.06;">Cotiza tu flotilla<br>en cuatro pasos</h2>
+        <p style="font-size:17px;color:#4C5765;max-width:46ch;">Nos dices la operación, no tus datos. El enganche y el plazo van en el paso tres, así la cotización te llega con la mensualidad ya calculada y no en una segunda llamada.</p>
+        <div style="display:flex;gap:12px;margin-top:8px;">
+          <a href="#" class="btn" style="background:#E0A03A;color:#16283F;">Iniciar cotización</a>
+          <a href="#" class="btn" style="border:2px solid #C6CBD1;color:#223B5D;">Hablar por WhatsApp</a>
+        </div>
+        <p style="font-size:13px;color:#77818F;letter-spacing:.04em;margin-top:4px;">Respuesta en menos de 24 h hábiles.</p>
+      </div>
+      <div style="background:#F2F3F4;padding:56px 48px;display:flex;flex-direction:column;gap:0;">
+        <div style="display:flex;gap:16px;padding:16px 0;border-bottom:1px solid #D8DBDF;align-items:center;">
+          <span class="num" style="font-size:15px;font-weight:800;color:#FFFFFF;background:#223B5D;width:28px;height:28px;display:flex;align-items:center;justify-content:center;flex:none;">1</span>
+          <span style="font-size:15.5px;color:#223B5D;font-weight:500;">Tipo de operación</span>
+        </div>
+        <div style="display:flex;gap:16px;padding:16px 0;border-bottom:1px solid #D8DBDF;align-items:center;">
+          <span class="num" style="font-size:15px;font-weight:800;color:#FFFFFF;background:#223B5D;width:28px;height:28px;display:flex;align-items:center;justify-content:center;flex:none;">2</span>
+          <span style="font-size:15.5px;color:#223B5D;font-weight:500;">Unidad y cantidad</span>
+        </div>
+        <div style="display:flex;gap:16px;padding:16px 0;border-bottom:1px solid #D8DBDF;align-items:center;">
+          <span class="num" style="font-size:15px;font-weight:800;color:#16283F;background:#E0A03A;width:28px;height:28px;display:flex;align-items:center;justify-content:center;flex:none;">3</span>
+          <span style="font-size:15.5px;color:#223B5D;font-weight:600;">Enganche y plazo</span>
+        </div>
+        <div style="display:flex;gap:16px;padding:16px 0;align-items:center;">
+          <span class="num" style="font-size:15px;font-weight:800;color:#FFFFFF;background:#223B5D;width:28px;height:28px;display:flex;align-items:center;justify-content:center;flex:none;">4</span>
+          <span style="font-size:15.5px;color:#223B5D;font-weight:500;">Tus datos de contacto</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ PIE ══ -->
+  <div style="background:#16283F;padding:64px 0 32px;">
+    <div class="wrap" style="display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:44px;">
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <svg width="30" height="30" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+            <path d="M17 3 L31 31 L23.5 31 L17 17 L10.5 31 L3 31 Z" fill="#FFFFFF"></path>
+            <path d="M17 19 L21 27 L13 27 Z" fill="#E0A03A"></path>
+          </svg>
+          <div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:19px;letter-spacing:.06em;color:#FFFFFF;text-transform:uppercase;">Apex</div>
+        </div>
+        <p style="font-size:14px;color:#8E9BAB;max-width:32ch;">Soluciones de transporte pesado desde 6 toneladas hasta tractocamiones, con servicio postventa en todo México.</p>
+      </div>
+      <div>
+        <div class="eyebrow" style="color:#6E7C8D;margin-bottom:14px;">Modelos</div>
+        <div style="display:flex;flex-direction:column;gap:9px;font-size:14px;">
+          <a href="#" style="color:#C6CDD6;">Tractocamiones</a>
+          <a href="#" style="color:#C6CDD6;">Vocacionales</a>
+          <a href="#" style="color:#C6CDD6;">Medianos</a>
+          <a href="#" style="color:#C6CDD6;">Ligeros</a>
+        </div>
+      </div>
+      <div>
+        <div class="eyebrow" style="color:#6E7C8D;margin-bottom:14px;">Servicio</div>
+        <div style="display:flex;flex-direction:column;gap:9px;font-size:14px;">
+          <a href="#" style="color:#C6CDD6;">Postventa</a>
+          <a href="#" style="color:#C6CDD6;">Refacciones</a>
+          <a href="#" style="color:#C6CDD6;">Agencias</a>
+          <a href="#" style="color:#C6CDD6;">Agendar cita</a>
+        </div>
+      </div>
+      <div>
+        <div class="eyebrow" style="color:#6E7C8D;margin-bottom:14px;">Contacto</div>
+        <div style="display:flex;flex-direction:column;gap:9px;font-size:14px;">
+          <a href="#" style="color:#C6CDD6;">WhatsApp</a>
+          <a href="#" style="color:#C6CDD6;">LinkedIn</a>
+          <a href="#" style="color:#C6CDD6;">Facebook</a>
+          <a href="#" style="color:#C6CDD6;">YouTube</a>
+        </div>
+      </div>
+    </div>
+    <div class="wrap" style="display:flex;justify-content:space-between;border-top:1px solid #2A3D57;margin-top:44px;padding-top:22px;font-size:12.5px;color:#6E7C8D;letter-spacing:.06em;">
+      <span>© 2026 Apex · Distribuidor autorizado Sitrak</span>
+      <span>Aviso de privacidad · Términos</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

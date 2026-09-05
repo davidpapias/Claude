@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+  <style>
+    body{margin:0;background:#FFFFFF;color:#16202C;font-family:"IBM Plex Sans","Segoe UI",Helvetica,sans-serif;font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;}
+    a{color:#223B5D;text-decoration:none;}
+    a:hover{color:#E0A03A;}
+    p{margin:0;}
+    h1,h2,h3{margin:0;font-family:"Archivo","Helvetica Neue",Helvetica,sans-serif;font-weight:700;text-transform:uppercase;line-height:1.05;}
+    .num{font-variant-numeric:tabular-nums;font-family:"Archivo",sans-serif;}
+    .eyebrow{font-weight:600;font-size:10px;letter-spacing:.18em;text-transform:uppercase;}
+  </style>
+</helmet>
+
+<div style="width:390px;height:844px;background:#FFFFFF;display:flex;flex-direction:column;overflow:hidden;">
+
+  <!-- encabezado -->
+  <div style="background:#223B5D;height:58px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 18px;">
+    <div style="display:flex;align-items:center;gap:9px;">
+      <svg width="26" height="26" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+        <path d="M17 3 L31 31 L23.5 31 L17 17 L10.5 31 L3 31 Z" fill="#FFFFFF"></path>
+        <path d="M17 19 L21 27 L13 27 Z" fill="#E0A03A"></path>
+      </svg>
+      <div>
+        <div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:16px;letter-spacing:.06em;color:#FFFFFF;text-transform:uppercase;">Apex</div>
+        <div style="font-size:7.5px;letter-spacing:.2em;text-transform:uppercase;color:#B5B6B6;font-weight:500;">Distribuidor Sitrak</div>
+      </div>
+    </div>
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.9" stroke-linecap="round" aria-hidden="true">
+      <path d="M4 7h16M4 12h16M4 17h16"></path>
+    </svg>
+  </div>
+
+  <!-- hero -->
+  <div style="position:relative;height:322px;flex:none;background:#223B5D;">
+    <img src="tracto-hero.jpg" alt="Tractocamión Sitrak C7H 540" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;">
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(34,59,93,0.35) 0%, rgba(22,40,63,0.55) 40%, rgba(22,40,63,0.94) 100%);"></div>
+    <div style="position:absolute;left:0;right:0;bottom:0;padding:0 18px 20px;display:flex;flex-direction:column;gap:11px;">
+      <div style="width:78px;height:3px;background:#B5B6B6;"></div>
+      <h1 style="font-size:46px;font-weight:800;letter-spacing:.14em;color:#FFFFFF;">Sitrak</h1>
+      <p style="font-size:14.5px;color:#C9CDD3;line-height:1.35;">Tecnología europea al servicio del transporte pesado en México</p>
+      <a href="#" style="background:#E0A03A;color:#16283F;font-weight:600;font-size:12.5px;letter-spacing:.13em;text-transform:uppercase;padding:15px;text-align:center;margin-top:4px;">Cotizar mi flotilla</a>
+    </div>
+  </div>
+
+  <!-- cifras -->
+  <div style="background:#16283F;flex:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));">
+    <div style="padding:13px 14px;border-right:1px solid #2A3D57;">
+      <div class="num" style="font-size:21px;font-weight:800;color:#FFFFFF;">24+</div>
+      <div class="eyebrow" style="color:#8E9BAB;">Agencias</div>
+    </div>
+    <div style="padding:13px 14px;border-right:1px solid #2A3D57;">
+      <div class="num" style="font-size:21px;font-weight:800;color:#FFFFFF;">540 HP</div>
+      <div class="eyebrow" style="color:#8E9BAB;">Potencia máx.</div>
+    </div>
+    <div style="padding:13px 14px;">
+      <div class="num" style="font-size:21px;font-weight:800;color:#FFFFFF;">6–48 t</div>
+      <div class="eyebrow" style="color:#8E9BAB;">Aplicación</div>
+    </div>
+  </div>
+
+  <!-- selector -->
+  <div style="padding:20px 18px 16px;flex:none;display:flex;flex-direction:column;gap:11px;border-bottom:1px solid #E2E4E6;">
+    <span class="eyebrow" style="color:#E0A03A;">Selector de unidad</span>
+    <h2 style="font-size:19px;color:#223B5D;letter-spacing:.02em;">¿Qué unidad necesita tu operación?</h2>
+    <p style="font-size:13.5px;color:#6A7482;">Tres preguntas y te decimos la línea que corresponde.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:3px;">
+      <div style="border:1px solid #C6CBD1;padding:12px;font-size:13px;color:#223B5D;font-weight:500;text-align:center;">Carga general</div>
+      <div style="border:1px solid #C6CBD1;padding:12px;font-size:13px;color:#223B5D;font-weight:500;text-align:center;">Material a granel</div>
+      <div style="border:1px solid #C6CBD1;padding:12px;font-size:13px;color:#223B5D;font-weight:500;text-align:center;">Reparto urbano</div>
+      <div style="border:1px solid #C6CBD1;padding:12px;font-size:13px;color:#223B5D;font-weight:500;text-align:center;">Sobredimensionada</div>
+    </div>
+  </div>
+
+  <!-- prueba social -->
+  <div style="padding:16px 18px;flex:1;display:flex;align-items:center;gap:14px;background:#F2F3F4;">
+    <div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:21px;letter-spacing:.08em;color:#223B5D;flex:none;">CEMEX</div>
+    <div style="width:1px;height:34px;background:#C6CBD1;flex:none;"></div>
+    <p style="font-size:12.5px;color:#5C6673;line-height:1.45;"><span class="num" style="font-weight:700;color:#223B5D;">5,000+</span> unidades operando en las flotas más exigentes de México</p>
+  </div>
+
+  <!-- barra de acción fija -->
+  <div style="flex:none;display:grid;grid-template-columns:1fr 1fr 1.1fr;border-top:1px solid #D8DBDF;background:#FFFFFF;">
+    <a href="#" style="padding:17px 6px;text-align:center;font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#223B5D;border-right:1px solid #E2E4E6;">Llamar</a>
+    <a href="#" style="padding:17px 6px;text-align:center;font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#223B5D;border-right:1px solid #E2E4E6;">WhatsApp</a>
+    <a href="#" style="padding:17px 6px;text-align:center;font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#16283F;background:#E0A03A;">Cotizar</a>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

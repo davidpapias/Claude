@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+  <style>
+    body{margin:0;background:#FFFFFF;color:#16202C;font-family:"IBM Plex Sans","Segoe UI",Helvetica,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+    a{color:#223B5D;text-decoration:none;}
+    a:hover{color:#E0A03A;}
+    p{margin:0;}
+    h1,h2,h3{margin:0;font-family:"Archivo","Helvetica Neue",Helvetica,sans-serif;font-weight:700;text-transform:uppercase;text-wrap:balance;line-height:1.05;}
+    .num{font-variant-numeric:tabular-nums;font-family:"Archivo",sans-serif;}
+    .rule{width:140px;height:3px;background:#223B5D;}
+    .eyebrow{font-weight:600;font-size:12px;letter-spacing:.2em;text-transform:uppercase;}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:600;font-size:13px;letter-spacing:.14em;text-transform:uppercase;padding:16px 28px;border:2px solid transparent;}
+    .wrap{max-width:1200px;margin:0 auto;}
+    .fl{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#77818F;font-weight:600;}
+    .fi{border:1px solid #C6CBD1;background:#FFFFFF;padding:14px 15px;font-size:15px;color:#16202C;}
+    .srow{display:flex;justify-content:space-between;gap:20px;padding:12px 0;border-bottom:1px solid #D8DBDF;}
+  </style>
+</helmet>
+
+<div style="width:1440px;background:#FFFFFF;">
+
+  <div style="background:#223B5D;">
+    <div class="wrap" style="display:flex;align-items:center;gap:44px;height:82px;">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <svg width="32" height="32" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+          <path d="M17 3 L31 31 L23.5 31 L17 17 L10.5 31 L3 31 Z" fill="#FFFFFF"></path>
+          <path d="M17 19 L21 27 L13 27 Z" fill="#E0A03A"></path>
+        </svg>
+        <div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:20px;letter-spacing:.06em;color:#FFFFFF;text-transform:uppercase;">Apex</div>
+      </div>
+      <div style="display:flex;gap:30px;margin-left:auto;font-size:14.5px;font-weight:500;">
+        <a href="#" style="color:#DCE0E5;">Modelos</a>
+        <a href="#" style="color:#DCE0E5;">Comparar</a>
+        <a href="#" style="color:#DCE0E5;">Postventa</a>
+        <a href="#" style="color:#DCE0E5;">Agencias</a>
+      </div>
+      <a href="#" class="btn" style="background:#E0A03A;color:#16283F;padding:13px 22px;">Cotizar</a>
+    </div>
+  </div>
+
+  <div class="wrap" style="padding:56px 0 72px;display:flex;flex-direction:column;gap:34px;">
+
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div class="rule"></div>
+      <h1 style="font-size:42px;color:#223B5D;letter-spacing:.02em;">Cotiza tu flotilla</h1>
+      <p style="font-size:18px;color:#4C5765;max-width:62ch;">Cuatro pasos cortos en lugar de un formulario largo. Primero tu operación, que contestas sin fricción; tus datos hasta el final.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.5fr .85fr;gap:26px;align-items:start;">
+
+      <!-- caja del cotizador -->
+      <div style="border:1px solid #E2E4E6;padding:38px 40px;display:flex;flex-direction:column;gap:0;">
+
+        <div style="height:6px;background:#E2E4E6;">
+          <div style="width:75%;height:100%;background:#E0A03A;"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding-top:12px;margin-bottom:30px;">
+          <span class="fl" style="color:#223B5D;">Paso 3 de 4 · Enganche y plazo</span>
+          <span class="fl">75 % completo</span>
+        </div>
+
+        <h2 style="font-size:27px;color:#223B5D;letter-spacing:.02em;margin-bottom:24px;">Volumen y forma de pago</h2>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+          <div style="display:flex;flex-direction:column;gap:7px;">
+            <span class="fl">Unidades a adquirir</span>
+            <div class="fi" style="display:flex;justify-content:space-between;align-items:center;">
+              <span>6 a 20 unidades</span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#77818F" stroke-width="2.4"><path d="M6 9l6 6 6-6"></path></svg>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:7px;">
+            <span class="fl">Forma de pago</span>
+            <div class="fi" style="display:flex;justify-content:space-between;align-items:center;">
+              <span>Crédito / financiamiento</span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#77818F" stroke-width="2.4"><path d="M6 9l6 6 6-6"></path></svg>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:9px;margin-top:24px;">
+          <span class="fl">Enganche estimado</span>
+          <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;">
+            <div style="border:1px solid #C6CBD1;padding:14px;text-align:center;font-size:15px;color:#4C5765;">10 %</div>
+            <div style="border:2px solid #223B5D;background:#223B5D;padding:13px;text-align:center;font-size:15px;color:#FFFFFF;font-weight:600;">20 %</div>
+            <div style="border:1px solid #C6CBD1;padding:14px;text-align:center;font-size:15px;color:#4C5765;">30 %</div>
+            <div style="border:1px solid #C6CBD1;padding:14px;text-align:center;font-size:15px;color:#4C5765;">40 % o más</div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:9px;margin-top:22px;">
+          <span class="fl">Plazo deseado</span>
+          <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;">
+            <div style="border:1px solid #C6CBD1;padding:14px;text-align:center;font-size:15px;color:#4C5765;">24 meses</div>
+            <div style="border:1px solid #C6CBD1;padding:14px;text-align:center;font-size:15px;color:#4C5765;">36 meses</div>
+            <div style="border:2px solid #223B5D;background:#223B5D;padding:13px;text-align:center;font-size:15px;color:#FFFFFF;font-weight:600;">48 meses</div>
+            <div style="border:1px solid #C6CBD1;padding:14px;text-align:center;font-size:15px;color:#4C5765;">60 meses</div>
+          </div>
+        </div>
+
+        <div style="background:#F2F3F4;border-left:3px solid #E0A03A;padding:18px 22px;margin-top:26px;">
+          <p style="font-size:14px;color:#4C5765;line-height:1.7;">Con estos dos datos la cotización te llega con la <strong style="color:#223B5D;">mensualidad estimada ya calculada</strong>, en vez de una segunda llamada para pedírtelos.</p>
+        </div>
+
+        <div style="display:flex;gap:12px;margin-top:28px;">
+          <a href="#" class="btn" style="border:2px solid #C6CBD1;color:#223B5D;">Atrás</a>
+          <a href="#" class="btn" style="background:#E0A03A;color:#16283F;">Continuar</a>
+        </div>
+      </div>
+
+      <!-- resumen -->
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div style="background:#F2F3F4;padding:30px 28px;">
+          <h3 style="font-size:17px;color:#223B5D;letter-spacing:.05em;border-bottom:2px solid #223B5D;padding-bottom:12px;margin-bottom:6px;">Tu cotización</h3>
+          <div class="srow"><span class="fl">Línea</span><span style="font-size:14px;color:#16202C;font-weight:600;">Tractocamiones</span></div>
+          <div class="srow"><span class="fl">Unidad</span><span style="font-size:14px;color:#16202C;font-weight:600;text-align:right;">Tracto Diesel 540HP 6×4</span></div>
+          <div class="srow"><span class="fl">Cantidad</span><span style="font-size:14px;color:#16202C;font-weight:600;">6 a 20 unidades</span></div>
+          <div class="srow"><span class="fl">Pago</span><span style="font-size:14px;color:#16202C;font-weight:600;">Crédito</span></div>
+          <div class="srow"><span class="fl">Enganche</span><span class="num" style="font-size:14px;color:#16202C;font-weight:700;">20 %</span></div>
+          <div class="srow" style="border-bottom:none;"><span class="fl">Plazo</span><span class="num" style="font-size:14px;color:#16202C;font-weight:700;">48 meses</span></div>
+          <img src="tracto-wide.jpg" alt="Tracto Diesel 540HP 6x4" style="width:100%;height:130px;object-fit:cover;display:block;margin-top:16px;">
+          <p style="font-size:12.5px;color:#77818F;margin-top:14px;letter-spacing:.04em;">Respuesta en menos de 24 h hábiles.</p>
+        </div>
+
+        <div style="background:#223B5D;padding:26px 28px;display:flex;flex-direction:column;gap:12px;">
+          <span class="eyebrow" style="color:#E0A03A;">¿Prefieres hablarlo?</span>
+          <p style="font-size:14.5px;color:#C2C8D0;">Un asesor de tu agencia te contacta con disponibilidad y fecha de entrega.</p>
+          <a href="#" class="btn" style="border:2px solid #47618A;color:#FFFFFF;width:100%;">WhatsApp [55 0000 0000]</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

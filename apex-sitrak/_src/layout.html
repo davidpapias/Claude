@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}}</title>
+<meta name="description" content="{{DESC}}">
+<!-- Borrador de revisión: no debe indexarse ni competir con el sitio en producción.
+     Eliminar esta línea y robots.txt cuando el sitio salga en vivo. -->
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:title" content="{{TITLE}}">
+<meta property="og:description" content="{{DESC}}">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_MX">
+<meta name="theme-color" content="#223B5D">
+<link rel="icon" href="{{BASE}}assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="{{BASE}}assets/css/apex.css">
+</head>
+<body>
+
+<a class="sr-only" href="#contenido">Saltar al contenido</a>
+
+<div class="topbar">
+  <div class="wrap topbar__in">
+    <span>Distribuidor autorizado <strong>Sitrak</strong> &middot; Sinotruk</span>
+    <div class="topbar__right">
+      <a class="topbar__hide" href="{{BASE}}agencias.html">Más de 24 agencias en México</a>
+      <a href="tel:+520000000000"><strong>Tel. [55 0000 0000]</strong></a>
+    </div>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="wrap site-header__in">
+    <a class="brand" href="{{BASE}}index.html">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+        <path d="M17 3 L31 31 L23.5 31 L17 17 L10.5 31 L3 31 Z" fill="#FFFFFF"></path>
+        <path d="M17 19 L21 27 L13 27 Z" fill="#E0A03A"></path>
+      </svg>
+      <span>
+        <span class="brand__name">Apex</span>
+        <span class="brand__sub">Distribuidor Sitrak</span>
+      </span>
+    </a>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-principal" aria-label="Abrir menú">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.9" stroke-linecap="round" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16"></path>
+      </svg>
+    </button>
+
+    <nav class="nav" id="nav-principal" aria-label="Principal">
+      <a href="{{BASE}}modelos.html"{{NAV_modelos}}>Modelos</a>
+      <a href="{{BASE}}seminuevos.html"{{NAV_seminuevos}}>Seminuevos</a>
+      <a href="{{BASE}}costo-por-km.html"{{NAV_costo-por-km}}>Costo por km</a>
+      <a href="{{BASE}}refacciones.html"{{NAV_refacciones}}>Refacciones</a>
+      <a href="{{BASE}}postventa.html"{{NAV_postventa}}>Postventa</a>
+      <a href="{{BASE}}agencias.html"{{NAV_agencias}}>Agencias</a>
+    </nav>
+
+    <a class="btn btn--amber btn--sm site-header__cta" href="{{BASE}}cotizar.html">Cotizar</a>
+  </div>
+</header>
+
+<main id="contenido">
+{{BODY}}
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="site-footer__grid">
+      <div>
+        <a class="brand" href="{{BASE}}index.html" style="margin-bottom:16px">
+          <svg width="30" height="30" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+            <path d="M17 3 L31 31 L23.5 31 L17 17 L10.5 31 L3 31 Z" fill="#FFFFFF"></path>
+            <path d="M17 19 L21 27 L13 27 Z" fill="#E0A03A"></path>
+          </svg>
+          <span class="brand__name">Apex</span>
+        </a>
+        <p>Soluciones de transporte pesado desde 6 toneladas hasta tractocamiones, con servicio postventa en todo México.</p>
+      </div>
+      <div>
+        <h4>Modelos</h4>
+        <ul>
+          <li><a href="{{BASE}}modelos.html#tractocamiones">Tractocamiones</a></li>
+          <li><a href="{{BASE}}modelos.html#vocacionales">Vocacionales</a></li>
+          <li><a href="{{BASE}}modelos.html#medianos">Medianos</a></li>
+          <li><a href="{{BASE}}modelos.html#ligeros">Ligeros</a></li>
+          <li><a href="{{BASE}}seminuevos.html">Seminuevos</a></li>
+          <li><a href="{{BASE}}comparar.html">Comparador</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Servicio</h4>
+        <ul>
+          <li><a href="{{BASE}}postventa.html">Postventa y servicio</a></li>
+          <li><a href="{{BASE}}refacciones.html">Refacciones</a></li>
+          <li><a href="{{BASE}}costo-por-km.html">Costo por kilómetro</a></li>
+          <li><a href="{{BASE}}agencias.html">Red de agencias</a></li>
+          <li><a href="{{BASE}}cotizar.html">Agendar cita</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="#">WhatsApp</a></li>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer__bar">
+      <span>&copy; 2026 Apex &middot; Distribuidor autorizado Sitrak</span>
+      <span><a href="#">Aviso de privacidad</a> &middot; <a href="#">Términos</a></span>
+    </div>
+  </div>
+</footer>
+
+<nav class="mobile-bar" aria-label="Acciones rápidas">
+  <a href="tel:+520000000000">Llamar</a>
+  <a href="#">WhatsApp</a>
+  <a href="{{BASE}}cotizar.html">Cotizar</a>
+</nav>
+
+<script src="{{BASE}}assets/js/data.js"></script>
+<script src="{{BASE}}assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculadora de costo por kilómetro | Apex Sitrak</title>
+<meta name="description" content="Calcula el costo por kilómetro real de tu flota: combustible, mantenimiento y costos fijos. Con tus números, no con promedios del mercado.">
+<!-- Borrador de revisión: no debe indexarse ni competir con el sitio en producción.
+     Eliminar esta línea y robots.txt cuando el sitio salga en vivo. -->
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:title" content="Calculadora de costo por kilómetro | Apex Sitrak">
+<meta property="og:description" content="Calcula el costo por kilómetro real de tu flota: combustible, mantenimiento y costos fijos. Con tus números, no con promedios del mercado.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_MX">
+<meta name="theme-color" content="#223B5D">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="assets/css/apex.css">
+</head>
+<body>
+
+<a class="sr-only" href="#contenido">Saltar al contenido</a>
+
+<div class="topbar">
+  <div class="wrap topbar__in">
+    <span>Distribuidor autorizado <strong>Sitrak</strong> &middot; Sinotruk</span>
+    <div class="topbar__right">
+      <a class="topbar__hide" href="agencias.html">Más de 24 agencias en México</a>
+      <a href="tel:+520000000000"><strong>Tel. [55 0000 0000]</strong></a>
+    </div>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="wrap site-header__in">
+    <a class="brand" href="index.html">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+        <path d="M17 3 L31 31 L23.5 31 L17 17 L10.5 31 L3 31 Z" fill="#FFFFFF"></path>
+        <path d="M17 19 L21 27 L13 27 Z" fill="#E0A03A"></path>
+      </svg>
+      <span>
+        <span class="brand__name">Apex</span>
+        <span class="brand__sub">Distribuidor Sitrak</span>
+      </span>
+    </a>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-principal" aria-label="Abrir menú">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.9" stroke-linecap="round" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16"></path>
+      </svg>
+    </button>
+
+    <nav class="nav" id="nav-principal" aria-label="Principal">
+      <a href="modelos.html">Modelos</a>
+      <a href="seminuevos.html">Seminuevos</a>
+      <a href="costo-por-km.html" aria-current="page">Costo por km</a>
+      <a href="refacciones.html">Refacciones</a>
+      <a href="postventa.html">Postventa</a>
+      <a href="agencias.html">Agencias</a>
+    </nav>
+
+    <a class="btn btn--amber btn--sm site-header__cta" href="cotizar.html">Cotizar</a>
+  </div>
+</header>
+
+<main id="contenido">
+<div class="crumb">
+  <div class="wrap crumb__in">
+    <a href="index.html">Inicio</a><span>/</span><strong>Costo por kilómetro</strong>
+  </div>
+</div>
+
+<section class="page-head">
+  <div class="wrap">
+    <div class="rule rule--navy"></div>
+    <h1>¿Cuánto te cuesta el kilómetro?</h1>
+    <p class="lead">Casi ningún transportista lo tiene a la mano y es el número que decide toda compra de unidad. Captura los datos de tu operación y lo calculamos aquí mismo: son tus cifras, no promedios del mercado.</p>
+  </div>
+</section>
+
+<section class="section" style="padding-top:clamp(32px,4vw,52px)">
+  <div class="wrap">
+    <div class="quote">
+
+      <!-- ── entradas ── -->
+      <div class="quote__box">
+        <h2 style="font-size:clamp(20px,2.2vw,25px);color:var(--navy);margin-bottom:6px">Tu operación</h2>
+        <p class="muted" style="font-size:13.5px;margin-bottom:24px">Ajusta los valores. El resultado se actualiza solo.</p>
+
+        <form id="calc-form" class="form-grid" novalidate>
+          <div class="field">
+            <label for="c-unidades">Unidades en la flota</label>
+            <input id="c-unidades" name="unidades" type="number" min="1" step="1" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="c-kmMes">Kilómetros al mes por unidad</label>
+            <input id="c-kmMes" name="kmMes" type="number" min="0" step="100" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="c-precioDiesel">Precio del diésel ($/litro)</label>
+            <input id="c-precioDiesel" name="precioDiesel" type="number" min="0" step="0.1" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label for="c-rendimiento">Rendimiento actual (km/litro)</label>
+            <input id="c-rendimiento" name="rendimiento" type="number" min="0.1" step="0.1" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label for="c-mantenimiento">Mantenimiento y llantas ($/mes por unidad)</label>
+            <input id="c-mantenimiento" name="mantenimiento" type="number" min="0" step="100" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="c-otros">Otros costos fijos ($/mes por unidad)</label>
+            <input id="c-otros" name="otros" type="number" min="0" step="100" inputmode="numeric">
+            <span class="muted" style="font-size:12px">Seguro, permisos, GPS, administración</span>
+          </div>
+        </form>
+
+        <div class="note mt-24">
+          <strong>Cómo se calcula.</strong> Combustible por km = precio del diésel ÷ rendimiento.
+          Mantenimiento y fijos por km = costo mensual ÷ kilómetros al mes. La suma es tu costo
+          por kilómetro. No incluye la mensualidad de la unidad ni el sueldo del operador, para
+          que el número sea comparable entre unidades.
+        </div>
+      </div>
+
+      <!-- ── resultado ── -->
+      <aside class="quote__aside" id="calc-resultado"></aside>
+    </div>
+
+    <!-- ── sensibilidad ── -->
+    <div class="mt-32" id="calc-sensibilidad"></div>
+
+    <div class="note note--amber mt-32">
+      <strong>El siguiente paso es tuyo.</strong> Con este número ya puedes comparar cualquier
+      unidad del mercado sobre la misma base. Si quieres el comparativo contra una Sitrak en tu
+      ruta específica —con el rendimiento medido, el plan de mantenimiento y el valor de reventa
+      proyectado— un asesor lo arma contigo.
+    </div>
+
+    <div class="row mt-24">
+      <a class="btn btn--amber" href="cotizar.html">Solicitar el comparativo</a>
+      <a class="btn btn--outline" href="modelos.html">Ver las unidades</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="site-footer__grid">
+      <div>
+        <a class="brand" href="index.html" style="margin-bottom:16px">
+          <svg width="30" height="30" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+            <path d="M17 3 L31 31 L23.5 31 L17 17 L10.5 31 L3 31 Z" fill="#FFFFFF"></path>
+            <path d="M17 19 L21 27 L13 27 Z" fill="#E0A03A"></path>
+          </svg>
+          <span class="brand__name">Apex</span>
+        </a>
+        <p>Soluciones de transporte pesado desde 6 toneladas hasta tractocamiones, con servicio postventa en todo México.</p>
+      </div>
+      <div>
+        <h4>Modelos</h4>
+        <ul>
+          <li><a href="modelos.html#tractocamiones">Tractocamiones</a></li>
+          <li><a href="modelos.html#vocacionales">Vocacionales</a></li>
+          <li><a href="modelos.html#medianos">Medianos</a></li>
+          <li><a href="modelos.html#ligeros">Ligeros</a></li>
+          <li><a href="seminuevos.html">Seminuevos</a></li>
+          <li><a href="comparar.html">Comparador</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Servicio</h4>
+        <ul>
+          <li><a href="postventa.html">Postventa y servicio</a></li>
+          <li><a href="refacciones.html">Refacciones</a></li>
+          <li><a href="costo-por-km.html">Costo por kilómetro</a></li>
+          <li><a href="agencias.html">Red de agencias</a></li>
+          <li><a href="cotizar.html">Agendar cita</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="#">WhatsApp</a></li>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer__bar">
+      <span>&copy; 2026 Apex &middot; Distribuidor autorizado Sitrak</span>
+      <span><a href="#">Aviso de privacidad</a> &middot; <a href="#">Términos</a></span>
+    </div>
+  </div>
+</footer>
+
+<nav class="mobile-bar" aria-label="Acciones rápidas">
+  <a href="tel:+520000000000">Llamar</a>
+  <a href="#">WhatsApp</a>
+  <a href="cotizar.html">Cotizar</a>
+</nav>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
