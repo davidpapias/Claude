@@ -683,31 +683,122 @@ footer{background:var(--ink-block); color:#7C9095; border-top:1px solid rgba(201
 .close-sec .proof, .ribbon .proof{color:#8FA3A6}
 
 /* ---------- invitación de salida ---------- */
-.exit{
-  position:fixed; inset:0; z-index:90; display:none; align-items:center; justify-content:center;
-  background:rgba(4,14,18,.72); backdrop-filter:blur(6px); padding:24px;
+
+/* ============================================================
+   NAVEGACIÓN CON PANEL POR ÁREA
+   La barra deja de esconder catorce páginas en un cajón que sólo
+   existía en móvil: cada área abre su propio índice, con una línea
+   que dice a dónde lleva cada enlace.
+   ============================================================ */
+.navgroup{position:relative}
+.navtop{
+  font-family:var(--body); font-size:.86rem; color:var(--text-dim); text-decoration:none;
+  background:transparent; border:none; border-bottom:1px solid transparent; cursor:pointer;
+  padding:4px 0; display:inline-flex; align-items:center; gap:7px;
+  transition:color .2s, border-color .2s;
 }
-.exit.show{display:flex}
-.exit-card{
-  max-width:520px; width:100%; background:var(--surface); border:1px solid var(--brass);
-  border-radius:3px; padding:clamp(26px,4vw,38px); box-shadow:0 40px 80px -30px rgba(0,0,0,.7);
-  position:relative;
+.navtop:hover{color:var(--text); border-color:var(--brass)}
+.navtop[aria-current="page"], .navtop[data-here]{color:var(--text); border-color:var(--brass)}
+.navtop .caret{
+  width:6px; height:6px; border-right:1px solid currentColor; border-bottom:1px solid currentColor;
+  transform:translateY(-2px) rotate(45deg); opacity:.6; transition:transform .2s;
 }
-.exit-card h3{font-size:clamp(1.4rem,2.6vw,1.9rem); margin-bottom:12px}
-.exit-card h3 em{font-style:italic; color:var(--brass)}
-.exit-card p{color:var(--text-dim); font-size:.94rem; margin-bottom:20px}
-.exit-card .mini{display:flex; flex-direction:column; gap:10px}
-.exit-card input{
-  font-family:var(--body); font-size:.94rem; padding:12px 14px; color:var(--text);
-  background:var(--surface-2); border:1px solid var(--line); border-radius:2px;
+.navgroup.open .navtop .caret{transform:translateY(1px) rotate(225deg)}
+.navpanel{
+  position:absolute; top:calc(100% + 13px); left:-18px; z-index:80; min-width:314px;
+  background:var(--surface); border:var(--rule); border-radius:3px; box-shadow:var(--shadow);
+  padding:8px; display:none;
 }
-.exit-card input:focus{border-color:var(--brass); outline:none}
-.exit-card .btn{justify-content:center}
-.exit-card .no{
-  background:transparent; border:none; color:var(--text-faint); font-family:var(--mono);
-  font-size:.66rem; letter-spacing:.11em; text-transform:uppercase; cursor:pointer; padding:10px;
+.navgroup.open .navpanel{display:block}
+.navpanel a{
+  display:block; padding:9px 12px; border-radius:2px; text-decoration:none;
+  border:none; transition:background .16s;
 }
-.exit-card .no:hover{color:var(--text-dim)}
+.navpanel a:hover{background:var(--brass-wash)}
+.navpanel a b{display:block; font-size:.88rem; font-weight:500; color:var(--text); line-height:1.3}
+.navpanel a span{display:block; font-size:.76rem; color:var(--text-faint); margin-top:2px; line-height:1.45}
+.navpanel a[aria-current="page"] b{color:var(--brass)}
+.navpanel .np-main{border-bottom:1px solid var(--line-soft); border-radius:2px 2px 0 0; margin-bottom:4px; padding-bottom:11px}
+.navpanel .np-main b{font-family:var(--display); font-size:1.02rem; font-weight:400}
+@media (max-width:1180px){.navlinks{gap:18px} .navpanel{min-width:280px}}
+.ndh{
+  font-family:var(--mono); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--brass); margin:18px 0 4px; padding-top:14px; border-top:1px solid var(--line-soft);
+}
+.ndh:first-child{margin-top:0; padding-top:0; border-top:none}
+@media (min-width:901px){.ndh{display:none}}
+
+/* ---------- enlace discreto, sin peso de botón ---------- */
+.quietlink{
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--brass); text-decoration:none; border-bottom:1px solid transparent;
+  transition:border-color .2s;
+}
+.quietlink:hover{border-color:var(--brass)}
+
+/* ============================================================
+   ENRUTADOR POR INTENCIÓN
+   La gente no llega sabiendo la taxonomía de productos: llega con
+   una frase. Cada fila es esa frase, y su destino.
+   ============================================================ */
+.router{border-top:var(--rule)}
+.router a{
+  display:grid; grid-template-columns:1fr auto; gap:18px; align-items:baseline;
+  padding:17px 4px; border-bottom:var(--rule); text-decoration:none; color:inherit;
+  transition:background .18s, padding-left .18s;
+}
+.router a:hover{background:var(--brass-wash); padding-left:14px}
+.router .want{font-family:var(--display); font-size:clamp(1.02rem,1.7vw,1.24rem); line-height:1.35; min-width:0}
+.router .want::before{content:"\201C"} .router .want::after{content:"\201D"}
+.router .goes{
+  font-family:var(--mono); font-size:.7rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--brass); white-space:nowrap; display:flex; align-items:center; gap:9px;
+}
+@media (max-width:620px){
+  .router a{grid-template-columns:1fr; gap:7px}
+  .router .goes{font-size:.66rem}
+}
+
+/* ============================================================
+   DESDE AQUÍ — a qué otras páginas lleva ésta
+   El componente que le faltaba al sitio: cada tarjeta dice el
+   destino y, sobre todo, la razón para ir.
+   ============================================================ */
+.rels{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:var(--rule); border-radius:3px; overflow:hidden}
+@media (max-width:960px){.rels{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.rels{grid-template-columns:1fr}}
+.rel{
+  background:var(--surface-2); padding:20px; min-width:0; text-decoration:none; color:inherit;
+  display:flex; flex-direction:column; gap:7px; transition:background .18s;
+}
+.rel:hover{background:var(--brass-wash)}
+.rel b{font-family:var(--display); font-size:1.08rem; font-weight:400; color:var(--brass); line-height:1.2}
+.rel span{font-size:.86rem; color:var(--text-dim); line-height:1.5}
+.rel .go{margin-top:auto; padding-top:10px; font-family:var(--mono); font-size:.8rem; color:var(--brass); opacity:.55; transition:opacity .18s}
+.rel:hover .go{opacity:1}
+
+/* ============================================================
+   MAPA DEL SITIO — el índice honesto, al pie del home
+   ============================================================ */
+/* Flujo por columnas, no rejilla: los grupos tienen tamaños muy distintos
+   (Fraccional son seis páginas, Club dos) y una rejilla dejaba huecos. */
+.sitemap{column-count:3; column-gap:clamp(24px,3vw,40px)}
+@media (max-width:900px){.sitemap{column-count:2}}
+@media (max-width:560px){.sitemap{column-count:1}}
+.sitemap > div{break-inside:avoid; -webkit-column-break-inside:avoid; margin-bottom:30px}
+.sitemap > div:last-child{margin-bottom:0}
+.sitemap h4{
+  font-family:var(--mono); font-size:.64rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--brass); font-weight:500; margin:0 0 12px; padding-bottom:10px; border-bottom:1px solid var(--brass);
+}
+.sitemap ul{list-style:none; margin:0; padding:0}
+.sitemap li{border-bottom:1px solid var(--line-soft)}
+.sitemap li:last-child{border-bottom:none}
+.sitemap a{display:block; padding:11px 8px 11px 0; text-decoration:none; transition:padding-left .18s}
+.sitemap a:hover{padding-left:8px}
+.sitemap a b{display:block; font-size:.92rem; font-weight:500; color:var(--text); line-height:1.3}
+.sitemap a:hover b{color:var(--brass)}
+.sitemap a span{display:block; font-size:.8rem; color:var(--text-faint); margin-top:3px; line-height:1.45}
 
 /* ---------- eslogan de marca ---------- */
 .tagline{
@@ -757,25 +848,38 @@ footer{background:var(--ink-block); color:#7C9095; border-top:1px solid rgba(201
 }
 
 /* ---------- las tres puertas de la portada ---------- */
-.doors{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
-@media (max-width:900px){.doors{grid-template-columns:1fr}}
+.doors{display:grid; grid-template-columns:repeat(4,1fr); gap:18px}
+@media (max-width:1100px){.doors{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){.doors{grid-template-columns:1fr}}
 .door{
-  position:relative; display:flex; flex-direction:column; gap:16px; text-decoration:none;
+  position:relative; display:flex; flex-direction:column; gap:14px; min-width:0;
   color:inherit; border:var(--rule); border-radius:3px; background:var(--surface-2);
-  padding:clamp(24px,3vw,34px); overflow:hidden; transition:border-color .25s, transform .25s;
+  padding:clamp(22px,2.6vw,30px); overflow:hidden; transition:border-color .25s;
 }
 .door::before{content:""; position:absolute; inset:0 auto 0 0; width:3px; background:var(--brass)}
-.door:hover{transform:translateY(-3px); border-color:var(--brass-soft)}
+.door:hover{border-color:var(--brass-soft)}
 .door .word{
-  font-family:var(--display); font-size:clamp(1.7rem,3vw,2.3rem); line-height:1;
-  color:var(--brass); letter-spacing:-.01em;
+  font-family:var(--display); font-size:clamp(1.55rem,2.4vw,2.05rem); line-height:1;
+  color:var(--brass); letter-spacing:-.01em; text-decoration:none;
+  border-bottom:1px solid transparent; align-self:flex-start; transition:border-color .2s;
 }
+.door .word:hover{border-color:var(--brass)}
 .door .what{font-family:var(--mono); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; color:var(--text-faint)}
 .door p{font-size:.94rem; color:var(--text-dim); line-height:1.55}
-.door ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:7px}
-.door li{font-size:.88rem; color:var(--text-dim); display:flex; gap:9px; align-items:baseline}
-.door li::before{content:""; width:5px; height:5px; border-radius:1px; background:var(--brass); flex:none; transform:translateY(-2px)}
-.door .go{
+.door ul.sub{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:2px}
+.door ul.sub:empty{display:none}
+.door .sub li{min-width:0}
+.door .sub a{
+  display:block; font-size:.86rem; color:var(--text-dim); text-decoration:none;
+  padding:5px 0 5px 14px; position:relative; border-radius:2px; transition:color .18s;
+}
+.door .sub a::before{
+  content:""; position:absolute; left:0; top:.95em; width:5px; height:5px;
+  border-radius:1px; background:var(--brass); opacity:.55; transition:opacity .18s;
+}
+.door .sub a:hover{color:var(--brass)}
+.door .sub a:hover::before{opacity:1}
+.door > .go{text-decoration:none; 
   margin-top:auto; padding-top:16px; border-top:var(--rule); font-family:var(--mono);
   font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; color:var(--brass);
   display:flex; justify-content:space-between; align-items:center;

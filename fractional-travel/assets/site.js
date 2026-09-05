@@ -24,6 +24,56 @@
     });
   }
 
+  /* ---------- paneles de navegación por área ---------- */
+  var groups = Array.prototype.slice.call(document.querySelectorAll(".navgroup"));
+  if (groups.length){
+    var closeAll = function(except){
+      groups.forEach(function(g){
+        if (g === except) return;
+        g.classList.remove("open");
+        var b = g.querySelector(".navtop");
+        if (b) b.setAttribute("aria-expanded", "false");
+      });
+    };
+    groups.forEach(function(g){
+      var btn = g.querySelector(".navtop");
+      if (!btn) return;
+      var set = function(open){
+        g.classList.toggle("open", open);
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+        if (open) closeAll(g);
+      };
+      btn.addEventListener("click", function(e){
+        e.stopPropagation();
+        set(!g.classList.contains("open"));
+      });
+      // con ratón basta apuntar; con teclado, el foco dentro lo mantiene abierto
+      g.addEventListener("mouseenter", function(){
+        if (window.matchMedia("(hover: hover)").matches) set(true);
+      });
+      g.addEventListener("mouseleave", function(){
+        if (window.matchMedia("(hover: hover)").matches) set(false);
+      });
+      // El foco NO abre el panel: si lo hiciera, el Enter del usuario de
+      // teclado llegaría a un panel ya abierto y lo cerraría en el acto.
+      // Se abre con Enter o clic, y se cierra al salir el foco del grupo.
+      g.addEventListener("focusout", function(){
+        setTimeout(function(){
+          if (!g.contains(document.activeElement)) set(false);
+        }, 0);
+      });
+    });
+    document.addEventListener("click", function(){ closeAll(null); });
+    document.addEventListener("keydown", function(e){
+      if (e.key !== "Escape") return;
+      var open = document.querySelector(".navgroup.open");
+      if (!open) return;
+      closeAll(null);
+      var b = open.querySelector(".navtop");
+      if (b) b.focus();
+    });
+  }
+
   /* ---------- 1. El libro de fracciones (portada) ---------- */
   var sharesEl = document.getElementById("shares");
   var weeksEl  = document.getElementById("weeks");
@@ -176,32 +226,7 @@
     onScroll();
   }
 
-  /* ---------- 5. Invitación de salida, una sola vez ---------- */
-  var exit = document.querySelector(".exit");
-  if (exit && window.matchMedia("(min-width: 900px)").matches){
-    var seen = false;
-    try { seen = localStorage.getItem("fti-exit") === "seen"; } catch (e) {}
-    var close = function(){
-      exit.classList.remove("show");
-      try { localStorage.setItem("fti-exit", "seen"); } catch (e) {}
-      seen = true;
-    };
-    exit.addEventListener("click", function(e){ if (e.target === exit) close(); });
-    Array.prototype.forEach.call(exit.querySelectorAll(".no"), function(b){
-      b.addEventListener("click", close);
-    });
-    document.addEventListener("keydown", function(e){ if (e.key === "Escape") close(); });
-    document.addEventListener("mouseout", function(e){
-      if (seen || e.relatedTarget || e.clientY > 12) return;
-      if (window.scrollY < 400) return;   // sólo a quien ya leyó algo
-      seen = true;
-      exit.classList.add("show");
-      var first = exit.querySelector("input");
-      if (first) first.focus();
-    });
-  }
-
-  /* ---------- 6. Enrutado del previsualizador de una sola página ---------- */
+  /* ---------- 5. Enrutado del previsualizador de una sola página ---------- */
   var routes = document.querySelectorAll(".route");
   if (routes.length){
     var show = function(){

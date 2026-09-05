@@ -69,15 +69,33 @@ FUTUROS = [
 RESIDENCIAS = [ANTHUS]
 
 # ---------------------------------------------------------------- navegación
-NAV = [("fractional", "Fraccional"), ("travel", "Travel"),
-       ("investing", "Investing"), ("club", "Club"),
-       ("servicios", "Servicios")]
-
-NAV_EXTRA = [("anthus", "Anthus"), ("numeros", "Los números"),
-             ("yates", "Yates"), ("rentas", "Rentas"),
-             ("partner-agent", "Partner Agent"), ("legal", "Estructura legal"),
-             ("memorandum", "Memorándum"), ("nosotros", "Nosotros"),
-             ("diario", "Diario"), ("preguntas", "Preguntas")]
+# El árbol de navegación. Cada grupo es (slug propio o None, rótulo, hijos);
+# cada hijo lleva la línea que explica a dónde lleva, para que el panel oriente
+# en vez de sólo enumerar.
+NAV_TREE = [
+    ("fractional", "Fraccional", [
+        ("anthus", "Anthus", "El desarrollo, residencia por residencia"),
+        ("modelo", "Cómo funciona", "La copropiedad explicada paso a paso"),
+        ("numeros", "Los números", "Qué cuesta, qué rinde y con qué supuestos"),
+        ("memorandum", "El memorándum", "Cifras, reglamento y fideicomiso modelo"),
+        ("copropietarios", "Copropietarios", "Quiénes ya firmaron y qué dicen"),
+    ]),
+    ("travel", "Travel", [
+        ("yates", "Flota", "Las tres embarcaciones y sus tarifas"),
+        ("servicios", "Servicios", "Concierge, chef, autos y catálogo"),
+    ]),
+    ("investing", "Investing", [
+        ("legal", "Estructura legal", "Fideicomiso, escritura y régimen de propiedad"),
+        ("rentas", "Rentas", "Quién administra y renta la propiedad"),
+    ]),
+    ("club", "Club", []),
+    (None, "La casa", [
+        ("nosotros", "Quiénes somos", "La operación y la gente detrás"),
+        ("diario", "Diario", "Notas sobre la zona y el mercado"),
+        ("preguntas", "Preguntas frecuentes", "Las dudas que más se repiten"),
+        ("partner-agent", "Partner Agent", "El canal para agentes con cartera"),
+    ]),
+]
 
 FOOTNAV = [
     ("Fraccional", [("fractional", "La división"), ("anthus", "Anthus"),
@@ -88,7 +106,7 @@ FOOTNAV = [
     ("Investing", [("investing", "La división"), ("legal", "Estructura legal")]),
     ("Club y programas", [("club", "Club"), ("rentas", "Rentas"),
                           ("partner-agent", "Partner Agent")]),
-    ("La casa", [("nosotros", "Quiénes somos"), ("diario", "Diario"),
+    ("La casa", [("inicio", "Inicio"), ("nosotros", "Quiénes somos"), ("diario", "Diario"),
                  ("preguntas", "Preguntas frecuentes"), ("agendar", "Hablar con alguien"),
                  ("avisos", "Aviso legal")]),
 ]
@@ -125,16 +143,43 @@ def link(slug, single):
 
 
 def topbar(current, single):
-    nav = "".join(
-        '<a href="%s"%s%s>%s</a>' % (link(s, single),
-                                     ' data-nav' if single else '',
-                                     ' aria-current="page"' if s == current else '', t)
-        for s, t in NAV)
-    drawer = "".join(
-        '<a href="%s"%s%s>%s</a>' % (link(s, single),
-                                     ' data-nav' if single else '',
-                                     ' aria-current="page"' if s == current else '', t)
-        for s, t in NAV + NAV_EXTRA)
+    def a(slug, label, why="", cls=""):
+        return '<a href="%s"%s%s%s><b>%s</b>%s</a>' % (
+            link(slug, single), ' data-nav' if single else '',
+            ' class="%s"' % cls if cls else '',
+            ' aria-current="page"' if slug == current else '',
+            label, '<span>%s</span>' % why if why else '')
+
+    nav, drawer = [], []
+    for slug, label, hijos in NAV_TREE:
+        aqui = slug == current or any(s == current for s, _, _ in hijos)
+        if not hijos:
+            nav.append('<a class="navtop"%s href="%s"%s>%s</a>' % (
+                ' aria-current="page"' if aqui else '', link(slug, single),
+                ' data-nav' if single else '', label))
+        else:
+            panel = ""
+            if slug:
+                panel += a(slug, label, "La división completa", cls="np-main")
+            panel += "".join(a(s, t, why) for s, t, why in hijos)
+            nav.append(
+                '<div class="navgroup">'
+                '<button class="navtop" type="button" aria-expanded="false"%s>%s'
+                '<span class="caret" aria-hidden="true"></span></button>'
+                '<div class="navpanel">%s</div></div>'
+                % (' data-here' if aqui else '', label, panel))
+        # el cajón móvil repite la misma agrupación, sin desplegables
+        drawer.append('<p class="ndh">%s</p>' % label)
+        if slug:
+            drawer.append('<a href="%s"%s%s>%s</a>' % (
+                link(slug, single), ' data-nav' if single else '',
+                ' aria-current="page"' if slug == current else '',
+                "%s &middot; la división" % label if hijos else label))
+        drawer += ['<a href="%s"%s%s>%s</a>' % (
+            link(s, single), ' data-nav' if single else '',
+            ' aria-current="page"' if s == current else '', t)
+            for s, t, _ in hijos]
+
     return """<div class="topbar">
   <div class="wrap topbar-in">
     <a class="brand" href="{home}"><b>Fractional Travel <span class="amp">&amp;</span> Investing</b></a>
@@ -144,70 +189,168 @@ def topbar(current, single):
   </div>
   <div class="navdrawer">{drawer}<a class="btn" href="{book}">Agendar llamada</a></div>
 </div>
-""".format(home=link("inicio", single), nav=nav, drawer=drawer,
-           book=link("agendar", single))
+""".format(home=link("inicio", single), nav="".join(nav),
+           drawer="".join(drawer), book=link("agendar", single))
 
 
+# ------------------------------------------------- cómo se relacionan las páginas
+# Cada entrada dice a dónde sigue esta página y, sobre todo, POR QUÉ iría ahí.
+# La razón importa más que el nombre: es lo que convierte una lista de enlaces
+# en una recomendación.
+RELACIONES = {
+    "fractional": [
+        ("anthus", "El desarrollo donde hoy hay fracciones liberadas"),
+        ("modelo", "Cómo funciona la copropiedad, paso a paso"),
+        ("numeros", "Qué cuesta entrar y qué rinde, con supuestos editables"),
+        ("rentas", "Quién renta su residencia los meses que usted no está"),
+    ],
+    "anthus": [
+        ("fractional", "La división a la que pertenece este desarrollo"),
+        ("numeros", "Corra los números de una fracción de Anthus"),
+        ("modelo", "Qué significa exactamente ser uno de ocho"),
+        ("copropietarios", "Con quiénes compartiría la residencia"),
+    ],
+    "modelo": [
+        ("numeros", "Ya entiende el mecanismo: ahora las cifras"),
+        ("anthus", "El desarrollo donde se aplica"),
+        ("legal", "El fideicomiso y la escritura que lo sostienen"),
+        ("preguntas", "Lo que suele quedar suelto después de leer esto"),
+    ],
+    "numeros": [
+        ("modelo", "De dónde sale cada supuesto de la calculadora"),
+        ("anthus", "Las cifras concretas del desarrollo"),
+        ("rentas", "Cómo se genera el ingreso que ve arriba"),
+        ("memorandum", "Las mismas cifras, auditadas y por escrito"),
+    ],
+    "memorandum": [
+        ("anthus", "El desarrollo del que trata el documento"),
+        ("numeros", "Verifique los números antes de pedirlo"),
+        ("legal", "La estructura legal que describe"),
+    ],
+    "copropietarios": [
+        ("fractional", "Cómo se entra a la copropiedad"),
+        ("anthus", "Las residencias que comparten"),
+        ("club", "El beneficio que se abre al escriturar"),
+    ],
+    "travel": [
+        ("yates", "Las tres embarcaciones, con capacidad y tarifa"),
+        ("servicios", "Lo que resuelve la operación durante la estancia"),
+        ("fractional", "Si el viaje le deja ganas de quedarse"),
+        ("investing", "O si prefiere la propiedad completa"),
+    ],
+    "yates": [
+        ("travel", "La división completa: circuitos, agencia y villas"),
+        ("servicios", "Chef, concierge y traslados a bordo"),
+        ("fractional", "Cómo el gasto de hoy se acredita a una inversión"),
+    ],
+    "investing": [
+        ("legal", "Fideicomiso, escritura y régimen de propiedad"),
+        ("rentas", "El programa opcional que la pone a producir"),
+        ("servicios", "La capa de operación que viene incluida"),
+        ("club", "Lo que se abre el día que escritura"),
+    ],
+    "club": [
+        ("fractional", "Una de las dos puertas que activan la membresía"),
+        ("investing", "La otra puerta: propiedad completa"),
+        ("servicios", "Los servicios de la casa que incluye"),
+        ("travel", "Los viajes que puede reservar sin ser miembro"),
+    ],
+    "servicios": [
+        ("travel", "Cómo se pide durante una estancia corta"),
+        ("fractional", "Cómo viene incluida con una fracción"),
+        ("investing", "Cómo opera sobre una propiedad completa"),
+        ("rentas", "Quién se ocupa cuando usted no está"),
+    ],
+    "rentas": [
+        ("fractional", "Aquí el programa viene integrado"),
+        ("investing", "Aquí es opcional, con contrato anual"),
+        ("numeros", "Qué ingreso estimado produce"),
+        ("servicios", "Quién atiende al huésped mientras tanto"),
+    ],
+    "partner-agent": [
+        ("fractional", "El producto que más se coloca"),
+        ("investing", "Propiedad completa, para carteras de mayor ticket"),
+        ("travel", "La puerta de entrada para un cliente que aún no compra"),
+        ("nosotros", "Con quién estaría trabajando"),
+    ],
+    "legal": [
+        ("modelo", "El modelo que esta estructura hace posible"),
+        ("memorandum", "El expediente donde viene todo por escrito"),
+        ("investing", "Cómo aplica a una propiedad completa"),
+        ("preguntas", "Las dudas legales que más se repiten"),
+    ],
+    "nosotros": [
+        ("diario", "Lo que vamos escribiendo sobre la zona"),
+        ("fractional", "La copropiedad, nuestra operación principal"),
+        ("travel", "Los viajes y la flota"),
+        ("investing", "La propiedad completa"),
+    ],
+    "diario": [
+        ("nosotros", "Quién escribe esto"),
+        ("preguntas", "Respuestas cortas a lo concreto"),
+        ("fractional", "El modelo del que hablan varias notas"),
+    ],
+    "preguntas": [
+        ("modelo", "El mecanismo explicado con calma"),
+        ("numeros", "Las cifras, con sus supuestos a la vista"),
+        ("legal", "La estructura de propiedad en detalle"),
+        ("agendar", "Si su pregunta no estaba"),
+    ],
+    "agendar": [
+        ("memorandum", "Léalo antes de la llamada, si prefiere"),
+        ("numeros", "Llegue con su escenario ya corrido"),
+        ("preguntas", "Quizá ya está contestada"),
+    ],
+    "avisos": [
+        ("legal", "La estructura de propiedad, en detalle"),
+        ("preguntas", "Dudas frecuentes sobre el modelo"),
+        ("nosotros", "Quién opera y responde"),
+    ],
+}
+
+NOMBRES = {
+    "inicio": "Inicio", "fractional": "Fraccional", "anthus": "Anthus",
+    "modelo": "Cómo funciona", "numeros": "Los números", "memorandum": "El memorándum",
+    "copropietarios": "Copropietarios", "travel": "Travel", "yates": "Flota",
+    "investing": "Investing", "club": "Club", "servicios": "Servicios",
+    "rentas": "Rentas", "partner-agent": "Partner Agent", "legal": "Estructura legal",
+    "nosotros": "Quiénes somos", "diario": "Diario", "preguntas": "Preguntas frecuentes",
+    "agendar": "Hablar con alguien", "avisos": "Aviso legal",
+}
+
+
+def relacionadas(slug, single):
+    """La sección 'Desde aquí': a qué otras páginas lleva ésta, y por qué."""
+    if slug not in RELACIONES:
+        return ""
+    cards = "".join(
+        '<a class="rel" href="%s"%s><b>%s</b><span>%s</span>'
+        '<span class="go" aria-hidden="true">&rarr;</span></a>'
+        % (link(dest, single), ' data-nav' if single else '', NOMBRES[dest], why)
+        for dest, why in RELACIONES[slug])
+    return """<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Desde aquí</p></div>
+      <div><h2>A dónde lleva <em>esta página.</em></h2></div></div>
+    <div class="rels">%s</div>
+  </div>
+</section>
+""" % cards
+
+
+# La cinta de venta sobrevive sólo donde el siguiente paso es de verdad
+# comercial: alguien que ya está mirando el desarrollo, las cifras o el
+# expediente. En el resto del sitio la sustituye relacionadas().
 RIBBONS = {
-    "inicio": ("Tres vías de entrada. <em>Una conversación.</em>",
-               "Cuéntenos qué busca y le decimos por cuál empezar, aunque acabe siendo ninguna.",
-               "agendar", "Hablar con alguien"),
-
-    "fractional": ("Ocho copropietarios por residencia. <em>Ni uno más.</em>",
-                   "Empiece por el memorándum de Anthus: cifras auditadas del ejercicio anterior, sin llamada de por medio.",
-                   "memorandum", "Descargar el memorándum"),
     "anthus": ("Quedan <em>{libres}</em> fracciones liberadas.",
                "Cuando una residencia completa sus ocho copropietarios, se cierra y no la volvemos a abrir.",
                "memorandum", "Ver las cifras de Anthus"),
-    "modelo": ("Ya entiende el modelo. <em>Ahora los números.</em>",
-               "La calculadora corre sobre supuestos declarados y editables, y termina en un escenario que le podemos mandar por escrito.",
-               "numeros", "Calcular mi rendimiento"),
-    "numeros": ("Los números cuadran. <em>¿Y la casa?</em>",
+    "numeros": ("Los números cuadran. <em>&iquest;Y la casa?</em>",
                 "Anthus, con las fracciones liberadas y las cifras auditadas por separado.",
                 "anthus", "Ver Anthus"),
-    "memorandum": ("Cuando lo haya leído, <em>hablamos.</em>",
+    "memorandum": ("Cuando lo haya le&iacute;do, <em>hablamos.</em>",
                    "Cuarenta y cinco minutos con quien opera las casas, y sólo si usted lo pide.",
                    "agendar", "Agendar la llamada"),
-    "copropietarios": ("Ocho personas por residencia. <em>Falta usted.</em>",
-                       "Cuarenta y cinco minutos con quien opera Anthus. Si el modelo no le conviene, se lo decimos ahí mismo.",
-                       "agendar", "Agendar la llamada"),
-
-    "travel": ("Lo que gasta viajando, <em>se le acredita.</em>",
-               "Disponibilidad real y propuesta con precio cerrado, en el mismo día hábil.",
-               "yates", "Ver la flota"),
-    "yates": ("La bahía se ve mejor <em>desde el agua.</em>",
-              "Díganos días, personas y qué le gustaría hacer. Cotizar no cuesta ni aparta la fecha.",
-              "agendar", "Pedir disponibilidad"),
-
-    "investing": ("Propiedad completa, <em>sin reglamento de uso.</em>",
-                  "Plano, escritura, libertad de gravamen, avalúo y el historial de renta de las propiedades terminadas.",
-                  "agendar", "Pedir la ficha"),
-
-    "club": ("La membresía <em>se gana invirtiendo.</em>",
-             "Escriturar en Fraccional o en Investing la activa el mismo día de la firma.",
-             "agendar", "Hablar con alguien"),
-    "servicios": ("La operación resuelve, <em>usted descansa.</em>",
-                  "La misma capa está en las tres verticales. Pregunte por ella en la llamada.",
-                  "agendar", "Hablar con alguien"),
-    "rentas": ("Su propiedad vacía <em>cuesta dinero.</em>",
-               "Le estimamos el ingreso anual con lo que rentan propiedades comparables que ya operamos.",
-               "agendar", "Pedir la estimación"),
-    "partner-agent": ("¿Tiene cartera? <em>Hablemos.</em>",
-                      "Le mandamos el esquema de comisiones y el material de venta completo.",
-                      "agendar", "Ver las condiciones"),
-
-    "legal": ("Ya vio la estructura. <em>Pida el expediente.</em>",
-              "Reglamento de uso, contrato de fideicomiso modelo y avalúo, en un solo correo.",
-              "memorandum", "Pedir el expediente modelo"),
-    "nosotros": ("Ya sabe con quién <em>firmaría.</em>",
-                 "El siguiente paso natural es el papel: memorándum, reglamento y fideicomiso modelo.",
-                 "memorandum", "Descargar el memorándum"),
-    "diario": ("¿Le quedó una pregunta <em>sin contestar?</em>",
-               "El memorándum contesta la mayoría, y no hay que hablar con nadie para leerlo.",
-               "memorandum", "Descargar el memorándum"),
-    "preguntas": ("¿Su pregunta no estaba? <em>Pregúntela.</em>",
-                  "En la llamada se contestan todas antes de que firme nada.",
-                  "agendar", "Hablar con alguien"),
 }
 
 
@@ -1048,23 +1191,6 @@ def p_avisos(single):
 """
 
 
-def exit_invite(single):
-    return """<div class="exit" role="dialog" aria-modal="true" aria-label="Descargar el memorándum">
-  <div class="exit-card">
-    <p class="eyebrow">Antes de irse</p>
-    <h3 style="margin-top:12px">Llévese <em>los números reales.</em></h3>
-    <p>El memorándum de cualquiera de las tres residencias: cifras auditadas del ejercicio anterior, cuota de operación desglosada, reglamento de uso y contrato de fideicomiso modelo. Un correo, un adjunto, nada más.</p>
-    <form class="mini" data-mini data-done="Enviado" id="exitForm">
-      <input type="email" name="email" placeholder="Correo electrónico" required aria-label="Correo electrónico">
-      <button class="btn" type="submit">Enviarme el memorándum <span class="arw">&rarr;</span></button>
-      <p class="form-ok">Listo. Le llega en unos minutos.</p>
-    </form>
-    <button class="no" type="button">No, gracias &mdash; sigo mirando</button>
-  </div>
-</div>
-"""
-
-
 def p_memorandum(single):
     opciones = "".join('<option>%s &mdash; %s</option>' % (r["name"], r["loc"].replace("&middot;", "·"))
                        for r in RESIDENCIAS)
@@ -1126,18 +1252,105 @@ def divbar(current, single):
 
 
 def divbar_section(current, single):
-    root = {"fractional": "fractional", "travel": "travel", "investing": "investing"}
+    # Cada página interior pertenece a una división; la tira debe resaltarla.
+    root = {"fractional": "fractional", "anthus": "fractional", "modelo": "fractional",
+            "numeros": "fractional", "memorandum": "fractional",
+            "copropietarios": "fractional", "travel": "travel", "yates": "travel",
+            "investing": "investing", "club": "club"}
     here = root.get(current, "")
     return """<section>
   <div class="wrap sec" style="padding-block:clamp(44px,5vw,72px)">
     <div class="sec-head" style="margin-bottom:26px">
-      <div class="rail"><p class="folio">Las tres divisiones</p></div>
-      <div><h2 style="font-size:clamp(1.5rem,2.6vw,2rem)">Lo demás que hacemos</h2></div>
+      <div class="rail"><p class="folio">Las cuatro áreas</p></div>
+      <div><h2 style="font-size:clamp(1.5rem,2.6vw,2rem)">Las otras áreas</h2></div>
     </div>
     %s
   </div>
 </section>
 """ % divbar(here, single)
+
+
+# El mapa completo del sitio, tal como se publica al pie del home: las 20
+# páginas agrupadas, cada una con la línea de qué encuentra ahí. Es lo que
+# impide que una página quede huérfana.
+MAPA = [
+    ("Fraccional", [
+        ("fractional", "La división: qué es y cómo se entra"),
+        ("anthus", "El desarrollo, residencia por residencia"),
+        ("modelo", "La copropiedad explicada paso a paso"),
+        ("numeros", "Calculadora de costo y rendimiento"),
+        ("memorandum", "Cifras auditadas, reglamento y fideicomiso"),
+        ("copropietarios", "Quiénes ya firmaron y qué dicen"),
+    ]),
+    ("Travel", [
+        ("travel", "La división: viajes, agencia y experiencias"),
+        ("yates", "Las tres embarcaciones y sus tarifas"),
+        ("servicios", "Concierge, chef, autos y catálogo"),
+    ]),
+    ("Investing", [
+        ("investing", "La división: propiedad completa"),
+        ("legal", "Fideicomiso, escritura y régimen de propiedad"),
+        ("rentas", "Administración y renta de la propiedad"),
+    ]),
+    ("Club y programas", [
+        ("club", "La membresía, y qué la activa"),
+        ("partner-agent", "El canal para agentes con cartera"),
+    ]),
+    ("La casa", [
+        ("nosotros", "La operación y la gente detrás"),
+        ("diario", "Notas sobre la zona y el mercado"),
+        ("preguntas", "Las dudas que más se repiten"),
+        ("agendar", "Agendar una llamada de 45 minutos"),
+        ("avisos", "Aviso legal y privacidad"),
+    ]),
+]
+
+# El enrutador por intención. La gente no llega sabiendo su taxonomía de
+# productos: llega con una frase en la cabeza. Cada fila es esa frase.
+INTENCIONES = [
+    ("Quiero conocer la zona sin comprometerme a nada", "travel"),
+    ("Quiero una casa aquí, pero no pagarla entera", "fractional"),
+    ("Quiero comprar completo, para mí o para rentar", "investing"),
+    ("Quiero saber cuánto cuesta y cuánto rinde", "numeros"),
+    ("Quiero entender el modelo antes que los precios", "modelo"),
+    ("Tengo cartera de clientes y quiero vender esto", "partner-agent"),
+    ("Ya invertí con ustedes", "club"),
+    ("Sólo tengo una duda concreta", "preguntas"),
+]
+
+
+def bloque_mapa(single):
+    cols = "".join(
+        '<div><h4>%s</h4><ul>%s</ul></div>' % (titulo, "".join(
+            '<li><a href="%s"%s><b>%s</b><span>%s</span></a></li>'
+            % (link(s, single), ' data-nav' if single else '', NOMBRES[s], que)
+            for s, que in items))
+        for titulo, items in MAPA)
+    return '<div class="sitemap">%s</div>' % cols
+
+
+def bloque_router(single):
+    filas = "".join(
+        '<a href="%s"%s><span class="want">%s</span>'
+        '<span class="goes">%s <b aria-hidden="true">&rarr;</b></span></a>'
+        % (link(dest, single), ' data-nav' if single else '', frase, NOMBRES[dest])
+        for frase, dest in INTENCIONES)
+    return '<div class="router">%s</div>' % filas
+
+
+def puerta(single, div, slug, etiqueta, palabra, texto, hijos):
+    subs = "".join('<li><a href="%s"%s>%s</a></li>'
+                   % (link(s, single), ' data-nav' if single else '', NOMBRES[s])
+                   for s in hijos)
+    return """<div class="door %s">
+      <span class="what">%s</span>
+      <a class="word" href="%s"%s>%s</a>
+      <p>%s</p>
+      <ul class="sub">%s</ul>
+      <a class="go" href="%s"%s>Ver %s <span aria-hidden="true">&rarr;</span></a>
+    </div>""" % (div, etiqueta, link(slug, single), ' data-nav' if single else '',
+                 palabra, texto, subs, link(slug, single),
+                 ' data-nav' if single else '', palabra)
 
 
 def p_inicio(single):
@@ -1149,16 +1362,13 @@ def p_inicio(single):
       <span class="amp">&amp;</span><span class="w3">Investing</span>
     </div>
     <p class="tagline" style="margin-top:14px">Own a piece of the places you love.</p>
-    <p class="lede measure" style="margin-top:24px">El nombre no es una frase: son tres negocios. Puede <strong>viajar</strong> con nosotros sin comprometerse a nada, quedarse con <strong>una fracción</strong> de una casa frente al mar, o <strong>comprar completo</strong> una propiedad o un terreno. Los tres caminos los atiende la misma operación, y los tres llevan al mismo lugar.</p>
-    <div class="hero-cta" style="margin-top:26px">
-      <a class="btn" href="{book}">Hablar con alguien <span class="arw">&rarr;</span></a>
-      <a class="btn btn-ghost" href="{memo}">Descargar el memorándum</a>
-    </div>
+    <p class="lede measure" style="margin-top:24px">Somos una operación de bienes raíces y viajes en la bahía de Banderas, entre Nuevo Vallarta, Bucerías y Sayulita. El nombre no es una frase: son las tres cosas que hacemos. Organizamos <strong>viajes</strong> en la zona, vendemos <strong>fracciones</strong> escrituradas de casas frente al mar, y vendemos <strong>propiedad completa</strong>. La misma gente opera las tres.</p>
+    <p style="margin-top:20px"><a class="quietlink" href="{nosotros}">Quiénes somos y cómo trabajamos <span class="arw">&rarr;</span></a></p>
     <div class="trustbar">
-      <div><b>3</b> vías de entrada</div>
-      <div><b>{libres}</b> fracciones disponibles</div>
+      <div><b>3</b> líneas de negocio</div>
+      <div><b>1</b> desarrollo en venta</div>
       <div><b>3</b> yates propios</div>
-      <div><b>7</b> propiedades en venta</div>
+      <div><b>{nprop}</b> propiedades listadas</div>
     </div>
   </div>
 </section>
@@ -1166,33 +1376,22 @@ def p_inicio(single):
 <section>
   <div class="wrap sec">
     <div class="sec-head">
-      <div class="rail"><p class="folio">Nuestros productos</p></div>
-      <div><h2>Elija por dónde <em>entra.</em></h2>
-      <p class="lede measure" style="margin-top:16px">No hay una puerta mejor que otra: hay una que corresponde a lo que usted quiere hoy. Si no está seguro, entre por la que más se le parezca y en la llamada lo acomodamos.</p></div>
+      <div class="rail"><p class="folio">Qué hacemos</p></div>
+      <div><h2>Cuatro áreas, <em>una sola operación.</em></h2>
+      <p class="lede measure" style="margin-top:16px">Tres se pueden contratar desde fuera. La cuarta no: sólo se abre para quien ya invirtió. Cada una tiene sus propias páginas, y aquí abajo están enlazadas.</p></div>
     </div>
-    <div class="doors">
-      <a class="door div-travel" href="{trav}">
-        <span class="what">Menor compromiso</span>
-        <span class="word">Travel</span>
-        <p>Yates propios, actividades, circuitos y agencia de viajes. La forma de conocer la zona antes de comprometer nada &mdash; y lo que gaste se le acredita si después invierte.</p>
-        <ul><li>Tres embarcaciones propias</li><li>Circuitos y viajes a la medida</li><li>Genera crédito hacia la inversión</li></ul>
-        <span class="go">Ver la división <span>&rarr;</span></span>
-      </a>
-      <a class="door div-fractional" href="{frac}">
-        <span class="what">Inversión compartida</span>
-        <span class="word">Fraccional</span>
-        <p>Una octava parte de una residencia en Anthus, escriturada a su nombre. Seis semanas y media de uso al año; lo que no usa, lo rentamos por usted.</p>
-        <ul><li>Desde USD ${fracp}</li><li>Escritura pública e indiviso</li><li>Programa de rentas integrado</li></ul>
-        <span class="go">Ver la división <span>&rarr;</span></span>
-      </a>
-      <a class="door div-investing" href="{inv}">
-        <span class="what">Propiedad completa</span>
-        <span class="word">Investing</span>
-        <p>Condominios, casas, villas y terrenos en propiedad total. Sin copropietarios y sin reglamento de uso, con el programa de rentas como opción.</p>
-        <ul><li>Desde USD $495,000</li><li>Expediente completo antes de firmar</li><li>Rentas opcional, contrato anual</li></ul>
-        <span class="go">Ver la división <span>&rarr;</span></span>
-      </a>
+    <div class="doors">{puertas}</div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec">
+    <div class="sec-head">
+      <div class="rail"><p class="folio">Por dónde empezar</p></div>
+      <div><h2>&iquest;Qué le <em>trae por aquí?</em></h2>
+      <p class="lede measure" style="margin-top:16px">Si no quiere recorrer el sitio entero, busque la frase que más se parezca a lo suyo y vaya directo.</p></div>
     </div>
+    {router}
   </div>
 </section>
 
@@ -1200,30 +1399,13 @@ def p_inicio(single):
   <div class="wrap sec">
     <div class="sec-head">
       <div class="rail"><p class="folio">Cómo encajan</p></div>
-      <div><h2>Tres negocios <em>que se alimentan.</em></h2>
-      <p class="lede measure" style="margin-top:16px">No es un conglomerado: es un ciclo. Cada vertical existe porque resuelve lo que la anterior dejaba abierto.</p></div>
+      <div><h2>Por qué están <em>bajo el mismo techo.</em></h2>
+      <p class="lede measure" style="margin-top:16px">No es un conglomerado: cada área existe porque resuelve lo que la anterior dejaba abierto.</p></div>
     </div>
     <div class="grid3 chain">
-      <div class="panel"><span class="folio">01 &middot; Capta</span><h3>Travel abre la puerta</h3><p>Un día de yate o un circuito cuesta poco y no compromete a nada. Quien viene a pasarla bien conoce la zona, conoce a la operación, y se lleva un crédito acumulado hacia una inversión que todavía no ha decidido hacer.</p></div>
-      <div class="panel"><span class="folio">02 &middot; Convierte</span><h3>Fraccional e Investing cierran</h3><p>Aquí ocurre la inversión de verdad, con escritura y notario. El programa de rentas es el argumento que la sostiene: la propiedad no se queda vacía los meses que usted no está, y el ingreso compensa la cuota.</p></div>
-      <div class="panel"><span class="folio">03 &middot; Fideliza</span><h3>Club cierra el ciclo</h3><p>Al escriturar se abre la membresía: hoteles y resorts del mundo a la mitad. No es un producto que se persiga por separado &mdash; es la razón por la que invertir aquí vale más que invertir en otro lado.</p></div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap sec">
-    <div class="sec-head">
-      <div class="rail"><p class="folio">Cuarta llave</p></div>
-      <div><h2>Y lo que <em>no</em> se vende.</h2></div>
-    </div>
-    <div class="gate div-club">
-      <span class="seal" aria-hidden="true"></span>
-      <div>
-        <h3>Club: sólo para <em>quien ya invirtió.</em></h3>
-        <p>Una membresía de pago que da acceso a la plataforma Vacation Owners &mdash; hoteles y resorts de todo el mundo a la mitad del costo público, más los servicios de viaje de la casa. No tiene campaña, no tiene precio de lista público y no se abre a quien llega de fuera: se activa al escriturar en Fraccional o en Investing.</p>
-        <p style="margin-top:16px"><a class="btn btn-ghost btn-sm" href="{club}">Ver qué incluye <span class="arw">&rarr;</span></a></p>
-      </div>
+      <div class="panel"><span class="folio">01 &middot; Conocer</span><h3>Travel abre la puerta</h3><p>Un día de yate o un circuito cuesta poco y no compromete a nada. Quien viene a pasarla bien conoce la zona y conoce a la operación &mdash; y lo que gasta se le acredita si más adelante decide invertir.</p></div>
+      <div class="panel"><span class="folio">02 &middot; Invertir</span><h3>Fraccional e Investing</h3><p>Aquí ocurre la compra, con escritura y notario. El programa de rentas es lo que la sostiene: la propiedad no se queda vacía los meses que el dueño no está, y el ingreso compensa la cuota.</p></div>
+      <div class="panel"><span class="folio">03 &middot; Quedarse</span><h3>Club cierra el ciclo</h3><p>Al escriturar se abre la membresía: hoteles y resorts del mundo a la mitad. No es un producto que se persiga por separado &mdash; es lo que hace que invertir aquí valga más que invertir en otro lado.</p></div>
     </div>
   </div>
 </section>
@@ -1255,50 +1437,43 @@ def p_inicio(single):
 <section>
   <div class="wrap sec">
     <div class="sec-head">
-      <div class="rail"><p class="folio">Lo común</p></div>
-      <div><h2>Lo que no cambia <em>entre las tres.</em></h2></div>
+      <div class="rail"><p class="folio">Mapa del sitio</p></div>
+      <div><h2>Todo lo que hay aquí, <em>en una pantalla.</em></h2>
+      <p class="lede measure" style="margin-top:16px">Veinte páginas, agrupadas por área, cada una con lo que va a encontrar dentro.</p></div>
     </div>
-    {reassure}
+    {mapa}
   </div>
 </section>
-
-<section>
-  <div class="wrap sec">
-    <div class="sec-head">
-      <div class="rail"><p class="folio">Voces</p></div>
-      <div><h2>Quiénes ya <em>firmaron.</em></h2></div>
-    </div>
-    {testi}
-  </div>
-</section>
-
-<section>
-  <div class="wrap sec">{capture}</div>
-</section>
-""".replace("{book}", link("agendar", single)) \
-   .replace("{memo}", link("memorandum", single)) \
-   .replace("{libres}", str(TOTAL_LIBRES)) \
-   .replace("{fracp}", format(ANTHUS["frac"], ",")) \
-   .replace("{trav}", link("travel", single)) \
-   .replace("{frac}", link("fractional", single)) \
-   .replace("{inv}", link("investing", single)) \
-   .replace("{club}", link("club", single)) \
+""".replace("{nosotros}", link("nosotros", single)) \
+   .replace("{nprop}", "7") \
    .replace("{rentas}", link("rentas", single)) \
    .replace("{partner}", link("partner-agent", single)) \
+   .replace("{router}", bloque_router(single)) \
+   .replace("{mapa}", bloque_mapa(single)) \
+   .replace("{puertas}", "".join([
+       puerta(single, "div-travel", "travel", "Menor compromiso", "Travel",
+              "Yates propios, circuitos, actividades y agencia de viajes. La forma de "
+              "conocer la zona antes de comprometer nada &mdash; y lo que gaste se le "
+              "acredita si después invierte.",
+              ["yates", "servicios"]),
+       puerta(single, "div-fractional", "fractional", "Inversión compartida", "Fraccional",
+              "Una octava parte de una residencia en Anthus, escriturada a su nombre. "
+              "Seis semanas y media de uso al año; lo que no usa, lo rentamos por usted.",
+              ["anthus", "modelo", "numeros", "memorandum", "copropietarios"]),
+       puerta(single, "div-investing", "investing", "Propiedad completa", "Investing",
+              "Condominios, casas, villas y terrenos en propiedad total. Sin copropietarios "
+              "y sin reglamento de uso, con el programa de rentas como opción.",
+              ["legal", "rentas"]),
+       puerta(single, "div-club", "club", "Sólo para inversionistas", "Club",
+              "Membresía de pago que se activa al escriturar en Fraccional o en Investing. "
+              "Hoteles y resorts del mundo a la mitad del costo público, más los servicios "
+              "de viaje de la casa. No tiene precio de lista ni se abre desde fuera.",
+              []),
+   ])) \
    .replace("{servicios}", bloque_servicios(single,
-       "Concierge, chef, autos y catálogo de servicios no son una vertical aparte: son la "
-       "capa que aparece dentro de las tres, operada por la misma gente.")) \
-   .replace("{reassure}", reassure()) \
-   .replace("{testi}", bloque_testimonios(3)) \
-   .replace("{capture}", mini_capture(
-       "hubMemo", "¿No sabe por cuál <em>de las tres?</em>",
-       "Déjenos su correo y le mandamos el panorama completo en un solo documento: qué cuesta "
-       "entrar en cada vertical, qué recibe, cómo funciona el crédito de Travel y qué abre el "
-       "Club. Sin llamada de por medio.",
-       "Enviarme el panorama", fields="email"))
+       "Concierge, chef, autos y catálogo de servicios no son un área aparte: son la "
+       "capa que aparece dentro de las tres, operada por la misma gente."))
 
-
-# ---------------------------------------------------------------- travel
 
 FLOTA = [
     dict(name="Azimut 55", cls="Yate a motor &middot; día completo", eslora="16.8 m",
@@ -1895,6 +2070,12 @@ def asset_version(path):
         return hashlib.md5(f.read()).hexdigest()[:8]
 
 
+# La barra fija sólo donde alguien ya mostró intención: está mirando el
+# desarrollo, corriendo las cifras o pidiendo el expediente. En el resto del
+# sitio estorba y hace que un hub se lea como una página de venta.
+CON_BARRA = ("anthus", "numeros", "memorandum")
+
+
 def build():
     os.makedirs(os.path.join(HERE, "dist"), exist_ok=True)
     cssv = asset_version("assets/styles.css")
@@ -1904,11 +2085,12 @@ def build():
     for slug, title, desc, fn, division in PAGES:
         # --- página estática del hub ---
         body = fn(False)
+        body += relacionadas(slug, False)
         if division:
             body += divbar_section(slug, False)
         body += ribbon(slug, False)
-        if slug not in ("agendar", "avisos"):
-            body += stickybar(False) + exit_invite(False)
+        if slug in CON_BARRA:
+            body += stickybar(False)
         body = '<div class="page %s">%s</div>' % (division, body)
         html = (HEAD.format(title=title, desc=desc, root="", cssv=cssv, jsv=jsv)
                 + topbar(slug, False) + body + footer(False)
@@ -1919,6 +2101,7 @@ def build():
 
         # --- misma página como ruta del previsualizador ---
         rbody = fn(True)
+        rbody += relacionadas(slug, True)
         if division:
             rbody += divbar_section(slug, True)
         rbody += ribbon(slug, True)
@@ -1936,7 +2119,6 @@ def build():
         '&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">\n'
         '<style>\n' + css + '\n</style>\n'
         + topbar("inicio", True)
-        + stickybar(True) + exit_invite(True)
         + "\n".join(routes)
         + footer(True)
         + '<script>\n' + js + '\n</script>\n')
@@ -1972,7 +2154,7 @@ def stickybar(single, texto=None, cta="Agendar llamada"):
 def ladder(here, single):
     pasos = [
         ("Peldaño 01", "El memorándum", "Cifras auditadas del ejercicio anterior, reglamento de uso y contrato de fideicomiso modelo, de la residencia que le interese.", "Su correo", "memorandum"),
-        ("Peldaño 02", "Su escenario por escrito", "Tomamos los números que usted movió en la calculadora y le devolvemos el cálculo con las cifras reales de esa residencia.", "Correo y WhatsApp", "inversion"),
+        ("Peldaño 02", "Su escenario por escrito", "Tomamos los números que usted movió en la calculadora y le devolvemos el cálculo con las cifras reales de esa residencia.", "Correo y WhatsApp", "numeros"),
         ("Peldaño 03", "La llamada de calificación", "Cuarenta y cinco minutos con quien opera las casas. Si el modelo no le conviene, se lo decimos ahí mismo.", "45 minutos", "agendar"),
         ("Peldaño 04", "La visita", "Recorrido de las residencias disponibles, presencial o guiado por video. Sin apartado de por medio.", "Media jornada", "agendar"),
         ("Peldaño 05", "Apartado y escritura", "Carta de intención, apartado reembolsable, due diligence y firma ante notario.", "8 a 12 semanas", "agendar"),
