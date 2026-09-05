@@ -54,7 +54,7 @@
 
   /* ---------- menú móvil ---------- */
 
-  (function menu() {
+  function menu() {
     var boton = document.querySelector(".nav-toggle");
     var nav = document.getElementById("nav-principal");
     if (!boton || !nav) return;
@@ -78,7 +78,7 @@
 
     window.addEventListener("resize", ajustar);
     ajustar();
-  })();
+  }
 
   /* ---------- tarjeta de unidad ---------- */
 
@@ -138,7 +138,7 @@
 
   /* ---------- líneas (portada) ---------- */
 
-  (function lineas() {
+  function lineas() {
     var cont = document.getElementById("lineas");
     if (!cont) return;
     cont.innerHTML = D.LINEAS.map(function (l) {
@@ -152,7 +152,7 @@
           '<span class="line-card__more">Ver la línea &rarr;</span>' +
         "</span></a>";
     }).join("");
-  })();
+  }
 
   /* ---------- catálogo con filtros ---------- */
 
@@ -167,7 +167,7 @@
     if (vacio) vacio.hidden = lista.length > 0;
   }
 
-  (function catalogo() {
+  function catalogo() {
     var barra = document.getElementById("filtros");
     if (!barra) return;
 
@@ -198,7 +198,7 @@
 
     pintarFiltros();
     pintarCatalogo();
-  })();
+  }
 
   /* ---------- comparador (página) ---------- */
 
@@ -252,7 +252,7 @@
     tabla.innerHTML = cab + "<tbody>" + cuerpo + pie + "</tbody>";
   }
 
-  (function comparadorPagina() {
+  function comparadorPagina() {
     var picker = document.getElementById("cmp-picker");
     if (!picker) return;
 
@@ -281,11 +281,11 @@
     }
 
     pintarComparador();
-  })();
+  }
 
   /* ---------- selector de unidad ---------- */
 
-  (function selector() {
+  function selector() {
     var cont = document.getElementById("finder");
     if (!cont) return;
 
@@ -359,11 +359,11 @@
     });
 
     pintar();
-  })();
+  }
 
   /* ---------- cotizador de cuatro pasos ---------- */
 
-  (function cotizador() {
+  function cotizador() {
     var caja = document.getElementById("cotizador");
     var aside = document.getElementById("cotizador-resumen");
     if (!caja || !aside) return;
@@ -522,11 +522,11 @@
     });
 
     pintar();
-  })();
+  }
 
   /* ---------- agencias ---------- */
 
-  (function agencias() {
+  function agencias() {
     var sel = document.getElementById("filtro-estado");
     var lista = document.getElementById("lista-agencias");
     if (!sel || !lista) return;
@@ -550,17 +550,35 @@
 
     sel.addEventListener("change", pintar);
     pintar();
-  })();
+  }
 
   /* ---------- selector de agencia en el formulario de taller ---------- */
 
-  (function tallerAgencias() {
+  function tallerAgencias() {
     var sel = document.getElementById("taller-agencia");
     if (!sel) return;
     sel.innerHTML = D.AGENCIAS.map(function (a) {
       return "<option>" + esc(a.ciudad) + " &middot; " + esc(a.estado) + "</option>";
     }).join("");
-  })();
+  }
 
-  sincronizarCasillas();
+  /* ---------- arranque ----------
+     initPagina() vuelve a cablear los módulos sobre el DOM actual. El sitio la
+     llama una vez al cargar; una integración que reemplace el contenido sin
+     recargar (Elementor, o el visor de una sola página) la llama de nuevo. */
+
+  function initPagina() {
+    menu();
+    lineas();
+    catalogo();
+    comparadorPagina();
+    selector();
+    cotizador();
+    agencias();
+    tallerAgencias();
+    sincronizarCasillas();
+  }
+
+  window.ApexApp = { init: initPagina };
+  initPagina();
 })();
