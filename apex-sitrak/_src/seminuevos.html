@@ -1,0 +1,59 @@
+<!--@{"title":"Seminuevos Sitrak | Apex","desc":"Tractocamiones y unidades Sitrak seminuevas con historial de servicio, revisadas y respaldadas por la red de agencias Apex.","nav":"seminuevos"}-->
+
+<div class="crumb">
+  <div class="wrap crumb__in">
+    <a href="index.html">Inicio</a><span>/</span><strong>Seminuevos</strong>
+  </div>
+</div>
+
+<section class="page-head">
+  <div class="wrap">
+    <div class="rule rule--navy"></div>
+    <h1>Seminuevos</h1>
+    <p class="lead">Unidades revisadas en agencia, con historial de servicio y el mismo respaldo de refacciones y taller que una unidad nueva. Filtra por año, kilometraje, precio y agencia.</p>
+  </div>
+</section>
+
+<section class="section" style="padding-top:clamp(32px,4vw,52px)">
+  <div class="wrap">
+    <form class="form-grid" id="sn-filtros" style="margin-bottom:28px" novalidate>
+      <div class="field">
+        <label for="sn-agencia">Agencia</label>
+        <select id="sn-agencia"></select>
+      </div>
+      <div class="field">
+        <label for="sn-anio">Año mínimo</label>
+        <select id="sn-anio"></select>
+      </div>
+      <div class="field">
+        <label for="sn-km">Kilometraje máximo</label>
+        <select id="sn-km">
+          <option value="">Sin límite</option>
+          <option value="150000">Hasta 150,000 km</option>
+          <option value="300000">Hasta 300,000 km</option>
+          <option value="450000">Hasta 450,000 km</option>
+          <option value="600000">Hasta 600,000 km</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="sn-precio">Presupuesto máximo</label>
+        <select id="sn-precio">
+          <option value="">Sin límite</option>
+          <option value="700000">Hasta $700,000</option>
+          <option value="1000000">Hasta $1,000,000</option>
+          <option value="1300000">Hasta $1,300,000</option>
+          <option value="1600000">Hasta $1,600,000</option>
+        </select>
+      </div>
+    </form>
+
+    <p class="muted" id="sn-conteo" style="margin-bottom:18px"></p>
+    <div class="units" id="sn-lista"></div>
+
+    <div class="note mt-32">
+      <strong>Inventario de demostración.</strong> Las ocho unidades de esta página son de ejemplo.
+      En producción se administran desde WooCommerce con los mismos atributos que el catálogo de
+      unidades nuevas, para que la ficha, el filtro y el comparador se alimenten de una sola captura.
+    </div>
+  </div>
+</section>

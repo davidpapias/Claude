@@ -249,18 +249,18 @@ export const MODELOS = [
 ];
 
 export const AGENCIAS = [
-  { estado: "Nuevo León",     ciudad: "Monterrey",     tel: "[81 0000 0000]" },
-  { estado: "Jalisco",        ciudad: "Guadalajara",   tel: "[33 0000 0000]" },
-  { estado: "Veracruz",       ciudad: "Xalapa",        tel: "[228 000 0000]" },
-  { estado: "Querétaro",      ciudad: "Querétaro",     tel: "[442 000 0000]" },
-  { estado: "Edo. de México", ciudad: "Cuautitlán",    tel: "[55 0000 0000]" },
-  { estado: "Puebla",         ciudad: "Puebla",        tel: "[222 000 0000]" },
-  { estado: "Guanajuato",     ciudad: "León",          tel: "[477 000 0000]" },
-  { estado: "Coahuila",       ciudad: "Saltillo",      tel: "[844 000 0000]" },
-  { estado: "Chihuahua",      ciudad: "Chihuahua",     tel: "[614 000 0000]" },
-  { estado: "Sonora",         ciudad: "Hermosillo",    tel: "[662 000 0000]" },
-  { estado: "Tamaulipas",     ciudad: "Nuevo Laredo",  tel: "[867 000 0000]" },
-  { estado: "Yucatán",        ciudad: "Mérida",        tel: "[999 000 0000]" }
+  { slug: "monterrey",    ciudad: "Monterrey",    estado: "Nuevo León",     tel: "[81 0000 0000]",  direccion: "[Av. Ejemplo 1000, Parque Industrial]", cp: "[64000]", horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00", taller: true, partes: true, ruta: "Corredor Monterrey–Laredo", lat: 25.6866, lng: -100.3161 },
+  { slug: "guadalajara",  ciudad: "Guadalajara",  estado: "Jalisco",        tel: "[33 0000 0000]",  direccion: "[Av. Ejemplo 1000, Zona Industrial]",   cp: "[44940]", horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00", taller: true, partes: true, ruta: "Occidente y Bajío", lat: 20.6597, lng: -103.3496 },
+  { slug: "xalapa",       ciudad: "Xalapa",       estado: "Veracruz",       tel: "[228 000 0000]",  direccion: "[Carretera Ejemplo km 5]",              cp: "[91000]", horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00", taller: true, partes: true, ruta: "Golfo y planta de producción", lat: 19.5438, lng: -96.9102 },
+  { slug: "queretaro",    ciudad: "Querétaro",    estado: "Querétaro",      tel: "[442 000 0000]",  direccion: "[Carretera Ejemplo km 12]",             cp: "[76120]", horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00", taller: true, partes: true, ruta: "Bajío y centro del país", lat: 20.5888, lng: -100.3899 },
+  { slug: "cuautitlan",   ciudad: "Cuautitlán",   estado: "Edo. de México", tel: "[55 0000 0000]",  direccion: "[Av. Ejemplo 1000]",                    cp: "[54800]", horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00", taller: true, partes: true, ruta: "Zona Metropolitana del Valle de México", lat: 19.6697, lng: -99.1817 },
+  { slug: "puebla",       ciudad: "Puebla",       estado: "Puebla",         tel: "[222 000 0000]",  direccion: "[Blvd. Ejemplo 1000]",                  cp: "[72220]", horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00", taller: true, partes: false, ruta: "Corredor México–Veracruz", lat: 19.0414, lng: -98.2063 },
+  { slug: "leon",         ciudad: "León",         estado: "Guanajuato",     tel: "[477 000 0000]",  direccion: "[Blvd. Ejemplo 1000]",                  cp: "[37160]", horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00", taller: true, partes: true, ruta: "Bajío industrial", lat: 21.1219, lng: -101.6833 },
+  { slug: "saltillo",     ciudad: "Saltillo",     estado: "Coahuila",       tel: "[844 000 0000]",  direccion: "[Carretera Ejemplo km 8]",              cp: "[25000]", horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00", taller: true, partes: false, ruta: "Corredor automotriz del noreste", lat: 25.4232, lng: -101.0053 },
+  { slug: "chihuahua",    ciudad: "Chihuahua",    estado: "Chihuahua",      tel: "[614 000 0000]",  direccion: "[Av. Ejemplo 1000]",                    cp: "[31100]", horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00", taller: true, partes: false, ruta: "Frontera y corredor norte", lat: 28.6330, lng: -106.0691 },
+  { slug: "hermosillo",   ciudad: "Hermosillo",   estado: "Sonora",         tel: "[662 000 0000]",  direccion: "[Blvd. Ejemplo 1000]",                  cp: "[83000]", horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00", taller: true, partes: false, ruta: "Noroeste y Pacífico", lat: 29.0729, lng: -110.9559 },
+  { slug: "nuevo-laredo", ciudad: "Nuevo Laredo", estado: "Tamaulipas",     tel: "[867 000 0000]",  direccion: "[Carretera Ejemplo km 3]",              cp: "[88000]", horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00", taller: true, partes: true, ruta: "Cruce fronterizo de mayor volumen del país", lat: 27.4763, lng: -99.5164 },
+  { slug: "merida",       ciudad: "Mérida",       estado: "Yucatán",        tel: "[999 000 0000]",  direccion: "[Periférico Ejemplo km 20]",            cp: "[97300]", horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00", taller: true, partes: false, ruta: "Península de Yucatán", lat: 20.9674, lng: -89.5926 }
 ];
 
 // Selector de unidad: tres preguntas → una línea recomendada.
@@ -293,3 +293,58 @@ export const PREGUNTAS = [
     ]
   }
 ];
+
+
+// ── Seminuevos ────────────────────────────────────────────────────────────
+// Inventario de unidades usadas. Cada registro se publica como ficha propia.
+export const SEMINUEVOS = [
+  { id: "sn-001", nombre: "Sitrak Tracto Diesel 540HP 6×4", anio: 2023, km: 285000, precio: 1450000, agencia: "monterrey",    condicion: "Excelente", img: "assets/img/tracto-wide.jpg",  nota: "Un solo operador, mantenimiento en agencia, con historial de servicio completo." },
+  { id: "sn-002", nombre: "Sitrak Tracto 540HP 6×4 AMT",    anio: 2023, km: 412000, precio: 1320000, agencia: "guadalajara",  condicion: "Muy bueno",  img: "assets/img/tracto-wide.jpg",  nota: "Transmisión automatizada, llantas al 70 %." },
+  { id: "sn-003", nombre: "Sitrak Tracto Diesel 540HP 6×4", anio: 2022, km: 540000, precio: 1180000, agencia: "queretaro",    condicion: "Muy bueno",  img: "assets/img/tracto-hero.jpg",  nota: "Ruta federal, retardador ZF en buen estado." },
+  { id: "sn-004", nombre: "Sitrak Volteo 6×4",              anio: 2022, km: 198000, precio: 1240000, agencia: "leon",         condicion: "Bueno",      img: "assets/img/tracto-frente.jpg", nota: "Caja de 16 m³, uso en obra, chasis sin golpes." },
+  { id: "sn-005", nombre: "Sitrak Chasis 360HP 6×4",        anio: 2023, km: 156000, precio: 980000,  agencia: "cuautitlan",   condicion: "Excelente",  img: "assets/img/tracto-frente.jpg", nota: "Con caja seca de 8.5 m incluida." },
+  { id: "sn-006", nombre: "Sitrak 62K 330HP 6×4",           anio: 2021, km: 620000, precio: 720000,  agencia: "puebla",       condicion: "Bueno",      img: "assets/img/tracto-frente.jpg", nota: "Reparto regional, motor con servicio mayor reciente." },
+  { id: "sn-007", nombre: "Sitrak 6T",                      anio: 2023, km: 88000,  precio: 520000,  agencia: "merida",       condicion: "Excelente",  img: "assets/img/tracto-wide.jpg",  nota: "Última milla, caja seca original de fábrica." },
+  { id: "sn-008", nombre: "Sitrak 8×4 Minero",              anio: 2022, km: 240000, precio: 1390000, agencia: "chihuahua",    condicion: "Muy bueno",  img: "assets/img/tracto-frente.jpg", nota: "Uso minero, suspensión reforzada revisada." }
+];
+
+// ── Refacciones ───────────────────────────────────────────────────────────
+export const SISTEMAS = [
+  { id: "motor",       nombre: "Motor" },
+  { id: "frenos",      nombre: "Frenos" },
+  { id: "transmision", nombre: "Transmisión" },
+  { id: "suspension",  nombre: "Suspensión" },
+  { id: "filtracion",  nombre: "Filtración" },
+  { id: "electrico",   nombre: "Eléctrico" }
+];
+
+export const REFACCIONES = [
+  { np: "[MT13-0101]", nombre: "Kit de empaques de culata MT13",       sistema: "motor",       precio: 8450,  compat: ["sitrak-tracto-diesel-540hp-6x4", "sitrak-tracto-540hp-6x4-amt", "sitrak-g7-540hp-6x4"] },
+  { np: "[MT13-0204]", nombre: "Bomba de agua MT13",                   sistema: "motor",       precio: 6200,  compat: ["sitrak-tracto-diesel-540hp-6x4", "sitrak-g7-540hp-6x4"] },
+  { np: "[MC11-0310]", nombre: "Turbocargador MC11",                   sistema: "motor",       precio: 24800, compat: ["sitrak-chasis-360hp-6x4"] },
+  { np: "[FRN-1020]",  nombre: "Juego de balatas eje delantero",       sistema: "frenos",      precio: 3980,  compat: ["sitrak-tracto-diesel-540hp-6x4", "sitrak-tracto-540hp-6x4-amt", "sitrak-62k-330hp-6x4"] },
+  { np: "[FRN-1044]",  nombre: "Disco de freno eje trasero MCP16",     sistema: "frenos",      precio: 7350,  compat: ["sitrak-tracto-diesel-540hp-6x4"] },
+  { np: "[FRN-1180]",  nombre: "Secador de aire con cartucho",         sistema: "frenos",      precio: 5120,  compat: ["sitrak-tracto-diesel-540hp-6x4", "sitrak-volteo-6x4", "sitrak-8x4-minero"] },
+  { np: "[ZF16-2201]", nombre: "Kit de embrague ZF 16 velocidades",    sistema: "transmision", precio: 18600, compat: ["sitrak-tracto-diesel-540hp-6x4", "sitrak-chasis-360hp-6x4"] },
+  { np: "[AMT-2310]",  nombre: "Actuador de cambios AMT 12 vel.",      sistema: "transmision", precio: 21400, compat: ["sitrak-tracto-540hp-6x4-amt"] },
+  { np: "[SUS-3105]",  nombre: "Bolsa de aire suspensión de cabina",   sistema: "suspension",  precio: 4300,  compat: ["sitrak-tracto-diesel-540hp-6x4", "sitrak-tracto-540hp-6x4-amt", "sitrak-g7-540hp-6x4"] },
+  { np: "[SUS-3208]",  nombre: "Muelle reforzado eje trasero",         sistema: "suspension",  precio: 9700,  compat: ["sitrak-volteo-6x4", "sitrak-8x4-minero"] },
+  { np: "[FIL-4001]",  nombre: "Filtro de aceite MT13",                sistema: "filtracion",  precio: 620,   compat: ["sitrak-tracto-diesel-540hp-6x4", "sitrak-tracto-540hp-6x4-amt", "sitrak-g7-540hp-6x4"] },
+  { np: "[FIL-4012]",  nombre: "Filtro de combustible con separador",  sistema: "filtracion",  precio: 890,   compat: ["sitrak-tracto-diesel-540hp-6x4", "sitrak-chasis-360hp-6x4", "sitrak-62k-330hp-6x4"] },
+  { np: "[FIL-4030]",  nombre: "Filtro de aire primario",              sistema: "filtracion",  precio: 1150,  compat: ["sitrak-tracto-diesel-540hp-6x4", "sitrak-volteo-6x4", "sitrak-8x4-minero"] },
+  { np: "[ELE-5102]",  nombre: "Alternador 28V 100A",                  sistema: "electrico",   precio: 11200, compat: ["sitrak-tracto-diesel-540hp-6x4", "sitrak-62k-330hp-6x4"] },
+  { np: "[ELE-5220]",  nombre: "Marcha reforzada 24V",                 sistema: "electrico",   precio: 13900, compat: ["sitrak-tracto-diesel-540hp-6x4", "sitrak-volteo-6x4"] },
+  { np: "[ELE-5301]",  nombre: "Faro principal LED lado izquierdo",    sistema: "electrico",   precio: 6800,  compat: ["sitrak-tracto-diesel-540hp-6x4", "sitrak-g7-540hp-6x4"] }
+];
+
+// ── Calculadora de costo por kilómetro ────────────────────────────────────
+// Valores de arranque del formulario. Son puntos de partida editables: el
+// cálculo se hace SIEMPRE con lo que el visitante captura de su propia flota.
+export const TCO_BASE = {
+  unidades: 5,
+  kmMes: 12000,
+  precioDiesel: 26.5,
+  rendimiento: 2.2,
+  mantenimiento: 9000,
+  otros: 6000
+};

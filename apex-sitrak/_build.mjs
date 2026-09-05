@@ -8,17 +8,19 @@
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { LINEAS, MODELOS, CAMPOS, AGENCIAS, PREGUNTAS, PC } from "./_src/data.mjs";
+import { LINEAS, MODELOS, CAMPOS, AGENCIAS, PREGUNTAS, PC,
+         SEMINUEVOS, REFACCIONES, SISTEMAS, TCO_BASE } from "./_src/data.mjs";
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const SRC = join(ROOT, "_src");
 
 const PAGINAS = [
-  "index", "modelos", "comparar", "cotizar",
+  "index", "modelos", "comparar", "cotizar", "costo-por-km",
+  "seminuevos", "refacciones", "valuacion",
   "postventa", "agencias", "nosotros", "gracias"
 ];
 
-const NAV_KEYS = ["modelos", "comparar", "postventa", "agencias", "nosotros"];
+const NAV_KEYS = ["modelos", "seminuevos", "costo-por-km", "refacciones", "postventa", "agencias"];
 
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
@@ -111,9 +113,60 @@ async function main() {
     await writeFile(join(ROOT, "modelos", `${m.slug}.html`), html);
   }
 
+
+  // ── páginas de agencia ───────────────────────────────────────────────
+  const plantillaAgencia = await readFile(join(SRC, "agencia.html"), "utf8");
+  await mkdir(join(ROOT, "agencias"), { recursive: true });
+
+  for (const a of AGENCIAS) {
+    const jsonld = {
+      "@context": "https://schema.org",
+      "@type": "AutoDealer",
+      name: `Apex Sitrak ${a.ciudad}`,
+      description: `Distribuidor autorizado Sitrak en ${a.ciudad}, ${a.estado}. Venta de unidades nuevas y seminuevas, taller de servicio y refacciones originales.`,
+      telephone: a.tel,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: a.direccion,
+        addressLocality: a.ciudad,
+        addressRegion: a.estado,
+        postalCode: a.cp,
+        addressCountry: "MX"
+      },
+      geo: { "@type": "GeoCoordinates", latitude: a.lat, longitude: a.lng },
+      openingHours: ["Mo-Fr 08:00-18:00", "Sa 08:00-13:00"],
+      brand: { "@type": "Brand", name: "Sitrak" },
+      parentOrganization: { "@type": "Organization", name: "Apex" }
+    };
+
+    const body = plantillaAgencia
+      .replaceAll("{{CIUDAD}}", esc(a.ciudad))
+      .replaceAll("{{ESTADO}}", esc(a.estado))
+      .replaceAll("{{TEL}}", esc(a.tel))
+      .replaceAll("{{DIRECCION}}", esc(a.direccion))
+      .replaceAll("{{CP}}", esc(a.cp))
+      .replaceAll("{{HORARIO_CORTO}}", "Lun a Vie 8:00–18:00")
+      .replaceAll("{{HORARIO}}", esc(a.horario))
+      .replaceAll("{{TALLER}}", a.taller ? "Sí" : "No")
+      .replaceAll("{{PARTES}}", a.partes ? "Sí" : "El más cercano atiende esta plaza")
+      .replaceAll("{{RUTA}}", esc(a.ruta))
+      .replaceAll("{{SLUG}}", a.slug)
+      + `\n<script type="application/ld+json">${JSON.stringify(jsonld)}</script>\n`;
+
+    const html = aplicarLayout(layout, {
+      title: `Agencia Apex Sitrak en ${a.ciudad}, ${a.estado}`,
+      desc: `Distribuidor autorizado Sitrak en ${a.ciudad}. Unidades nuevas y seminuevas, taller de servicio y refacciones originales. ${a.ruta}.`,
+      nav: "agencias",
+      body,
+      base: "../"
+    });
+    await writeFile(join(ROOT, "agencias", `${a.slug}.html`), html);
+  }
+
   // ── datos para el navegador ──────────────────────────────────────────
   const datos = `/* Generado por _build.mjs — no editar a mano. Fuente: _src/data.mjs */
-window.APEX = ${JSON.stringify({ PC, LINEAS, CAMPOS, MODELOS, AGENCIAS, PREGUNTAS }, null, 2)};
+window.APEX = ${JSON.stringify({ PC, LINEAS, CAMPOS, MODELOS, AGENCIAS, PREGUNTAS,
+  SEMINUEVOS, REFACCIONES, SISTEMAS, TCO_BASE }, null, 2)};
 `;
   await mkdir(join(ROOT, "assets", "js"), { recursive: true });
   await writeFile(join(ROOT, "assets", "js", "data.js"), datos);
@@ -129,7 +182,8 @@ window.APEX = ${JSON.stringify({ PC, LINEAS, CAMPOS, MODELOS, AGENCIAS, PREGUNTA
   await writeFile(join(ROOT, "assets", "img", "favicon.svg"), favicon);
 
   console.log(
-    `listo — ${PAGINAS.length} páginas, ${MODELOS.length} fichas de modelo, data.js y favicon`
+    `listo — ${PAGINAS.length} páginas, ${MODELOS.length} fichas de modelo, ` +
+    `${AGENCIAS.length} páginas de agencia, data.js y favicon`
   );
 }
 

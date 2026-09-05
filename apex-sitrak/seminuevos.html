@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nuestra historia | Apex Sitrak</title>
-<meta name="description" content="Sitrak es la marca premium de Sinotruk (CNHTC), nacida de la alianza con MAN de Alemania. Llegó a México en 2018.">
+<title>Seminuevos Sitrak | Apex</title>
+<meta name="description" content="Tractocamiones y unidades Sitrak seminuevas con historial de servicio, revisadas y respaldadas por la red de agencias Apex.">
 <!-- Borrador de revisión: no debe indexarse ni competir con el sitio en producción.
      Eliminar esta línea y robots.txt cuando el sitio salga en vivo. -->
 <meta name="robots" content="noindex, nofollow">
-<meta property="og:title" content="Nuestra historia | Apex Sitrak">
-<meta property="og:description" content="Sitrak es la marca premium de Sinotruk (CNHTC), nacida de la alianza con MAN de Alemania. Llegó a México en 2018.">
+<meta property="og:title" content="Seminuevos Sitrak | Apex">
+<meta property="og:description" content="Tractocamiones y unidades Sitrak seminuevas con historial de servicio, revisadas y respaldadas por la red de agencias Apex.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_MX">
 <meta name="theme-color" content="#223B5D">
@@ -54,7 +54,7 @@
 
     <nav class="nav" id="nav-principal" aria-label="Principal">
       <a href="modelos.html">Modelos</a>
-      <a href="seminuevos.html">Seminuevos</a>
+      <a href="seminuevos.html" aria-current="page">Seminuevos</a>
       <a href="costo-por-km.html">Costo por km</a>
       <a href="refacciones.html">Refacciones</a>
       <a href="postventa.html">Postventa</a>
@@ -68,69 +68,58 @@
 <main id="contenido">
 <div class="crumb">
   <div class="wrap crumb__in">
-    <a href="index.html">Inicio</a><span>/</span><strong>Nuestra historia</strong>
+    <a href="index.html">Inicio</a><span>/</span><strong>Seminuevos</strong>
   </div>
 </div>
 
 <section class="page-head">
   <div class="wrap">
     <div class="rule rule--navy"></div>
-    <h1>Sesenta años de camión pesado detrás de cada unidad</h1>
-    <p class="lead">Sitrak es la marca premium de Sinotruk (CNHTC), nacida de la alianza con MAN de Alemania. Llegó al mercado mexicano en 2018 a través de AT Motors.</p>
+    <h1>Seminuevos</h1>
+    <p class="lead">Unidades revisadas en agencia, con historial de servicio y el mismo respaldo de refacciones y taller que una unidad nueva. Filtra por año, kilometraje, precio y agencia.</p>
   </div>
 </section>
 
 <section class="section" style="padding-top:clamp(32px,4vw,52px)">
   <div class="wrap">
-    <div class="timeline">
-      <div>
-        <h3 class="num">1956</h3>
-        <p>Se funda Sinotruk (CNHTC), hoy la mayor base de producción y exportación de camión pesado de China.</p>
+    <form class="form-grid" id="sn-filtros" style="margin-bottom:28px" novalidate>
+      <div class="field">
+        <label for="sn-agencia">Agencia</label>
+        <select id="sn-agencia"></select>
       </div>
-      <div>
-        <h3 class="num">1960</h3>
-        <p>Sinotruk fabrica el primer camión pesado de China y marca el inicio de la industria en el país.</p>
+      <div class="field">
+        <label for="sn-anio">Año mínimo</label>
+        <select id="sn-anio"></select>
       </div>
-      <div>
-        <h3 class="num">2018</h3>
-        <p>Sitrak entra al mercado mexicano a través de AT Motors, con precio directo de fábrica y respaldo local.</p>
+      <div class="field">
+        <label for="sn-km">Kilometraje máximo</label>
+        <select id="sn-km">
+          <option value="">Sin límite</option>
+          <option value="150000">Hasta 150,000 km</option>
+          <option value="300000">Hasta 300,000 km</option>
+          <option value="450000">Hasta 450,000 km</option>
+          <option value="600000">Hasta 600,000 km</option>
+        </select>
       </div>
-      <div>
-        <h3 class="num">Hoy</h3>
-        <p>Planta en Xalapa, Veracruz con capacidad de 2,000 unidades anuales y una red de más de 24 agencias.</p>
+      <div class="field">
+        <label for="sn-precio">Presupuesto máximo</label>
+        <select id="sn-precio">
+          <option value="">Sin límite</option>
+          <option value="700000">Hasta $700,000</option>
+          <option value="1000000">Hasta $1,000,000</option>
+          <option value="1300000">Hasta $1,300,000</option>
+          <option value="1600000">Hasta $1,600,000</option>
+        </select>
       </div>
-    </div>
+    </form>
 
-    <div class="grid grid--3 mt-32" style="margin-top:44px">
-      <div class="card">
-        <p class="eyebrow eyebrow--amber">Volumen</p>
-        <h3 style="color:var(--navy)">400,000 unidades al año</h3>
-        <p>Capacidad de producción que sostiene la disponibilidad de unidad nueva y de refacción.</p>
-      </div>
-      <div class="card">
-        <p class="eyebrow eyebrow--amber">Alcance</p>
-        <h3 style="color:var(--navy)">Más de 100 países</h3>
-        <p>Sitrak es marca registrada en decenas de mercados, con estándares de exportación.</p>
-      </div>
-      <div class="card">
-        <p class="eyebrow eyebrow--amber">Origen</p>
-        <h3 style="color:var(--navy)">CNHTC &amp; MAN</h3>
-        <p>La línea premium del grupo, con tecnología alemana en el tren motriz.</p>
-      </div>
-    </div>
-  </div>
-</section>
+    <p class="muted" id="sn-conteo" style="margin-bottom:18px"></p>
+    <div class="units" id="sn-lista"></div>
 
-<section class="section section--dark">
-  <div class="wrap">
-    <div class="split">
-      <div class="stack gap-20">
-        <div class="rule"></div>
-        <h2>Planta Xalapa, Veracruz</h2>
-        <p class="lead">Capacidad de 2,000 unidades anuales. Producción local que acorta los tiempos de entrega y sostiene la disponibilidad de refacciones en la red nacional.</p>
-        <a class="btn btn--amber" href="cotizar.html" style="align-self:flex-start">Cotizar una unidad</a>
-      </div>
-      <img src="assets/img/tracto-wide.jpg" alt="Unidades Sitrak producidas en México" style="width:100%;aspect-ratio:16/9;object-fit:cover">
+    <div class="note mt-32">
+      <strong>Inventario de demostración.</strong> Las ocho unidades de esta página son de ejemplo.
+      En producción se administran desde WooCommerce con los mismos atributos que el catálogo de
+      unidades nuevas, para que la ficha, el filtro y el comparador se alimenten de una sola captura.
     </div>
   </div>
 </section>

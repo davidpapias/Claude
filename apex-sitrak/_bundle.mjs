@@ -17,6 +17,10 @@ const PAGINAS = [
   ["modelos", "modelos.html"],
   ["comparar", "comparar.html"],
   ["cotizar", "cotizar.html"],
+  ["costo-por-km", "costo-por-km.html"],
+  ["seminuevos", "seminuevos.html"],
+  ["refacciones", "refacciones.html"],
+  ["valuacion", "valuacion.html"],
   ["postventa", "postventa.html"],
   ["agencias", "agencias.html"],
   ["nosotros", "nosotros.html"],
@@ -58,6 +62,14 @@ async function main() {
     if (!archivo.endsWith(".html")) continue;
     const html = await readFile(join(ROOT, "modelos", archivo), "utf8");
     vistas["modelos/" + archivo.replace(/\.html$/, "")] =
+      inlineImg(entre(html, "<main id=\"contenido\">", "</main>"));
+  }
+
+  const sucursales = await readdir(join(ROOT, "agencias"));
+  for (const archivo of sucursales) {
+    if (!archivo.endsWith(".html")) continue;
+    const html = await readFile(join(ROOT, "agencias", archivo), "utf8");
+    vistas["agencias/" + archivo.replace(/\.html$/, "")] =
       inlineImg(entre(html, "<main id=\"contenido\">", "</main>"));
   }
 
@@ -149,6 +161,8 @@ async function main() {
   VISTA DE REVISIÓN &middot; El sitio real es multipágina y se entrega en código para WordPress
 </div>`;
 
+  // Las vistas incluyen JSON-LD, así que el literal JSON se embebe con los "<"
+  // escapados: si no, un "</script>" del contenido cortaría este bloque.
   const salida = `<!doctype html>
 <html lang="es-MX">
 <head>
@@ -168,7 +182,7 @@ ${aviso}
 ${cabecera}
 <main id="contenido"></main>
 ${pie}
-<script>window.__APEX_VISTAS__ = ${JSON.stringify(vistas)};</script>
+<script>window.__APEX_VISTAS__ = ${JSON.stringify(vistas).replace(/</g, "\\u003c")};</script>
 <script>${datos}</script>
 <script>${app}</script>
 <script>${router}</script>
