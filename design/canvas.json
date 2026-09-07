@@ -1,0 +1,40 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "title": "Inicio — escritorio", "x": 0, "y": 0, "w": 1440, "h": 5150 },
+    { "file": "Ficha.dc.html", "title": "Ficha de modelo", "x": 1620, "y": 0, "w": 1440, "h": 1850 },
+    { "file": "Comparador.dc.html", "title": "Comparador", "x": 1620, "y": 1990, "w": 1440, "h": 1500 },
+    { "file": "Cotizador.dc.html", "title": "Cotizador · paso 3", "x": 1620, "y": 3630, "w": 1440, "h": 1150 },
+    { "file": "Movil.dc.html", "title": "Inicio — móvil", "x": 3240, "y": 0, "w": 390, "h": 844 }
+  ],
+  "annotations": [
+    {
+      "id": "direccion",
+      "x": 0,
+      "y": -190,
+      "w": 620,
+      "text": "DIRECCIÓN — Paleta y estructura del deck: navy #223B5D, gris #B5B6B6, blanco.\nÚnico acento: ámbar #E0A03A, tomado de las luces de posición del propio tractocamión de la foto. Se usa solo en el CTA primario y en indicadores activos.\nTipografía: Archivo (titulares, versalitas muy espaciadas como el 'SITRAK' del slide) + IBM Plex Sans (lectura).\nSecciones en el orden del deck: hero, cifras, clientes, marcas, beneficios, modelos, servicio."
+    },
+    {
+      "id": "por-confirmar",
+      "x": 3240,
+      "y": 950,
+      "w": 400,
+      "text": "POR CONFIRMAR antes de publicar\n· Las 4 cifras del slide NOSOTROS (3.ª / 47,000 / 7.ª / 100) no eran legibles en la captura; puse en su lugar cifras verificadas de Sinotruk. Sustituir por las suyas.\n· CEMEX y '5,000+ unidades operando' vienen del slide CLIENTES: validar cifra y vigencia con el área comercial.\n· Teléfonos y logos de clientes son marcadores.\n· Fotos: recorte de su propio slide. Reemplazar por fotografía a resolución."
+    },
+    {
+      "id": "buyer-persona",
+      "x": 3240,
+      "y": 1990,
+      "w": 400,
+      "text": "BUYER PERSONA — dueño de empresa de transporte.\nNo compra un camión, compra kilómetros facturables. El orden de sus preguntas manda en la página:\n1. ¿Cuánto me cuesta el kilómetro?\n2. Si se para, ¿en cuánto la levantan?\n3. ¿Quién más la trae? (riesgo reputacional)\n4. ¿Cómo la pago?\nPor eso postventa y prueba social suben, y la ficha técnica baja."
+    },
+    {
+      "id": "embudo",
+      "x": 3240,
+      "y": 3630,
+      "w": 400,
+      "text": "EMBUDO — el paso 3 pregunta enganche y plazo ANTES de pedir datos de contacto.\nDos motivos: el dueño contesta eso sin fricción, y la cotización sale con la mensualidad ya calculada en vez de gastar una segunda llamada en pedirlos.\nEn Elementor Pro esto es el campo Step del widget Formulario — multipaso y barra de progreso nativos."
+    }
+  ],
+  "launch": { "view": "canvas" }
+}
