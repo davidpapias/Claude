@@ -725,14 +725,7 @@ def p_fractional(single):
       <div class="rail"><p class="folio">Al escriturar</p></div>
       <div><h2>Invertir aquí <em>abre la puerta del Club.</em></h2></div>
     </div>
-    <div class="gate div-club">
-      <span class="seal" aria-hidden="true"></span>
-      <div>
-        <h3>Su fracción lo vuelve <em>elegible.</em></h3>
-        <p>Al firmar la escritura queda habilitado para la membresía del Club: la plataforma Vacation Owners, con hoteles y resorts de todo el mundo a la mitad del costo público, más los servicios de viaje de la casa. No se vende por separado ni se abre a quien no ha invertido.</p>
-        <p style="margin-top:16px"><a class="btn btn-ghost btn-sm" href="{club}">Ver qué incluye el Club <span class="arw">&rarr;</span></a></p>
-      </div>
-    </div>
+{gate}
   </div>
 </section>
 
@@ -784,7 +777,12 @@ def p_fractional(single):
        "Su fracción no viene sola: la misma capa de servicios que opera la casa está "
        "disponible cuando usted la usa, y ya está dentro de la cuota anual.")) \
    .replace("{notfor}", notfor()) \
-   .replace("{club}", link("club", single)) \
+   .replace("{gate}", gate(single,
+       "Su fracción lo vuelve <em>elegible.</em>",
+       "Al firmar la escritura queda habilitado para la membresía del Club: la "
+       "plataforma Vacation Owners, con hoteles y resorts de todo el mundo a la mitad "
+       "del costo público, más los servicios de viaje de la casa. No se vende por "
+       "separado ni se abre a quien no ha invertido.")) \
    .replace("{testi}", bloque_testimonios(3)) \
    .replace("{cop}", link("copropietarios", single)) \
    .replace("{leg}", link("legal", single)) \
@@ -1750,14 +1748,7 @@ def p_investing(single):
   <div class="wrap sec">
     <div class="sec-head"><div class="rail"><p class="folio">Al escriturar</p></div>
       <div><h2>Comprar aquí <em>abre la puerta del Club.</em></h2></div></div>
-    <div class="gate div-club">
-      <span class="seal" aria-hidden="true"></span>
-      <div>
-        <h3>Sin importar <em>el monto.</em></h3>
-        <p>Escriturar cualquier propiedad de Investing &mdash; un terreno de entrada o una villa &mdash; lo habilita para la membresía del Club: la plataforma Vacation Owners, con hoteles y resorts de todo el mundo a la mitad del costo público. No se vende a quien no ha invertido.</p>
-        <p style="margin-top:16px"><a class="btn btn-ghost btn-sm" href="{club}">Ver qué incluye el Club <span class="arw">&rarr;</span></a></p>
-      </div>
-    </div>
+{gate}
   </div>
 </section>
 <section>
@@ -1777,7 +1768,12 @@ def p_investing(single):
    .replace("{servicios}", bloque_servicios(single,
        "Comprar completo no significa operar solo: la misma capa de servicios está "
        "disponible cuando usted usa la propiedad, contratable por estancia.")) \
-   .replace("{club}", link("club", single)) \
+   .replace("{gate}", gate(single,
+       "Sin importar <em>el monto.</em>",
+       "Escriturar cualquier propiedad de Investing &mdash; un terreno de entrada o una "
+       "villa &mdash; lo habilita para la membresía del Club: la plataforma Vacation "
+       "Owners, con hoteles y resorts de todo el mundo a la mitad del costo público. "
+       "No se vende a quien no ha invertido.")) \
    .replace("{legal}", link("legal", single)) \
    .replace("{captura}", mini_capture(
        "invFicha", "La ficha completa <em>de la que le interese.</em>",
@@ -1800,6 +1796,29 @@ SERVICIOS = [
     ("Catálogo de servicios", "Limpieza extra, niñera, masaje, fotógrafo, decoración de "
      "aniversario. Se pide desde la plataforma y se cobra al final."),
 ]
+
+
+def gate(single, titulo, texto, cta=True, propio=False):
+    """La barrera del Club, idéntica en las tres páginas que la muestran.
+
+    En las páginas de otras divisiones lleva div-club para remapear el acento
+    a lapislázuli; dentro de Club la página entera ya lo trae, y ahí tampoco
+    tiene sentido un botón que lleve a donde ya se está.
+    """
+    boton = ''
+    if cta:
+        boton = ('\n        <p style="margin-top:16px">'
+                 '<a class="btn btn-ghost btn-sm" href="%s">'
+                 'Ver qué incluye el Club <span class="arw">&rarr;</span></a></p>'
+                 % link("club", single))
+    return ('    <div class="%s">\n'
+            '      <span class="seal" aria-hidden="true"></span>\n'
+            '      <div>\n'
+            '        <h3>%s</h3>\n'
+            '        <p>%s</p>%s\n'
+            '      </div>\n'
+            '    </div>') % ("gate" if propio else "gate div-club",
+                             titulo, texto, boton)
 
 
 def bloque_servicios(single, intro=None):
@@ -1860,13 +1879,7 @@ def p_club(single):
         [("inicio", "Inicio")], single) + """
 <section>
   <div class="wrap sec" style="padding-top:0">
-    <div class="gate">
-      <span class="seal" aria-hidden="true"></span>
-      <div>
-        <h3>Sólo para quien ya <em>invirtió con nosotros.</em></h3>
-        <p>Club no tiene campaña, no tiene precio de lista público y no se abre a quien llega de fuera. Se activa cuando usted escritura una fracción en Fraccional o una propiedad completa en Investing. Es un beneficio de haber invertido, no un producto que se persiga por separado.</p>
-      </div>
-    </div>
+{gate}
   </div>
 </section>
 <section>
@@ -1892,7 +1905,14 @@ def p_club(single):
     </div>
   </div>
 </section>
-""".replace("{frac}", link("fractional", single)).replace("{inv}", link("investing", single))
+""".replace("{frac}", link("fractional", single)) \
+   .replace("{inv}", link("investing", single)) \
+   .replace("{gate}", gate(single,
+       "Sólo para quien ya <em>invirtió con nosotros.</em>",
+       "Club no tiene campaña, no tiene precio de lista público y no se abre a quien "
+       "llega de fuera. Se activa cuando usted escritura una fracción en Fraccional o "
+       "una propiedad completa en Investing. Es un beneficio de haber invertido, no un "
+       "producto que se persiga por separado.", cta=False, propio=True))
 
 
 # ---------------------------------------------------------------- programas
