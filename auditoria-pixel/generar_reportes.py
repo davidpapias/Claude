@@ -53,7 +53,7 @@ S_sub  = sty('sub',  fontSize=9.5, textColor=AZUL, fontName='Helvetica-Bold', sp
 # ══════════════════════════════════════════════════════════════════════════════
 # PDF 1 — RESUMEN EJECUTIVO (teaser, sin problema ni solucion)
 # ══════════════════════════════════════════════════════════════════════════════
-doc1 = build_doc('/home/user/Claude/resumen_ejecutivo_pixel.pdf', 'Resumen Ejecutivo - Meta Pixel')
+doc1 = build_doc('/home/user/Claude/auditoria-pixel/resumen_ejecutivo_pixel.pdf', 'Resumen Ejecutivo - Meta Pixel')
 s = banner('RESUMEN EJECUTIVO', 'Meta Pixel — eventosptovallartatransfer.com')
 
 s.append(Paragraph(
@@ -108,7 +108,7 @@ print('PDF 1 (ejecutivo) generado.')
 # ══════════════════════════════════════════════════════════════════════════════
 # PDF 2 — REPORTE DE FALLOS Y PASOS
 # ══════════════════════════════════════════════════════════════════════════════
-doc2 = build_doc('/home/user/Claude/reporte_fallos_pixel.pdf', 'Reporte de Fallos - Meta Pixel')
+doc2 = build_doc('/home/user/Claude/auditoria-pixel/reporte_fallos_pixel.pdf', 'Reporte de Fallos - Meta Pixel')
 s = banner('REPORTE DE FALLOS Y PASOS', 'Meta Pixel — eventosptovallartatransfer.com')
 
 s.append(Paragraph(

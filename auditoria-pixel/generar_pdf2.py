@@ -21,7 +21,7 @@ NEGRO  = colors.black
 BLANCO = colors.white
 
 doc = SimpleDocTemplate(
-    '/home/user/Claude/reporte_meta_pixel.pdf',
+    '/home/user/Claude/auditoria-pixel/reporte_meta_pixel.pdf',
     pagesize=A4,
     rightMargin=1.8*cm, leftMargin=1.8*cm,
     topMargin=2.2*cm, bottomMargin=2*cm,

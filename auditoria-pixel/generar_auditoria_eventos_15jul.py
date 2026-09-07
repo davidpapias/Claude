@@ -35,7 +35,7 @@ def _pg(canvas, doc):
     canvas.drawCentredString(W/2, 1*cm, f'Auditoría de Eventos · eventosptovallartatransfer.com · {HOY} · Pág. {doc.page}')
     canvas.restoreState()
 
-doc = SimpleDocTemplate('/home/user/Claude/auditoria_eventos_15jul.pdf', pagesize=A4,
+doc = SimpleDocTemplate('/home/user/Claude/auditoria-pixel/auditoria_eventos_15jul.pdf', pagesize=A4,
                         rightMargin=1.6*cm, leftMargin=1.6*cm, topMargin=1.8*cm, bottomMargin=1.6*cm,
                         title='Auditoria de eventos - Meta Pixel')
 

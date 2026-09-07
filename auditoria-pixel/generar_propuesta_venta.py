@@ -36,7 +36,7 @@ def _pg(canvas, doc):
     canvas.drawCentredString(W/2, 1*cm, f'Propuesta de Servicios · Meta Pixel & Optimización de Conversiones · {HOY} · Pág. {doc.page}')
     canvas.restoreState()
 
-doc = SimpleDocTemplate('/home/user/Claude/propuesta_venta_cliente.pdf', pagesize=A4,
+doc = SimpleDocTemplate('/home/user/Claude/auditoria-pixel/propuesta_venta_cliente.pdf', pagesize=A4,
                         rightMargin=1.6*cm, leftMargin=1.6*cm, topMargin=1.8*cm, bottomMargin=1.6*cm,
                         title='Propuesta de Servicios - Meta Pixel')
 

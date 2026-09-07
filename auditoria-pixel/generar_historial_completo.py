@@ -35,7 +35,7 @@ def _pg(canvas, doc):
     canvas.drawCentredString(W/2, 1*cm, f'Historial Meta Pixel · eventosptovallartatransfer.com · {HOY} · Pág. {doc.page}')
     canvas.restoreState()
 
-doc = SimpleDocTemplate('/home/user/Claude/historial_completo_pixel.pdf', pagesize=A4,
+doc = SimpleDocTemplate('/home/user/Claude/auditoria-pixel/historial_completo_pixel.pdf', pagesize=A4,
                         rightMargin=1.6*cm, leftMargin=1.6*cm, topMargin=1.8*cm, bottomMargin=1.6*cm,
                         title='Historial completo - Meta Pixel')
 
