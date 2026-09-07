@@ -36,7 +36,7 @@ def _pg(canvas, doc):
     canvas.drawCentredString(W/2, 1*cm, f'Diagnóstico Pixel — Migración Next.js · eventosptovallartatransfer.com · {HOY} · Pág. {doc.page}')
     canvas.restoreState()
 
-doc = SimpleDocTemplate('/home/user/Claude/diagnostico_nextjs_pixel_dev.pdf', pagesize=A4,
+doc = SimpleDocTemplate('/home/user/Claude/auditoria-pixel/diagnostico_nextjs_pixel_dev.pdf', pagesize=A4,
                         rightMargin=1.6*cm, leftMargin=1.6*cm, topMargin=1.8*cm, bottomMargin=1.6*cm,
                         title='Diagnóstico - Pixel incompleto tras migración a Next.js')
 
