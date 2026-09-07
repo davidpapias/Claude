@@ -182,7 +182,8 @@ ${aviso}
 ${cabecera}
 <main id="contenido"></main>
 ${pie}
-<script>window.__APEX_VISTAS__ = ${JSON.stringify(vistas).replace(/</g, "\\u003c")};</script>
+<script>window.__APEX_VISTAS__ = ${JSON.stringify(vistas).replace(/</g, "\\u003c")};
+window.__APEX_IMG__ = ${JSON.stringify(imagenes)};</script>
 <script>${datos}</script>
 <script>${app}</script>
 <script>${router}</script>

@@ -109,18 +109,48 @@ Es la parte alta del embudo, que no existe en el sitio actual.
 de tipo *product finder / quiz* si se prefiere administrarlo desde el panel. Los estilos ya salen
 de las variables CSS globales.
 
-### 4.2 Cotizador de 4 pasos *(nuevo — reemplaza el formulario largo)*
-Paso 1 tipo de unidad → 2 unidad → 3 volumen y forma de pago → 4 datos de contacto.
-Barra de progreso y resumen lateral en vivo.
+### 4.2 Cotizador multipaso — un motor, cuatro guiones *(reemplaza el formulario largo)*
+No es un formulario por intención: es una máquina de pasos que cambia de secuencia según de dónde
+venga el visitante.
 
-**Por qué:** el formulario largo pide todo antes de dar algo. Este empieza por lo que el visitante
-contesta sin fricción y deja los datos personales al final, cuando ya invirtió tiempo. Además, al
-preguntar enganche y plazo, la cotización sale con **mensualidad estimada ya calculada** en lugar
-de gastar una segunda llamada en pedirlos.
+| Enlace | Guion | Pasos |
+|---|---|---|
+| `/cotizar/` | unidad nueva | línea → unidad → enganche → contacto |
+| `/cotizar/?tipo=seminuevo&sn=sn-003` | seminuevo | unidad → enganche → contacto |
+| `/cotizar/?tipo=refaccion&np=FIL-4001` | refacción | refacción → contacto |
+| `/cotizar/?tipo=taller&ag=monterrey` | taller | servicio → contacto |
 
-**Cómo:** widget **Formulario** de Elementor Pro con campos de tipo **Step** (multipaso nativo,
-con barra de progreso). Acciones al enviar: Correo + **Redirección a `/gracias/`** —indispensable
-para medir conversiones— + Webhook al CRM.
+**Por qué:** el formulario largo pide todo antes de dar algo, y uno genérico le pregunta «¿qué tipo
+de unidad buscas?» a quien solo quiere una refacción. Este empieza por lo que el visitante contesta
+sin fricción, deja los datos personales al final —cuando ya invirtió tiempo— y nunca le pregunta lo
+que el enlace ya sabía. Al preguntar enganche y plazo, la cotización sale con **mensualidad
+estimada ya calculada** en lugar de gastar una segunda llamada en pedirlos.
+
+**El contexto viaja en la URL.** Cada llamado a la acción del sitio etiqueta su procedencia:
+`u` (unidad), `sn` (seminuevo), `np` (número de parte), `ag` (agencia), `origen`, y desde la
+calculadora `cpk`, `km` y `rend`. Todo se refleja en el resumen lateral y se manda como campo
+oculto, de modo que el asesor recibe el lead con los números ya puestos.
+
+**Cómo:** widget **Formulario** de Elementor Pro con campos de tipo **Step** (multipaso nativo, con
+barra de progreso), un formulario por guion. Los parámetros de la URL entran con los *shortcodes de
+consulta* de Elementor en campos ocultos. Acciones al enviar: Correo + **Redirección a `/gracias/`**
+—indispensable para medir conversiones— + Webhook al CRM.
+
+### 4.2b La calculadora de costo por kilómetro *(nuevo — la pieza del pitch)*
+El costo por kilómetro **se muestra completo y gratis**. Esconder detrás de un formulario el número
+que el propio visitante acaba de calcular con sus datos se siente a trampa y se nota. Lo que se pide
+a cambio del contacto es el paso siguiente, que de todos modos necesita a una persona: el
+comparativo contra una unidad Sitrak **en su ruta**, con rendimiento medido, plan de mantenimiento y
+valor de reventa.
+
+**Importante para la junta:** el cálculo no supone ningún rendimiento de una unidad Sitrak. Es
+aritmética sobre las cifras que capturó el prospecto. Así no hay número que se pueda impugnar. No
+sustituir esto por una comparación con un rendimiento inventado.
+
+### 4.2c Descarga de ficha técnica *(nuevo — el único micro-compromiso)*
+Botón en cada ficha que pide **solo el correo**. Es la salida para quien todavía no quiere hablar
+con un vendedor; sin ella, el visitante o cotiza o se va sin dejar rastro.
+**Cómo:** Popup de Elementor con un campo, y la ficha como adjunto de la confirmación.
 
 ### 4.3 Comparador de unidades *(nuevo)*
 Hasta tres unidades lado a lado, 13 renglones, valor más alto marcado en rojo. Se alimenta desde
@@ -152,11 +182,43 @@ Agencia · tipo de servicio · VIN · fecha. Convierte la postventa —que hoy e
 segundo embudo de ingresos recurrentes.
 **Cómo:** widget Formulario con notificación a la agencia seleccionada.
 
-### 4.6 Agencias filtrables con contacto directo *(nuevo)*
-Selector por estado y, en cada sucursal, «Cómo llegar» y «Contactar».
-**Cómo:** CPT `agencia` + Loop Grid con filtro por taxonomía de estado. Crear además una página
-por agencia (`/agencias/monterrey/`) con dirección, teléfono, horario y datos estructurados
-`AutoDealer`: es el mayor gancho de tráfico local que el sitio no aprovecha.
+### 4.6 Las 24 agencias, homologadas *(nuevo)*
+Son todas propias de Apex y las mantiene marketing central. Eso define la arquitectura completa.
+
+**Un CPT, una plantilla.** CPT `agencia` + Loop Grid con filtro por taxonomía de estado, y una
+página por sucursal (`/agencias/monterrey/`) con datos estructurados `AutoDealer`. Es el mayor
+gancho de tráfico local que el sitio no aprovecha hoy.
+
+**Carga masiva, no captura a mano.** Con marketing central manteniendo las 24 fichas, el flujo no
+puede ser 24 formularios: la fuente es una hoja de cálculo con una fila por agencia, importada al
+CPT con **WP All Import**. Actualizar los horarios de las 24 pasa a ser editar una columna.
+
+**Enrutamiento de leads.** Una tabla estado → agencia cubre los 32 estados; los que no tienen
+sucursal propia se asignan explícitamente, nunca por cercanía adivinada. Cuando el visitante elige
+su estado, el sitio le dice qué agencia lo atiende y el lead sale etiquetado con ella.
+
+**Un solo WhatsApp con API, no 24 números.** Los teléfonos por sucursal siguen publicados para
+llamada directa, pero el canal de WhatsApp del sitio es único y reparte: es la única manera de saber
+cuántos leads entraron, cuáles se contestaron y cuáles no.
+
+**La regla que evita canibalizar.** Veinticuatro páginas de ubicación calcadas compiten entre sí y
+no posiciona ninguna. Tres bloques obligatoriamente distintos por agencia, y **ninguna se publica
+sin ellos**:
+
+1. Párrafo de cobertura con las rutas e industrias reales de esa plaza
+2. El inventario de seminuevos de esa sucursal
+3. El asesor responsable, con nombre
+
+**Google Business Profile por sucursal.** 24 perfiles, con nombre, dirección y teléfono idénticos a
+la ficha del sitio y cada uno enlazando a su página. Es donde nacen los leads locales y hoy no está
+conectado.
+
+**URLs.** `/agencias/<ciudad>/` mientras no haya ciudades repetidas; si hay dos en la misma plaza,
+`<ciudad>-<zona>`. Un slug publicado no se cambia sin redirección 301.
+
+**El riesgo de operar centralizado.** El dato envejece y nadie se entera. Cada ficha lleva campo
+**última actualización** visible, con revisión trimestral en el calendario; conviene dejar preparado
+el rol de «gerente de agencia» por si más adelante deciden delegar.
 
 ### 4.7 CTA escalonado en la ficha
 Bloque lateral fijo con **Cotizar** (rojo) · **WhatsApp** (verde) · **Comparar** (contorno) ·
@@ -165,15 +227,23 @@ casilla de comparador. Tres niveles de compromiso en lugar de un único botón.
 ---
 
 ## 5. Medición mínima para que el embudo sea gestionable
-1. Página `/gracias/` como destino de cada envío, con evento de conversión.
-2. Eventos separados por origen del lead: selector de unidad, ficha, comparador, WhatsApp, taller.
-3. Campo oculto en el formulario con la unidad y la línea, para saber qué producto genera demanda.
+1. **`/gracias/` como destino único de cada envío**, sin excepciones. Un formulario que termina
+   pintando un mensaje en su propio sitio no se puede medir.
+2. Ahí se dispara un solo evento con todo lo necesario para administrar el embudo:
+   `dataLayer.push({ event: "generate_lead", origen, tipo_solicitud, unidad, linea, agencia })`,
+   conectado a Google Tag Manager.
+3. `origen` distingue de dónde salió el lead: calculadora, catálogo, ficha, seminuevos, refacciones,
+   valuación, agencia o ficha técnica. Es lo que responde qué parte del sitio trae los leads.
+4. `agencia` cierra el circuito con la operación: cuántos leads se fueron a cada plaza y cuáles se
+   contestaron.
 
 ---
 
 ## 6. Pendientes antes de publicar
 - **Fotografía de las unidades** — ver `IMAGENES.md`.
 - Teléfonos reales y directorio de agencias (el prototipo trae 12 de ejemplo).
+- El número de la línea de WhatsApp Business, los asesores por agencia y el `placeId` de cada
+  Google Business Profile.
 - Completar los atributos marcados «Por confirmar» de las 11 unidades.
 - Aviso de privacidad y consentimiento del formulario.
 - Verificar que los slugs de producto coincidan con los del sitio actual antes de migrar.

@@ -13,7 +13,8 @@
           <div class="rule rule--navy"></div>
           <p class="eyebrow eyebrow--amber">Agencia autorizada Sitrak</p>
           <h1 style="color:var(--navy)">Apex Sitrak {{CIUDAD}}</h1>
-          <p class="lead">Venta de unidades nuevas y seminuevas, taller de servicio y refacciones originales en {{CIUDAD}}, {{ESTADO}}. Atendemos {{RUTA}}.</p>
+          <p class="lead">Venta de unidades nuevas y seminuevas, taller de servicio y refacciones originales en {{CIUDAD}}, {{ESTADO}}. Atendemos {{RUTA}}: operaciones de {{INDUSTRIAS}}.</p>
+          <p class="lead">Desde esta agencia se atiende a {{COBERTURA}}. Si operas en esa zona, tu cotización, tu servicio de taller y tus refacciones salen de aquí.</p>
         </div>
 
         <img class="detail__gallery" src="../assets/img/tracto-frente.jpg" alt="Agencia Apex Sitrak en {{CIUDAD}}" width="1200" height="675" loading="lazy">
@@ -23,10 +24,12 @@
           <dl>
             <div class="srow"><dt>Dirección</dt><dd>{{DIRECCION}}, {{CIUDAD}}, {{ESTADO}}, C.P. {{CP}}</dd></div>
             <div class="srow"><dt>Teléfono</dt><dd>{{TEL}}</dd></div>
-            <div class="srow"><dt>Horario</dt><dd>{{HORARIO}}</dd></div>
-            <div class="srow"><dt>Taller de servicio</dt><dd>{{TALLER}}</dd></div>
-            <div class="srow"><dt>Centro de partes</dt><dd>{{PARTES}}</dd></div>
-            <div class="srow"><dt>Cobertura</dt><dd>{{RUTA}}</dd></div>
+            <div class="srow"><dt>Correo</dt><dd>{{CORREO}}</dd></div>
+            <div class="srow"><dt>Horario de venta</dt><dd>{{HORARIO_VENTA}}</dd></div>
+            <div class="srow"><dt>Horario de taller</dt><dd>{{HORARIO_TALLER}}</dd></div>
+            <div class="srow"><dt>Refacciones</dt><dd>{{HORARIO_PARTES}}</dd></div>
+            <div class="srow"><dt>Servicios</dt><dd>{{SERVICIOS}}</dd></div>
+            <div class="srow"><dt>Estados que atiende</dt><dd>{{COBERTURA}}</dd></div>
           </dl>
         </div>
 
@@ -50,18 +53,30 @@
             </div>
           </div>
         </div>
+        <div>
+          <h2 style="font-size:22px;color:var(--navy);border-bottom:2px solid var(--navy);padding-bottom:12px;margin-bottom:18px">Seminuevos en esta agencia</h2>
+          {{SEMINUEVOS}}
+        </div>
       </div>
 
       <div class="stack gap-16">
+        <div class="card">
+          <p class="eyebrow eyebrow--amber">Quién te atiende</p>
+          <h3 style="color:var(--navy)">{{ASESOR}}</h3>
+          <p>{{PUESTO}} &middot; Apex Sitrak {{CIUDAD}}</p>
+          <p class="muted" style="font-size:12.5px;margin-top:10px">Es la persona que da seguimiento a tu cotización y a tus unidades en esta plaza.</p>
+        </div>
+
         <div class="buybox">
           <p class="eyebrow eyebrow--amber">Contacto directo</p>
           <h3>Apex Sitrak {{CIUDAD}}</h3>
           <div class="client__hr"></div>
           <div class="buybox__row"><span>Teléfono</span><strong>{{TEL}}</strong></div>
           <div class="buybox__row"><span>Horario</span><strong>{{HORARIO_CORTO}}</strong></div>
-          <a class="btn btn--amber btn--block mt-8" href="../cotizar.html">Cotizar en esta agencia</a>
-          <a class="btn btn--ghost btn--block" href="../postventa.html">Agendar servicio de taller</a>
-          <a class="btn btn--ghost btn--block" href="#">Cómo llegar</a>
+          <a class="btn btn--amber btn--block mt-8" href="../cotizar.html?ag={{SLUG}}&amp;origen=agencia-{{SLUG}}">Cotizar en esta agencia</a>
+          <a class="btn btn--ghost btn--block" href="../cotizar.html?tipo=taller&amp;ag={{SLUG}}&amp;origen=agencia-{{SLUG}}">Agendar servicio de taller</a>
+          <a class="btn btn--ghost btn--block" href="{{WA}}" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+          <a class="btn btn--ghost btn--block" href="{{MAPA}}" target="_blank" rel="noopener">Cómo llegar</a>
         </div>
 
         <div class="map" role="img" aria-label="Ubicación de la agencia Apex Sitrak en {{CIUDAD}}" style="aspect-ratio:4/3">
@@ -71,6 +86,7 @@
 
         <div class="note">
           Los datos entre <strong>[corchetes]</strong> se completan con el directorio real antes de publicar.
+          <br><span class="muted" style="font-size:12px">Ficha revisada el {{ACTUALIZADO}}.</span>
         </div>
       </div>
 

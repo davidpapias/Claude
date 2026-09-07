@@ -35,6 +35,67 @@
     return '<div class="srow"><dt>' + esc(k) + "</dt><dd>" + esc(v) + "</dd></div>";
   }
 
+  function porSeminuevo(id) {
+    for (var i = 0; i < D.SEMINUEVOS.length; i++) {
+      if (D.SEMINUEVOS[i].id === id) return D.SEMINUEVOS[i];
+    }
+    return null;
+  }
+
+  function porRefaccion(np) {
+    for (var i = 0; i < D.REFACCIONES.length; i++) {
+      if (D.REFACCIONES[i].np === np) return D.REFACCIONES[i];
+    }
+    return null;
+  }
+
+  function porAgencia(slug) {
+    for (var i = 0; i < D.AGENCIAS.length; i++) {
+      if (D.AGENCIAS[i].slug === slug) return D.AGENCIAS[i];
+    }
+    return null;
+  }
+
+  // Estados de la república que la red atiende, en orden alfabético.
+  function estadosCubiertos() {
+    return Object.keys(D.COBERTURA).sort(function (a, b) { return a.localeCompare(b, "es"); });
+  }
+
+  /* ---------- contexto que viaja en la URL ----------
+     Todo el embudo depende de que el lead llegue sabiendo de dónde vino: qué
+     unidad miraba, qué refacción buscaba, qué costo por km calculó y qué
+     agencia le toca. Estos dos helpers son el único lugar donde se lee y se
+     arma esa información. */
+
+  function parametros() {
+    var q = {};
+    // El visor de una sola página guarda la consulta en el hash; el sitio
+    // multipágina la trae en location.search. Se leen las dos.
+    var fuentes = [location.search, location.hash.indexOf("?") > -1 ? location.hash.slice(location.hash.indexOf("?")) : ""];
+    fuentes.forEach(function (f) {
+      if (!f) return;
+      new URLSearchParams(f).forEach(function (v, k) { if (v) q[k] = v; });
+    });
+    return q;
+  }
+
+  function aConsulta(obj) {
+    var partes = [];
+    for (var k in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, k) && obj[k] !== "" && obj[k] != null) {
+        partes.push(encodeURIComponent(k) + "=" + encodeURIComponent(obj[k]));
+      }
+    }
+    return partes.join("&");
+  }
+
+  // Enlace de WhatsApp con el mensaje ya redactado: el asesor recibe el
+  // contexto en lugar de empezar preguntando de qué unidad se trata.
+  function waLink(texto) {
+    var n = (D.CONTACTO && D.CONTACTO.whatsapp) || "";
+    return "https://wa.me/" + n + "?text=" + encodeURIComponent(texto);
+  }
+
   function nombreLinea(id) {
     for (var i = 0; i < D.LINEAS.length; i++) {
       if (D.LINEAS[i].id === id) return D.LINEAS[i].nombre;
@@ -44,6 +105,18 @@
 
   // Prefijo relativo: las fichas viven en /modelos/, el resto en la raíz.
   var BASE = /\/modelos\/[^/]+\.html?$/.test(location.pathname) ? "../" : "";
+
+  // Ruta de una imagen del catálogo. En el sitio normal es la ruta relativa; en
+  // el visor de un solo archivo el paquete deja las imágenes ya incrustadas en
+  // __APEX_IMG__, para que ese HTML se pueda compartir suelto.
+  function imagen(ruta) {
+    var inc = window.__APEX_IMG__;
+    if (inc) {
+      var nombre = String(ruta).split("/").pop();
+      if (inc[nombre]) return inc[nombre];
+    }
+    return BASE + ruta;
+  }
 
   function leer(clave, alt) {
     try {
@@ -90,7 +163,7 @@
     var marcada = comparador.indexOf(m.slug) > -1 ? " checked" : "";
     return '<article class="unit">' +
       '<a class="unit__media" href="' + BASE + 'modelos/' + m.slug + '.html">' +
-        '<img src="' + BASE + m.img + '" alt="' + esc(m.nombre) + '" loading="lazy" width="600" height="450">' +
+        '<img src="' + imagen(m.img) + '" alt="' + esc(m.nombre) + '" loading="lazy" width="600" height="450">' +
       "</a>" +
       '<div class="unit__body">' +
         '<span class="unit__cat">' + esc(nombreLinea(m.linea)) + " &middot; " + esc(m.uso) + "</span>" +
@@ -102,7 +175,7 @@
           '<div class="srow"><dt>Capacidad</dt><dd>' + (m.cap === D.PC ? "&mdash;" : esc(m.cap)) + "</dd></div>" +
         "</dl>" +
         '<div class="unit__acts">' +
-          '<a class="btn btn--amber btn--sm" href="' + BASE + "cotizar.html?u=" + m.slug + '">Cotizar</a>' +
+          '<a class="btn btn--amber btn--sm" href="' + BASE + "cotizar.html?u=" + m.slug + "&origen=catalogo" + '">Cotizar</a>' +
           '<a class="btn btn--outline btn--sm" href="' + BASE + "modelos/" + m.slug + '.html">Ficha</a>' +
           '<label class="unit__cmp"><input type="checkbox" data-cmp="' + m.slug + '"' + marcada + "> Agregar al comparador</label>" +
         "</div>" +
@@ -148,7 +221,7 @@
     cont.innerHTML = D.LINEAS.map(function (l) {
       var n = D.MODELOS.filter(function (m) { return m.linea === l.id; }).length;
       return '<a class="line-card' + (l.destacada ? " line-card--featured" : "") + '" href="modelos.html#' + l.id + '">' +
-        '<span class="line-card__media"><img src="' + l.img + '" alt="' + esc(l.nombre) + '" loading="lazy" width="400" height="320"></span>' +
+        '<span class="line-card__media"><img src="' + imagen(l.img) + '" alt="' + esc(l.nombre) + '" loading="lazy" width="400" height="320"></span>' +
         '<span class="line-card__body">' +
           '<span class="unit__cat">' + n + " unidad" + (n === 1 ? "" : "es") + "</span>" +
           '<h3 class="unit__title">' + esc(l.nombre) + "</h3>" +
@@ -230,7 +303,7 @@
 
     var cab = "<thead><tr><th></th>" + elegidas.map(function (m) {
       return "<th>" +
-        '<span class="cmp__media"><img src="' + BASE + m.img + '" alt="' + esc(m.nombre) + '" loading="lazy" width="400" height="250"></span>' +
+        '<span class="cmp__media"><img src="' + imagen(m.img) + '" alt="' + esc(m.nombre) + '" loading="lazy" width="400" height="250"></span>' +
         '<span class="cmp__name">' + esc(m.nombre) + "</span>" +
         '<span class="cmp__cat">' + esc(nombreLinea(m.linea)) + "</span></th>";
     }).join("") + "</tr></thead>";
@@ -365,61 +438,87 @@
     pintar();
   }
 
-  /* ---------- cotizador de cuatro pasos ---------- */
+  /* ---------- cotizador: un motor, varios guiones ----------
+     No hay cuatro formularios distintos. Hay una máquina de pasos y un guion
+     por intención: quien viene por una refacción no debe contestar «¿qué tipo
+     de unidad buscas?». El guion se elige con ?tipo= y el contexto viaja en la
+     URL para que el asesor reciba el lead con los datos ya puestos. */
+
+  var GUIONES = {
+    unidad:    { pasos: ["linea", "unidad", "pago", "contacto"],   etiqueta: "Cotizar unidad nueva" },
+    seminuevo: { pasos: ["seminuevo", "pago", "contacto"],          etiqueta: "Cotizar seminuevo" },
+    refaccion: { pasos: ["refaccion", "contacto"],                  etiqueta: "Consultar refacción" },
+    taller:    { pasos: ["taller", "contacto"],                     etiqueta: "Agendar servicio de taller" }
+  };
+
+  var TITULOS = {
+    linea: "Tipo de operación", unidad: "Unidad y cantidad", pago: "Enganche y plazo",
+    seminuevo: "Unidad seminueva", refaccion: "Refacción", taller: "Servicio de taller",
+    contacto: "Datos de contacto"
+  };
+
+  function estadoNuevo(tipo) {
+    return {
+      tipo: GUIONES[tipo] ? tipo : "unidad", paso: 0,
+      linea: "", unidad: "", cantidad: "1 unidad",
+      pago: "Crédito / financiamiento", enganche: "20 %", plazo: "48 meses",
+      agencia: "", sn: "", np: "", servicio: "Mantenimiento preventivo", vin: "", fecha: "",
+      origen: "", cpk: "", km: "", rend: ""
+    };
+  }
 
   function cotizador() {
     var caja = document.getElementById("cotizador");
     var aside = document.getElementById("cotizador-resumen");
     if (!caja || !aside) return;
 
-    var TITULOS = ["Tipo de operación", "Unidad y cantidad", "Enganche y plazo", "Datos de contacto"];
-    var estado = leer(CLAVE_COT, null) || {
-      paso: 0, linea: "", unidad: "", cantidad: "1 unidad",
-      pago: "Crédito / financiamiento", enganche: "20 %", plazo: "48 meses", listo: false
-    };
+    var p = parametros();
+    var estado = leer(CLAVE_COT, null);
 
-    var pre = new URLSearchParams(location.search).get("u");
-    if (pre && porSlug(pre)) {
-      estado.unidad = pre;
-      estado.linea = porSlug(pre).linea;
-      estado.paso = 2;
-      estado.listo = false;
+    // Un enlace con contexto siempre gana sobre lo que quedó en sesión: si el
+    // visitante pulsó «Me interesa» en otra unidad, esa es su intención ahora.
+    var contexto = p.u || p.sn || p.np || p.ag || p.tipo || p.origen;
+    if (!estado || contexto) {
+      var previo = estado;
+      estado = estadoNuevo(p.tipo);
+      if (previo && !p.tipo) {
+        // Conserva lo que ya había contestado del mismo guion.
+        ["cantidad", "pago", "enganche", "plazo", "agencia"].forEach(function (k) {
+          if (previo[k]) estado[k] = previo[k];
+        });
+      }
+      if (p.u && porSlug(p.u)) { estado.unidad = p.u; estado.linea = porSlug(p.u).linea; }
+      if (p.sn && porSeminuevo(p.sn)) { estado.tipo = "seminuevo"; estado.sn = p.sn; }
+      if (p.np && porRefaccion(p.np)) { estado.tipo = "refaccion"; estado.np = p.np; }
+      if (p.ag && porAgencia(p.ag)) estado.agencia = p.ag;
+      ["origen", "cpk", "km", "rend"].forEach(function (k) { if (p[k]) estado[k] = p[k]; });
+
+      // Si ya sabemos qué unidad quiere, se salta la elección de línea y modelo.
+      var guion = GUIONES[estado.tipo].pasos;
+      if (estado.tipo === "unidad" && estado.unidad) estado.paso = guion.indexOf("pago");
+      if (estado.tipo === "seminuevo" && estado.sn) estado.paso = guion.indexOf("pago");
+      if (estado.tipo === "refaccion" && estado.np) estado.paso = guion.indexOf("contacto");
     }
+    if (!GUIONES[estado.tipo]) estado.tipo = "unidad";
 
+    function pasos() { return GUIONES[estado.tipo].pasos; }
+    function pasoActual() { return pasos()[Math.min(estado.paso, pasos().length - 1)]; }
     function persistir() { guardar(CLAVE_COT, estado); }
 
-    function pintar() {
-      var html = "";
+    /* --- cada paso pinta su propio contenido --- */
 
-      if (estado.listo) {
-        html = '<div class="center" style="padding:24px 0">' +
-          '<div style="width:56px;height:56px;background:var(--amber);color:var(--navy-900);display:grid;place-items:center;margin:0 auto 18px">' +
-            '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M20 6 L9 17 L4 12"></path></svg>' +
-          "</div>" +
-          '<h2 style="color:var(--navy);margin-bottom:12px">Solicitud lista</h2>' +
-          '<p class="lead" style="margin-inline:auto">Un asesor de tu agencia te contacta en menos de 24 horas hábiles con disponibilidad, plan de financiamiento y fecha de entrega.</p>' +
-          '<div class="row mt-24" style="justify-content:center">' +
-            '<a class="btn btn--amber" href="#">Adelantar por WhatsApp</a>' +
-            '<button class="btn btn--outline" type="button" data-accion="reiniciar">Cotizar otra unidad</button>' +
-          "</div>" +
-          '<p class="muted mt-24" style="font-size:12.5px">Demostración: el formulario todavía no envía datos.</p></div>';
-        caja.innerHTML = html;
-        pintarResumen();
-        return;
-      }
-
-      var pct = ((estado.paso + 1) / 4) * 100;
-      html += '<div class="progress"><i style="width:' + pct + '%"></i></div>' +
-        '<div class="progress-meta"><strong>Paso ' + (estado.paso + 1) + " de 4 &middot; " + TITULOS[estado.paso] + "</strong><span>" + Math.round(pct) + " % completo</span></div>";
-
-      if (estado.paso === 0) {
-        html += '<h2 style="font-size:clamp(21px,2.4vw,27px);color:var(--navy);margin-bottom:20px">¿Qué tipo de unidad buscas?</h2>' +
+    var PINTA = {
+      linea: function () {
+        return h2("¿Qué tipo de unidad buscas?") +
           '<div class="option-grid">' + D.LINEAS.map(function (l) {
-            return '<button class="option" type="button" data-campo="linea" data-v="' + l.id + '"><b>' + esc(l.nombre) + "</b><span>" + esc(l.desc) + "</span></button>";
+            return '<button class="option" type="button" data-campo="linea" data-v="' + l.id + '"><b>' +
+              esc(l.nombre) + "</b><span>" + esc(l.desc) + "</span></button>";
           }).join("") + "</div>";
-      } else if (estado.paso === 1) {
+      },
+
+      unidad: function () {
         var lista = D.MODELOS.filter(function (m) { return !estado.linea || m.linea === estado.linea; });
-        html += '<h2 style="font-size:clamp(21px,2.4vw,27px);color:var(--navy);margin-bottom:20px">¿Cuál unidad y cuántas?</h2>' +
+        return h2("¿Cuál unidad y cuántas?") +
           '<div class="form-grid">' +
             '<div class="field field--full"><label for="q-unidad">Unidad</label><select id="q-unidad" data-campo="unidad">' +
               '<option value="">Elegir&hellip;</option>' +
@@ -433,38 +532,129 @@
                 return "<option" + (estado.cantidad === o ? " selected" : "") + ">" + o + "</option>";
               }).join("") + "</select></div>" +
           "</div>";
-      } else if (estado.paso === 2) {
-        html += '<h2 style="font-size:clamp(21px,2.4vw,27px);color:var(--navy);margin-bottom:20px">Enganche y plazo</h2>' +
+      },
+
+      seminuevo: function () {
+        return h2("¿Cuál unidad del inventario?") +
+          '<div class="field field--full"><label for="q-sn">Seminuevo</label><select id="q-sn" data-campo="sn">' +
+            '<option value="">Elegir&hellip;</option>' +
+            D.SEMINUEVOS.map(function (u) {
+              return '<option value="' + u.id + '"' + (estado.sn === u.id ? " selected" : "") + ">" +
+                esc(u.nombre) + " &middot; " + u.anio + " &middot; " + esc(nombreAgencia(u.agencia)) + "</option>";
+            }).join("") + "</select></div>" +
+          '<div class="note note--amber mt-24">Cada seminuevo del inventario tiene historial de servicio. Al enviar la solicitud te llega el expediente completo de esa unidad.</div>';
+      },
+
+      refaccion: function () {
+        return h2("¿Qué refacción necesitas?") +
+          '<div class="form-grid">' +
+            '<div class="field field--full"><label for="q-np">Número de parte o descripción</label><select id="q-np" data-campo="np">' +
+              '<option value="">Elegir&hellip;</option>' +
+              D.REFACCIONES.map(function (r) {
+                return '<option value="' + esc(r.np) + '"' + (estado.np === r.np ? " selected" : "") + ">" +
+                  esc(r.np) + " &middot; " + esc(r.nombre) + "</option>";
+              }).join("") +
+              '<option value="otra"' + (estado.np === "otra" ? " selected" : "") + ">No está en la lista</option>" +
+            "</select></div>" +
+            '<div class="field field--full"><label for="q-unidad">Unidad donde se instala</label><select id="q-unidad" data-campo="unidad">' +
+              '<option value="">Elegir&hellip;</option>' +
+              D.MODELOS.map(function (m) {
+                return '<option value="' + m.slug + '"' + (estado.unidad === m.slug ? " selected" : "") + ">" + esc(m.nombre) + "</option>";
+              }).join("") + "</select></div>" +
+          "</div>" +
+          '<div class="note note--amber mt-24">Con el número de parte y la unidad confirmamos <strong>existencia y tiempo de entrega</strong> antes de llamarte, en lugar de tomarte el dato y devolverte la llamada después.</div>';
+      },
+
+      taller: function () {
+        return h2("¿Qué servicio y cuándo?") +
+          '<div class="form-grid">' +
+            '<div class="field"><label for="q-servicio">Tipo de servicio</label><select id="q-servicio" data-campo="servicio">' +
+              ["Mantenimiento preventivo", "Correctivo / diagnóstico", "Hojalatería y pintura", "Garantía"].map(function (o) {
+                return "<option" + (estado.servicio === o ? " selected" : "") + ">" + o + "</option>";
+              }).join("") + "</select></div>" +
+            '<div class="field"><label for="q-fecha">Fecha deseada</label><input id="q-fecha" type="date" data-campo="fecha" value="' + esc(estado.fecha) + '"></div>' +
+            '<div class="field field--full"><label for="q-vin">VIN o número económico</label><input id="q-vin" type="text" data-campo="vin" placeholder="Opcional" value="' + esc(estado.vin) + '"></div>' +
+          "</div>" +
+          '<div class="note note--amber mt-24">Confirmamos disponibilidad de refacciones antes de que llegues, para que la unidad no espere en el patio.</div>';
+      },
+
+      pago: function () {
+        return h2("Enganche y plazo") +
           '<div class="field" style="margin-bottom:22px"><label for="q-pago">Forma de pago</label><select id="q-pago" data-campo="pago">' +
             ["Crédito / financiamiento", "Contado", "Arrendamiento", "Por definir"].map(function (o) {
               return "<option" + (estado.pago === o ? " selected" : "") + ">" + o + "</option>";
             }).join("") + "</select></div>" +
-          '<div class="field" style="margin-bottom:22px"><span class="field-label" style="font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:9px;display:block">Enganche estimado</span>' +
+          '<div class="field" style="margin-bottom:22px">' + rotulo("Enganche estimado") +
             '<div class="choice-grid">' + ["10 %", "20 %", "30 %", "40 % o más"].map(function (o) {
               return '<button class="choice" type="button" data-campo="enganche" data-v="' + o + '" aria-pressed="' + (estado.enganche === o) + '">' + o + "</button>";
             }).join("") + "</div></div>" +
-          '<div class="field"><span style="font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:9px;display:block">Plazo deseado</span>' +
+          '<div class="field">' + rotulo("Plazo deseado") +
             '<div class="choice-grid">' + ["24 meses", "36 meses", "48 meses", "60 meses"].map(function (o) {
               return '<button class="choice" type="button" data-campo="plazo" data-v="' + o + '" aria-pressed="' + (estado.plazo === o) + '">' + o + "</button>";
             }).join("") + "</div></div>" +
           '<div class="note note--amber mt-24">Con estos dos datos la cotización te llega con la <strong>mensualidad estimada ya calculada</strong>, en vez de una segunda llamada para pedírtelos.</div>';
-      } else {
-        html += '<h2 style="font-size:clamp(21px,2.4vw,27px);color:var(--navy);margin-bottom:20px">¿A dónde te contactamos?</h2>' +
+      },
+
+      contacto: function () {
+        return h2("¿A dónde te contactamos?") +
           '<div class="form-grid">' +
-            '<div class="field"><label for="q-nombre">Nombre</label><input id="q-nombre" type="text" placeholder="Nombre y apellido"></div>' +
-            '<div class="field"><label for="q-empresa">Empresa</label><input id="q-empresa" type="text" placeholder="Razón social"></div>' +
-            '<div class="field"><label for="q-tel">Teléfono</label><input id="q-tel" type="tel" placeholder="10 dígitos"></div>' +
-            '<div class="field"><label for="q-correo">Correo</label><input id="q-correo" type="email" placeholder="nombre@empresa.mx"></div>' +
-            '<div class="field field--full"><label for="q-agencia">Agencia más cercana</label><select id="q-agencia">' +
-              D.AGENCIAS.map(function (a) { return "<option>" + esc(a.ciudad) + " &middot; " + esc(a.estado) + "</option>"; }).join("") +
-            "</select></div>" +
+            '<div class="field"><label for="q-nombre">Nombre</label><input id="q-nombre" type="text" data-campo="nombre" placeholder="Nombre y apellido"></div>' +
+            '<div class="field"><label for="q-empresa">Empresa</label><input id="q-empresa" type="text" data-campo="empresa" placeholder="Razón social"></div>' +
+            '<div class="field"><label for="q-tel">Teléfono</label><input id="q-tel" type="tel" data-campo="telefono" placeholder="10 dígitos"></div>' +
+            '<div class="field"><label for="q-correo">Correo</label><input id="q-correo" type="email" data-campo="correo" placeholder="nombre@empresa.mx"></div>' +
+            '<div class="field field--full"><label for="q-estado">¿En qué estado operas?</label><select id="q-estado" data-campo="estadoMx">' +
+              '<option value="">Elegir&hellip;</option>' +
+              estadosCubiertos().map(function (e) {
+                return '<option value="' + esc(e) + '"' + (D.COBERTURA[e] === estado.agencia ? " selected" : "") + ">" + esc(e) + "</option>";
+              }).join("") + "</select></div>" +
+            '<div class="field field--full"><label for="q-agencia">Agencia que te atiende</label><select id="q-agencia" data-campo="agencia">' +
+              // Sin opción vacía el desplegable mostraría una agencia que el
+              // visitante nunca eligió, y el lead saldría etiquetado con otra.
+              '<option value=""' + (estado.agencia ? "" : " selected") + ">Elegir&hellip;</option>" +
+              D.AGENCIAS.map(function (a) {
+                return '<option value="' + a.slug + '"' + (estado.agencia === a.slug ? " selected" : "") + ">" +
+                  esc(a.ciudad) + " &middot; " + esc(a.estado) + "</option>";
+              }).join("") + "</select></div>" +
           "</div>" +
           '<p class="muted mt-16" style="font-size:12.5px">Al enviar aceptas el aviso de privacidad.</p>';
       }
+    };
 
+    function h2(t) {
+      return '<h2 style="font-size:clamp(21px,2.4vw,27px);color:var(--navy);margin-bottom:20px">' + esc(t) + "</h2>";
+    }
+    function rotulo(t) {
+      return '<span style="font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:9px;display:block">' + esc(t) + "</span>";
+    }
+
+    function pintar() {
+      var lista = pasos();
+      var i = Math.min(estado.paso, lista.length - 1);
+      estado.paso = i;
+      var id = lista[i];
+      var pct = ((i + 1) / lista.length) * 100;
+
+      var html = "";
+
+      // Cuando el visitante llega con una agencia ya definida, se lo decimos
+      // desde el primer paso en vez de preguntárselo al final.
+      var ag = estado.agencia ? porAgencia(estado.agencia) : null;
+      if (ag) {
+        html += '<div class="note note--amber" style="margin-bottom:18px">Te atiende <strong>Apex Sitrak ' +
+          esc(ag.ciudad) + "</strong> &middot; " + esc(ag.estado) + ". Puedes cambiarla en el último paso.</div>";
+      }
+
+      html += '<div class="progress"><i style="width:' + pct + '%"></i></div>' +
+        '<div class="progress-meta"><strong>Paso ' + (i + 1) + " de " + lista.length +
+          " &middot; " + esc(TITULOS[id]) + "</strong><span>" + Math.round(pct) + " % completo</span></div>";
+
+      html += PINTA[id]();
+
+      var puedeAvanzar = id !== "linea";
       html += '<div class="quote__nav">' +
-        (estado.paso > 0 ? '<button class="btn btn--outline" type="button" data-accion="atras">Atrás</button>' : "") +
-        (estado.paso > 0 ? '<button class="btn btn--amber" type="button" data-accion="siguiente">' + (estado.paso === 3 ? "Enviar solicitud" : "Continuar") + "</button>" : "") +
+        (i > 0 ? '<button class="btn btn--outline" type="button" data-accion="atras">Atrás</button>' : "") +
+        (puedeAvanzar ? '<button class="btn btn--amber" type="button" data-accion="siguiente">' +
+          (i === lista.length - 1 ? "Enviar solicitud" : "Continuar") + "</button>" : "") +
         "</div>";
 
       caja.innerHTML = html;
@@ -473,18 +663,54 @@
 
     function pintarResumen() {
       var u = estado.unidad && estado.unidad !== "indeciso" ? porSlug(estado.unidad) : null;
-      aside.innerHTML =
-        '<h3 style="font-size:17px;color:var(--navy);border-bottom:2px solid var(--navy);padding-bottom:12px;margin-bottom:6px">Tu cotización</h3>' +
-        "<dl>" +
-          fila("Línea", estado.linea ? nombreLinea(estado.linea) : "—") +
+      var sn = estado.sn ? porSeminuevo(estado.sn) : null;
+      var rf = estado.np && estado.np !== "otra" ? porRefaccion(estado.np) : null;
+      var ag = estado.agencia ? porAgencia(estado.agencia) : null;
+      var filas = "";
+
+      filas += fila("Solicitud", GUIONES[estado.tipo].etiqueta);
+      if (estado.tipo === "unidad") {
+        filas += fila("Línea", estado.linea ? nombreLinea(estado.linea) : "—") +
           fila("Unidad", u ? u.nombre : estado.unidad === "indeciso" ? "Por definir" : "—") +
-          fila("Cantidad", estado.cantidad || "—") +
-          fila("Pago", estado.pago || "—") +
-          fila("Enganche", estado.enganche || "—") +
-          fila("Plazo", estado.plazo || "—") +
-        "</dl>" +
-        (u ? '<img src="' + BASE + u.img + '" alt="' + esc(u.nombre) + '" loading="lazy" style="width:100%;aspect-ratio:16/10;object-fit:cover;margin-top:16px">' : "") +
+          fila("Cantidad", estado.cantidad || "—");
+      }
+      if (sn) filas += fila("Seminuevo", sn.nombre + " · " + sn.anio) + fila("Precio de lista", pesos(sn.precio));
+      if (estado.np) filas += fila("Refacción", rf ? rf.np + " · " + rf.nombre : "Fuera de catálogo") +
+        (u ? fila("Se instala en", u.nombre) : "");
+      if (estado.tipo === "taller") filas += fila("Servicio", estado.servicio) +
+        fila("Fecha deseada", estado.fecha || "Por definir");
+      if (estado.tipo === "unidad" || estado.tipo === "seminuevo") {
+        filas += fila("Pago", estado.pago || "—") + fila("Enganche", estado.enganche || "—") +
+          fila("Plazo", estado.plazo || "—");
+      }
+      // Números que el visitante calculó en la calculadora: llegan con el lead.
+      if (estado.cpk) filas += fila("Su costo por km hoy", "$" + estado.cpk);
+      if (estado.km) filas += fila("Km al mes por unidad", num(parseFloat(estado.km) || 0));
+      if (estado.rend) filas += fila("Rendimiento actual", estado.rend + " km/L");
+      filas += fila("Agencia", ag ? ag.ciudad + " · " + ag.estado : "Por asignar");
+
+      var img = u ? u.img : sn ? sn.img : "";
+      aside.innerHTML =
+        '<h3 style="font-size:17px;color:var(--navy);border-bottom:2px solid var(--navy);padding-bottom:12px;margin-bottom:6px">Tu solicitud</h3>' +
+        "<dl>" + filas + "</dl>" +
+        (img ? '<img src="' + imagen(img) + '" alt="" loading="lazy" style="width:100%;aspect-ratio:16/10;object-fit:cover;margin-top:16px">' : "") +
         '<p class="muted mt-16" style="font-size:12.5px">Respuesta en menos de 24 h hábiles.</p>';
+    }
+
+    /* --- envío: destino único de conversión --- */
+
+    function enviar() {
+      var q = { origen: estado.origen || estado.tipo, tipo: estado.tipo };
+      if (estado.unidad && estado.unidad !== "indeciso") q.unidad = estado.unidad;
+      if (estado.linea) q.linea = estado.linea;
+      if (estado.sn) q.sn = estado.sn;
+      if (estado.np) q.np = estado.np;
+      if (estado.servicio && estado.tipo === "taller") q.servicio = estado.servicio;
+      q.agencia = estado.agencia || "por-asignar";
+
+      // La sesión se limpia: la siguiente visita al cotizador empieza en blanco.
+      try { window.sessionStorage.removeItem(CLAVE_COT); } catch (e) {}
+      location.href = BASE + "gracias.html?" + aConsulta(q);
     }
 
     caja.addEventListener("click", function (e) {
@@ -492,7 +718,7 @@
       if (opt) {
         var campo = opt.getAttribute("data-campo");
         estado[campo] = opt.getAttribute("data-v");
-        if (campo === "linea") estado.paso = 1;
+        if (campo === "linea") estado.paso++;
         persistir();
         pintar();
         return;
@@ -502,26 +728,78 @@
       var a = acc.getAttribute("data-accion");
       if (a === "atras") estado.paso = Math.max(0, estado.paso - 1);
       if (a === "siguiente") {
-        if (estado.paso === 3) estado.listo = true;
-        else estado.paso++;
+        if (estado.paso === pasos().length - 1) { enviar(); return; }
+        estado.paso++;
       }
-      if (a === "reiniciar") {
-        estado = { paso: 0, linea: "", unidad: "", cantidad: "1 unidad",
-          pago: "Crédito / financiamiento", enganche: "20 %", plazo: "48 meses", listo: false };
-      }
+      if (a === "reiniciar") estado = estadoNuevo(estado.tipo);
       persistir();
       pintar();
     });
 
     caja.addEventListener("change", function (e) {
-      var s = e.target.closest("select[data-campo]");
-      if (!s) return;
-      estado[s.getAttribute("data-campo")] = s.value;
+      var c = e.target.closest("[data-campo]");
+      if (!c || c.hasAttribute("data-v")) return;
+      var campo = c.getAttribute("data-campo");
+
+      // Elegir el estado de la república asigna la agencia que lo atiende.
+      if (campo === "estadoMx") {
+        var destino = D.COBERTURA[c.value];
+        if (destino) { estado.agencia = destino; persistir(); pintar(); }
+        return;
+      }
+      estado[campo] = c.value;
+      if (campo === "unidad" && porSlug(c.value)) estado.linea = porSlug(c.value).linea;
       persistir();
       pintarResumen();
     });
 
     pintar();
+  }
+
+  /* ---------- página de gracias: el evento de conversión ---------- */
+
+  function gracias() {
+    var caja = document.getElementById("gracias-resumen");
+    if (!caja) return;
+
+    var p = parametros();
+    if (!p.origen && !p.tipo && !p.agencia) return;   // llegada directa
+
+    var u = p.unidad ? porSlug(p.unidad) : null;
+    var sn = p.sn ? porSeminuevo(p.sn) : null;
+    var rf = p.np ? porRefaccion(p.np) : null;
+    var ag = p.agencia ? porAgencia(p.agencia) : null;
+
+    var filas = "";
+    if (u) filas += fila("Unidad", u.nombre);
+    if (sn) filas += fila("Seminuevo", sn.nombre + " · " + sn.anio);
+    if (rf) filas += fila("Refacción", rf.np + " · " + rf.nombre);
+    if (p.servicio) filas += fila("Servicio", p.servicio);
+    filas += fila("Agencia", ag ? "Apex Sitrak " + ag.ciudad + " · " + ag.estado : "Se te asigna en cuanto confirmes tu zona");
+
+    caja.hidden = false;
+    caja.innerHTML =
+      '<p class="eyebrow eyebrow--amber">Lo que enviaste</p><dl>' + filas + "</dl>" +
+      (ag ? '<p class="muted" style="font-size:12.5px;margin-top:12px">Tel. ' + esc(ag.tel) +
+        ' &middot; <a href="' + BASE + "agencias/" + ag.slug + '.html">Ver la agencia</a></p>' : "");
+
+    if (ag) {
+      var m = document.getElementById("gracias-mensaje");
+      if (m) m.textContent = "Tu solicitud quedó asignada a Apex Sitrak " + ag.ciudad +
+        ". Un asesor de esa agencia te contacta en menos de 24 horas hábiles.";
+    }
+
+    // Destino único de conversión de todo el sitio. Con estos campos se puede
+    // saber qué parte del sitio trae los leads y a qué agencia se fueron.
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: "generate_lead",
+      origen: p.origen || p.tipo || "directo",
+      tipo_solicitud: p.tipo || "",
+      unidad: p.unidad || p.sn || p.np || "",
+      linea: p.linea || "",
+      agencia: p.agencia || "por-asignar"
+    });
   }
 
   /* ---------- agencias ---------- */
@@ -548,7 +826,7 @@
             "<span>" + esc(a.estado) + " &middot; Tel. " + esc(a.tel) +
             (a.partes ? " &middot; Centro de partes" : "") + "</span></div>" +
           '<div class="row"><a class="btn btn--outline btn--sm" href="' + url + '">Ver agencia</a>' +
-          '<a class="btn btn--amber btn--sm" href="' + BASE + 'cotizar.html">Contactar</a></div></div>';
+          '<a class="btn btn--amber btn--sm" href="' + BASE + "cotizar.html?ag=" + a.slug + "&origen=agencias" + '">Contactar</a></div></div>';
       }).join("");
     }
 
@@ -561,8 +839,10 @@
   function tallerAgencias() {
     var sel = document.getElementById("taller-agencia");
     if (!sel) return;
+    // El valor es el slug, no el nombre: así la página de gracias puede
+    // resolver la agencia y etiquetar el lead igual que el cotizador.
     sel.innerHTML = D.AGENCIAS.map(function (a) {
-      return "<option>" + esc(a.ciudad) + " &middot; " + esc(a.estado) + "</option>";
+      return '<option value="' + a.slug + '">' + esc(a.ciudad) + " &middot; " + esc(a.estado) + "</option>";
     }).join("");
   }
 
@@ -640,7 +920,10 @@
           '<p class="muted" style="font-size:12.5px;margin-top:6px">' + num(unidades) + ' unidad' + (unidades === 1 ? "" : "es") +
             ' &middot; ' + num(v.kmMes * 12 * unidades) + ' km al año</p>' +
         '</div>' +
-        '<a class="btn btn--amber btn--block mt-16" href="cotizar.html">Recibir el análisis por correo</a>';
+        '<a class="btn btn--amber btn--block mt-16" href="' + BASE + "cotizar.html?" + aConsulta({
+          origen: "calculadora", cpk: total.toFixed(2), km: v.kmMes, rend: v.rendimiento
+        }) + '">Comparar contra una unidad Sitrak en mi ruta</a>' +
+        '<p class="muted" style="font-size:12px;margin-top:10px">El asesor recibe estos mismos números y regresa con rendimiento medido en tu ruta, plan de mantenimiento y valor de reventa.</p>';
 
       if (!sens) return;
 
@@ -714,7 +997,7 @@
 
       cont.innerHTML = lista.length ? lista.map(function (u) {
         return '<article class="unit">' +
-          '<span class="unit__media"><img src="' + BASE + u.img + '" alt="' + esc(u.nombre) + '" loading="lazy" width="600" height="450"></span>' +
+          '<span class="unit__media"><img src="' + imagen(u.img) + '" alt="' + esc(u.nombre) + '" loading="lazy" width="600" height="450"></span>' +
           '<div class="unit__body">' +
             '<span class="unit__cat">' + u.anio + " &middot; " + esc(nombreAgencia(u.agencia)) + "</span>" +
             '<h3 class="unit__title">' + esc(u.nombre) + "</h3>" +
@@ -725,7 +1008,9 @@
               '<div class="srow"><dt>Precio</dt><dd>' + pesos(u.precio) + "</dd></div>" +
             "</dl>" +
             '<div class="unit__acts">' +
-              '<a class="btn btn--amber btn--sm" href="' + BASE + 'cotizar.html">Me interesa</a>' +
+              '<a class="btn btn--amber btn--sm" href="' + BASE + "cotizar.html?" + aConsulta({
+                tipo: "seminuevo", sn: u.id, ag: u.agencia, origen: "seminuevos"
+              }) + '">Me interesa</a>' +
               '<a class="btn btn--outline btn--sm" href="' + BASE + 'costo-por-km.html">Costo por km</a>' +
             "</div>" +
           "</div></article>";
@@ -794,7 +1079,9 @@
             "<td>" + esc(nombreSistema(r.sistema)) + "</td>" +
             '<td style="font-size:13px">' + compat + "</td>" +
             "<td>" + pesos(r.precio) + "</td>" +
-            '<td><a class="btn btn--amber btn--sm" href="' + BASE + 'cotizar.html">Consultar existencia</a></td>' +
+            '<td><a class="btn btn--amber btn--sm" href="' + BASE + "cotizar.html?" + aConsulta({
+              tipo: "refaccion", np: r.np, u: fm || "", origen: "refacciones"
+            }) + '">Consultar existencia</a></td>' +
           "</tr>";
         }).join("") + "</tbody>";
     }
@@ -863,7 +1150,7 @@
           fila("Kilometraje", num(k) + " km") +
           fila("Estado", estadoActivo().charAt(0).toUpperCase() + estadoActivo().slice(1)) +
         "</dl>" +
-        '<a class="btn btn--amber btn--block mt-16" href="' + BASE + 'cotizar.html">Aplicarlo como enganche</a>' +
+        '<a class="btn btn--amber btn--block mt-16" href="' + BASE + "cotizar.html?origen=valuacion" + '">Aplicarlo como enganche</a>' +
         '<p class="muted" style="font-size:12px;margin-top:14px">Tabla de valuación de demostración. Se sustituye por la tabla real de Apex antes de publicar.</p>';
     }
 
@@ -879,6 +1166,50 @@
     pintar();
   }
 
+  /* ---------- descarga de ficha técnica ----------
+     La única salida para quien todavía no quiere hablar con un vendedor. Pide
+     el correo y nada más: es un micro-compromiso, no una cotización encubierta.
+     En WordPress este botón abre un Popup de Elementor con un formulario de un
+     solo campo y la ficha como archivo adjunto de la confirmación. */
+
+  function fichaTecnica() {
+    var boton = document.querySelector("[data-ficha]");
+    if (!boton || boton.dataset.cableado === "1") return;
+    boton.dataset.cableado = "1";
+
+    var slug = boton.getAttribute("data-ficha");
+    var m = porSlug(slug);
+    if (!m) return;
+
+    boton.addEventListener("click", function () {
+      if (boton.nextElementSibling && boton.nextElementSibling.classList.contains("ficha-form")) return;
+
+      var caja = document.createElement("div");
+      caja.className = "card ficha-form";
+      caja.style.marginTop = "10px";
+      caja.innerHTML =
+        '<p class="eyebrow eyebrow--amber">Ficha en PDF</p>' +
+        '<p style="font-size:14px;margin-bottom:12px">Te la enviamos al correo. Sin llamada de seguimiento a menos que tú la pidas.</p>' +
+        '<div class="field"><label for="ficha-correo">Correo</label>' +
+          '<input id="ficha-correo" type="email" placeholder="nombre@empresa.mx"></div>' +
+        '<button class="btn btn--amber btn--block mt-8" type="button" data-enviar-ficha>Enviármela</button>';
+      boton.insertAdjacentElement("afterend", caja);
+      caja.querySelector("input").focus();
+
+      caja.addEventListener("click", function (e) {
+        if (!e.target.closest("[data-enviar-ficha]")) return;
+        var correo = caja.querySelector("input").value.trim();
+        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(correo)) {
+          caja.querySelector("input").focus();
+          return;
+        }
+        location.href = BASE + "gracias.html?" + aConsulta({
+          origen: "ficha-tecnica", tipo: "ficha", unidad: slug, linea: m.linea
+        });
+      });
+    });
+  }
+
   /* ---------- arranque ----------
      initPagina() vuelve a cablear los módulos sobre el DOM actual. El sitio la
      llama una vez al cargar; una integración que reemplace el contenido sin
@@ -891,6 +1222,8 @@
     comparadorPagina();
     selector();
     cotizador();
+    gracias();
+    fichaTecnica();
     agencias();
     tallerAgencias();
     calculadoraKm();

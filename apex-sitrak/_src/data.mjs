@@ -248,20 +248,241 @@ export const MODELOS = [
   }
 ];
 
+// ── Contacto central ──────────────────────────────────────────────────────
+// Un solo canal de WhatsApp para todo el sitio: es la única forma de medir
+// cuántos leads entran y cuáles se contestaron. Los teléfonos por sucursal
+// siguen publicados para llamada directa. Sustituir por el número real de la
+// línea de WhatsApp Business antes de publicar.
+export const CONTACTO = {
+  whatsapp: "5210000000000",          // formato E.164 sin "+", como lo pide wa.me
+  telefono: "+520000000000",
+  telefonoTxt: "[55 0000 0000]",
+  correo: "[contacto@apexsitrak.com]"
+};
+
+// ── Red de agencias ───────────────────────────────────────────────────────
+// Todas son agencias propias de Apex y las mantiene marketing central. Este
+// arreglo es la fuente única: alimenta el listado, las fichas de sucursal, el
+// JSON-LD de cada una y el enrutamiento de leads. En WordPress equivale al CPT
+// `agencia`; agregar una sucursal es agregar un renglón, no una plantilla.
+//
+// `cobertura` son los estados que atiende esa plaza (ver COBERTURA abajo).
+// `actualizado` es la fecha de la última revisión del dato: se muestra en la
+// ficha para que un horario viejo se note.
 export const AGENCIAS = [
-  { slug: "monterrey",    ciudad: "Monterrey",    estado: "Nuevo León",     tel: "[81 0000 0000]",  direccion: "[Av. Ejemplo 1000, Parque Industrial]", cp: "[64000]", horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00", taller: true, partes: true, ruta: "Corredor Monterrey–Laredo", lat: 25.6866, lng: -100.3161 },
-  { slug: "guadalajara",  ciudad: "Guadalajara",  estado: "Jalisco",        tel: "[33 0000 0000]",  direccion: "[Av. Ejemplo 1000, Zona Industrial]",   cp: "[44940]", horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00", taller: true, partes: true, ruta: "Occidente y Bajío", lat: 20.6597, lng: -103.3496 },
-  { slug: "xalapa",       ciudad: "Xalapa",       estado: "Veracruz",       tel: "[228 000 0000]",  direccion: "[Carretera Ejemplo km 5]",              cp: "[91000]", horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00", taller: true, partes: true, ruta: "Golfo y planta de producción", lat: 19.5438, lng: -96.9102 },
-  { slug: "queretaro",    ciudad: "Querétaro",    estado: "Querétaro",      tel: "[442 000 0000]",  direccion: "[Carretera Ejemplo km 12]",             cp: "[76120]", horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00", taller: true, partes: true, ruta: "Bajío y centro del país", lat: 20.5888, lng: -100.3899 },
-  { slug: "cuautitlan",   ciudad: "Cuautitlán",   estado: "Edo. de México", tel: "[55 0000 0000]",  direccion: "[Av. Ejemplo 1000]",                    cp: "[54800]", horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00", taller: true, partes: true, ruta: "Zona Metropolitana del Valle de México", lat: 19.6697, lng: -99.1817 },
-  { slug: "puebla",       ciudad: "Puebla",       estado: "Puebla",         tel: "[222 000 0000]",  direccion: "[Blvd. Ejemplo 1000]",                  cp: "[72220]", horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00", taller: true, partes: false, ruta: "Corredor México–Veracruz", lat: 19.0414, lng: -98.2063 },
-  { slug: "leon",         ciudad: "León",         estado: "Guanajuato",     tel: "[477 000 0000]",  direccion: "[Blvd. Ejemplo 1000]",                  cp: "[37160]", horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00", taller: true, partes: true, ruta: "Bajío industrial", lat: 21.1219, lng: -101.6833 },
-  { slug: "saltillo",     ciudad: "Saltillo",     estado: "Coahuila",       tel: "[844 000 0000]",  direccion: "[Carretera Ejemplo km 8]",              cp: "[25000]", horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00", taller: true, partes: false, ruta: "Corredor automotriz del noreste", lat: 25.4232, lng: -101.0053 },
-  { slug: "chihuahua",    ciudad: "Chihuahua",    estado: "Chihuahua",      tel: "[614 000 0000]",  direccion: "[Av. Ejemplo 1000]",                    cp: "[31100]", horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00", taller: true, partes: false, ruta: "Frontera y corredor norte", lat: 28.6330, lng: -106.0691 },
-  { slug: "hermosillo",   ciudad: "Hermosillo",   estado: "Sonora",         tel: "[662 000 0000]",  direccion: "[Blvd. Ejemplo 1000]",                  cp: "[83000]", horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00", taller: true, partes: false, ruta: "Noroeste y Pacífico", lat: 29.0729, lng: -110.9559 },
-  { slug: "nuevo-laredo", ciudad: "Nuevo Laredo", estado: "Tamaulipas",     tel: "[867 000 0000]",  direccion: "[Carretera Ejemplo km 3]",              cp: "[88000]", horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00", taller: true, partes: true, ruta: "Cruce fronterizo de mayor volumen del país", lat: 27.4763, lng: -99.5164 },
-  { slug: "merida",       ciudad: "Mérida",       estado: "Yucatán",        tel: "[999 000 0000]",  direccion: "[Periférico Ejemplo km 20]",            cp: "[97300]", horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00", taller: true, partes: false, ruta: "Península de Yucatán", lat: 20.9674, lng: -89.5926 }
+  { slug: "monterrey", ciudad: "Monterrey", estado: "Nuevo León",
+    tel: "[81 0000 0000]", whatsapp: "5210000000000", correo: "[monterrey@apexsitrak.com]",
+    direccion: "[Av. Ejemplo 1000, Parque Industrial]", cp: "[64000]",
+    horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    horarioVenta: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    horarioTaller: "Lun a Vie 7:00–19:00 · Sáb 8:00–14:00",
+    horarioPartes: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    taller: true, partes: true,
+    servicios: ["venta", "taller", "refacciones", "hojalateria", "carretera"],
+    ruta: "Corredor Monterrey–Laredo",
+    industrias: "acero, automotriz y carga refrigerada de exportación",
+    cobertura: ["Nuevo León", "Zacatecas"],
+    asesor: "[Nombre del asesor]", puesto: "Gerente de ventas",
+    placeId: "[ChIJ_pendiente]", actualizado: "2026-09-05",
+    lat: 25.6866, lng: -100.3161 },
+
+  { slug: "guadalajara", ciudad: "Guadalajara", estado: "Jalisco",
+    tel: "[33 0000 0000]", whatsapp: "5210000000000", correo: "[guadalajara@apexsitrak.com]",
+    direccion: "[Av. Ejemplo 1000, Zona Industrial]", cp: "[44940]",
+    horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    horarioVenta: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    horarioTaller: "Lun a Vie 7:00–19:00 · Sáb 8:00–14:00",
+    horarioPartes: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    taller: true, partes: true,
+    servicios: ["venta", "taller", "refacciones", "hojalateria", "carretera"],
+    ruta: "Occidente y Bajío",
+    industrias: "agroindustria, tequilera y distribución al Pacífico",
+    cobertura: ["Jalisco", "Nayarit", "Colima", "Aguascalientes"],
+    asesor: "[Nombre del asesor]", puesto: "Gerente de ventas",
+    placeId: "[ChIJ_pendiente]", actualizado: "2026-09-05",
+    lat: 20.6597, lng: -103.3496 },
+
+  { slug: "xalapa", ciudad: "Xalapa", estado: "Veracruz",
+    tel: "[228 000 0000]", whatsapp: "5210000000000", correo: "[xalapa@apexsitrak.com]",
+    direccion: "[Carretera Ejemplo km 5]", cp: "[91000]",
+    horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    horarioVenta: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    horarioTaller: "Lun a Vie 7:00–19:00 · Sáb 8:00–14:00",
+    horarioPartes: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    taller: true, partes: true,
+    servicios: ["venta", "taller", "refacciones", "hojalateria", "carretera"],
+    ruta: "Golfo y planta de producción",
+    industrias: "cañera, cafetalera y movimiento de puerto",
+    cobertura: ["Veracruz", "Tabasco", "Chiapas"],
+    asesor: "[Nombre del asesor]", puesto: "Gerente de ventas",
+    placeId: "[ChIJ_pendiente]", actualizado: "2026-09-05",
+    lat: 19.5438, lng: -96.9102 },
+
+  { slug: "queretaro", ciudad: "Querétaro", estado: "Querétaro",
+    tel: "[442 000 0000]", whatsapp: "5210000000000", correo: "[queretaro@apexsitrak.com]",
+    direccion: "[Carretera Ejemplo km 12]", cp: "[76120]",
+    horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    horarioVenta: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    horarioTaller: "Lun a Vie 7:00–19:00 · Sáb 8:00–14:00",
+    horarioPartes: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    taller: true, partes: true,
+    servicios: ["venta", "taller", "refacciones", "carretera"],
+    ruta: "Bajío y centro del país",
+    industrias: "aeroespacial, logística de paquetería y centros de distribución",
+    cobertura: ["Querétaro", "Hidalgo"],
+    asesor: "[Nombre del asesor]", puesto: "Gerente de ventas",
+    placeId: "[ChIJ_pendiente]", actualizado: "2026-09-05",
+    lat: 20.5888, lng: -100.3899 },
+
+  { slug: "cuautitlan", ciudad: "Cuautitlán", estado: "Edo. de México",
+    tel: "[55 0000 0000]", whatsapp: "5210000000000", correo: "[cuautitlan@apexsitrak.com]",
+    direccion: "[Av. Ejemplo 1000]", cp: "[54800]",
+    horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    horarioVenta: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    horarioTaller: "Lun a Vie 7:00–19:00 · Sáb 8:00–14:00",
+    horarioPartes: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    taller: true, partes: true,
+    servicios: ["venta", "taller", "refacciones", "hojalateria", "carretera"],
+    ruta: "Zona Metropolitana del Valle de México",
+    industrias: "última milla, comercio electrónico y abasto de la central",
+    cobertura: ["Edo. de México", "Ciudad de México", "Morelos", "Tlaxcala"],
+    asesor: "[Nombre del asesor]", puesto: "Gerente de ventas",
+    placeId: "[ChIJ_pendiente]", actualizado: "2026-09-05",
+    lat: 19.6697, lng: -99.1817 },
+
+  { slug: "puebla", ciudad: "Puebla", estado: "Puebla",
+    tel: "[222 000 0000]", whatsapp: "5210000000000", correo: "[puebla@apexsitrak.com]",
+    direccion: "[Blvd. Ejemplo 1000]", cp: "[72220]",
+    horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    horarioVenta: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    horarioTaller: "Lun a Vie 7:00–19:00 · Sáb 8:00–14:00",
+    horarioPartes: "El centro de partes de Cuautitlán surte esta plaza",
+    taller: true, partes: false,
+    servicios: ["venta", "taller", "carretera"],
+    ruta: "Corredor México–Veracruz",
+    industrias: "automotriz, textil y arrastre hacia el puerto",
+    cobertura: ["Puebla", "Guerrero", "Oaxaca"],
+    asesor: "[Nombre del asesor]", puesto: "Gerente de ventas",
+    placeId: "[ChIJ_pendiente]", actualizado: "2026-09-05",
+    lat: 19.0414, lng: -98.2063 },
+
+  { slug: "leon", ciudad: "León", estado: "Guanajuato",
+    tel: "[477 000 0000]", whatsapp: "5210000000000", correo: "[leon@apexsitrak.com]",
+    direccion: "[Blvd. Ejemplo 1000]", cp: "[37160]",
+    horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    horarioVenta: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    horarioTaller: "Lun a Vie 7:00–19:00 · Sáb 8:00–14:00",
+    horarioPartes: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    taller: true, partes: true,
+    servicios: ["venta", "taller", "refacciones", "carretera"],
+    ruta: "Bajío industrial",
+    industrias: "cuero y calzado, automotriz y obra pública",
+    cobertura: ["Guanajuato", "San Luis Potosí", "Michoacán"],
+    asesor: "[Nombre del asesor]", puesto: "Gerente de ventas",
+    placeId: "[ChIJ_pendiente]", actualizado: "2026-09-05",
+    lat: 21.1219, lng: -101.6833 },
+
+  { slug: "saltillo", ciudad: "Saltillo", estado: "Coahuila",
+    tel: "[844 000 0000]", whatsapp: "5210000000000", correo: "[saltillo@apexsitrak.com]",
+    direccion: "[Carretera Ejemplo km 8]", cp: "[25000]",
+    horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    horarioVenta: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    horarioTaller: "Lun a Vie 7:00–19:00 · Sáb 8:00–14:00",
+    horarioPartes: "El centro de partes de Monterrey surte esta plaza",
+    taller: true, partes: false,
+    servicios: ["venta", "taller", "carretera"],
+    ruta: "Corredor automotriz del noreste",
+    industrias: "armadoras, autopartes y minería del carbón",
+    cobertura: ["Coahuila", "Durango"],
+    asesor: "[Nombre del asesor]", puesto: "Gerente de ventas",
+    placeId: "[ChIJ_pendiente]", actualizado: "2026-09-05",
+    lat: 25.4232, lng: -101.0053 },
+
+  { slug: "chihuahua", ciudad: "Chihuahua", estado: "Chihuahua",
+    tel: "[614 000 0000]", whatsapp: "5210000000000", correo: "[chihuahua@apexsitrak.com]",
+    direccion: "[Av. Ejemplo 1000]", cp: "[31100]",
+    horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    horarioVenta: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    horarioTaller: "Lun a Vie 7:00–19:00 · Sáb 8:00–14:00",
+    horarioPartes: "El centro de partes de Monterrey surte esta plaza",
+    taller: true, partes: false,
+    servicios: ["venta", "taller", "carretera"],
+    ruta: "Frontera y corredor norte",
+    industrias: "maquiladora, minería y forestal",
+    cobertura: ["Chihuahua"],
+    asesor: "[Nombre del asesor]", puesto: "Gerente de ventas",
+    placeId: "[ChIJ_pendiente]", actualizado: "2026-09-05",
+    lat: 28.6330, lng: -106.0691 },
+
+  { slug: "hermosillo", ciudad: "Hermosillo", estado: "Sonora",
+    tel: "[662 000 0000]", whatsapp: "5210000000000", correo: "[hermosillo@apexsitrak.com]",
+    direccion: "[Blvd. Ejemplo 1000]", cp: "[83000]",
+    horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    horarioVenta: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    horarioTaller: "Lun a Vie 7:00–19:00 · Sáb 8:00–14:00",
+    horarioPartes: "El centro de partes de Monterrey surte esta plaza",
+    taller: true, partes: false,
+    servicios: ["venta", "taller", "carretera"],
+    ruta: "Noroeste y Pacífico",
+    industrias: "minería, agroexportación y armadoras del noroeste",
+    cobertura: ["Sonora", "Baja California", "Baja California Sur", "Sinaloa"],
+    asesor: "[Nombre del asesor]", puesto: "Gerente de ventas",
+    placeId: "[ChIJ_pendiente]", actualizado: "2026-09-05",
+    lat: 29.0729, lng: -110.9559 },
+
+  { slug: "nuevo-laredo", ciudad: "Nuevo Laredo", estado: "Tamaulipas",
+    tel: "[867 000 0000]", whatsapp: "5210000000000", correo: "[nuevolaredo@apexsitrak.com]",
+    direccion: "[Carretera Ejemplo km 3]", cp: "[88000]",
+    horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    horarioVenta: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    horarioTaller: "Lun a Sáb 7:00–20:00",
+    horarioPartes: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    taller: true, partes: true,
+    servicios: ["venta", "taller", "refacciones", "carretera"],
+    ruta: "Cruce fronterizo de mayor volumen del país",
+    industrias: "transporte de exportación, cruce de caja seca y logística aduanal",
+    cobertura: ["Tamaulipas"],
+    asesor: "[Nombre del asesor]", puesto: "Gerente de ventas",
+    placeId: "[ChIJ_pendiente]", actualizado: "2026-09-05",
+    lat: 27.4763, lng: -99.5164 },
+
+  { slug: "merida", ciudad: "Mérida", estado: "Yucatán",
+    tel: "[999 000 0000]", whatsapp: "5210000000000", correo: "[merida@apexsitrak.com]",
+    direccion: "[Periférico Ejemplo km 20]", cp: "[97300]",
+    horario: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    horarioVenta: "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+    horarioTaller: "Lun a Vie 7:00–19:00 · Sáb 8:00–14:00",
+    horarioPartes: "El centro de partes de Xalapa surte esta plaza",
+    taller: true, partes: false,
+    servicios: ["venta", "taller", "carretera"],
+    ruta: "Península de Yucatán",
+    industrias: "turismo, obra del sureste y abasto peninsular",
+    cobertura: ["Yucatán", "Quintana Roo", "Campeche"],
+    asesor: "[Nombre del asesor]", puesto: "Gerente de ventas",
+    placeId: "[ChIJ_pendiente]", actualizado: "2026-09-05",
+    lat: 20.9674, lng: -89.5926 }
 ];
+
+// Catálogo de servicios, para que la ficha de cada agencia se arme sola.
+export const SERVICIOS = [
+  { id: "venta",       nombre: "Venta de unidades nuevas" },
+  { id: "taller",      nombre: "Taller de servicio" },
+  { id: "refacciones", nombre: "Centro de refacciones" },
+  { id: "hojalateria", nombre: "Hojalatería y pintura" },
+  { id: "carretera",   nombre: "Asistencia en carretera" }
+];
+
+// ── Enrutamiento de leads por estado ──────────────────────────────────────
+// Estado de la república → agencia que lo atiende. Se deriva del campo
+// `cobertura` de cada agencia para que no existan dos verdades. Un estado sin
+// sucursal propia queda asignado explícitamente aquí, nunca por cercanía
+// adivinada. El lead sale etiquetado con esta agencia y el canal central lo
+// reparte.
+export const COBERTURA = AGENCIAS.reduce(function (mapa, a) {
+  a.cobertura.forEach(function (estado) { mapa[estado] = a.slug; });
+  return mapa;
+}, {});
+
 
 // Selector de unidad: tres preguntas → una línea recomendada.
 export const PREGUNTAS = [

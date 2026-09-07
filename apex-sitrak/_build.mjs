@@ -9,7 +9,8 @@ import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { LINEAS, MODELOS, CAMPOS, AGENCIAS, PREGUNTAS, PC,
-         SEMINUEVOS, REFACCIONES, SISTEMAS, TCO_BASE } from "./_src/data.mjs";
+         SEMINUEVOS, REFACCIONES, SISTEMAS, TCO_BASE,
+         CONTACTO, COBERTURA, SERVICIOS } from "./_src/data.mjs";
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const SRC = join(ROOT, "_src");
@@ -32,7 +33,15 @@ function aplicarLayout(layout, { title, desc, nav, body, base }) {
   for (const key of NAV_KEYS) {
     out = out.replaceAll(`{{NAV_${key}}}`, key === nav ? ' aria-current="page"' : "");
   }
-  return out.replace("{{BODY}}", body);
+  out = out.replace("{{BODY}}", body);
+
+  // Globales que también pueden aparecer dentro del cuerpo de una página, así
+  // que se resuelven al final, sobre el documento ya armado.
+  return out
+    .replaceAll("{{TEL_HREF}}", "tel:" + CONTACTO.telefono)
+    .replaceAll("{{TEL_TXT}}", esc(CONTACTO.telefonoTxt))
+    .replaceAll("{{WA_GENERAL}}", waLink(CONTACTO.whatsapp,
+      "Hola, escribo desde el sitio de Apex Sitrak. Me interesa información sobre unidades."));
 }
 
 function filaSpec(campo, modelo) {
@@ -66,6 +75,45 @@ function tarjetaUnidad(m, base) {
 
 const nombreLinea = (id) => (LINEAS.find((l) => l.id === id) || {}).nombre || id;
 
+const nombreServicio = (id) => (SERVICIOS.find((s) => s.id === id) || {}).nombre || id;
+
+// Lista en prosa: "A, B y C". Se usa para servicios y estados de cobertura.
+const enumerar = (arr) =>
+  arr.length < 2 ? (arr[0] || "") : arr.slice(0, -1).join(", ") + " y " + arr[arr.length - 1];
+
+// Enlace de WhatsApp con el mensaje ya escrito, para que el lead llegue con
+// contexto y el asesor no empiece preguntando de qué unidad se trata.
+const waLink = (numero, texto) =>
+  "https://wa.me/" + numero + "?text=" + encodeURIComponent(texto);
+
+const fmtMXN = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN", maximumFractionDigits: 0 });
+const fmtNum = new Intl.NumberFormat("es-MX");
+
+// Inventario de seminuevos de una sucursal. Es uno de los tres bloques que
+// obligan a que la ficha de cada agencia sea distinta de las otras 23.
+function seminuevosDe(slug) {
+  const lista = SEMINUEVOS.filter((u) => u.agencia === slug);
+  if (!lista.length) {
+    return `<p class="lead">Ahora mismo no hay seminuevos en el patio de esta agencia. ` +
+      `<a href="../seminuevos.html">Consulta el inventario de toda la red</a>.</p>`;
+  }
+  return '<div class="grid grid--2">' + lista.map((u) => `<article class="unit">
+  <span class="unit__media"><img src="../${u.img}" alt="${esc(u.nombre)}" loading="lazy" width="600" height="450"></span>
+  <div class="unit__body">
+    <span class="unit__cat">${u.anio} &middot; ${fmtNum.format(u.km)} km</span>
+    <h3 class="unit__title">${esc(u.nombre)}</h3>
+    <p class="unit__desc">${esc(u.nota)}</p>
+    <dl class="unit__rows">
+      <div class="srow"><dt>Estado</dt><dd>${esc(u.condicion)}</dd></div>
+      <div class="srow"><dt>Precio</dt><dd>${fmtMXN.format(u.precio)}</dd></div>
+    </dl>
+    <div class="unit__acts">
+      <a class="btn btn--amber btn--sm" href="../cotizar.html?tipo=seminuevo&amp;sn=${u.id}&amp;ag=${slug}&amp;origen=agencia-${slug}">Me interesa</a>
+    </div>
+  </div>
+</article>`).join("\n") + "</div>";
+}
+
 async function main() {
   const layout = await readFile(join(SRC, "layout.html"), "utf8");
 
@@ -97,6 +145,8 @@ async function main() {
       .replaceAll("{{TRAC}}", esc(m.trac))
       .replaceAll("{{CAP}}", m.cap === PC ? "&mdash;" : esc(m.cap))
       .replaceAll("{{SLUG}}", m.slug)
+      .replaceAll("{{WA_MODELO}}", waLink(CONTACTO.whatsapp,
+        `Hola, vengo del sitio. Me interesa el ${m.nombre}.`))
       .replace("{{SPECS_1}}", CAMPOS.slice(0, mitad).map((c) => filaSpec(c, m)).join("\n"))
       .replace("{{SPECS_2}}", CAMPOS.slice(mitad).map((c) => filaSpec(c, m)).join("\n"))
       .replace("{{RELACIONADOS}}", relacionados.length
@@ -125,6 +175,11 @@ async function main() {
       name: `Apex Sitrak ${a.ciudad}`,
       description: `Distribuidor autorizado Sitrak en ${a.ciudad}, ${a.estado}. Venta de unidades nuevas y seminuevas, taller de servicio y refacciones originales.`,
       telephone: a.tel,
+      email: a.correo,
+      areaServed: a.cobertura.map((e) => ({ "@type": "State", name: e })),
+      makesOffer: a.servicios.map((id) => ({
+        "@type": "Offer", itemOffered: { "@type": "Service", name: nombreServicio(id) }
+      })),
       address: {
         "@type": "PostalAddress",
         streetAddress: a.direccion,
@@ -150,6 +205,20 @@ async function main() {
       .replaceAll("{{TALLER}}", a.taller ? "Sí" : "No")
       .replaceAll("{{PARTES}}", a.partes ? "Sí" : "El más cercano atiende esta plaza")
       .replaceAll("{{RUTA}}", esc(a.ruta))
+      .replaceAll("{{INDUSTRIAS}}", esc(a.industrias))
+      .replaceAll("{{CORREO}}", esc(a.correo))
+      .replaceAll("{{HORARIO_VENTA}}", esc(a.horarioVenta))
+      .replaceAll("{{HORARIO_TALLER}}", esc(a.horarioTaller))
+      .replaceAll("{{HORARIO_PARTES}}", esc(a.horarioPartes))
+      .replaceAll("{{SERVICIOS}}", esc(enumerar(a.servicios.map(nombreServicio))))
+      .replaceAll("{{COBERTURA}}", esc(enumerar(a.cobertura)))
+      .replaceAll("{{ASESOR}}", esc(a.asesor))
+      .replaceAll("{{PUESTO}}", esc(a.puesto))
+      .replaceAll("{{ACTUALIZADO}}", esc(a.actualizado))
+      .replaceAll("{{MAPA}}", "https://www.google.com/maps/search/?api=1&amp;query=" + a.lat + "," + a.lng)
+      .replaceAll("{{WA}}", esc(waLink(a.whatsapp,
+        `Hola, escribo desde el sitio. Me interesa la agencia de ${a.ciudad}.`)).replace(/&amp;/g, "&amp;"))
+      .replace("{{SEMINUEVOS}}", seminuevosDe(a.slug))
       .replaceAll("{{SLUG}}", a.slug)
       + `\n<script type="application/ld+json">${JSON.stringify(jsonld)}</script>\n`;
 
@@ -166,7 +235,7 @@ async function main() {
   // ── datos para el navegador ──────────────────────────────────────────
   const datos = `/* Generado por _build.mjs — no editar a mano. Fuente: _src/data.mjs */
 window.APEX = ${JSON.stringify({ PC, LINEAS, CAMPOS, MODELOS, AGENCIAS, PREGUNTAS,
-  SEMINUEVOS, REFACCIONES, SISTEMAS, TCO_BASE }, null, 2)};
+  SEMINUEVOS, REFACCIONES, SISTEMAS, TCO_BASE, CONTACTO, COBERTURA, SERVICIOS }, null, 2)};
 `;
   await mkdir(join(ROOT, "assets", "js"), { recursive: true });
   await writeFile(join(ROOT, "assets", "js", "data.js"), datos);

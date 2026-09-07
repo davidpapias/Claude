@@ -340,12 +340,33 @@ window.APEX = {
       "ciudad": "Monterrey",
       "estado": "Nuevo León",
       "tel": "[81 0000 0000]",
+      "whatsapp": "5210000000000",
+      "correo": "[monterrey@apexsitrak.com]",
       "direccion": "[Av. Ejemplo 1000, Parque Industrial]",
       "cp": "[64000]",
       "horario": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+      "horarioVenta": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+      "horarioTaller": "Lun a Vie 7:00–19:00 · Sáb 8:00–14:00",
+      "horarioPartes": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
       "taller": true,
       "partes": true,
+      "servicios": [
+        "venta",
+        "taller",
+        "refacciones",
+        "hojalateria",
+        "carretera"
+      ],
       "ruta": "Corredor Monterrey–Laredo",
+      "industrias": "acero, automotriz y carga refrigerada de exportación",
+      "cobertura": [
+        "Nuevo León",
+        "Zacatecas"
+      ],
+      "asesor": "[Nombre del asesor]",
+      "puesto": "Gerente de ventas",
+      "placeId": "[ChIJ_pendiente]",
+      "actualizado": "2026-09-05",
       "lat": 25.6866,
       "lng": -100.3161
     },
@@ -354,12 +375,35 @@ window.APEX = {
       "ciudad": "Guadalajara",
       "estado": "Jalisco",
       "tel": "[33 0000 0000]",
+      "whatsapp": "5210000000000",
+      "correo": "[guadalajara@apexsitrak.com]",
       "direccion": "[Av. Ejemplo 1000, Zona Industrial]",
       "cp": "[44940]",
       "horario": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+      "horarioVenta": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+      "horarioTaller": "Lun a Vie 7:00–19:00 · Sáb 8:00–14:00",
+      "horarioPartes": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
       "taller": true,
       "partes": true,
+      "servicios": [
+        "venta",
+        "taller",
+        "refacciones",
+        "hojalateria",
+        "carretera"
+      ],
       "ruta": "Occidente y Bajío",
+      "industrias": "agroindustria, tequilera y distribución al Pacífico",
+      "cobertura": [
+        "Jalisco",
+        "Nayarit",
+        "Colima",
+        "Aguascalientes"
+      ],
+      "asesor": "[Nombre del asesor]",
+      "puesto": "Gerente de ventas",
+      "placeId": "[ChIJ_pendiente]",
+      "actualizado": "2026-09-05",
       "lat": 20.6597,
       "lng": -103.3496
     },
@@ -368,12 +412,34 @@ window.APEX = {
       "ciudad": "Xalapa",
       "estado": "Veracruz",
       "tel": "[228 000 0000]",
+      "whatsapp": "5210000000000",
+      "correo": "[xalapa@apexsitrak.com]",
       "direccion": "[Carretera Ejemplo km 5]",
       "cp": "[91000]",
       "horario": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+      "horarioVenta": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+      "horarioTaller": "Lun a Vie 7:00–19:00 · Sáb 8:00–14:00",
+      "horarioPartes": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
       "taller": true,
       "partes": true,
+      "servicios": [
+        "venta",
+        "taller",
+        "refacciones",
+        "hojalateria",
+        "carretera"
+      ],
       "ruta": "Golfo y planta de producción",
+      "industrias": "cañera, cafetalera y movimiento de puerto",
+      "cobertura": [
+        "Veracruz",
+        "Tabasco",
+        "Chiapas"
+      ],
+      "asesor": "[Nombre del asesor]",
+      "puesto": "Gerente de ventas",
+      "placeId": "[ChIJ_pendiente]",
+      "actualizado": "2026-09-05",
       "lat": 19.5438,
       "lng": -96.9102
     },
@@ -382,12 +448,32 @@ window.APEX = {
       "ciudad": "Querétaro",
       "estado": "Querétaro",
       "tel": "[442 000 0000]",
+      "whatsapp": "5210000000000",
+      "correo": "[queretaro@apexsitrak.com]",
       "direccion": "[Carretera Ejemplo km 12]",
       "cp": "[76120]",
       "horario": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+      "horarioVenta": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+      "horarioTaller": "Lun a Vie 7:00–19:00 · Sáb 8:00–14:00",
+      "horarioPartes": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
       "taller": true,
       "partes": true,
+      "servicios": [
+        "venta",
+        "taller",
+        "refacciones",
+        "carretera"
+      ],
       "ruta": "Bajío y centro del país",
+      "industrias": "aeroespacial, logística de paquetería y centros de distribución",
+      "cobertura": [
+        "Querétaro",
+        "Hidalgo"
+      ],
+      "asesor": "[Nombre del asesor]",
+      "puesto": "Gerente de ventas",
+      "placeId": "[ChIJ_pendiente]",
+      "actualizado": "2026-09-05",
       "lat": 20.5888,
       "lng": -100.3899
     },
@@ -396,12 +482,35 @@ window.APEX = {
       "ciudad": "Cuautitlán",
       "estado": "Edo. de México",
       "tel": "[55 0000 0000]",
+      "whatsapp": "5210000000000",
+      "correo": "[cuautitlan@apexsitrak.com]",
       "direccion": "[Av. Ejemplo 1000]",
       "cp": "[54800]",
       "horario": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+      "horarioVenta": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+      "horarioTaller": "Lun a Vie 7:00–19:00 · Sáb 8:00–14:00",
+      "horarioPartes": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
       "taller": true,
       "partes": true,
+      "servicios": [
+        "venta",
+        "taller",
+        "refacciones",
+        "hojalateria",
+        "carretera"
+      ],
       "ruta": "Zona Metropolitana del Valle de México",
+      "industrias": "última milla, comercio electrónico y abasto de la central",
+      "cobertura": [
+        "Edo. de México",
+        "Ciudad de México",
+        "Morelos",
+        "Tlaxcala"
+      ],
+      "asesor": "[Nombre del asesor]",
+      "puesto": "Gerente de ventas",
+      "placeId": "[ChIJ_pendiente]",
+      "actualizado": "2026-09-05",
       "lat": 19.6697,
       "lng": -99.1817
     },
@@ -410,12 +519,32 @@ window.APEX = {
       "ciudad": "Puebla",
       "estado": "Puebla",
       "tel": "[222 000 0000]",
+      "whatsapp": "5210000000000",
+      "correo": "[puebla@apexsitrak.com]",
       "direccion": "[Blvd. Ejemplo 1000]",
       "cp": "[72220]",
       "horario": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+      "horarioVenta": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+      "horarioTaller": "Lun a Vie 7:00–19:00 · Sáb 8:00–14:00",
+      "horarioPartes": "El centro de partes de Cuautitlán surte esta plaza",
       "taller": true,
       "partes": false,
+      "servicios": [
+        "venta",
+        "taller",
+        "carretera"
+      ],
       "ruta": "Corredor México–Veracruz",
+      "industrias": "automotriz, textil y arrastre hacia el puerto",
+      "cobertura": [
+        "Puebla",
+        "Guerrero",
+        "Oaxaca"
+      ],
+      "asesor": "[Nombre del asesor]",
+      "puesto": "Gerente de ventas",
+      "placeId": "[ChIJ_pendiente]",
+      "actualizado": "2026-09-05",
       "lat": 19.0414,
       "lng": -98.2063
     },
@@ -424,12 +553,33 @@ window.APEX = {
       "ciudad": "León",
       "estado": "Guanajuato",
       "tel": "[477 000 0000]",
+      "whatsapp": "5210000000000",
+      "correo": "[leon@apexsitrak.com]",
       "direccion": "[Blvd. Ejemplo 1000]",
       "cp": "[37160]",
       "horario": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+      "horarioVenta": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+      "horarioTaller": "Lun a Vie 7:00–19:00 · Sáb 8:00–14:00",
+      "horarioPartes": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
       "taller": true,
       "partes": true,
+      "servicios": [
+        "venta",
+        "taller",
+        "refacciones",
+        "carretera"
+      ],
       "ruta": "Bajío industrial",
+      "industrias": "cuero y calzado, automotriz y obra pública",
+      "cobertura": [
+        "Guanajuato",
+        "San Luis Potosí",
+        "Michoacán"
+      ],
+      "asesor": "[Nombre del asesor]",
+      "puesto": "Gerente de ventas",
+      "placeId": "[ChIJ_pendiente]",
+      "actualizado": "2026-09-05",
       "lat": 21.1219,
       "lng": -101.6833
     },
@@ -438,12 +588,31 @@ window.APEX = {
       "ciudad": "Saltillo",
       "estado": "Coahuila",
       "tel": "[844 000 0000]",
+      "whatsapp": "5210000000000",
+      "correo": "[saltillo@apexsitrak.com]",
       "direccion": "[Carretera Ejemplo km 8]",
       "cp": "[25000]",
       "horario": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+      "horarioVenta": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+      "horarioTaller": "Lun a Vie 7:00–19:00 · Sáb 8:00–14:00",
+      "horarioPartes": "El centro de partes de Monterrey surte esta plaza",
       "taller": true,
       "partes": false,
+      "servicios": [
+        "venta",
+        "taller",
+        "carretera"
+      ],
       "ruta": "Corredor automotriz del noreste",
+      "industrias": "armadoras, autopartes y minería del carbón",
+      "cobertura": [
+        "Coahuila",
+        "Durango"
+      ],
+      "asesor": "[Nombre del asesor]",
+      "puesto": "Gerente de ventas",
+      "placeId": "[ChIJ_pendiente]",
+      "actualizado": "2026-09-05",
       "lat": 25.4232,
       "lng": -101.0053
     },
@@ -452,12 +621,30 @@ window.APEX = {
       "ciudad": "Chihuahua",
       "estado": "Chihuahua",
       "tel": "[614 000 0000]",
+      "whatsapp": "5210000000000",
+      "correo": "[chihuahua@apexsitrak.com]",
       "direccion": "[Av. Ejemplo 1000]",
       "cp": "[31100]",
       "horario": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+      "horarioVenta": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+      "horarioTaller": "Lun a Vie 7:00–19:00 · Sáb 8:00–14:00",
+      "horarioPartes": "El centro de partes de Monterrey surte esta plaza",
       "taller": true,
       "partes": false,
+      "servicios": [
+        "venta",
+        "taller",
+        "carretera"
+      ],
       "ruta": "Frontera y corredor norte",
+      "industrias": "maquiladora, minería y forestal",
+      "cobertura": [
+        "Chihuahua"
+      ],
+      "asesor": "[Nombre del asesor]",
+      "puesto": "Gerente de ventas",
+      "placeId": "[ChIJ_pendiente]",
+      "actualizado": "2026-09-05",
       "lat": 28.633,
       "lng": -106.0691
     },
@@ -466,12 +653,33 @@ window.APEX = {
       "ciudad": "Hermosillo",
       "estado": "Sonora",
       "tel": "[662 000 0000]",
+      "whatsapp": "5210000000000",
+      "correo": "[hermosillo@apexsitrak.com]",
       "direccion": "[Blvd. Ejemplo 1000]",
       "cp": "[83000]",
       "horario": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+      "horarioVenta": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+      "horarioTaller": "Lun a Vie 7:00–19:00 · Sáb 8:00–14:00",
+      "horarioPartes": "El centro de partes de Monterrey surte esta plaza",
       "taller": true,
       "partes": false,
+      "servicios": [
+        "venta",
+        "taller",
+        "carretera"
+      ],
       "ruta": "Noroeste y Pacífico",
+      "industrias": "minería, agroexportación y armadoras del noroeste",
+      "cobertura": [
+        "Sonora",
+        "Baja California",
+        "Baja California Sur",
+        "Sinaloa"
+      ],
+      "asesor": "[Nombre del asesor]",
+      "puesto": "Gerente de ventas",
+      "placeId": "[ChIJ_pendiente]",
+      "actualizado": "2026-09-05",
       "lat": 29.0729,
       "lng": -110.9559
     },
@@ -480,12 +688,31 @@ window.APEX = {
       "ciudad": "Nuevo Laredo",
       "estado": "Tamaulipas",
       "tel": "[867 000 0000]",
+      "whatsapp": "5210000000000",
+      "correo": "[nuevolaredo@apexsitrak.com]",
       "direccion": "[Carretera Ejemplo km 3]",
       "cp": "[88000]",
       "horario": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+      "horarioVenta": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+      "horarioTaller": "Lun a Sáb 7:00–20:00",
+      "horarioPartes": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
       "taller": true,
       "partes": true,
+      "servicios": [
+        "venta",
+        "taller",
+        "refacciones",
+        "carretera"
+      ],
       "ruta": "Cruce fronterizo de mayor volumen del país",
+      "industrias": "transporte de exportación, cruce de caja seca y logística aduanal",
+      "cobertura": [
+        "Tamaulipas"
+      ],
+      "asesor": "[Nombre del asesor]",
+      "puesto": "Gerente de ventas",
+      "placeId": "[ChIJ_pendiente]",
+      "actualizado": "2026-09-05",
       "lat": 27.4763,
       "lng": -99.5164
     },
@@ -494,12 +721,32 @@ window.APEX = {
       "ciudad": "Mérida",
       "estado": "Yucatán",
       "tel": "[999 000 0000]",
+      "whatsapp": "5210000000000",
+      "correo": "[merida@apexsitrak.com]",
       "direccion": "[Periférico Ejemplo km 20]",
       "cp": "[97300]",
       "horario": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+      "horarioVenta": "Lun a Vie 8:00–18:00 · Sáb 8:00–13:00",
+      "horarioTaller": "Lun a Vie 7:00–19:00 · Sáb 8:00–14:00",
+      "horarioPartes": "El centro de partes de Xalapa surte esta plaza",
       "taller": true,
       "partes": false,
+      "servicios": [
+        "venta",
+        "taller",
+        "carretera"
+      ],
       "ruta": "Península de Yucatán",
+      "industrias": "turismo, obra del sureste y abasto peninsular",
+      "cobertura": [
+        "Yucatán",
+        "Quintana Roo",
+        "Campeche"
+      ],
+      "asesor": "[Nombre del asesor]",
+      "puesto": "Gerente de ventas",
+      "placeId": "[ChIJ_pendiente]",
+      "actualizado": "2026-09-05",
       "lat": 20.9674,
       "lng": -89.5926
     }
@@ -873,5 +1120,67 @@ window.APEX = {
     "rendimiento": 2.2,
     "mantenimiento": 9000,
     "otros": 6000
-  }
+  },
+  "CONTACTO": {
+    "whatsapp": "5210000000000",
+    "telefono": "+520000000000",
+    "telefonoTxt": "[55 0000 0000]",
+    "correo": "[contacto@apexsitrak.com]"
+  },
+  "COBERTURA": {
+    "Nuevo León": "monterrey",
+    "Zacatecas": "monterrey",
+    "Jalisco": "guadalajara",
+    "Nayarit": "guadalajara",
+    "Colima": "guadalajara",
+    "Aguascalientes": "guadalajara",
+    "Veracruz": "xalapa",
+    "Tabasco": "xalapa",
+    "Chiapas": "xalapa",
+    "Querétaro": "queretaro",
+    "Hidalgo": "queretaro",
+    "Edo. de México": "cuautitlan",
+    "Ciudad de México": "cuautitlan",
+    "Morelos": "cuautitlan",
+    "Tlaxcala": "cuautitlan",
+    "Puebla": "puebla",
+    "Guerrero": "puebla",
+    "Oaxaca": "puebla",
+    "Guanajuato": "leon",
+    "San Luis Potosí": "leon",
+    "Michoacán": "leon",
+    "Coahuila": "saltillo",
+    "Durango": "saltillo",
+    "Chihuahua": "chihuahua",
+    "Sonora": "hermosillo",
+    "Baja California": "hermosillo",
+    "Baja California Sur": "hermosillo",
+    "Sinaloa": "hermosillo",
+    "Tamaulipas": "nuevo-laredo",
+    "Yucatán": "merida",
+    "Quintana Roo": "merida",
+    "Campeche": "merida"
+  },
+  "SERVICIOS": [
+    {
+      "id": "venta",
+      "nombre": "Venta de unidades nuevas"
+    },
+    {
+      "id": "taller",
+      "nombre": "Taller de servicio"
+    },
+    {
+      "id": "refacciones",
+      "nombre": "Centro de refacciones"
+    },
+    {
+      "id": "hojalateria",
+      "nombre": "Hojalatería y pintura"
+    },
+    {
+      "id": "carretera",
+      "nombre": "Asistencia en carretera"
+    }
+  ]
 };

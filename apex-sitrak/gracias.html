@@ -72,12 +72,16 @@
       <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M20 6 L9 17 L4 12"></path></svg>
     </div>
     <h1 style="color:var(--navy);margin-bottom:18px">Solicitud recibida</h1>
-    <p class="lead" style="margin-inline:auto">Un asesor de tu agencia te contacta en menos de 24 horas hábiles con disponibilidad, plan de financiamiento y fecha de entrega.</p>
+    <p class="lead" style="margin-inline:auto" id="gracias-mensaje">Un asesor de tu agencia te contacta en menos de 24 horas hábiles con disponibilidad, plan de financiamiento y fecha de entrega.</p>
+
+    <!-- app.js lo llena con los parámetros de la solicitud y dispara el evento
+         de conversión. Vacío si alguien llega a esta página directamente. -->
+    <div class="card mt-32" id="gracias-resumen" hidden style="text-align:left"></div>
     <div class="row mt-32" style="justify-content:center">
-      <a class="btn btn--amber" href="#">Adelantar por WhatsApp</a>
+      <a class="btn btn--amber" href="https://wa.me/5210000000000?text=Hola%2C%20escribo%20desde%20el%20sitio%20de%20Apex%20Sitrak.%20Me%20interesa%20informaci%C3%B3n%20sobre%20unidades." target="_blank" rel="noopener">Adelantar por WhatsApp</a>
       <a class="btn btn--outline" href="modelos.html">Seguir viendo modelos</a>
     </div>
-    <p class="muted mt-24" style="font-size:13px">Esta página es el destino de conversión: aquí se dispara el evento de analítica.</p>
+    <p class="muted mt-24" style="font-size:13px">Esta página es el destino único de conversión de todo el sitio: aquí se dispara el evento <code>generate_lead</code> con origen, unidad y agencia, que es lo que permite saber qué parte del sitio trae los leads.</p>
   </div>
 </section>
 </main>
@@ -119,7 +123,7 @@
       <div>
         <h4>Contacto</h4>
         <ul>
-          <li><a href="#">WhatsApp</a></li>
+          <li><a href="https://wa.me/5210000000000?text=Hola%2C%20escribo%20desde%20el%20sitio%20de%20Apex%20Sitrak.%20Me%20interesa%20informaci%C3%B3n%20sobre%20unidades." target="_blank" rel="noopener">WhatsApp</a></li>
           <li><a href="#">LinkedIn</a></li>
           <li><a href="#">Facebook</a></li>
           <li><a href="#">Instagram</a></li>
@@ -136,7 +140,7 @@
 
 <nav class="mobile-bar" aria-label="Acciones rápidas">
   <a href="tel:+520000000000">Llamar</a>
-  <a href="#">WhatsApp</a>
+  <a href="https://wa.me/5210000000000?text=Hola%2C%20escribo%20desde%20el%20sitio%20de%20Apex%20Sitrak.%20Me%20interesa%20informaci%C3%B3n%20sobre%20unidades." target="_blank" rel="noopener">WhatsApp</a>
   <a href="cotizar.html">Cotizar</a>
 </nav>
 
