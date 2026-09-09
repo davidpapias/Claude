@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Los números &middot; Fractional Travel &amp; Investing</title>
+<meta name="description" content="Calculadora del modelo económico de una fracción, con los supuestos de ocupación, comisión y cuota declarados.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/styles.css?v=fce894fa">
+</head>
+<body>
+<div class="topbar">
+  <div class="wrap topbar-in">
+    <a class="brand" href="index.html"><b>Fractional Travel <span class="amp">&amp;</span> Investing</b></a>
+    <nav class="navlinks"><div class="navgroup"><button class="navtop" type="button" aria-expanded="false" data-here>Fraccional<span class="caret" aria-hidden="true"></span></button><div class="navpanel"><a href="fractional.html" class="np-main"><b>Fraccional</b><span>La división completa</span></a><a href="anthus.html"><b>Anthus</b><span>El desarrollo, residencia por residencia</span></a><a href="modelo.html"><b>Cómo funciona</b><span>La copropiedad explicada paso a paso</span></a><a href="numeros.html" aria-current="page"><b>Los números</b><span>Qué cuesta, qué rinde y con qué supuestos</span></a><a href="memorandum.html"><b>El memorándum</b><span>Cifras, reglamento y fideicomiso modelo</span></a><a href="copropietarios.html"><b>Copropietarios</b><span>Quiénes ya firmaron y qué dicen</span></a></div></div><div class="navgroup"><button class="navtop" type="button" aria-expanded="false">Travel<span class="caret" aria-hidden="true"></span></button><div class="navpanel"><a href="travel.html" class="np-main"><b>Travel</b><span>La división completa</span></a><a href="yates.html"><b>Flota</b><span>Las tres embarcaciones y sus tarifas</span></a><a href="servicios.html"><b>Servicios</b><span>Concierge, chef, autos y catálogo</span></a></div></div><div class="navgroup"><button class="navtop" type="button" aria-expanded="false">Investing<span class="caret" aria-hidden="true"></span></button><div class="navpanel"><a href="investing.html" class="np-main"><b>Investing</b><span>La división completa</span></a><a href="legal.html"><b>Estructura legal</b><span>Fideicomiso, escritura y régimen de propiedad</span></a><a href="rentas.html"><b>Rentas</b><span>Quién administra y renta la propiedad</span></a></div></div><a class="navtop" href="club.html">Club</a><div class="navgroup"><button class="navtop" type="button" aria-expanded="false">La casa<span class="caret" aria-hidden="true"></span></button><div class="navpanel"><a href="nosotros.html"><b>Quiénes somos</b><span>La operación y la gente detrás</span></a><a href="diario.html"><b>Diario</b><span>Notas sobre la zona y el mercado</span></a><a href="preguntas.html"><b>Preguntas frecuentes</b><span>Las dudas que más se repiten</span></a><a href="partner-agent.html"><b>Partner Agent</b><span>El canal para agentes con cartera</span></a></div></div></nav>
+    <a class="btn btn-sm" href="agendar.html">Agendar llamada <span class="arw">&rarr;</span></a>
+    <button class="navtoggle" type="button" aria-expanded="false">Menú</button>
+  </div>
+  <div class="navdrawer"><p class="ndh">Fraccional</p><a href="fractional.html">Fraccional &middot; la división</a><a href="anthus.html">Anthus</a><a href="modelo.html">Cómo funciona</a><a href="numeros.html" aria-current="page">Los números</a><a href="memorandum.html">El memorándum</a><a href="copropietarios.html">Copropietarios</a><p class="ndh">Travel</p><a href="travel.html">Travel &middot; la división</a><a href="yates.html">Flota</a><a href="servicios.html">Servicios</a><p class="ndh">Investing</p><a href="investing.html">Investing &middot; la división</a><a href="legal.html">Estructura legal</a><a href="rentas.html">Rentas</a><p class="ndh">Club</p><a href="club.html">Club</a><p class="ndh">La casa</p><a href="nosotros.html">Quiénes somos</a><a href="diario.html">Diario</a><a href="preguntas.html">Preguntas frecuentes</a><a href="partner-agent.html">Partner Agent</a><a class="btn" href="agendar.html">Agendar llamada</a></div>
+</div>
+<div class="page div-fractional"><section class="pagehead">
+  <div class="wrap">
+    <nav class="crumbs"><a href="index.html">Inicio</a><span>/</span><span style="opacity:1">Los números</span></nav>
+    <h1>Los números</h1>
+    <p class="lede measure">Mueva las variables. La tabla se recalcula sobre supuestos conservadores de ocupación y tarifa para Riviera Nayarit, y todos los supuestos están escritos abajo.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec" style="padding-top:0"><div class="calc">
+  <div class="calc-controls">
+    <div class="ctl"><label for="cValue"><span class="lname">Valor de la residencia</span><span class="lval num" id="vValue">$1,120,000</span></label><input type="range" id="cValue" min="800000" max="2400000" step="40000" value="1120000"></div>
+    <div class="ctl"><label for="cFrac"><span class="lname">Fracciones que adquiere</span><span class="lval num" id="vFrac">1 / 8</span></label><input type="range" id="cFrac" min="1" max="4" step="1" value="1"></div>
+    <div class="ctl"><label for="cUse"><span class="lname">Semanas que realmente usa</span><span class="lval num" id="vUse">4</span></label><input type="range" id="cUse" min="0" max="26" step="1" value="4"></div>
+    <div class="ctl"><label for="cRate"><span class="lname">Tarifa promedio por noche</span><span class="lval num" id="vRate">$780</span></label><input type="range" id="cRate" min="380" max="1800" step="20" value="780"></div>
+    <div class="ctl"><label for="cApp"><span class="lname">Plusvalía anual estimada</span><span class="lval num" id="vApp">5.0%</span></label><input type="range" id="cApp" min="0" max="10" step="0.5" value="5"></div>
+    <div class="note" style="margin-top:6px"><b>Muévalos hasta que se parezca a su caso.</b> El renglón que más cambia el resultado es el de semanas que realmente usa: por debajo de cuatro, el modelo se sostiene en la renta; por encima de seis, en el uso. Las semanas que no usa se liberan solas a renta administrada.</div>
+  </div>
+  <div>
+  <div class="ledger">
+    <div class="ledger-h"><p class="folio">Estado anual estimado</p><p class="folio">USD</p></div>
+    <div class="ledger-row"><span class="k">Inversión inicial (su fracción)</span><span class="v num" id="rInv">$140,000</span></div>
+    <div class="ledger-row"><span class="k">Semanas asignadas al año</span><span class="v num" id="rWeeks">6.5</span></div>
+    <div class="ledger-row"><span class="k">Semanas que libera a renta</span><span class="v num" id="rFree">2.5</span></div>
+    <div class="ledger-row pos"><span class="k">Ingreso neto por renta <small>(tras 22% de administración)</small></span><span class="v num" id="rIncome">+$10,647</span></div>
+    <div class="ledger-row neg"><span class="k">Cuota de operación proporcional <small>(predial, seguro, mantenimiento, personal)</small></span><span class="v num" id="rFees">&minus;$9,800</span></div>
+    <div class="ledger-row pos"><span class="k">Plusvalía anual de su fracción</span><span class="v num" id="rApp">+$7,000</span></div>
+    <div class="ledger-row"><span class="k">Valor de las noches que usted disfruta</span><span class="v num" id="rEnjoy">$21,840</span></div>
+    <div class="ledger-row total"><span class="k">Rendimiento total del año</span><span class="v num" id="rTotal">+$29,687</span></div>
+    <p class="ledger-note">Cifras ilustrativas, no una garantía de rendimiento. Supuestos: ocupación del 62% sobre las semanas liberadas, comisión de administración del 22%, cuota anual de operación equivalente al 7% del valor de la fracción. La plusvalía es una estimación de mercado y puede ser negativa.</p>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-h">
+      <h4>¿Le cuadra? Se lo mandamos con las cifras reales.</h4>
+      <p>Tomamos exactamente los números que usted acaba de mover y los recalculamos contra el estado de resultados auditado de la residencia que elija. Llega por correo, sin llamada de por medio.</p>
+    </div>
+    <div class="scenario-b">
+      <div class="f"><label for="scMail">Correo electrónico</label><input type="email" id="scMail" placeholder="nombre@dominio.com"></div>
+      <div class="f"><label for="scTel">WhatsApp (opcional)</label><input type="tel" id="scTel" placeholder="+52 322 000 0000"></div>
+      <button class="btn" type="button" id="scSend">Enviarme este escenario <span class="arw">&rarr;</span></button>
+    </div>
+    <p class="scenario-sum" id="sceneSum"></p>
+  </div>
+  </div>
+</div></div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Supuestos</p></div>
+      <div><h2>De dónde salen <em>los números.</em></h2></div></div>
+    <div class="grid3">
+      <div class="panel"><span class="folio">Ocupación 62%</span><h3>Semanas liberadas</h3><p>Promedio conservador para renta vacacional administrada en Riviera Nayarit, contando temporada alta y baja. Las casas frente a playa suelen quedar por encima.</p></div>
+      <div class="panel"><span class="folio">Comisión 22%</span><h3>Administración</h3><p>Cubre canales de reserva, limpieza entre estancias, recepción de huéspedes, mantenimiento correctivo y reporte trimestral.</p></div>
+      <div class="panel"><span class="folio">Cuota 7%</span><h3>Operación anual</h3><p>Sobre el valor de su fracción: predial, seguro, mantenimiento preventivo, personal, jardinería, alberca y fondo de reserva.</p></div>
+    </div>
+    <div class="note" style="margin-top:28px"><b>Estas cifras son ilustrativas.</b> No son una garantía de rendimiento y la plusvalía puede ser negativa. El memorándum de cada residencia trae las cifras auditadas del ejercicio anterior, y se lo damos sin condiciones.</div>
+    <div style="margin-top:34px"><div class="reassure"><div><p class="h">Nada cuesta hasta la escritura</p><p>La llamada, el memorándum, la visita y el expediente completo no tienen costo ni le comprometen a nada.</p></div><div><p class="h">El apartado es reembolsable</p><p>Durante todo el periodo de due diligence puede retirarse y se le devuelve íntegro. Está en la carta de intención.</p></div><div><p class="h">Ve el expediente antes de firmar</p><p>Avalúo, libertad de gravamen, reglamento y fideicomiso llegan a sus manos antes de que firme nada.</p></div><div><p class="h">Puede salir cuando quiera</p><p>La fracción se vende como cualquier inmueble. No hay penalización ni plazo forzoso.</p></div></div></div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Comparación</p></div>
+      <div><h2>La pregunta que <em>realmente</em> importa</h2>
+      <p class="lede measure" style="margin-top:16px">No es cuánto rinde la fracción. Es cuánto le cuesta hoy la alternativa que ya está usando.</p></div></div>
+    <div class="grid3">
+      <div class="panel"><span class="folio">Alternativa A</span><h3>Rentar cada año</h3><p>Seis semanas al año en casas equivalentes, a tarifa de mercado, son un gasto que no deja nada. En diez años supera con holgura el valor de una fracción, y usted sigue sin poseer nada.</p></div>
+      <div class="panel"><span class="folio">Alternativa B</span><h3>Comprar la casa entera</h3><p>Ocho veces el capital inmovilizado, el 100% de los costos fijos y un inmueble vacío cuarenta y seis semanas al año, salvo que usted quiera dedicarse a administrarlo.</p></div>
+      <div class="panel"><span class="folio">Alternativa C</span><h3>La fracción</h3><p>Un octavo del capital, un octavo de los costos, las mismas seis semanas y un activo escriturado que puede vender. La diferencia la absorbe la renta administrada.</p></div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec">
+    <div class="sec-head"><div class="rail"><p class="folio">Desde aquí</p></div>
+      <div><h2>A dónde lleva <em>esta página.</em></h2></div></div>
+    <div class="rels"><a class="rel" href="modelo.html"><b>Cómo funciona</b><span>De dónde sale cada supuesto de la calculadora</span><span class="go" aria-hidden="true">&rarr;</span></a><a class="rel" href="anthus.html"><b>Anthus</b><span>Las cifras concretas del desarrollo</span><span class="go" aria-hidden="true">&rarr;</span></a><a class="rel" href="rentas.html"><b>Rentas</b><span>Cómo se genera el ingreso que ve arriba</span><span class="go" aria-hidden="true">&rarr;</span></a><a class="rel" href="memorandum.html"><b>El memorándum</b><span>Las mismas cifras, auditadas y por escrito</span><span class="go" aria-hidden="true">&rarr;</span></a></div>
+  </div>
+</section>
+<section>
+  <div class="wrap sec" style="padding-block:clamp(44px,5vw,72px)">
+    <div class="sec-head" style="margin-bottom:26px">
+      <div class="rail"><p class="folio">Las cuatro áreas</p></div>
+      <div><h2 style="font-size:clamp(1.5rem,2.6vw,2rem)">Las otras áreas</h2></div>
+    </div>
+    <div class="divbar"><a class="f" href="fractional.html" aria-current="page"><span class="w">Fraccional</span><span class="d">Copropiedad escriturada</span></a><a class="t" href="travel.html"><span class="w">Travel</span><span class="d">Yates, circuitos y agencia</span></a><a class="i" href="investing.html"><span class="w">Investing</span><span class="d">Propiedad completa</span></a><a class="c" href="club.html"><span class="w">Club</span><span class="d">Sólo para inversionistas</span></a></div>
+  </div>
+</section>
+<section class="ribbon">
+  <div class="wrap">
+    <div><h2>Los números cuadran. <em>&iquest;Y la casa?</em></h2><p>Anthus, con las fracciones liberadas y las cifras auditadas por separado.</p></div>
+    <a class="btn" href="anthus.html">Ver Anthus <span class="arw">&rarr;</span></a>
+  </div>
+</section>
+<div class="stickybar">
+  <div class="wrap stickybar-in">
+    <div class="txt">
+      <p class="t1">¿Le cuadran los números? El siguiente paso es una llamada de 45 minutos.</p>
+      <p class="t2"><b>19</b> de 32 fracciones disponibles &middot; sin compromiso</p>
+    </div>
+    <a class="btn ghost btn-sm" href="memorandum.html">Descargar el memorándum</a>
+    <a class="btn btn-sm" href="agendar.html">Agendar llamada <span class="arw">&rarr;</span></a>
+    <button class="x" type="button" aria-label="Cerrar">&times;</button>
+  </div>
+</div>
+</div><footer>
+  <div class="wrap">
+    <div class="footnav"><div><h4>Fraccional</h4><ul><li><a href="fractional.html">La división</a></li><li><a href="anthus.html">Anthus</a></li><li><a href="modelo.html">Cómo funciona</a></li><li><a href="numeros.html">Los números</a></li><li><a href="memorandum.html">El memorándum</a></li><li><a href="copropietarios.html">Copropietarios</a></li></ul></div><div><h4>Travel</h4><ul><li><a href="travel.html">La división</a></li><li><a href="yates.html">Flota de yates</a></li><li><a href="servicios.html">Servicios</a></li></ul></div><div><h4>Investing</h4><ul><li><a href="investing.html">La división</a></li><li><a href="legal.html">Estructura legal</a></li></ul></div><div><h4>Club y programas</h4><ul><li><a href="club.html">Club</a></li><li><a href="rentas.html">Rentas</a></li><li><a href="partner-agent.html">Partner Agent</a></li></ul></div><div><h4>La casa</h4><ul><li><a href="index.html">Inicio</a></li><li><a href="nosotros.html">Quiénes somos</a></li><li><a href="diario.html">Diario</a></li><li><a href="preguntas.html">Preguntas frecuentes</a></li><li><a href="agendar.html">Hablar con alguien</a></li><li><a href="avisos.html">Aviso legal</a></li></ul></div></div>
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <b>Fractional Travel &amp; Investing</b>
+        <p class="foot-tagline">Own a piece of the places you love.</p>
+        <span class="folio">Copropiedad fraccional escriturada &middot; Riviera Nayarit, México</span>
+      </div>
+      <div class="foot-brand">
+        <span class="folio">Contacto</span>
+        <p style="font-family:var(--mono); font-size:.8rem; margin-top:6px">Nuevo Vallarta, Nayarit<br>hola@fractional-travel-investing.com</p>
+      </div>
+    </div>
+    <p class="disclaimer">Aviso: la información de este sitio tiene fines informativos y no constituye una oferta pública de valores, asesoría de inversión, fiscal o legal. Las cifras de rendimiento, plusvalía y ocupación son estimaciones ilustrativas basadas en supuestos de mercado y no garantizan resultados futuros; el valor de un inmueble puede disminuir. Toda operación se formaliza mediante escritura pública ante notario mexicano y se rige por el memorándum informativo y el reglamento de copropiedad correspondientes, documentos que prevalecen sobre cualquier contenido de esta página. Consulte a su asesor fiscal y legal antes de invertir.</p>
+  </div>
+</footer>
+<script src="assets/site.js?v=4fb040d9"></script>
+</body>
+</html>
